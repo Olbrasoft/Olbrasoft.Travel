@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Olbrasoft.Travel.EAN.DTO
+namespace Olbrasoft.Travel.EAN.DTO.Geography
 {
     /// <summary>
     /// https://support.ean.com/hc/en-us/articles/115005784405-V3-Database-Files-Geography-Data

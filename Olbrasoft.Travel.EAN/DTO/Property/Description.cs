@@ -7,10 +7,12 @@ namespace Olbrasoft.Travel.EAN.DTO.Property
     /// File Name: PropertyDescriptionList.txt
     /// Zip File Name: https://www.ian.com/affiliatecenter/include/V2/PropertyDescriptionList.zip
     /// This file holds the English language long general description of the properties in the EAN system.
-    /// This is base class for DescriptionMultiLanguage, Amenities,  AmenitiesMultiLanguage, BusinessAmenities,
-    /// BusinessAmenitiesMultiLanguage, Location, LocationMultiLanguage, NationalRatings, NationalRatingsMultiLanguage,
-    /// Renovations, RenovationsMultiLanguage, Rooms, RoomsMultiLanguage, AreaAttractions, AreaAttractionsMultiLanguage,
-    /// DiningDescription, DiningDescriptionMultiLanguage, SpaDescription, WhatToExpect, WhatToExpectMultiLanguage
+    /// This is base class for DescriptionMultiLanguage, PropertyFees, PropertyFeesMultiLanguage, PropertyMandatoryFees,
+    /// Amenities, AmenitiesMultiLanguage, BusinessAmenities, PropertyMandatoryFeesMultiLanguage, RecreationDescription,
+    /// RecreationDescriptionMultiLanguage BusinessAmenitiesMultiLanguage, Location, LocationMultiLanguage, NationalRatings,
+    /// NationalRatingsMultiLanguage, Renovations, RenovationsMultiLanguage, Rooms, RoomsMultiLanguage, AreaAttractions,
+    /// AreaAttractionsMultiLanguage, DiningDescription, DiningDescriptionMultiLanguage, SpaDescription, WhatToExpect,
+    /// WhatToExpectMultiLanguage
     /// </summary>
     public class Description
     {
@@ -24,6 +26,6 @@ namespace Olbrasoft.Travel.EAN.DTO.Property
 
         [Required]
         public string PropertyDescription { get; set; }
-           
+
     }
 }

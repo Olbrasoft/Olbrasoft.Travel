@@ -59,6 +59,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EanFilesTest.cs" />
     <Compile Include="ParentRegionTest.cs" />
     <Compile Include="ParserTest.cs" />
     <Compile Include="Person.cs" />

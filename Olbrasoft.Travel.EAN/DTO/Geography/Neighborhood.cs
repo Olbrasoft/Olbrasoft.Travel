@@ -9,7 +9,7 @@ namespace Olbrasoft.Travel.EAN.DTO.Geography
     /// This file contains a list of neighborhood and their matching RegionID.
     /// The Coordinates field is a colon delimited list of Latitude; Longitude values.
     /// </summary>
-    public class Neighborhood
+    public class Neighborhood 
     {
         // ReSharper disable once InconsistentNaming
         [Key]

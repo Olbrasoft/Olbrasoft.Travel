@@ -68,8 +68,16 @@
     <Compile Include="DTO\Property\LocationMultiLanguage.cs" />
     <Compile Include="DTO\Property\NationalRatings.cs" />
     <Compile Include="DTO\Property\NationalRatingsMultiLanguage.cs" />
+    <Compile Include="DTO\Property\PolicyDescription.cs" />
+    <Compile Include="DTO\Property\PolicyDescriptionMultiLanguage.cs" />
+    <Compile Include="DTO\Property\PropertyFees.cs" />
+    <Compile Include="DTO\Property\PropertyFeesMultiLanguage.cs" />
+    <Compile Include="DTO\Property\PropertyMandatoryFees.cs" />
+    <Compile Include="DTO\Property\PropertyMandatoryFeesMultiLanguage.cs" />
     <Compile Include="DTO\Property\PropertyType.cs" />
     <Compile Include="DTO\Property\PropertyTypeMultiLanguage.cs" />
+    <Compile Include="DTO\Property\RecreationDescription.cs" />
+    <Compile Include="DTO\Property\RecreationDescriptionMultiLanguage.cs" />
     <Compile Include="DTO\Property\Renovations.cs" />
     <Compile Include="DTO\Property\RenovationsMultiLanguage.cs" />
     <Compile Include="DTO\Property\Rooms.cs" />
@@ -78,12 +86,15 @@
     <Compile Include="DTO\Property\SpaDescriptionMultiLanguage.cs" />
     <Compile Include="DTO\Property\WhatToExpectDescription.cs" />
     <Compile Include="DTO\Property\WhatToExpectMultiLanguage.cs" />
-    <Compile Include="DTO\RegionEANHotelIDMapping.cs" />
+    <Compile Include="DTO\Geography\RegionEANHotelIDMapping.cs" />
+    <Compile Include="EanFile.cs" />
+    <Compile Include="EanFiles.cs" />
     <Compile Include="IParser.cs" />
     <Compile Include="IParserFactory.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="ParserFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeOfEanFile.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
