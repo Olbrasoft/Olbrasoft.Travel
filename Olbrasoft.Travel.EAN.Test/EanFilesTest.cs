@@ -12,7 +12,7 @@ namespace Olbrasoft.Travel.EAN.Test
     {
         
         [TestMethod]
-        public void TestMethod1()
+        public void GetEanFiles_If_return_the_some_number_files_as_the_number_of_types_Test()
         {
             //Arrange
             var geographyTypes = System.Reflection.Assembly.Load("Olbrasoft.Travel.EAN").GetTypes()
@@ -30,8 +30,7 @@ namespace Olbrasoft.Travel.EAN.Test
             //Asert
             Assert.IsTrue(geographyTypesCount== eanFiles.Count(p => p.TypeOfEanFile==TypeOfEanFile.Geography));
             Assert.IsTrue(propertyTypesCount == eanFiles.Count(p => p.TypeOfEanFile == TypeOfEanFile.Property));
-
-         
+            
         }
     }
 }
