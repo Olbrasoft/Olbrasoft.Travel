@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Olbrasoft.Travel.EAN.DTO;
 using Olbrasoft.Travel.EAN.DTO.Geography;
 using Olbrasoft.Travel.EAN.DTO.Property;
 
@@ -260,9 +259,5 @@ namespace Olbrasoft.Travel.EAN
 
             return files;
         }
-
-
-
-
     }
 }

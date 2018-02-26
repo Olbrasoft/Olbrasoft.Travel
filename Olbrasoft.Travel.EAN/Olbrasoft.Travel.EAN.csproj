@@ -87,8 +87,10 @@
     <Compile Include="DTO\Property\WhatToExpectDescription.cs" />
     <Compile Include="DTO\Property\WhatToExpectMultiLanguage.cs" />
     <Compile Include="DTO\Geography\RegionEANHotelIDMapping.cs" />
+    <Compile Include="EanLanguages.cs" />
     <Compile Include="EanFile.cs" />
     <Compile Include="EanFiles.cs" />
+    <Compile Include="EanLanguage.cs" />
     <Compile Include="IParser.cs" />
     <Compile Include="IParserFactory.cs" />
     <Compile Include="Parser.cs" />
