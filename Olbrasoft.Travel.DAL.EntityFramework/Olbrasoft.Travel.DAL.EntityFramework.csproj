@@ -36,58 +36,154 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.1.1.2\lib\netstandard1.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Caching.Memory, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.1.1.2\lib\net451\Microsoft.Extensions.Caching.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.1.1.2\lib\netstandard1.1\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.1.1.2\lib\netstandard1.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.FileExtensions, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.FileExtensions.1.1.2\lib\net451\Microsoft.Extensions.Configuration.FileExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Json, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Json.1.1.2\lib\net451\Microsoft.Extensions.Configuration.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.1.1\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.1.1.1\lib\netstandard1.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Physical, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Physical.1.1.1\lib\net451\Microsoft.Extensions.FileProviders.Physical.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileSystemGlobbing, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileSystemGlobbing.1.1.1\lib\net45\Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.1.1.2\lib\netstandard1.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.1.1.1\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpRepository.EfRepository, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpRepository.EfRepository.2.0.2\lib\net451\SharpRepository.EfRepository.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpRepository.Repository, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpRepository.Repository.2.0.2\lib\net451\SharpRepository.Repository.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.3.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.0\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.3.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201802190429313_CreateInit.cs" />
-    <Compile Include="Migrations\201802190429313_CreateInit.Designer.cs" />
-    <Compile Include="Migrations\201802190437349_CreateChains.cs" />
-    <Compile Include="Migrations\201802190437349_CreateChains.Designer.cs" />
-    <Compile Include="Migrations\201802190438453_CreateCategories.cs" />
-    <Compile Include="Migrations\201802190438453_CreateCategories.Designer.cs" />
-    <Compile Include="Migrations\201802190443150_CreateAccommodations.cs" />
-    <Compile Include="Migrations\201802190443150_CreateAccommodations.Designer.cs" />
-    <Compile Include="Migrations\201802190445493_CreateSupportedCultures.cs" />
-    <Compile Include="Migrations\201802190445493_CreateSupportedCultures.Designer.cs" />
-    <Compile Include="Migrations\201802190450259_LocalizedCategories.cs" />
-    <Compile Include="Migrations\201802190450259_LocalizedCategories.Designer.cs" />
-    <Compile Include="Migrations\201802190501110_CreateTypesOfDescriptions.cs" />
-    <Compile Include="Migrations\201802190501110_CreateTypesOfDescriptions.Designer.cs" />
-    <Compile Include="Migrations\201802190512274_CreateDescriptions.cs" />
-    <Compile Include="Migrations\201802190512274_CreateDescriptions.Designer.cs" />
-    <Compile Include="Migrations\201802191026351_CreateLocalizedAccommodations.cs" />
-    <Compile Include="Migrations\201802191026351_CreateLocalizedAccommodations.Designer.cs" />
-    <Compile Include="Migrations\201802191203551_AddUniqueIndexToAccommodationsEanId.cs" />
-    <Compile Include="Migrations\201802191203551_AddUniqueIndexToAccommodationsEanId.Designer.cs" />
-    <Compile Include="Migrations\201802212354218_ChageDescriptionsTypesToTypesOfDescriptions.cs" />
-    <Compile Include="Migrations\201802212354218_ChageDescriptionsTypesToTypesOfDescriptions.Designer.cs" />
-    <Compile Include="Migrations\201802212357353_CreateTypesOfRegions.cs" />
-    <Compile Include="Migrations\201802212357353_CreateTypesOfRegions.Designer.cs" />
-    <Compile Include="Migrations\201802220004207_CreateSubClassesOfRegions.cs" />
-    <Compile Include="Migrations\201802220004207_CreateSubClassesOfRegions.Designer.cs" />
-    <Compile Include="Migrations\201802221834460_CreateRegions.cs" />
-    <Compile Include="Migrations\201802221834460_CreateRegions.Designer.cs" />
-    <Compile Include="Migrations\201802230109078_CreateLocalizedRegions.cs" />
-    <Compile Include="Migrations\201802230109078_CreateLocalizedRegions.Designer.cs" />
-    <Compile Include="Migrations\201802231826527_CreateRegionsToRegions.cs" />
-    <Compile Include="Migrations\201802231826527_CreateRegionsToRegions.Designer.cs" />
-    <Compile Include="Migrations\201802232311076_CreateCountries.cs" />
-    <Compile Include="Migrations\201802232311076_CreateCountries.Designer.cs" />
-    <Compile Include="Migrations\201802232336163_AddColumnCoordinatesToRegions.cs" />
-    <Compile Include="Migrations\201802232336163_AddColumnCoordinatesToRegions.Designer.cs" />
+    <Compile Include="ImportsRepository.cs" />
+    <Compile Include="Migrations\201802261736212_CreateInit.cs" />
+    <Compile Include="Migrations\201802261736212_CreateInit.Designer.cs">
+      <DependentUpon>201802261736212_CreateInit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802261755003_CreateUsers.cs" />
+    <Compile Include="Migrations\201802261755003_CreateUsers.Designer.cs">
+      <DependentUpon>201802261755003_CreateUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802262259062_CreateStatuses.cs" />
+    <Compile Include="Migrations\201802262259062_CreateStatuses.Designer.cs">
+      <DependentUpon>201802262259062_CreateStatuses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802262300534_CreateImports.cs" />
+    <Compile Include="Migrations\201802262300534_CreateImports.Designer.cs">
+      <DependentUpon>201802262300534_CreateImports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802272053287_CreateTaskOfImports.cs" />
+    <Compile Include="Migrations\201802272053287_CreateTaskOfImports.Designer.cs">
+      <DependentUpon>201802272053287_CreateTaskOfImports.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TravelDbContext.cs" />
+    <Compile Include="StatusesRepository.cs" />
+    <Compile Include="TravelContext.cs" />
+    <Compile Include="TravelRepository.cs" />
+    <Compile Include="UsersRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Olbrasoft.Travel.DAL\Olbrasoft.Travel.DAL.csproj">
+      <Project>{6ED6A617-9102-4CB5-9C52-E69E5C6EC996}</Project>
+      <Name>Olbrasoft.Travel.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Olbrasoft.Travel.DTO\Olbrasoft.Travel.DTO.csproj">
       <Project>{a6dbd632-6e70-4f9d-88e0-3d00730ad38e}</Project>
       <Name>Olbrasoft.Travel.DTO</Name>
@@ -96,26 +192,25 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="repository.default.json" />
+    <None Include="repository.ef.json" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201802190429313_CreateInit.resx" />
-    <EmbeddedResource Include="Migrations\201802190437349_CreateChains.resx" />
-    <EmbeddedResource Include="Migrations\201802190438453_CreateCategories.resx" />
-    <EmbeddedResource Include="Migrations\201802190443150_CreateAccommodations.resx" />
-    <EmbeddedResource Include="Migrations\201802190445493_CreateSupportedCultures.resx" />
-    <EmbeddedResource Include="Migrations\201802190450259_LocalizedCategories.resx" />
-    <EmbeddedResource Include="Migrations\201802190501110_CreateTypesOfDescriptions.resx" />
-    <EmbeddedResource Include="Migrations\201802190512274_CreateDescriptions.resx" />
-    <EmbeddedResource Include="Migrations\201802191026351_CreateLocalizedAccommodations.resx" />
-    <EmbeddedResource Include="Migrations\201802191203551_AddUniqueIndexToAccommodationsEanId.resx" />
-    <EmbeddedResource Include="Migrations\201802212354218_ChageDescriptionsTypesToTypesOfDescriptions.resx" />
-    <EmbeddedResource Include="Migrations\201802212357353_CreateTypesOfRegions.resx" />
-    <EmbeddedResource Include="Migrations\201802220004207_CreateSubClassesOfRegions.resx" />
-    <EmbeddedResource Include="Migrations\201802221834460_CreateRegions.resx" />
-    <EmbeddedResource Include="Migrations\201802230109078_CreateLocalizedRegions.resx" />
-    <EmbeddedResource Include="Migrations\201802231826527_CreateRegionsToRegions.resx" />
-    <EmbeddedResource Include="Migrations\201802232311076_CreateCountries.resx" />
-    <EmbeddedResource Include="Migrations\201802232336163_AddColumnCoordinatesToRegions.resx" />
+    <EmbeddedResource Include="Migrations\201802261736212_CreateInit.resx">
+      <DependentUpon>201802261736212_CreateInit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802261755003_CreateUsers.resx">
+      <DependentUpon>201802261755003_CreateUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802262259062_CreateStatuses.resx">
+      <DependentUpon>201802262259062_CreateStatuses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802262300534_CreateImports.resx">
+      <DependentUpon>201802262300534_CreateImports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802272053287_CreateTaskOfImports.resx">
+      <DependentUpon>201802272053287_CreateTaskOfImports.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

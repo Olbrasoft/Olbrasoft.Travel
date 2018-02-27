@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Olbrasoft.Travel.DAL.Entity
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Olbrasoft.Travel.EAN", "Olbrasoft.Travel.EAN\Olbrasoft.Travel.EAN.csproj", "{0B602752-C834-4A56-BB99-2C7B22D88E42}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Olbrasoft.Travel.DAL", "Olbrasoft.Travel.DAL\Olbrasoft.Travel.DAL.csproj", "{6ED6A617-9102-4CB5-9C52-E69E5C6EC996}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{0B602752-C834-4A56-BB99-2C7B22D88E42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B602752-C834-4A56-BB99-2C7B22D88E42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B602752-C834-4A56-BB99-2C7B22D88E42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ED6A617-9102-4CB5-9C52-E69E5C6EC996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ED6A617-9102-4CB5-9C52-E69E5C6EC996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ED6A617-9102-4CB5-9C52-E69E5C6EC996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ED6A617-9102-4CB5-9C52-E69E5C6EC996}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

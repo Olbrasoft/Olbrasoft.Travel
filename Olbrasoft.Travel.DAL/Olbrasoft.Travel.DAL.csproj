@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0E52ADB7-931E-4A4F-B87E-BA0B3728F9B2}</ProjectGuid>
+    <ProjectGuid>{6ED6A617-9102-4CB5-9C52-E69E5C6EC996}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Olbrasoft.Travel.BLL</RootNamespace>
-    <AssemblyName>Olbrasoft.Travel.BLL</AssemblyName>
+    <RootNamespace>Olbrasoft.Travel.DAL</RootNamespace>
+    <AssemblyName>Olbrasoft.Travel.DAL</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -141,31 +141,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IImportsFacade.cs" />
-    <Compile Include="ImportsFacade.cs" />
-    <Compile Include="IRegionsFacade.cs" />
-    <Compile Include="IStatusesFacade.cs" />
-    <Compile Include="ITravelFacade.cs" />
-    <Compile Include="IUsersFacade.cs" />
+    <Compile Include="IImportsRepository.cs" />
+    <Compile Include="IStasusesRepository.cs" />
+    <Compile Include="IStatusesRepository.cs" />
+    <Compile Include="ITasksOfImportsRepository.cs" />
+    <Compile Include="ITravelRepository.cs" />
+    <Compile Include="IUsersRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatusesFacade.cs" />
-    <Compile Include="TravelFacade.cs" />
-    <Compile Include="UsersFacade.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Olbrasoft.Travel.DAL\Olbrasoft.Travel.DAL.csproj">
-      <Project>{6ED6A617-9102-4CB5-9C52-E69E5C6EC996}</Project>
-      <Name>Olbrasoft.Travel.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Olbrasoft.Travel.DTO\Olbrasoft.Travel.DTO.csproj">
-      <Project>{A6DBD632-6E70-4F9D-88E0-3D00730AD38E}</Project>
-      <Name>Olbrasoft.Travel.DTO</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="repository.default.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Olbrasoft.Travel.DTO\Olbrasoft.Travel.DTO.csproj">
+      <Project>{A6DBD632-6E70-4F9D-88E0-3D00730AD38E}</Project>
+      <Name>Olbrasoft.Travel.DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EanFilesTest.cs" />
+    <Compile Include="EanFileTest.cs" />
     <Compile Include="ParentRegionTest.cs" />
     <Compile Include="ParserTest.cs" />
     <Compile Include="Person.cs" />

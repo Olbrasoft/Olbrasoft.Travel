@@ -17,8 +17,7 @@ namespace Olbrasoft.Travel.EAN
         {
             return _eanLanguages ?? (_eanLanguages = BuildEanLanguages());
         }
-
-
+        
         private static IEnumerable<EanLanguage> BuildEanLanguages()
         {
             var result = new List<EanLanguage>()

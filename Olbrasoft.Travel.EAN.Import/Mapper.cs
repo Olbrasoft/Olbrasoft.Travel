@@ -6,8 +6,7 @@ using Olbrasoft.Travel.EAN.DTO;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-     
-    public abstract class Mapper<T,TE> where T : TravelEntity 
+     public abstract class Mapper<T,TE> where T : TravelEntity 
     {
         public abstract T Map(TE eanEntity); 
         
