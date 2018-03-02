@@ -77,6 +77,8 @@ namespace Olbrasoft.Travel.EAN.Import
             }
             loogerImports.Log("ParentRegions Loaded");
 
+            Write("ParentsRegions is " + parentRegions.Count);
+
             var regionsFacade = container.Resolve<IRegionsFacade>();
             // var storedNamesOfTypesOfRegions = regionsFacade.GetNamesOfTypesOfRegions();
 
@@ -296,8 +298,7 @@ namespace Olbrasoft.Travel.EAN.Import
             var regionsToRegionsArray = regionsToRegions as RegionToRegion[] ?? regionsToRegions.ToArray();
             if (regionsToRegionsArray.Length != 0) travelContext.BulkInsert(regionsToRegionsArray);
             loogerImports.Log("RegionsToRegions Saved.");
-
-
+            
             loogerImports.Log("PointsOfInterestToPointsOfInterest Build.");
             var storedPointsOfInterestToPointsOfInterest = travelContext
                 .PointsOfInterestToPointsOfInterest.ToDictionary(k => k.PointOfInterestId, v => v.ParentPointOfInterestId);
@@ -312,10 +313,57 @@ namespace Olbrasoft.Travel.EAN.Import
             if(pointsOfInterestToPointsOfInterestArray.Length!=0) travelContext.BulkInsert(pointsOfInterestToPointsOfInterestArray);
             loogerImports.Log("PointsOfInterestToPointsOfInterest Saved.");
 
+            loogerImports.Log("PointsOfInterestToRegions Build.");
+            var storedPointsOfInterestToRegions = travelContext.PointsOfInterestToRegions
+                .ToDictionary(k => k.PointOfInterestId, v => v.RegionId);
+            var pointsOfInterestToRegions = BuildPointsOfInterestToRegions(parentRegions, mappingRegionIdsToIds,
+                mappingPointsOfInterestEanRegionIdsToIds, storedPointsOfInterestToRegions);
+            loogerImports.Log("PointsOfInterestToRegions Builded.");
+            
+            loogerImports.Log("PointsOfInterestToRegions Save.");
+            var pointsOfInterestToRegionsArray = pointsOfInterestToRegions as PointOfInterestToRegion[] ??
+                                                 pointsOfInterestToRegions.ToArray();
+            if(pointsOfInterestToRegionsArray.Length!=0) travelContext.BulkInsert(pointsOfInterestToRegionsArray);
+            loogerImports.Log("PointsOfInterestToRegions Saved.");
+
             Write("Imported");
 #if DEBUG
             Console.ReadLine();
 #endif
+        }
+
+        
+        private static IEnumerable<PointOfInterestToRegion> BuildPointsOfInterestToRegions(
+            IEnumerable<ParentRegion> parentRegions,
+            IDictionary<long, int> mappingRegionIdsToIds, 
+            IDictionary<long, int> mappingPointsOfInterestEanRegionIdsToIds, 
+            IReadOnlyDictionary<int, int> storedPointsOfInterestToRegions)
+        {
+            var pointsOfInterestToRegions = new HashSet<PointOfInterestToRegion>();
+            foreach (var parentRegion in parentRegions)
+            {
+                
+                if (!mappingRegionIdsToIds.TryGetValue(parentRegion.ParentRegionID, out var regionId)
+                    ||
+                    !mappingPointsOfInterestEanRegionIdsToIds.TryGetValue(parentRegion.RegionID, out var pointOfInterestId)
+                ) continue;
+
+                if (storedPointsOfInterestToRegions.TryGetValue(pointOfInterestId, out var storedParentRegionId) && storedParentRegionId == regionId)
+                    continue;
+
+                var regionToRegion = new PointOfInterestToRegion
+                {
+                    RegionId = regionId,
+                    PointOfInterestId = pointOfInterestId
+                };
+
+                if (!pointsOfInterestToRegions.Contains(regionToRegion))
+                {
+                    pointsOfInterestToRegions.Add(regionToRegion);
+                }
+            }
+
+            return pointsOfInterestToRegions;
         }
 
 
