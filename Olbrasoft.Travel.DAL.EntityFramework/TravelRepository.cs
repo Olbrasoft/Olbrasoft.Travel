@@ -10,7 +10,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
             Context = travelContext;
         }
-        
     }
     
 }

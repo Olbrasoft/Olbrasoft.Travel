@@ -183,6 +183,10 @@
     <None Include="repository.default.json" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Olbrasoft.EntityFramework.Bulk\Olbrasoft.EntityFramework.Bulk.csproj">
+      <Project>{1326ba62-f609-4b14-9505-80e49ad3e5b0}</Project>
+      <Name>Olbrasoft.EntityFramework.Bulk</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Olbrasoft.Travel.BLL\Olbrasoft.Travel.BLL.csproj">
       <Project>{0E52ADB7-931E-4A4F-B87E-BA0B3728F9B2}</Project>
       <Name>Olbrasoft.Travel.BLL</Name>

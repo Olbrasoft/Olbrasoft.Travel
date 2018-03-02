@@ -151,32 +151,75 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ImportsRepository.cs" />
-    <Compile Include="Migrations\201802261736212_CreateInit.cs" />
-    <Compile Include="Migrations\201802261736212_CreateInit.Designer.cs">
-      <DependentUpon>201802261736212_CreateInit.cs</DependentUpon>
+    <Compile Include="CustomSqlServerMigrationSqlGenerator.cs" />
+    <Compile Include="LanguagesRepository.cs" />
+    <Compile Include="LocalizedPointsOfInterestRepository.cs" />
+    <Compile Include="LocalizedRegionsRepository.cs" />
+    <Compile Include="LogsOfRegionsRepository.cs" />
+    <Compile Include="Migrations\201802281830031_CreateInit.cs" />
+    <Compile Include="Migrations\201802281830031_CreateInit.Designer.cs">
+      <DependentUpon>201802281830031_CreateInit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802261755003_CreateUsers.cs" />
-    <Compile Include="Migrations\201802261755003_CreateUsers.Designer.cs">
-      <DependentUpon>201802261755003_CreateUsers.cs</DependentUpon>
+    <Compile Include="Migrations\201802281835153_CreateUsers.cs" />
+    <Compile Include="Migrations\201802281835153_CreateUsers.Designer.cs">
+      <DependentUpon>201802281835153_CreateUsers.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802262259062_CreateStatuses.cs" />
-    <Compile Include="Migrations\201802262259062_CreateStatuses.Designer.cs">
-      <DependentUpon>201802262259062_CreateStatuses.cs</DependentUpon>
+    <Compile Include="Migrations\201802281837564_CreateLogsOfImports.cs" />
+    <Compile Include="Migrations\201802281837564_CreateLogsOfImports.Designer.cs">
+      <DependentUpon>201802281837564_CreateLogsOfImports.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802262300534_CreateImports.cs" />
-    <Compile Include="Migrations\201802262300534_CreateImports.Designer.cs">
-      <DependentUpon>201802262300534_CreateImports.cs</DependentUpon>
+    <Compile Include="Migrations\201802282207413_CreateTypesOfRegions.cs" />
+    <Compile Include="Migrations\201802282207413_CreateTypesOfRegions.Designer.cs">
+      <DependentUpon>201802282207413_CreateTypesOfRegions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802272053287_CreateTaskOfImports.cs" />
-    <Compile Include="Migrations\201802272053287_CreateTaskOfImports.Designer.cs">
-      <DependentUpon>201802272053287_CreateTaskOfImports.cs</DependentUpon>
+    <Compile Include="Migrations\201803010242596_CreateSubClasses.cs" />
+    <Compile Include="Migrations\201803010242596_CreateSubClasses.Designer.cs">
+      <DependentUpon>201803010242596_CreateSubClasses.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\201803010244452_CreateRegions.cs" />
+    <Compile Include="Migrations\201803010244452_CreateRegions.Designer.cs">
+      <DependentUpon>201803010244452_CreateRegions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803011432149_CreatePointsOfInterest.cs" />
+    <Compile Include="Migrations\201803011432149_CreatePointsOfInterest.Designer.cs">
+      <DependentUpon>201803011432149_CreatePointsOfInterest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803011438209_CreateLanguages.cs" />
+    <Compile Include="Migrations\201803011438209_CreateLanguages.Designer.cs">
+      <DependentUpon>201803011438209_CreateLanguages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803011527142_CreateLocalizedRegions.cs" />
+    <Compile Include="Migrations\201803011527142_CreateLocalizedRegions.Designer.cs">
+      <DependentUpon>201803011527142_CreateLocalizedRegions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803012132337_LocalizedPointsOfInterest.cs" />
+    <Compile Include="Migrations\201803012132337_LocalizedPointsOfInterest.Designer.cs">
+      <DependentUpon>201803012132337_LocalizedPointsOfInterest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803012134019_ChangePointsOfInterestCreatorId.cs" />
+    <Compile Include="Migrations\201803012134019_ChangePointsOfInterestCreatorId.Designer.cs">
+      <DependentUpon>201803012134019_ChangePointsOfInterestCreatorId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803012239267_CreateRegionsToRegions.cs" />
+    <Compile Include="Migrations\201803012239267_CreateRegionsToRegions.Designer.cs">
+      <DependentUpon>201803012239267_CreateRegionsToRegions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803020047228_CreatePointsOfInterestToPointsOfInterest.cs" />
+    <Compile Include="Migrations\201803020047228_CreatePointsOfInterestToPointsOfInterest.Designer.cs">
+      <DependentUpon>201803020047228_CreatePointsOfInterestToPointsOfInterest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803020355374_CreatePointsOfInterestToRegions.cs" />
+    <Compile Include="Migrations\201803020355374_CreatePointsOfInterestToRegions.Designer.cs">
+      <DependentUpon>201803020355374_CreatePointsOfInterestToRegions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PointsOfInterestRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatusesRepository.cs" />
+    <Compile Include="RegionsToRegionsRepository.cs" />
+    <Compile Include="SubClassesRepository.cs" />
     <Compile Include="TravelContext.cs" />
+    <Compile Include="Migrations\TravelMigrationsConfiguration.cs" />
     <Compile Include="TravelRepository.cs" />
+    <Compile Include="TypesOfRegionsRepository.cs" />
     <Compile Include="UsersRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -195,21 +238,49 @@
     <None Include="repository.default.json" />
     <None Include="repository.ef.json" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201802261736212_CreateInit.resx">
-      <DependentUpon>201802261736212_CreateInit.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201802281830031_CreateInit.resx">
+      <DependentUpon>201802281830031_CreateInit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802261755003_CreateUsers.resx">
-      <DependentUpon>201802261755003_CreateUsers.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201802281835153_CreateUsers.resx">
+      <DependentUpon>201802281835153_CreateUsers.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802262259062_CreateStatuses.resx">
-      <DependentUpon>201802262259062_CreateStatuses.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201802281837564_CreateLogsOfImports.resx">
+      <DependentUpon>201802281837564_CreateLogsOfImports.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802262300534_CreateImports.resx">
-      <DependentUpon>201802262300534_CreateImports.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201802282207413_CreateTypesOfRegions.resx">
+      <DependentUpon>201802282207413_CreateTypesOfRegions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802272053287_CreateTaskOfImports.resx">
-      <DependentUpon>201802272053287_CreateTaskOfImports.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803010242596_CreateSubClasses.resx">
+      <DependentUpon>201803010242596_CreateSubClasses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803010244452_CreateRegions.resx">
+      <DependentUpon>201803010244452_CreateRegions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803011432149_CreatePointsOfInterest.resx">
+      <DependentUpon>201803011432149_CreatePointsOfInterest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803011438209_CreateLanguages.resx">
+      <DependentUpon>201803011438209_CreateLanguages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803011527142_CreateLocalizedRegions.resx">
+      <DependentUpon>201803011527142_CreateLocalizedRegions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803012132337_LocalizedPointsOfInterest.resx">
+      <DependentUpon>201803012132337_LocalizedPointsOfInterest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803012134019_ChangePointsOfInterestCreatorId.resx">
+      <DependentUpon>201803012134019_ChangePointsOfInterestCreatorId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803012239267_CreateRegionsToRegions.resx">
+      <DependentUpon>201803012239267_CreateRegionsToRegions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803020047228_CreatePointsOfInterestToPointsOfInterest.resx">
+      <DependentUpon>201803020047228_CreatePointsOfInterestToPointsOfInterest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803020355374_CreatePointsOfInterestToRegions.resx">
+      <DependentUpon>201803020355374_CreatePointsOfInterestToRegions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

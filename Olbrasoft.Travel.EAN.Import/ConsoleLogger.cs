@@ -5,7 +5,6 @@ using log4net.Config;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-   
     public class ConsoleLogger : ILogger
     {
         protected readonly ILog Logger;
@@ -15,7 +14,7 @@ namespace Olbrasoft.Travel.EAN.Import
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
 
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
-
+            
             Logger = LogManager.GetLogger(typeof(EanImport));
         }
 

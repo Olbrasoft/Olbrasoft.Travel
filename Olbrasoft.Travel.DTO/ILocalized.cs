@@ -2,7 +2,7 @@
 {
     public interface ILocalized
     {
-        int SupportedCultureId { get; set; }
-        SupportedCulture SupportedCulture { get; set; }
+        int LanguageId { get; set; }
+        Language Language { get; set; }
     }
 }

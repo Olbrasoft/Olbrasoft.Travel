@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class Description: ILocalized
+    public class Description
     {
         [Key]
         [Column(Order = 1)]

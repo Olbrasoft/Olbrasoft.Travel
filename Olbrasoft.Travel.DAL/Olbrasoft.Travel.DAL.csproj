@@ -141,11 +141,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IImportsRepository.cs" />
-    <Compile Include="IStasusesRepository.cs" />
-    <Compile Include="IStatusesRepository.cs" />
-    <Compile Include="ITasksOfImportsRepository.cs" />
+    <Compile Include="ILanguagesRepository.cs" />
+    <Compile Include="ILocalizedPointsOfInterestRepository.cs" />
+    <Compile Include="ILocalizedRegionsRepository.cs" />
+    <Compile Include="ILogsOfImportsRepository.cs" />
+    <Compile Include="IPointsOfInterestRepository.cs" />
+    <Compile Include="IRegionsToRegionsRepository.cs" />
+    <Compile Include="ISubClassesRepository.cs" />
     <Compile Include="ITravelRepository.cs" />
+    <Compile Include="ITypesOfRegionsRepository.cs" />
     <Compile Include="IUsersRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

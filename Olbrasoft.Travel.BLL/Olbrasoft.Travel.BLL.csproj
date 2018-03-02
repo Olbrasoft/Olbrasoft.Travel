@@ -141,14 +141,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IImportsFacade.cs" />
-    <Compile Include="ImportsFacade.cs" />
+    <Compile Include="ILanguagesFacade.cs" />
+    <Compile Include="ILocalizedFacade.cs" />
+    <Compile Include="ILoggingImports.cs" />
+    <Compile Include="ImportsLogger.cs" />
     <Compile Include="IRegionsFacade.cs" />
-    <Compile Include="IStatusesFacade.cs" />
     <Compile Include="ITravelFacade.cs" />
     <Compile Include="IUsersFacade.cs" />
+    <Compile Include="LanguagesFacade.cs" />
+    <Compile Include="LocalizedFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatusesFacade.cs" />
+    <Compile Include="RegionsFacade.cs" />
     <Compile Include="TravelFacade.cs" />
     <Compile Include="UsersFacade.cs" />
   </ItemGroup>

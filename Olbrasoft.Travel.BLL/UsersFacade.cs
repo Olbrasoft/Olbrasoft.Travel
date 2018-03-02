@@ -8,6 +8,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.BLL
 {
+
     public class UsersFacade:TravelFacade<User>,IUsersFacade
     {
         protected new readonly IUsersRepository Repository;
