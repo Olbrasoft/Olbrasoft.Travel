@@ -14,7 +14,7 @@
 
         public bool EnableStreaming { get; set; }
 
-        public bool UseTempDB { get; set; }
+        public bool UseTempDb { get; set; }
 
         public bool KeepIdentity { get; set; }
     }

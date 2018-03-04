@@ -31,7 +31,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         //public virtual IDbSet<LocalizedAccommodation> LocalizedAccommodations { get; set; }
 
 
-
         //public virtual IDbSet<Country> Countries { get; set; }
 
 
@@ -104,7 +103,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         private void OnPointsOfInterestToPointsOfInterestCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PointOfInterestToPointOfInterest>()
-                .ToTable("PointsOfInterestToPointsOfInterest", "geo");
+                .ToTable(nameof(PointsOfInterestToPointsOfInterest), "geo");
 
             modelBuilder.Entity<PointOfInterestToPointOfInterest>()
                 .HasRequired(pointOfInterestToPointOfInterest 
@@ -219,6 +218,11 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .Property(e => e.DateAndTimeOfCreation)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
+            modelBuilder.Entity<User>()
+                .HasMany(user => user.CreatedRegions)
+                .WithRequired(region => region.Creator)
+                .WillCascadeOnDelete(false);
+
             //AddColumnCoordinatesToRegions
             //modelBuilder.Entity<Region>()
             //    .Property(t => t.Coordinates)
@@ -278,11 +282,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .HasIndex(p => p.Code).IsUnique();
         }
 
-
-
-
-
-
+        
 
         private void OnLocalizedAccommodationsCreating(DbModelBuilder modelBuilder)
         {

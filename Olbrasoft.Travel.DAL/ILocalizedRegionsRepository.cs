@@ -9,5 +9,7 @@ namespace Olbrasoft.Travel.DAL
 {
     public interface ILocalizedRegionsRepository : ITravelRepository<LocalizedRegion>
     {
+
+
     }
 }

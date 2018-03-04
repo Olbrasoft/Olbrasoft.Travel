@@ -35,6 +35,6 @@ namespace Olbrasoft.Travel.DTO
 
         public virtual ICollection<PointOfInterestToRegion> PointsOfInterestToRegions { get; set; }
 
-       // public virtual ICollection<Region> Regions { get; set; }
+        // public virtual ICollection<Region> Regions { get; set; }
     }
 }

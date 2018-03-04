@@ -11,6 +11,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
     {
         public PointsOfInterestRepository(TravelContext travelContext) : base(travelContext)
         {
+
         }
     }
 }

@@ -146,6 +146,8 @@
     <Compile Include="ILocalizedRegionsRepository.cs" />
     <Compile Include="ILogsOfImportsRepository.cs" />
     <Compile Include="IPointsOfInterestRepository.cs" />
+    <Compile Include="IPointsOfInterestToPointsOfInterestRepository.cs" />
+    <Compile Include="IPointsOfInterestToRegionsRepository.cs" />
     <Compile Include="IRegionsToRegionsRepository.cs" />
     <Compile Include="ISubClassesRepository.cs" />
     <Compile Include="ITravelRepository.cs" />

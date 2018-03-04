@@ -8,6 +8,10 @@ namespace Olbrasoft.Travel.BLL
 {
     public interface ILocalizedFacade
     {
-        bool Exists<T>(Language language);
+        bool Exists<T>(int languageId);
+
+        void BulkSave(LocalizedRegion[] localizedRegions);
+        void BulkSave(LocalizedPointOfInterest[] localizedPointsOfInterest);
+
     }
 }

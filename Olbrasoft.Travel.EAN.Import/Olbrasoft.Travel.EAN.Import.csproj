@@ -165,10 +165,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CitiesImporter.cs" />
+    <Compile Include="FileImportProvider.cs" />
+    <Compile Include="IImportProvider.cs" />
+    <Compile Include="ParentRegionImportOption.cs" />
     <Compile Include="ConsoleLogger.cs" />
+    <Compile Include="IImport.cs" />
     <Compile Include="ILogger.cs" />
+    <Compile Include="Importer.cs" />
+    <Compile Include="ImportOption.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="EanImport.cs" />
+    <Compile Include="ParentRegionImporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

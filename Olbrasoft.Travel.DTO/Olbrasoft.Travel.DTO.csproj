@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accommodation.cs" />
+    <Compile Include="BaseRegion.cs" />
     <Compile Include="BaseType.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Chain.cs" />

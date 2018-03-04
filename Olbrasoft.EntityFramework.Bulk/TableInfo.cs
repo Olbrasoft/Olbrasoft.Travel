@@ -25,7 +25,7 @@ namespace Olbrasoft.EntityFramework.Bulk
         public List<string> PrimaryKeys { get; set; }
         public bool HasSinglePrimaryKey { get; set; }
 
-        protected string TempDBPrefix => BulkConfig.UseTempDB ? "#" : "";
+        protected string TempDBPrefix => BulkConfig.UseTempDb ? "#" : "";
         public string TempTableSufix { get; set; }
         public string TempTableName => $"{TableName}{TempTableSufix}";
         public string FullTempTableName => $"{SchemaFormated}[{TempDBPrefix}{TempTableName}]";

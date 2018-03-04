@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -21,6 +22,7 @@ namespace Olbrasoft.Travel.EAN
             return s.Split('|');
         }
 
+
         public bool TryParse(string line, out TEan entita)
         {
             var items = Split(line);
@@ -31,19 +33,32 @@ namespace Olbrasoft.Travel.EAN
             var counter = 0;
             foreach (var propertiesName in PropertiesNames)
             {
-                var prop= entita.GetType().GetProperty(propertiesName);
+                var prop = entita.GetType().GetProperty(propertiesName);
                 if (prop == null)
                 {
-                   return false;
+                    return false;
                 }
-                prop.SetValue(entita,  Convert.ChangeType(items[counter], prop.PropertyType), null);
-             
+                prop.SetValue(entita, Convert.ChangeType(items[counter], prop.PropertyType), null);
+
                 counter++;
             }
 
             return Validator.TryValidateObject(entita, new ValidationContext(entita), null, true);
-            
+
         }
 
+        public IEnumerable<TEan> Parse(IEnumerable<string> lines)
+        {
+            var entities = new HashSet<TEan>();
+            foreach (var line in lines)
+            {
+                if (TryParse(line, out var entity))
+                {
+                    entities.Add(entity);
+                }
+            }
+
+            return entities;
+        }
     }
 }

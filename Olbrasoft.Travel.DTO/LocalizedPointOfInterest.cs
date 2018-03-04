@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class LocalizedPointOfInterest
+    public class LocalizedPointOfInterest:ILocalized
     {
         [Key, Column(Order = 1)]
         public int PointOfInterestId { get; set; }

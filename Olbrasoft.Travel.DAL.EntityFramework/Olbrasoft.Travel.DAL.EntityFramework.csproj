@@ -212,7 +212,13 @@
     <Compile Include="Migrations\201803020355374_CreatePointsOfInterestToRegions.Designer.cs">
       <DependentUpon>201803020355374_CreatePointsOfInterestToRegions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803031811511_ChangeRegionsCreatorId.cs" />
+    <Compile Include="Migrations\201803031811511_ChangeRegionsCreatorId.Designer.cs">
+      <DependentUpon>201803031811511_ChangeRegionsCreatorId.cs</DependentUpon>
+    </Compile>
     <Compile Include="PointsOfInterestRepository.cs" />
+    <Compile Include="PointsOfInterestToPointsOfInterestRepository.cs" />
+    <Compile Include="PointsOfInterestToRegionsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionsToRegionsRepository.cs" />
     <Compile Include="SubClassesRepository.cs" />
@@ -223,6 +229,10 @@
     <Compile Include="UsersRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Olbrasoft.EntityFramework.Bulk\Olbrasoft.EntityFramework.Bulk.csproj">
+      <Project>{1326ba62-f609-4b14-9505-80e49ad3e5b0}</Project>
+      <Name>Olbrasoft.EntityFramework.Bulk</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Olbrasoft.Travel.DAL\Olbrasoft.Travel.DAL.csproj">
       <Project>{6ED6A617-9102-4CB5-9C52-E69E5C6EC996}</Project>
       <Name>Olbrasoft.Travel.DAL</Name>
@@ -281,6 +291,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803020355374_CreatePointsOfInterestToRegions.resx">
       <DependentUpon>201803020355374_CreatePointsOfInterestToRegions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803031811511_ChangeRegionsCreatorId.resx">
+      <DependentUpon>201803031811511_ChangeRegionsCreatorId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
