@@ -8,7 +8,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
         public override void Up()
         {
             CreateTable(
-                "geo.PointsOfInterestToPointsOfInterestRepository",
+                "geo.PointsOfInterestToPointsOfInterest",
                 c => new
                     {
                         PointOfInterestId = c.Int(nullable: false),
@@ -24,11 +24,11 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
         
         public override void Down()
         {
-            DropForeignKey("geo.PointsOfInterestToPointsOfInterestRepository", "PointOfInterestId", "geo.PointsOfInterest");
-            DropForeignKey("geo.PointsOfInterestToPointsOfInterestRepository", "ParentPointOfInterestId", "geo.PointsOfInterest");
-            DropIndex("geo.PointsOfInterestToPointsOfInterestRepository", new[] { "ParentPointOfInterestId" });
-            DropIndex("geo.PointsOfInterestToPointsOfInterestRepository", new[] { "PointOfInterestId" });
-            DropTable("geo.PointsOfInterestToPointsOfInterestRepository");
+            DropForeignKey("geo.PointsOfInterestToPointsOfInterest", "PointOfInterestId", "geo.PointsOfInterest");
+            DropForeignKey("geo.PointsOfInterestToPointsOfInterest", "ParentPointOfInterestId", "geo.PointsOfInterest");
+            DropIndex("geo.PointsOfInterestToPointsOfInterest", new[] { "ParentPointOfInterestId" });
+            DropIndex("geo.PointsOfInterestToPointsOfInterest", new[] { "PointOfInterestId" });
+            DropTable("geo.PointsOfInterestToPointsOfInterest");
         }
     }
 }

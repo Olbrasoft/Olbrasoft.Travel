@@ -48,6 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accommodation.cs" />
+    <Compile Include="Airport.cs" />
+    <Compile Include="BaseAirport.cs" />
+    <Compile Include="BaseLocalizedAirport.cs" />
+    <Compile Include="BasePointOfInterest.cs" />
     <Compile Include="BaseRegion.cs" />
     <Compile Include="BaseType.cs" />
     <Compile Include="Category.cs" />
@@ -57,6 +61,7 @@
     <Compile Include="ILocalized.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="LocalizedAccommodation.cs" />
+    <Compile Include="LocalizedAirport.cs" />
     <Compile Include="LocalizedCategory.cs" />
     <Compile Include="LocalizedPointOfInterest.cs" />
     <Compile Include="LocalizedRegion.cs" />

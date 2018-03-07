@@ -18,7 +18,12 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
         public virtual IDbSet<RegionToRegion> RegionsToRegions { get; set; }
         public virtual IDbSet<PointOfInterestToPointOfInterest> PointsOfInterestToPointsOfInterest { get; set; }
-        public  virtual IDbSet<PointOfInterestToRegion> PointsOfInterestToRegions { get; set; }
+        public virtual IDbSet<PointOfInterestToRegion> PointsOfInterestToRegions { get; set; }
+
+
+        public virtual IDbSet<Airport> Airports { get; set; }
+
+
 
 
         //public virtual IDbSet<SupportedCulture> SupportedCultures { get; set; }
@@ -29,13 +34,12 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         //public virtual IDbSet<Description> Descriptions { get; set; }
         //public virtual IDbSet<LocalizedCategory> LocalizedCategories { get; set; }
         //public virtual IDbSet<LocalizedAccommodation> LocalizedAccommodations { get; set; }
-
-
         //public virtual IDbSet<Country> Countries { get; set; }
 
 
         public TravelContext() : base("name=Travel")
         {
+
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -52,6 +56,9 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnRegionsToRegionsCreating(modelBuilder);
             OnPointsOfInterestToPointsOfInterestCreating(modelBuilder);
             OnPointsOfInterestToRegionCreating(modelBuilder);
+
+            OnAirportsCreating(modelBuilder);
+
             //OnChainsCreating(modelBuilder);
             //OnCategoriesCreating(modelBuilder);
             //OnAccommodationsCreating(modelBuilder);
@@ -60,8 +67,23 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             //OnDescriptionsCreating(modelBuilder);
             //OnSupportedCulturesCreating(modelBuilder);
             //OnLocalizedAccommodationsCreating(modelBuilder);
-
             //OnCountriesCreating(modelBuilder);
+
+        }
+
+        private void OnAirportsCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Airport>()
+                .ToTable(nameof(Airports), "geo");
+
+            modelBuilder.Entity<User>()
+                .HasMany(user => user.CreatedAirports)
+                .WithRequired(airport => airport.Creator)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Airport>()
+                .Property(e => e.DateAndTimeOfCreation)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
         }
 
@@ -106,18 +128,18 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .ToTable(nameof(PointsOfInterestToPointsOfInterest), "geo");
 
             modelBuilder.Entity<PointOfInterestToPointOfInterest>()
-                .HasRequired(pointOfInterestToPointOfInterest 
+                .HasRequired(pointOfInterestToPointOfInterest
                     => pointOfInterestToPointOfInterest.PointOfInterest)
                 .WithMany(pointOfInterest => pointOfInterest.ToChildPointsOfInterest)
-                .HasForeignKey(pointOfInterestToPointOfInterest 
+                .HasForeignKey(pointOfInterestToPointOfInterest
                     => pointOfInterestToPointOfInterest.PointOfInterestId)
                 .WillCascadeOnDelete(true);
-            
+
             modelBuilder.Entity<PointOfInterestToPointOfInterest>()
-                .HasRequired(pointOfInterestToPointOfInterest 
+                .HasRequired(pointOfInterestToPointOfInterest
                     => pointOfInterestToPointOfInterest.ParentPointOfInterest)
                 .WithMany(pointOfInterest => pointOfInterest.ToParentPointsOfInterest)
-                .HasForeignKey(pointOfInterestToPointOfInterest 
+                .HasForeignKey(pointOfInterestToPointOfInterest
                     => pointOfInterestToPointOfInterest.ParentPointOfInterestId)
                 .WillCascadeOnDelete(false);
         }
@@ -155,7 +177,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
-                .HasMany(user => user.LocalizedPointsOfInterest)
+                .HasMany(user => user.CreatedLocalizedPointsOfInterest)
                 .WithRequired(localizedPointsOfInterest => localizedPointsOfInterest.Creator)
                 .WillCascadeOnDelete(false);
         }
@@ -175,7 +197,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
-                .HasMany(user => user.LocalizedRegions)
+                .HasMany(user => user.CreatedLocalizedRegions)
                 .WithRequired(localizedRegion => localizedRegion.Creator)
                 .WillCascadeOnDelete(false);
 
@@ -200,7 +222,11 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
             modelBuilder.Entity<PointOfInterest>()
                 .ToTable("PointsOfInterest", "geo")
-                .HasIndex(p => p.EanRegionId).IsUnique();
+                .HasIndex(pointOfInterest => pointOfInterest.EanRegionId).IsUnique();
+
+            //modelBuilder.Entity<PointOfInterest>()
+            //    .ToTable("PointsOfInterest", "geo")
+            //    .HasIndex(pointOfInterest => pointOfInterest.EanAirportId).IsUnique();
 
             modelBuilder.Entity<PointOfInterest>()
                 .Property(e => e.DateAndTimeOfCreation)
@@ -282,7 +308,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .HasIndex(p => p.Code).IsUnique();
         }
 
-        
+
 
         private void OnLocalizedAccommodationsCreating(DbModelBuilder modelBuilder)
         {

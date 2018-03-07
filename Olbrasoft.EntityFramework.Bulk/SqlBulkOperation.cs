@@ -75,7 +75,6 @@ namespace Olbrasoft.EntityFramework.Bulk
 
             context.Database.ExecuteSqlCommand(SqlQueryBuilder.CreateTableCopy(tableInfo.FullTableName, tableInfo.FullTempTableName));
             
-
             if (tableInfo.BulkConfig.SetOutputIdentity)
             {
                 context.Database.ExecuteSqlCommand(SqlQueryBuilder.CreateTableCopy(tableInfo.FullTableName, tableInfo.FullTempOutputTableName));
@@ -86,25 +85,23 @@ namespace Olbrasoft.EntityFramework.Bulk
                 context.Database.ExecuteSqlCommand(SqlQueryBuilder.MergeTable(tableInfo, operationType));
                 context.Database.ExecuteSqlCommand(SqlQueryBuilder.DropTable(tableInfo.FullTempTableName));
 
-                if (tableInfo.BulkConfig.SetOutputIdentity && tableInfo.HasSinglePrimaryKey)
+                if (!tableInfo.BulkConfig.SetOutputIdentity || !tableInfo.HasSinglePrimaryKey) return;
+                try
                 {
-                    try
-                    {
-                        tableInfo.UpdateOutputIdentity(context, entities);
-                        var dp = SqlQueryBuilder.DropTable(tableInfo.FullTempOutputTableName);
-                        context.Database.ExecuteSqlCommand(dp);
-                    }
-                    catch (Exception ex)
-                    {
-                        context.Database.ExecuteSqlCommand(SqlQueryBuilder.DropTable(tableInfo.FullTempOutputTableName));
-                        throw ex;
-                    }
+                    tableInfo.UpdateOutputIdentity(context, entities);
+                    var dp = SqlQueryBuilder.DropTable(tableInfo.FullTempOutputTableName);
+                    context.Database.ExecuteSqlCommand(dp);
+                }
+                catch (Exception ex)
+                {
+                    context.Database.ExecuteSqlCommand(SqlQueryBuilder.DropTable(tableInfo.FullTempOutputTableName));
+                    throw;
                 }
             }
             catch (Exception ex)
             {
                 context.Database.ExecuteSqlCommand(SqlQueryBuilder.DropTable(tableInfo.FullTempTableName));
-                throw ex;
+                throw;
             }
         }
 

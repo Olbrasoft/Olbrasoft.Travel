@@ -23,9 +23,9 @@ namespace Olbrasoft.Travel.EAN.Import
             PointsOfInterestFacade = Option.PointsOfInterestFacade;
         }
 
-        protected override void ImportBatch(IEnumerable<ParentRegion> Cities)
+        protected override void ImportBatch(IEnumerable<ParentRegion> eanPointsOfInterest)
         {
-            var parentRegionsArray = Cities as ParentRegion[] ?? Cities.ToArray();
+            var parentRegionsArray = eanPointsOfInterest as ParentRegion[] ?? eanPointsOfInterest.ToArray();
 
             ImportSubClasses(parentRegionsArray, SubClassesFacade, CreatorId);
 
@@ -486,7 +486,7 @@ namespace Olbrasoft.Travel.EAN.Import
                     EanRegionId = parentRegion.RegionID,
                     TypeOfRegionId = typeOfRegionId,
                     CreatorId = creatorId,
-                    DateAndTimeOfCreation = DateTime.Now
+                   // DateAndTimeOfCreation = DateTime.Now
                 };
 
                 if (mappingEanRegionIdsToIds.TryGetValue(parentRegion.RegionID, out var id))
@@ -494,9 +494,12 @@ namespace Olbrasoft.Travel.EAN.Import
                     region.Id = id;
                 }
 
-                if (storedSubClasses.TryGetValue(parentRegion.SubClass, out var subClassId))
+                if (!string.IsNullOrEmpty(parentRegion.SubClass))
                 {
-                    region.SubClassId = subClassId;
+                    if (storedSubClasses.TryGetValue(parentRegion.SubClass, out var subClassId))
+                    {
+                        region.SubClassId = subClassId;
+                    }
                 }
 
                 regions.Add(parentRegion.RegionID, region);
@@ -517,7 +520,7 @@ namespace Olbrasoft.Travel.EAN.Import
                     EanRegionId = parentRegion.ParentRegionID,
                     TypeOfRegionId = typeOfRegionId,
                     CreatorId = creatorId,
-                    DateAndTimeOfCreation = DateTime.Now
+                   // DateAndTimeOfCreation = DateTime.Now
                 };
 
                 if (mappingEanRegionIdsToIds.TryGetValue(parentRegion.ParentRegionID, out var id))

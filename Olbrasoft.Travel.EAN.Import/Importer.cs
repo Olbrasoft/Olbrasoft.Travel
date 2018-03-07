@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,15 +61,23 @@ namespace Olbrasoft.Travel.EAN.Import
             }
         }
         
-        protected abstract void ImportBatch(IEnumerable<T> Cities);
+        protected abstract void ImportBatch(IEnumerable<T> eanEntities);
        
         public static int GetBatchCount(int countLines, int batchSize = 90000, bool skipFirstLine = true)
         {
             if (skipFirstLine) countLines = countLines - 1;
             return (int)Math.Ceiling(countLines / (double)batchSize);
         }
-        
-        public static DbGeography ParsePolygon(string s)
+
+        public static DbGeography CreatePoint(double latitude, double longitude)
+        {
+            var point = string.Format(CultureInfo.InvariantCulture.NumberFormat,
+                "POINT({0} {1})", longitude, latitude);
+            // 4326 is most common coordinate system used by GPS/Maps
+            return DbGeography.PointFromText(point, 4326);
+        }
+
+        public static DbGeography CreatePoligon(string s)
         {
             var spl = s.Split(':');
             var pointsString = new StringBuilder();

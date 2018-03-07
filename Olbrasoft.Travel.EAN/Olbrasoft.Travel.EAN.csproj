@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="DTO\Geography\Airport.cs" />
     <Compile Include="DTO\Geography\City.cs" />
+    <Compile Include="DTO\Geography\CityNeighborhood.cs" />
     <Compile Include="DTO\Geography\Country.cs" />
     <Compile Include="DTO\Geography\CountryMultiLanguage.cs" />
     <Compile Include="DTO\Geography\Neighborhood.cs" />

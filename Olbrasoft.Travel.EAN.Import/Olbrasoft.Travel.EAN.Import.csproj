@@ -165,9 +165,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirportsImporter.cs" />
     <Compile Include="CitiesImporter.cs" />
+    <Compile Include="CitiesNeighborhoodsImporter.cs" />
     <Compile Include="FileImportProvider.cs" />
     <Compile Include="IImportProvider.cs" />
+    <Compile Include="NeighborhoodsImporter.cs" />
     <Compile Include="ParentRegionImportOption.cs" />
     <Compile Include="ConsoleLogger.cs" />
     <Compile Include="IImport.cs" />
@@ -177,6 +180,7 @@
     <Compile Include="Mapper.cs" />
     <Compile Include="EanImport.cs" />
     <Compile Include="ParentRegionImporter.cs" />
+    <Compile Include="PointsOfInterestImporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

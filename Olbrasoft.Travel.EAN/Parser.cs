@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 
 namespace Olbrasoft.Travel.EAN
@@ -33,12 +34,19 @@ namespace Olbrasoft.Travel.EAN
             var counter = 0;
             foreach (var propertiesName in PropertiesNames)
             {
-                var prop = entita.GetType().GetProperty(propertiesName);
-                if (prop == null)
+                var property = entita.GetType().GetProperty(propertiesName);
+                if (property == null)
                 {
                     return false;
                 }
-                prop.SetValue(entita, Convert.ChangeType(items[counter], prop.PropertyType), null);
+
+                var t = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+
+                if (!string.IsNullOrEmpty(items[counter]))
+                {
+                    property.SetValue(entita, Convert.ChangeType(items[counter], t,
+                        CultureInfo.InvariantCulture.NumberFormat), null);
+                }
 
                 counter++;
             }

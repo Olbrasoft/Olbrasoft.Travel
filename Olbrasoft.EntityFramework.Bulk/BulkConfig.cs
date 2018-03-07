@@ -1,4 +1,8 @@
-﻿namespace Olbrasoft.EntityFramework.Bulk
+﻿using System.Collections.Generic;
+using System.Reflection;
+using System.Security.Policy;
+
+namespace Olbrasoft.EntityFramework.Bulk
 {
     public class BulkConfig
     {
@@ -17,5 +21,10 @@
         public bool UseTempDb { get; set; }
 
         public bool KeepIdentity { get; set; }
+
+        public HashSet<string> IgnoreColumns { get; set; } = new HashSet<string>();
+        public HashSet<string> IgnoreColumnsUpdate { get; set; } = new HashSet<string>();
+
+
     }
 }

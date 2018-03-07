@@ -7,15 +7,23 @@ using Olbrasoft.EntityFramework.Bulk;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class TravelRepository<T> :SharpRepository.EfRepository.EfRepository<T>, ITravelRepository<T> where T : class
+    public class TravelRepository<T> : SharpRepository.EfRepository.EfRepository<T>, ITravelRepository<T> where T : class
     {
+        public event EventHandler<EventArgs> OnSaved;
+
         protected new readonly TravelContext Context;
+
 
         public TravelRepository(TravelContext travelContext) : base(travelContext)
         {
             Context = travelContext;
         }
-        
+
+        public new TResult Min<TResult>(Expression<Func<T,TResult>> selector)
+        {
+           return  Context.Set<T>().Min(selector);
+        }
+
         public T Find(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includePaths)
         {
             var query = Context.Set<T>().Where(predicate);
@@ -29,27 +37,81 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             return query.AsNoTracking().FirstOrDefault();
         }
 
-        public void BulkInsert(IEnumerable<T> entities)
+        public new void Add(T entity)
+        {
+            base.Add(entity);
+            OnSaved?.Invoke(this, new EventArgs());
+        }
+
+        public new void Add(IEnumerable<T> entities)
+        {
+            base.Add(entities);
+            OnSaved?.Invoke(this, new EventArgs());
+        }
+
+        public virtual void BulkInsert(IEnumerable<T> entities)
+        {
+            BulkInsert(entities.ToArray());
+        }
+
+        public virtual void BulkInsert(T[] entities)
         {
             var batchesToInsert = SplitList(entities, 90000);
-
+            
             foreach (var batch in batchesToInsert)
             {
-                Context.BulkInsert(batch, new BulkConfig() { BatchSize = 45000, BulkCopyTimeout = 480 });
+                Context.BulkInsert(batch, 
+                    new BulkConfig
+                    {
+                        BatchSize = 45000,
+                        BulkCopyTimeout = 480,
+                        IgnoreColumns = new HashSet<string>(new[]{"DateAndTimeOfCreation"})
+
+                    });
+
+                OnSaved?.Invoke(this, new EventArgs());
             }
         }
 
         public void BulkUpdate(IEnumerable<T> entities)
         {
+            BulkUpdate(entities.ToArray());
+        }
+
+        public virtual void BulkUpdate(T[] entities)
+        {
             var batchesToUpdate = SplitList(entities, 90000);
 
             foreach (var batch in batchesToUpdate)
             {
-                Context.BulkUpdate(batch, new BulkConfig() { BatchSize = 45000, BulkCopyTimeout = 480 });
+                Context.BulkUpdate(batch, new BulkConfig()
+                {
+                    BatchSize = 45000,
+                    BulkCopyTimeout = 480,
+                    IgnoreColumns = new HashSet<string>(new[] {"DateAndTimeOfCreation"}),
+                    IgnoreColumnsUpdate = new HashSet<string>(new[] {"CreatorId"})
+                });
+                OnSaved?.Invoke(this, new EventArgs());
             }
         }
 
-        
+        public virtual void BulkInsertOrUpdate(T[] entities)
+        {
+            var batchesToInsertOrUpdate = SplitList(entities, 90000);
+
+            foreach (var batch in batchesToInsertOrUpdate)
+            {
+                Context.BulkInsertOrUpdate(batch, new BulkConfig()
+                {
+                    BatchSize = 45000,
+                    BulkCopyTimeout = 480,
+                    IgnoreColumns = new HashSet<string>(new[] {"DateAndTimeOfCreation"})
+                });
+                OnSaved?.Invoke(this, new EventArgs());
+            }
+        }
+
+
         public static IEnumerable<List<T>> SplitList(IEnumerable<T> locations, int nSize = 30)
         {
             var result = locations.ToList();
@@ -59,5 +121,5 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             }
         }
     }
-    
+
 }

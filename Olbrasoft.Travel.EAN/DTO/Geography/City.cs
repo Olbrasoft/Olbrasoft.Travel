@@ -9,15 +9,8 @@ namespace Olbrasoft.Travel.EAN.DTO.Geography
     /// This file contains a list of cities and their matching RegionID.
     /// The Coordinates field is a colon delimited list of Latitude; Longitude values.
     /// </summary>
-    public class City
+    public class City : CityNeighborhood
     {
-        // ReSharper disable once InconsistentNaming
-        [Key]
-        public long RegionID { get; set; }
-        [Required]
-        [StringLength(255)]
-        public string RegionName { get; set; }
-        [Required]
-        public string Coordinates { get; set; }
+
     }
 }

@@ -36,7 +36,9 @@ namespace Olbrasoft.EntityFramework.Bulk
         public int NumberOfEntities { get; set; }
 
         public BulkConfig BulkConfig { get; set; }
+
         public Dictionary<string, string> PropertyColumnNamesDict { get; set; } = new Dictionary<string, string>();
+        
         public HashSet<string> ShadowProperties { get; set; } = new HashSet<string>();
 
         public static TableInfo CreateInstance<T>(DbContext context, IList<T> entities, OperationType operationType, BulkConfig bulkConfig)
@@ -46,13 +48,25 @@ namespace Olbrasoft.EntityFramework.Bulk
             tableInfo.NumberOfEntities = entities.Count;
             tableInfo.LoadData<T>(context, isDeleteOperation);
             tableInfo.BulkConfig = bulkConfig ?? new BulkConfig();
+            
+            foreach (var ignoreColumn in tableInfo.BulkConfig.IgnoreColumns)
+            {
+               tableInfo.PropertyColumnNamesDict.Remove(ignoreColumn);
+            }
+
+            if (operationType != OperationType.Update) return tableInfo;
+            
+            foreach (var ignoreColumn in tableInfo.BulkConfig.IgnoreColumnsUpdate)
+            {
+               tableInfo.PropertyColumnNamesDict.Remove(ignoreColumn);
+            }
+            
             return tableInfo;
         }
 
-        public void LoadData<T>(DbContext context, bool loadOnlyPKColumn)
+        public void LoadData<T>(DbContext context, bool loadOnlyPkColumn)
         {
-
-
+            
             var mapping = EfMappingFactory.GetMappingsForContext(context);
             TypeMapping typeMapping=null;
             if (mapping.TypeMappings.ContainsKey(typeof(T)))
@@ -104,7 +118,7 @@ namespace Olbrasoft.EntityFramework.Bulk
             
             HasSinglePrimaryKey = PrimaryKeys.Count == 1;
             
-            if (loadOnlyPKColumn)
+            if (loadOnlyPkColumn)
             {
                         PropertyColumnNamesDict = tableMapping.PropertyMappings.Where(p => p.IsPrimaryKey)
                         .ToDictionary(key => key.PropertyName, name => name.PropertyName);
@@ -215,8 +229,11 @@ namespace Olbrasoft.EntityFramework.Bulk
             sqlBulkCopy.BulkCopyTimeout = BulkConfig.BulkCopyTimeout ?? sqlBulkCopy.BulkCopyTimeout;
             sqlBulkCopy.EnableStreaming = BulkConfig.EnableStreaming;
 
+            
+
             foreach (var element in this.PropertyColumnNamesDict)
             {
+
                 sqlBulkCopy.ColumnMappings.Add(element.Key, element.Value);
             }
         }

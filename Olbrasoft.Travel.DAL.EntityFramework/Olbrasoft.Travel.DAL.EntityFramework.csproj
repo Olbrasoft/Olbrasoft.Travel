@@ -151,6 +151,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirportsRepository.cs" />
     <Compile Include="CustomSqlServerMigrationSqlGenerator.cs" />
     <Compile Include="LanguagesRepository.cs" />
     <Compile Include="LocalizedPointsOfInterestRepository.cs" />
@@ -215,6 +216,14 @@
     <Compile Include="Migrations\201803031811511_ChangeRegionsCreatorId.cs" />
     <Compile Include="Migrations\201803031811511_ChangeRegionsCreatorId.Designer.cs">
       <DependentUpon>201803031811511_ChangeRegionsCreatorId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803060030403_Change.PointsOfInterest.EanRegionId.To.NotNull.cs" />
+    <Compile Include="Migrations\201803060030403_Change.PointsOfInterest.EanRegionId.To.NotNull.Designer.cs">
+      <DependentUpon>201803060030403_Change.PointsOfInterest.EanRegionId.To.NotNull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803061746229_CreateAirports.cs" />
+    <Compile Include="Migrations\201803061746229_CreateAirports.Designer.cs">
+      <DependentUpon>201803061746229_CreateAirports.cs</DependentUpon>
     </Compile>
     <Compile Include="PointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToPointsOfInterestRepository.cs" />
@@ -294,6 +303,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803031811511_ChangeRegionsCreatorId.resx">
       <DependentUpon>201803031811511_ChangeRegionsCreatorId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803060030403_Change.PointsOfInterest.EanRegionId.To.NotNull.resx">
+      <DependentUpon>201803060030403_Change.PointsOfInterest.EanRegionId.To.NotNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803061746229_CreateAirports.resx">
+      <DependentUpon>201803061746229_CreateAirports.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

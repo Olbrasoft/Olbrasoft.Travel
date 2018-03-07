@@ -32,6 +32,11 @@ namespace Olbrasoft.Travel.BLL
             return _mappingEanRegionIdToIds;
         }
 
+        public IDictionary<long, BasePointOfInterest> EanRegionIdsToBasePointsOfInterest(bool clearFacadeCache = false)
+        {
+            return Repository.EanRegionIdsToBasePointsOfInterest();
+        }
+
         public IDictionary<int, int> PointOfInterestIdsToParentPointOfInterestIds(bool clearFacadeCache = false)
         {
             if (_pointOfInterestIdsToParentPointOfInterestIds == null || clearFacadeCache)

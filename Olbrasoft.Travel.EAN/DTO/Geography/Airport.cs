@@ -35,7 +35,7 @@ namespace Olbrasoft.Travel.EAN.DTO.Geography
         /// <summary>
         ///  MainCityID is the RegionID of the major city or multi-city the airport serves.
         /// </summary>
-        public long MainCityID { get; set; }
+        public long? MainCityID { get; set; }
 
         [StringLength(2)]
         public string CountryCode { get; set; }

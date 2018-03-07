@@ -28,9 +28,10 @@ namespace Olbrasoft.Travel.DTO
 
         public virtual ICollection<Language> CreatedLanguages { get; set; }
 
-        public virtual ICollection<LocalizedRegion> LocalizedRegions { get; set; }
+        public virtual ICollection<LocalizedRegion> CreatedLocalizedRegions { get; set; }
 
-        public virtual ICollection<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
+        public virtual ICollection<LocalizedPointOfInterest> CreatedLocalizedPointsOfInterest { get; set; }
 
+        public  virtual ICollection<Airport> CreatedAirports { get; set; }
     }
 }

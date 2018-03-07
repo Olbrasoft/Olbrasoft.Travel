@@ -10,6 +10,8 @@ namespace Olbrasoft.Travel.BLL
     {
         IDictionary<long, int> GetMappingEanRegionIdsToIds(bool clearFacadeCache = false);
 
+        IDictionary<long, BasePointOfInterest> EanRegionIdsToBasePointsOfInterest(bool clearCache = false);
+
         IDictionary<int, int> PointOfInterestIdsToParentPointOfInterestIds(bool clearFacadeCache = false);
 
         IDictionary<int, int> PointOfInterestIdsToRegionIds(bool clearFacadeCache = false);

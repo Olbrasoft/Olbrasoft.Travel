@@ -45,9 +45,6 @@ namespace Olbrasoft.Travel.EAN.Import
 
             Write($"Id to a user with a UserName {user.UserName} is {user.Id}.");
 
-
-            #region Sucess
-
             
 
             // var url = "https://www.ian.com/affiliatecenter/include/V2/ParentRegionList.zip";
@@ -59,16 +56,7 @@ namespace Olbrasoft.Travel.EAN.Import
             container.Register(Component.For<IImportProvider>().ImplementedBy<FileImportProvider>());
             container.Register(Component.For<User>().Instance(user));
            
-            var loogerImports = container.Resolve<ILoggingImports>();
-
-            var parserFactory = container.Resolve<IParserFactory>();
-
-            var regionsFacade = container.Resolve<IRegionsFacade>();
-            
-            var travelContext = container.Resolve<TravelContext>();
-            
-            #endregion
-
+           
             var languagesFacade = container.Resolve<ILanguagesFacade>();
             var defaultLanguage = languagesFacade.Get(1033);
             if (defaultLanguage == null)
@@ -97,12 +85,48 @@ namespace Olbrasoft.Travel.EAN.Import
                 .ImplementedBy<CitiesImporter>()
                 .Named(nameof(CitiesImporter)));
 
+            container.Register(Component.For<IImport>()
+                .ImplementedBy<NeighborhoodsImporter>()
+                .Named(nameof(NeighborhoodsImporter)));
+
+
+            container.Register(Component.For<IImport>()
+                .ImplementedBy<PointsOfInterestImporter>()
+                .Named(nameof(PointsOfInterestImporter)));
+
             var parentRegionImporter = container.Resolve<IImport>(nameof(ParentRegionImporter));
-           // parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
+            parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
 
-            var citiesImporter = container.Resolve<IImport>(nameof(CitiesImporter));
-            citiesImporter.Import(@"D:\Ean\CityCoordinatesList.Txt");
+            //var citiesImporter = container.Resolve<IImport>(nameof(CitiesImporter));
+            //citiesImporter.Import(@"D:\Ean\CityCoordinatesList.Txt");
+            
+            //var neighborhoodsImporter = container.Resolve<IImport>(nameof(NeighborhoodsImporter));
+            //neighborhoodsImporter.Import(@"D:\Ean\NeighborhoodCoordinatesList.Txt");
 
+            //var pointsOfInterestImporter = container.Resolve<IImport>(nameof(PointsOfInterestImporter));
+            //pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
+
+
+
+
+
+            //var path = @"D:/Ean/AirportCoordinatesList.txt";
+            //var lines = File.ReadAllLines(path);
+            //var parserFactory = container.Resolve<IParserFactory>();
+            //var parser = parserFactory.Create<Airport>(lines.FirstOrDefault());
+            //foreach (var line in lines.Skip(1))
+            //{
+                
+            //    if (parser.TryParse(line, out var airoport))
+            //    {
+            //        using (var context= new TravelContext())
+            //        {
+            //            context.Airports.Add(airoport);
+            //            context.SaveChanges();
+            //        }
+            //    }            
+                
+            //}
 
 
 
@@ -180,7 +204,7 @@ namespace Olbrasoft.Travel.EAN.Import
             //{
             //    if (storedRegions.TryGetValue(eanCity.RegionID, out var city))
             //    {
-            //         city.Coordinates = ParsePolygon(eanCity.Coordinates);
+            //         city.Coordinates = CreatePoligon(eanCity.Coordinates);
             //    }
             //    else
             //    {

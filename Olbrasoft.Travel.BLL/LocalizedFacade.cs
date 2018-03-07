@@ -70,10 +70,14 @@ namespace Olbrasoft.Travel.BLL
                 {
                     LocalizedRegionsRepository.BulkInsert(localizedRegions);
                 }
+                else
+                {
+                    LocalizedRegionsRepository.BulkInsertOrUpdate(localizedRegions);
+                }
             }
             else
             {
-                LocalizedRegionsRepository.BulkUpdate(localizedRegions);
+                LocalizedRegionsRepository.BulkInsertOrUpdate(localizedRegions);
             }
         }
 
@@ -85,10 +89,14 @@ namespace Olbrasoft.Travel.BLL
                 {
                     LocalizedPointsOfInterestRepository.BulkInsert(localizedPointsOfInterest);
                 }
+                else
+                {
+                    LocalizedPointsOfInterestRepository.BulkInsertOrUpdate(localizedPointsOfInterest);
+                }
             }
             else
             {
-                LocalizedPointsOfInterestRepository.BulkUpdate(localizedPointsOfInterest);
+                LocalizedPointsOfInterestRepository.BulkInsertOrUpdate(localizedPointsOfInterest);
             }
         }
     }

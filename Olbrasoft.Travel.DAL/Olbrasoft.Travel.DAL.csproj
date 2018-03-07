@@ -141,6 +141,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAirportsRepository.cs" />
     <Compile Include="ILanguagesRepository.cs" />
     <Compile Include="ILocalizedPointsOfInterestRepository.cs" />
     <Compile Include="ILocalizedRegionsRepository.cs" />

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL
 {
     public interface IPointsOfInterestRepository : ITravelRepository<PointOfInterest>
     {
-
+        IDictionary<long, BasePointOfInterest> EanRegionIdsToBasePointsOfInterest(bool clearCache = false);
     }
 }
