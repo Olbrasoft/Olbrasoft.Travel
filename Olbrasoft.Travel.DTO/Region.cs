@@ -5,10 +5,12 @@ namespace Olbrasoft.Travel.DTO
 {
     public class Region : BaseRegion
     {
+        public int TypeOfRegionId { get; set; }
+
+        public int? SubClassId { get; set; }
+
         public DbGeography Coordinates { get; set; }
-
-        public User Creator { get; set; }
-
+        
         public TypeOfRegion TypeOfRegion { get; set; }
 
         public SubClass SubClass { get; set; }

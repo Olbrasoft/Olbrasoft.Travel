@@ -13,16 +13,16 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public event EventHandler<EventArgs> OnSaved;
 
         protected new readonly TravelContext Context;
-
-
+        
+        
         public TravelRepository(TravelContext travelContext) : base(travelContext)
         {
-            Context = travelContext;
+           Context = travelContext;
         }
 
-        public new TResult Min<TResult>(Expression<Func<T,TResult>> selector)
+        public new TResult Min<TResult>(Expression<Func<T, TResult>> selector)
         {
-           return  Context.Set<T>().Min(selector);
+            return Context.Set<T>().Min(selector);
         }
 
         public T Find(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includePaths)
@@ -58,15 +58,15 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual void BulkInsert(T[] entities)
         {
             var batchesToInsert = SplitList(entities, 90000);
-            
+
             foreach (var batch in batchesToInsert)
             {
-                Context.BulkInsert(batch, 
+                Context.BulkInsert(batch,
                     new BulkConfig
                     {
                         BatchSize = 45000,
                         BulkCopyTimeout = 480,
-                        IgnoreColumns = new HashSet<string>(new[]{"DateAndTimeOfCreation"})
+                        IgnoreColumns = new HashSet<string>(new[] { "DateAndTimeOfCreation" })
 
                     });
 
@@ -77,10 +77,10 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public void BulkUpdate(IEnumerable<T> entities)
         {
             BulkUpdate(entities.ToArray());
-            
+
         }
 
-       
+
 
         public virtual void BulkUpdate(T[] entities)
         {
@@ -92,8 +92,8 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 {
                     BatchSize = 45000,
                     BulkCopyTimeout = 480,
-                    IgnoreColumns = new HashSet<string>(new[] {"DateAndTimeOfCreation"}),
-                    IgnoreColumnsUpdate = new HashSet<string>(new[] {"CreatorId"})
+                    IgnoreColumns = new HashSet<string>(new[] { "DateAndTimeOfCreation" }),
+                    IgnoreColumnsUpdate = new HashSet<string>(new[] { "CreatorId" })
                 });
                 OnSaved?.Invoke(this, new EventArgs());
             }
@@ -109,7 +109,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 {
                     BatchSize = 45000,
                     BulkCopyTimeout = 480,
-                    IgnoreColumns = new HashSet<string>(new[] {"DateAndTimeOfCreation"})
+                    IgnoreColumns = new HashSet<string>(new[] { "DateAndTimeOfCreation" })
                 });
                 OnSaved?.Invoke(this, new EventArgs());
             }

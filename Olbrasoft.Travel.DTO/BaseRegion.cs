@@ -8,14 +8,12 @@ namespace Olbrasoft.Travel.DTO
         [Key]
         public int Id { get; set; }
 
-        public int TypeOfRegionId { get; set; }
-
-        public int? SubClassId { get; set; }
-
         public long EanRegionId { get; set; } = long.MinValue;
 
         public int CreatorId { get; set; }
 
         public DateTime DateAndTimeOfCreation { get; set; }
+
+        public User Creator { get; set; }
     }
 }
