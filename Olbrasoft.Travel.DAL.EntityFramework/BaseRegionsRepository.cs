@@ -46,10 +46,17 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         private void ClearCache(object sender, EventArgs eventArgs)
         {
-            _eanRegionIdsToIds = null;
-            _minEanRegionId = long.MinValue;
             ClearCache();
         }
+
+        public new void ClearCache()
+        {
+            _eanRegionIdsToIds = null;
+            _minEanRegionId = long.MinValue;
+            base.ClearCache();
+
+        }
+
 
         public new void Add(T entity)
         {

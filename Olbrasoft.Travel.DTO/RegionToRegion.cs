@@ -23,6 +23,5 @@ namespace Olbrasoft.Travel.DTO
         public DateTime DateAndTimeOfCreation { get; set; }
 
         public virtual User Creator { get; set; }
-
     }
 }

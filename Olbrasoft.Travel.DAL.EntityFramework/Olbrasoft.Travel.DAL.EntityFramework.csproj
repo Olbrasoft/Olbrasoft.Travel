@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AirportsRepository.cs" />
+    <Compile Include="BaseNamesRepository.cs" />
     <Compile Include="BaseRegionsRepository.cs" />
     <Compile Include="ContinentsRepository.cs" />
     <Compile Include="CustomSqlServerMigrationSqlGenerator.cs" />
