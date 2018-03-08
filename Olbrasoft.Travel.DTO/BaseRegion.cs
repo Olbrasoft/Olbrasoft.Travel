@@ -13,6 +13,5 @@ namespace Olbrasoft.Travel.DTO
         public int CreatorId { get; set; }
 
         public DateTime DateAndTimeOfCreation { get; set; }
-        
     }
 }

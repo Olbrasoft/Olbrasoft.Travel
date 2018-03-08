@@ -8,6 +8,8 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
     public class PointsOfInterestRepository : KeyIdRepository<PointOfInterest>, IPointsOfInterestRepository
     {
         private IDictionary<long, BasePointOfInterest> _eanRegionIdsToBasePointsOfInterest;
+
+
         private long _minEanRegionId = long.MinValue;
 
         private long MinEanRegionId

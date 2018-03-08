@@ -96,10 +96,10 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Named(nameof(PointsOfInterestImporter)));
 
             container.AddFacility<TypedFactoryFacility>();
-            container.Register(Component.For<IRepositoryFactory>().AsFactory());
+            container.Register(Component.For<IFactoryOfRepositories>().AsFactory());
 
             //Logger.Log(container.Resolve<ITravelRepository<Continent>>().Count().ToString());
-            //Logger.Log(container.Resolve<IRepositoryFactory>().Travel<Continent>().Count().ToString());
+            //Logger.Log(container.Resolve<IFactoryOfRepositories>().Travel<Continent>().Count().ToString());
             
             var parentRegionImporter = container.Resolve<IImport>(nameof(ParentRegionImporter));
             parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
@@ -257,18 +257,6 @@ namespace Olbrasoft.Travel.EAN.Import
            
         }
 
-
-       
-
-
-       
-
-
-
-
-        
-       
-
         private static async void DownloadFile(string url)
         {
 
@@ -314,9 +302,10 @@ namespace Olbrasoft.Travel.EAN.Import
 #else
          container.Register(Component.For<ILoggingImports>().ImplementedBy<ImportsLogger>());
 #endif
-             container.Register(Component.For<IParserFactory>().ImplementedBy<ParserFactory>());
-
+            container.Register(Component.For<IParserFactory>().ImplementedBy<ParserFactory>());
+            
             container.Register(Component.For(typeof(ITravelRepository<>)).ImplementedBy(typeof(TravelRepository<>)));
+            container.Register(Component.For(typeof(IBaseRegionsRepository<>)).ImplementedBy(typeof(BaseRegionsRepository<>)));
 
             return container;
         }

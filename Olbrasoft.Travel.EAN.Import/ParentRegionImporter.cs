@@ -12,13 +12,13 @@ namespace Olbrasoft.Travel.EAN.Import
     internal class ParentRegionImporter : Importer<ParentRegion>
     {
         protected new readonly ParentRegionImportOption Option;
-        protected readonly IRepositoryFactory Factory;
+        protected readonly IFactoryOfRepositories Factory;
 
         protected ISubClassesFacade SubClassesFacade;
         protected IRegionsFacade RegionsFacade;
         protected IPointsOfInterestFacade PointsOfInterestFacade;
 
-        public ParentRegionImporter(ParentRegionImportOption option, IRepositoryFactory factory) : base(option)
+        public ParentRegionImporter(ParentRegionImportOption option, IFactoryOfRepositories factory) : base(option)
         {
             Option = option;
             Factory = factory;
@@ -26,16 +26,14 @@ namespace Olbrasoft.Travel.EAN.Import
             RegionsFacade = Option.RegionsFacade;
             PointsOfInterestFacade = Option.PointsOfInterestFacade;
         }
-
-
+        
         protected override void ImportBatch(ParentRegion[] parentRegions)
         {
-            var continentRepository = Factory.Travel<Continent>();
+            var continentRepository = Factory.BaseRegions<Continent>();
             ImportContinents(parentRegions, continentRepository, CreatorId);
 
-            var eanRegionIdsToContinentIds = continentRepository
-                .FindAll(continent => continent.EanRegionId > 0, continent => new { continent.EanRegionId, continent.Id })
-                .ToDictionary(k => k.EanRegionId, v => v.Id);
+            var eanRegionIdsToContinentIds = continentRepository.EanRegionIdsToIds;
+            
 
             //var eanRegionIdsToContinentIds = continentRepository
             //    .AsReadDictionary(continent => continent.EanRegionId > 0, v => v.EanRegionId, v => v.Id);
