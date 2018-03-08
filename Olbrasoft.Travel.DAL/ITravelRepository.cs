@@ -13,5 +13,4 @@ namespace Olbrasoft.Travel.DAL
         void BulkUpdate(IEnumerable<T> entities);
         void BulkInsertOrUpdate(T[] entities);
     }
-
 }

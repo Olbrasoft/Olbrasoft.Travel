@@ -14,7 +14,7 @@ namespace Olbrasoft.Travel.DTO
 
         public User Creator { get; set; }
 
-        public ICollection<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
+        //public ICollection<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
         public ICollection<PointOfInterestToPointOfInterest> ToParentPointsOfInterest { get; set; }
         public ICollection<PointOfInterestToPointOfInterest> ToChildPointsOfInterest { get; set; }
         public virtual ICollection<PointOfInterestToRegion> PointsOfInterestToRegions { get; set; }

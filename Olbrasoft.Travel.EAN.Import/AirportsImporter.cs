@@ -14,7 +14,7 @@ namespace Olbrasoft.Travel.EAN.Import
         }
          
 
-        protected override void ImportBatch(IEnumerable<Airport> eanAirports)
+        protected override void ImportBatch(Airport[] parentRegions)
         {
 
             throw new NotImplementedException();

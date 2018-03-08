@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using Olbrasoft.EntityFramework.Bulk;
+using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
@@ -76,7 +77,10 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public void BulkUpdate(IEnumerable<T> entities)
         {
             BulkUpdate(entities.ToArray());
+            
         }
+
+       
 
         public virtual void BulkUpdate(T[] entities)
         {

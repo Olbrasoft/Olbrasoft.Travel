@@ -29,7 +29,7 @@ namespace Olbrasoft.Travel.EAN.Import
             ISubClassesFacade subClassesFacade);
 
 
-        protected override void ImportBatch(IEnumerable<T> eanPointsOfInterest)
+        protected override void ImportBatch(T[] parentRegions)
         {
 
             SetTypeOfRegionIdAndSubClassId(RegionsFacade, SubClassesFacade);
@@ -51,7 +51,7 @@ namespace Olbrasoft.Travel.EAN.Import
             var defaltBaseRegion = new BaseRegion { TypeOfRegionId = TypeOfRegionId, SubClassId = SubClassId, CreatorId = CreatorId };
 
             WriteLog("Regions Build.");
-            var regions = BuildRegions(eanPointsOfInterest, storedRegions, defaltBaseRegion, out var adeptsToLocalizedRegions);
+            var regions = BuildRegions(parentRegions, storedRegions, defaltBaseRegion, out var adeptsToLocalizedRegions);
             var count = regions.Length;
             WriteLog($"Regions Builded:{count}.");
 

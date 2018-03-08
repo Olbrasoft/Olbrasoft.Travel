@@ -141,7 +141,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContinentsFacade.cs" />
     <Compile Include="IAirportsFacade.cs" />
+    <Compile Include="IContinentsFacade.cs" />
     <Compile Include="ILanguagesFacade.cs" />
     <Compile Include="ILocalizedFacade.cs" />
     <Compile Include="ILoggingImports.cs" />

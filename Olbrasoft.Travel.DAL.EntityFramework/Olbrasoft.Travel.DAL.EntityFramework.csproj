@@ -152,8 +152,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AirportsRepository.cs" />
+    <Compile Include="ContinentsRepository.cs" />
     <Compile Include="CustomSqlServerMigrationSqlGenerator.cs" />
+    <Compile Include="KeyIdRepository.cs" />
     <Compile Include="LanguagesRepository.cs" />
+    <Compile Include="LocalizedContinentsRepository.cs" />
     <Compile Include="LocalizedPointsOfInterestRepository.cs" />
     <Compile Include="LocalizedRegionsRepository.cs" />
     <Compile Include="LogsOfRegionsRepository.cs" />
@@ -169,66 +172,55 @@
     <Compile Include="Migrations\201802281837564_CreateLogsOfImports.Designer.cs">
       <DependentUpon>201802281837564_CreateLogsOfImports.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802282207413_CreateTypesOfRegions.cs" />
-    <Compile Include="Migrations\201802282207413_CreateTypesOfRegions.Designer.cs">
-      <DependentUpon>201802282207413_CreateTypesOfRegions.cs</DependentUpon>
+    <Compile Include="Migrations\201803071457497_CreateContinents.cs" />
+    <Compile Include="Migrations\201803071457497_CreateContinents.Designer.cs">
+      <DependentUpon>201803071457497_CreateContinents.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803010242596_CreateSubClasses.cs" />
-    <Compile Include="Migrations\201803010242596_CreateSubClasses.Designer.cs">
-      <DependentUpon>201803010242596_CreateSubClasses.cs</DependentUpon>
+    <Compile Include="Migrations\201803071506252_CreateLanguages.cs" />
+    <Compile Include="Migrations\201803071506252_CreateLanguages.Designer.cs">
+      <DependentUpon>201803071506252_CreateLanguages.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803010244452_CreateRegions.cs" />
-    <Compile Include="Migrations\201803010244452_CreateRegions.Designer.cs">
-      <DependentUpon>201803010244452_CreateRegions.cs</DependentUpon>
+    <Compile Include="Migrations\201803071515430_CreateLocalizedContinents.cs" />
+    <Compile Include="Migrations\201803071515430_CreateLocalizedContinents.Designer.cs">
+      <DependentUpon>201803071515430_CreateLocalizedContinents.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803011432149_CreatePointsOfInterest.cs" />
-    <Compile Include="Migrations\201803011432149_CreatePointsOfInterest.Designer.cs">
-      <DependentUpon>201803011432149_CreatePointsOfInterest.cs</DependentUpon>
+    <Compile Include="Migrations\201803071902455_CreateSubClasses.cs" />
+    <Compile Include="Migrations\201803071902455_CreateSubClasses.Designer.cs">
+      <DependentUpon>201803071902455_CreateSubClasses.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803011438209_CreateLanguages.cs" />
-    <Compile Include="Migrations\201803011438209_CreateLanguages.Designer.cs">
-      <DependentUpon>201803011438209_CreateLanguages.cs</DependentUpon>
+    <Compile Include="Migrations\201803072008051_CreateTypesOfRegions.cs" />
+    <Compile Include="Migrations\201803072008051_CreateTypesOfRegions.Designer.cs">
+      <DependentUpon>201803072008051_CreateTypesOfRegions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803011527142_CreateLocalizedRegions.cs" />
-    <Compile Include="Migrations\201803011527142_CreateLocalizedRegions.Designer.cs">
-      <DependentUpon>201803011527142_CreateLocalizedRegions.cs</DependentUpon>
+    <Compile Include="Migrations\201803072359179_CreateRegions.cs" />
+    <Compile Include="Migrations\201803072359179_CreateRegions.Designer.cs">
+      <DependentUpon>201803072359179_CreateRegions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803012132337_LocalizedPointsOfInterest.cs" />
-    <Compile Include="Migrations\201803012132337_LocalizedPointsOfInterest.Designer.cs">
-      <DependentUpon>201803012132337_LocalizedPointsOfInterest.cs</DependentUpon>
+    <Compile Include="Migrations\201803080240007_CreateRegionsToregions.cs" />
+    <Compile Include="Migrations\201803080240007_CreateRegionsToregions.Designer.cs">
+      <DependentUpon>201803080240007_CreateRegionsToregions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803012134019_ChangePointsOfInterestCreatorId.cs" />
-    <Compile Include="Migrations\201803012134019_ChangePointsOfInterestCreatorId.Designer.cs">
-      <DependentUpon>201803012134019_ChangePointsOfInterestCreatorId.cs</DependentUpon>
+    <Compile Include="Migrations\201803080404109_CreatePointsOfInterest.cs" />
+    <Compile Include="Migrations\201803080404109_CreatePointsOfInterest.Designer.cs">
+      <DependentUpon>201803080404109_CreatePointsOfInterest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803012239267_CreateRegionsToRegions.cs" />
-    <Compile Include="Migrations\201803012239267_CreateRegionsToRegions.Designer.cs">
-      <DependentUpon>201803012239267_CreateRegionsToRegions.cs</DependentUpon>
+    <Compile Include="Migrations\201803080510049_CreatePointsOfInterestToPointsOfInterest.cs" />
+    <Compile Include="Migrations\201803080510049_CreatePointsOfInterestToPointsOfInterest.Designer.cs">
+      <DependentUpon>201803080510049_CreatePointsOfInterestToPointsOfInterest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803020047228_CreatePointsOfInterestToPointsOfInterest.cs" />
-    <Compile Include="Migrations\201803020047228_CreatePointsOfInterestToPointsOfInterest.Designer.cs">
-      <DependentUpon>201803020047228_CreatePointsOfInterestToPointsOfInterest.cs</DependentUpon>
+    <Compile Include="Migrations\201803080546211_CreatePointsOfInterestToRegions.cs" />
+    <Compile Include="Migrations\201803080546211_CreatePointsOfInterestToRegions.Designer.cs">
+      <DependentUpon>201803080546211_CreatePointsOfInterestToRegions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803020355374_CreatePointsOfInterestToRegions.cs" />
-    <Compile Include="Migrations\201803020355374_CreatePointsOfInterestToRegions.Designer.cs">
-      <DependentUpon>201803020355374_CreatePointsOfInterestToRegions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803031811511_ChangeRegionsCreatorId.cs" />
-    <Compile Include="Migrations\201803031811511_ChangeRegionsCreatorId.Designer.cs">
-      <DependentUpon>201803031811511_ChangeRegionsCreatorId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803060030403_Change.PointsOfInterest.EanRegionId.To.NotNull.cs" />
-    <Compile Include="Migrations\201803060030403_Change.PointsOfInterest.EanRegionId.To.NotNull.Designer.cs">
-      <DependentUpon>201803060030403_Change.PointsOfInterest.EanRegionId.To.NotNull.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803061746229_CreateAirports.cs" />
-    <Compile Include="Migrations\201803061746229_CreateAirports.Designer.cs">
-      <DependentUpon>201803061746229_CreateAirports.cs</DependentUpon>
+    <Compile Include="Migrations\201803080621048_CreateLocalizedRegions.cs" />
+    <Compile Include="Migrations\201803080621048_CreateLocalizedRegions.Designer.cs">
+      <DependentUpon>201803080621048_CreateLocalizedRegions.cs</DependentUpon>
     </Compile>
     <Compile Include="PointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToPointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToRegionsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionsRepository.cs" />
     <Compile Include="RegionsToRegionsRepository.cs" />
     <Compile Include="SubClassesRepository.cs" />
     <Compile Include="TravelContext.cs" />
@@ -268,47 +260,38 @@
     <EmbeddedResource Include="Migrations\201802281837564_CreateLogsOfImports.resx">
       <DependentUpon>201802281837564_CreateLogsOfImports.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802282207413_CreateTypesOfRegions.resx">
-      <DependentUpon>201802282207413_CreateTypesOfRegions.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803071457497_CreateContinents.resx">
+      <DependentUpon>201803071457497_CreateContinents.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803010242596_CreateSubClasses.resx">
-      <DependentUpon>201803010242596_CreateSubClasses.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803071506252_CreateLanguages.resx">
+      <DependentUpon>201803071506252_CreateLanguages.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803010244452_CreateRegions.resx">
-      <DependentUpon>201803010244452_CreateRegions.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803071515430_CreateLocalizedContinents.resx">
+      <DependentUpon>201803071515430_CreateLocalizedContinents.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803011432149_CreatePointsOfInterest.resx">
-      <DependentUpon>201803011432149_CreatePointsOfInterest.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803071902455_CreateSubClasses.resx">
+      <DependentUpon>201803071902455_CreateSubClasses.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803011438209_CreateLanguages.resx">
-      <DependentUpon>201803011438209_CreateLanguages.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803072008051_CreateTypesOfRegions.resx">
+      <DependentUpon>201803072008051_CreateTypesOfRegions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803011527142_CreateLocalizedRegions.resx">
-      <DependentUpon>201803011527142_CreateLocalizedRegions.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803072359179_CreateRegions.resx">
+      <DependentUpon>201803072359179_CreateRegions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803012132337_LocalizedPointsOfInterest.resx">
-      <DependentUpon>201803012132337_LocalizedPointsOfInterest.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803080240007_CreateRegionsToregions.resx">
+      <DependentUpon>201803080240007_CreateRegionsToregions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803012134019_ChangePointsOfInterestCreatorId.resx">
-      <DependentUpon>201803012134019_ChangePointsOfInterestCreatorId.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803080404109_CreatePointsOfInterest.resx">
+      <DependentUpon>201803080404109_CreatePointsOfInterest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803012239267_CreateRegionsToRegions.resx">
-      <DependentUpon>201803012239267_CreateRegionsToRegions.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803080510049_CreatePointsOfInterestToPointsOfInterest.resx">
+      <DependentUpon>201803080510049_CreatePointsOfInterestToPointsOfInterest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803020047228_CreatePointsOfInterestToPointsOfInterest.resx">
-      <DependentUpon>201803020047228_CreatePointsOfInterestToPointsOfInterest.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803080546211_CreatePointsOfInterestToRegions.resx">
+      <DependentUpon>201803080546211_CreatePointsOfInterestToRegions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803020355374_CreatePointsOfInterestToRegions.resx">
-      <DependentUpon>201803020355374_CreatePointsOfInterestToRegions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803031811511_ChangeRegionsCreatorId.resx">
-      <DependentUpon>201803031811511_ChangeRegionsCreatorId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803060030403_Change.PointsOfInterest.EanRegionId.To.NotNull.resx">
-      <DependentUpon>201803060030403_Change.PointsOfInterest.EanRegionId.To.NotNull.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803061746229_CreateAirports.resx">
-      <DependentUpon>201803061746229_CreateAirports.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803080621048_CreateLocalizedRegions.resx">
+      <DependentUpon>201803080621048_CreateLocalizedRegions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

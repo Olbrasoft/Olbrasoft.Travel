@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
+using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Olbrasoft.EntityFramework.Bulk;
@@ -44,7 +45,6 @@ namespace Olbrasoft.Travel.EAN.Import
             usersFacade.AddIfNotExist(ref user);
 
             Write($"Id to a user with a UserName {user.UserName} is {user.Id}.");
-
             
 
             // var url = "https://www.ian.com/affiliatecenter/include/V2/ParentRegionList.zip";
@@ -55,21 +55,22 @@ namespace Olbrasoft.Travel.EAN.Import
 
             container.Register(Component.For<IImportProvider>().ImplementedBy<FileImportProvider>());
             container.Register(Component.For<User>().Instance(user));
-           
-           
-            var languagesFacade = container.Resolve<ILanguagesFacade>();
-            var defaultLanguage = languagesFacade.Get(1033);
+            
+            var languagesRepository = container.Resolve<ILanguagesRepository>();
+
+            var defaultLanguage = languagesRepository.Get(1033);
             if (defaultLanguage == null)
             {
                 defaultLanguage = new Language()
                 {
                     Id = 1033,
                     EanLanguageCode = "en_US",
-                    CreatorId  = user.Id
+                    CreatorId = user.Id
                 };
-                languagesFacade.Add(defaultLanguage);
+                languagesRepository.Add(defaultLanguage);
             }
             
+           
             container.Register(
                 Component.For<ParentRegionImportOption>()
                 .ImplementedBy<ParentRegionImportOption>()
@@ -94,6 +95,12 @@ namespace Olbrasoft.Travel.EAN.Import
                 .ImplementedBy<PointsOfInterestImporter>()
                 .Named(nameof(PointsOfInterestImporter)));
 
+            container.AddFacility<TypedFactoryFacility>();
+            container.Register(Component.For<IRepositoryFactory>().AsFactory());
+
+            //Logger.Log(container.Resolve<ITravelRepository<Continent>>().Count().ToString());
+            //Logger.Log(container.Resolve<IRepositoryFactory>().Travel<Continent>().Count().ToString());
+            
             var parentRegionImporter = container.Resolve<IImport>(nameof(ParentRegionImporter));
             parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
 
@@ -113,7 +120,7 @@ namespace Olbrasoft.Travel.EAN.Import
             //var path = @"D:/Ean/AirportCoordinatesList.txt";
             //var lines = File.ReadAllLines(path);
             //var parserFactory = container.Resolve<IParserFactory>();
-            //var parser = parserFactory.Create<Airport>(lines.FirstOrDefault());
+            //var parser = parserFactory.Travel<Airport>(lines.FirstOrDefault());
             //foreach (var line in lines.Skip(1))
             //{
                 
@@ -135,7 +142,7 @@ namespace Olbrasoft.Travel.EAN.Import
             //var eanCountries = new HashSet<DTO.Geography.Country>();
             //using (var reader = new StreamReader(countryListFullPath))
             //{
-            //    var parserCountries = parserFactory.Create<DTO.Geography.Country>(reader.ReadLine());
+            //    var parserCountries = parserFactory.Travel<DTO.Geography.Country>(reader.ReadLine());
 
             //    while (!reader.EndOfStream)
             //    {
@@ -153,7 +160,7 @@ namespace Olbrasoft.Travel.EAN.Import
             //var eanCities = new HashSet<DTO.Geography.City>();
             //using (var reader = new StreamReader(cityCityCoordinatesListFullPath))
             //{
-            //    var parserCities = parserFactory.Create<DTO.Geography.City>(reader.ReadLine());
+            //    var parserCities = parserFactory.Travel<DTO.Geography.City>(reader.ReadLine());
 
             //    while (!reader.EndOfStream)
             //    {
@@ -170,8 +177,8 @@ namespace Olbrasoft.Travel.EAN.Import
 
             //loogerImports.Log("Regions from CityCoordinatesList Build");
             //var storedEanRegionsIds = regionsFacade.GetEanRegionsIds(true);
-            //var typeOfRegionCity = typesOfRegionsFacade.Get("City");
-            //var subClassCity = subClassesFacade.Get("city");
+            //var typeOfRegionCity = typesOfRegionsFacade.Travel("City");
+            //var subClassCity = subClassesFacade.Travel("city");
 
             //var regions = new HashSet<Region>();
 

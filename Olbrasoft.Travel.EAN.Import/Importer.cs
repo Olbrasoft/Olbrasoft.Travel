@@ -28,7 +28,6 @@ namespace Olbrasoft.Travel.EAN.Import
         protected Importer(ImportOption option)
         {
             Option = option ?? throw new ArgumentNullException(nameof(option));
-           
         }
         
         public virtual void Import(string path)
@@ -57,11 +56,11 @@ namespace Olbrasoft.Travel.EAN.Import
             {
                 var lines = Provider.GetBatchLines(path, batch, BatchSize);
                 var entities = Parser.Parse(lines);
-                ImportBatch(entities);
+                ImportBatch(entities.ToArray());
             }
         }
         
-        protected abstract void ImportBatch(IEnumerable<T> eanEntities);
+        protected abstract void ImportBatch(T[] parentRegions);
        
         public static int GetBatchCount(int countLines, int batchSize = 90000, bool skipFirstLine = true)
         {

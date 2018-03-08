@@ -140,10 +140,7 @@ namespace Olbrasoft.Travel.BLL
             TypesOfRegionsRepository.Add(typesOfRegionsToSave);
         }
 
-        public void BulkSave(RegionToRegion[] regionsToRegions)
-        {
-           RegionsToRegionsRepository.BulkInsert(regionsToRegions);
-        }
+       
 
         public void BulkSave(PointOfInterestToRegion[] pointsOfInterestToRegions)
         {

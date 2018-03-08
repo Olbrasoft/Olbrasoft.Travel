@@ -5,7 +5,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class PointsOfInterestRepository : TravelRepository<PointOfInterest>, IPointsOfInterestRepository
+    public class PointsOfInterestRepository : KeyIdRepository<PointOfInterest>, IPointsOfInterestRepository
     {
         private IDictionary<long, BasePointOfInterest> _eanRegionIdsToBasePointsOfInterest;
         private long _minEanRegionId = long.MinValue;
@@ -27,12 +27,10 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             }
 
         }
-
-
+        
         public PointsOfInterestRepository(TravelContext travelContext) : base(travelContext)
         {
             OnSaved += ClearCache;
-
         }
 
         private void ClearCache(object sender, EventArgs eventArgs)
@@ -65,8 +63,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
             return pointsOfInterest;
         }
-
-
+        
 
         public new void Add(IEnumerable<PointOfInterest> pointsOfInterest)
         {
@@ -107,6 +104,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         }
 
 
-
+        
     }
 }

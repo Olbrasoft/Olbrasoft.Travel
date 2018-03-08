@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class BaseRegion 
+    public class BaseRegion : IKeyId
     {
         [Key]
         public int Id { get; set; }
@@ -12,7 +12,7 @@ namespace Olbrasoft.Travel.DTO
 
         public int? SubClassId { get; set; }
 
-        public long? EanRegionId { get; set; }
+        public long EanRegionId { get; set; } = long.MinValue;
 
         public int CreatorId { get; set; }
 

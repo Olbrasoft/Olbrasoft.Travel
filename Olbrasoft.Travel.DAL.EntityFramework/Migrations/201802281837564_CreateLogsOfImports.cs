@@ -16,7 +16,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
                         DateAndTimeOfCreation = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
-            
         }
         
         public override void Down()

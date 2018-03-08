@@ -27,8 +27,7 @@ namespace Olbrasoft.Travel.BLL
 
         void Save(HashSet<TypeOfRegion> typesOfRegions);
 
-        void BulkSave(RegionToRegion[] regionsToRegions);
-
+       
         void BulkSave(PointOfInterestToRegion[] pointsOfInterestToRegions);
 
     }

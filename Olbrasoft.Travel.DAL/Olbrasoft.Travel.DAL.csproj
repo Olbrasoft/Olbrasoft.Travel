@@ -142,15 +142,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAirportsRepository.cs" />
+    <Compile Include="IContinentsRepository.cs" />
     <Compile Include="ILanguagesRepository.cs" />
+    <Compile Include="ILocalizedContinentsRepository.cs" />
     <Compile Include="ILocalizedPointsOfInterestRepository.cs" />
     <Compile Include="ILocalizedRegionsRepository.cs" />
     <Compile Include="ILogsOfImportsRepository.cs" />
     <Compile Include="IPointsOfInterestRepository.cs" />
     <Compile Include="IPointsOfInterestToPointsOfInterestRepository.cs" />
     <Compile Include="IPointsOfInterestToRegionsRepository.cs" />
+    <Compile Include="IRegionsRepository.cs" />
     <Compile Include="IRegionsToRegionsRepository.cs" />
+    <Compile Include="IRepositoryFactory.cs" />
     <Compile Include="ISubClassesRepository.cs" />
+    <Compile Include="IKeyIdRepository.cs" />
     <Compile Include="ITravelRepository.cs" />
     <Compile Include="ITypesOfRegionsRepository.cs" />
     <Compile Include="IUsersRepository.cs" />

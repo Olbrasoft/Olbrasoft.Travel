@@ -56,13 +56,16 @@
     <Compile Include="BaseType.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Chain.cs" />
+    <Compile Include="Continent.cs" />
     <Compile Include="Country.cs" />
     <Compile Include="Description.cs" />
+    <Compile Include="IKeyId.cs" />
     <Compile Include="ILocalized.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="LocalizedAccommodation.cs" />
     <Compile Include="LocalizedAirport.cs" />
     <Compile Include="LocalizedCategory.cs" />
+    <Compile Include="LocalizedContinent.cs" />
     <Compile Include="LocalizedPointOfInterest.cs" />
     <Compile Include="LocalizedRegion.cs" />
     <Compile Include="LogOfImport.cs" />
