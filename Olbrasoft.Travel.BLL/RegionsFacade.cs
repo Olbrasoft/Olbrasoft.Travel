@@ -32,16 +32,16 @@ namespace Olbrasoft.Travel.BLL
             PointsOfInterestToRegionsFacade = pointsOfInterestToRegionsFacade;
         }
 
-        public HashSet<long> GetEanRegionsIds(bool clearFacadeCache = false)
-        {
-            if (_eanRegionsIds == null || clearFacadeCache)
-            {
-                _eanRegionsIds = new HashSet<long>(Repository.AsQueryable()
-                    .Where(region => region.EanRegionId != null).Select(region => (long)region.EanRegionId));
-            }
+        //public HashSet<long> GetEanRegionsIds(bool clearFacadeCache = false)
+        //{
+        //    if (_eanRegionsIds == null || clearFacadeCache)
+        //    {
+        //        _eanRegionsIds = new HashSet<long>(Repository.AsQueryable()
+        //            .Where(region => region.EanRegionId != null).Select(region => (long)region.EanRegionId));
+        //    }
 
-            return _eanRegionsIds;
-        }
+        //    return _eanRegionsIds;
+        //}
 
         public IDictionary<long, int> GetMappingEanRegionIdsToIds(bool clearFacadeCache = false)
         {
@@ -93,27 +93,27 @@ namespace Olbrasoft.Travel.BLL
 
        
 
-        public IDictionary<long, BaseRegion> GetMappingEanRegionIdsToRegions(bool clearFacadeCache = false)
-        {
-            if (_mappingEanRegionIdsToRegions == null || clearFacadeCache)
-            {
-                _mappingEanRegionIdsToRegions = Repository.AsQueryable()
-                    .Where(region=>region.EanRegionId!=null).ToDictionary(k =>
-                    {
-                        if (k.EanRegionId != null) return (long) k.EanRegionId;
-                        return 0;
-                    }, v => new BaseRegion
-                    {
-                        Id = v.Id,
-                        CreatorId = v.CreatorId,
-                        EanRegionId = v.EanRegionId,
-                        TypeOfRegionId = v.TypeOfRegionId,
-                        DateAndTimeOfCreation = v.DateAndTimeOfCreation,
-                        SubClassId = v.SubClassId
-                    });
-            }
-            return _mappingEanRegionIdsToRegions;
-        }
+        //public IDictionary<long, BaseRegion> GetMappingEanRegionIdsToRegions(bool clearFacadeCache = false)
+        //{
+        //    if (_mappingEanRegionIdsToRegions == null || clearFacadeCache)
+        //    {
+        //        _mappingEanRegionIdsToRegions = Repository.AsQueryable()
+        //            .Where(region=>region.EanRegionId!=null).ToDictionary(k =>
+        //            {
+        //                if (k.EanRegionId != null) return (long) k.EanRegionId;
+        //                return 0;
+        //            }, v => new BaseRegion
+        //            {
+        //                Id = v.Id,
+        //                CreatorId = v.CreatorId,
+        //                EanRegionId = v.EanRegionId,
+        //                TypeOfRegionId = v.TypeOfRegionId,
+        //                DateAndTimeOfCreation = v.DateAndTimeOfCreation,
+        //                SubClassId = v.SubClassId
+        //            });
+        //    }
+        //    return _mappingEanRegionIdsToRegions;
+        //}
 
 
         public void BulkSave(IEnumerable<Region> regions)

@@ -13,6 +13,6 @@ namespace Olbrasoft.Travel.DTO
         public int ContinentId { get; set; }
 
         public Continent Continent { get; set; }
-        
+        public virtual User Creator { get; set; }
     }
 }

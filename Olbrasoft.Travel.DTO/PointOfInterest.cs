@@ -12,7 +12,7 @@ namespace Olbrasoft.Travel.DTO
         
         public SubClass SubClass { get; set; }
 
-        public User Creator { get; set; }
+        public virtual User Creator { get; set; }
 
         //public ICollection<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
         public ICollection<PointOfInterestToPointOfInterest> ToParentPointsOfInterest { get; set; }

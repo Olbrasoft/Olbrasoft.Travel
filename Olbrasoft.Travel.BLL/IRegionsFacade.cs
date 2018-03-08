@@ -7,7 +7,7 @@ namespace Olbrasoft.Travel.BLL
 {
     public interface IRegionsFacade : ITravelFacade<Region>
     {
-        HashSet<long> GetEanRegionsIds(bool clearFacadeCache = false);
+        //HashSet<long> GetEanRegionsIds(bool clearFacadeCache = false);
 
         IDictionary<long, int> GetMappingEanRegionIdsToIds(bool clearFacadeCache = false);
 
@@ -21,7 +21,7 @@ namespace Olbrasoft.Travel.BLL
 
         IDictionary<string, int> TypesOfRegionsAsReverseDictionary(bool clearFacadeCache = false);
         
-        IDictionary<long, BaseRegion> GetMappingEanRegionIdsToRegions(bool clearFacadeCache=false);
+        //IDictionary<long, BaseRegion> GetMappingEanRegionIdsToRegions(bool clearFacadeCache=false);
 
         void BulkSave(IEnumerable<Region> regions);
 

@@ -46,9 +46,9 @@ namespace Olbrasoft.Travel.EAN.Import
                 return;
             }
 
-            var storedRegions = RegionsFacade.GetMappingEanRegionIdsToRegions(true);
+            var storedRegions = new Dictionary<long,Region>();  // RegionsFacade.GetMappingEanRegionIdsToRegions(true);
 
-            var defaltBaseRegion = new BaseRegion { TypeOfRegionId = TypeOfRegionId, SubClassId = SubClassId, CreatorId = CreatorId };
+            var defaltBaseRegion = new Region { TypeOfRegionId = TypeOfRegionId, SubClassId = SubClassId, CreatorId = CreatorId };
 
             WriteLog("Regions Build.");
             var regions = BuildRegions(parentRegions, storedRegions, defaltBaseRegion, out var adeptsToLocalizedRegions);
@@ -102,8 +102,8 @@ namespace Olbrasoft.Travel.EAN.Import
 
         private static Region[] BuildRegions(
             IEnumerable<CityNeighborhood> eanEntities,
-            IDictionary<long, BaseRegion> storedRegions,
-            BaseRegion defaultBaseRegion,
+            IDictionary<long, Region> storedRegions,
+            Region defaultBaseRegion,
             out IDictionary<long, string> adeptsToLocalizedRegions
         )
         {
