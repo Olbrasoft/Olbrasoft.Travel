@@ -53,7 +53,7 @@
     <Compile Include="BaseLocalizedAirport.cs" />
     <Compile Include="BasePointOfInterest.cs" />
     <Compile Include="BaseRegion.cs" />
-    <Compile Include="BaseType.cs" />
+    <Compile Include="BaseName.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Chain.cs" />
     <Compile Include="Continent.cs" />
@@ -79,6 +79,7 @@
     <Compile Include="SubClass.cs" />
     <Compile Include="SupportedCulture.cs" />
     <Compile Include="TravelEntity.cs" />
+    <Compile Include="NameOfDescription.cs" />
     <Compile Include="TypeOfDescription.cs" />
     <Compile Include="TypeOfRegion.cs" />
     <Compile Include="User.cs" />

@@ -22,7 +22,7 @@ namespace Olbrasoft.Travel.DTO
 
         public virtual Accommodation Accommodation { get; set; }
 
-        public virtual TypeOfDescription TypeOfDescription { get; set; }
+        public virtual NameOfDescription NameOfDescription { get; set; }
 
         public virtual SupportedCulture SupportedCulture { get; set; }
     }

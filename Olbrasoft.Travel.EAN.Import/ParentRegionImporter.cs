@@ -220,7 +220,7 @@ namespace Olbrasoft.Travel.EAN.Import
             WriteLog("PointsOfInterestToPointsOfInterest Saved.");
         }
 
-        private void ImportRegionsToRegions(ParentRegion[] parentRegions, IReadOnlyDictionary<long, int> eanRegionIdsToIds, ITravelRepository<RegionToRegion> repository, int creatorId)
+        private void ImportRegionsToRegions(IEnumerable<ParentRegion> parentRegions, IReadOnlyDictionary<long, int> eanRegionIdsToIds, ITravelRepository<RegionToRegion> repository, int creatorId)
         {
             WriteLog("RegionsToRegions Build.");
             var regionsToRegions = BuildRegionsToRegions(parentRegions, eanRegionIdsToIds,

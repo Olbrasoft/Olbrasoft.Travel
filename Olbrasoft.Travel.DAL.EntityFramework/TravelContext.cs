@@ -26,7 +26,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         //public virtual IDbSet<Category> Categories { get; set; }
         //public virtual IDbSet<Accommodation> Accommodations { get; set; }
         //public virtual IDbSet<Chain> Chains { get; set; }
-        //public virtual IDbSet<TypeOfDescription> TypesOfDescriptions { get; set; }
+        //public virtual IDbSet<NameOfDescription> TypesOfDescriptions { get; set; }
         //public virtual IDbSet<Description> Descriptions { get; set; }
         //public virtual IDbSet<LocalizedCategory> LocalizedCategories { get; set; }
         //public virtual IDbSet<LocalizedAccommodation> LocalizedAccommodations { get; set; }
@@ -411,7 +411,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         private void OnTypesOfDescriptionsCreating(DbModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<TypeOfDescription>()
+            modelBuilder.Entity<NameOfDescription>()
                 .ToTable("acco.TypesOfDescriptions")
                 .HasIndex(p => p.Name).IsUnique();
         }
@@ -445,10 +445,10 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             //    .WithRequired(e => e.Accommodation)
             //    .WillCascadeOnDelete(true);
 
-            //modelBuilder.Entity<TypeOfDescription>()
+            //modelBuilder.Entity<NameOfDescription>()
             //    .ToTable("acco.TypesOfDescriptions")
             //    .HasMany(e => e.Descriptions)
-            //    .WithRequired(e => e.TypeOfDescription)
+            //    .WithRequired(e => e.NameOfDescription)
             //    .WillCascadeOnDelete(true);
 
             //modelBuilder.Entity<SupportedCulture>()
