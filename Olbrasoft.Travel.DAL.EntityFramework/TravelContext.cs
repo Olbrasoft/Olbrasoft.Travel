@@ -19,8 +19,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<PointOfInterestToPointOfInterest> PointsOfInterestToPointsOfInterest { get; set; }
         public virtual IDbSet<PointOfInterestToRegion> PointsOfInterestToRegions { get; set; }
         public virtual IDbSet<LocalizedRegion> LocalizedRegions { get; set; }
-        
-        //public virtual IDbSet<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
+        public virtual IDbSet<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
 
         //public virtual IDbSet<Airport> Airports { get; set; }
         //public virtual IDbSet<SupportedCulture> SupportedCultures { get; set; }
@@ -50,14 +49,13 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnTypesOfRegionsCreating(modelBuilder);
             OnRegionsCreating(modelBuilder);
             OnRegionsToRegionsCreating(modelBuilder);
-
             OnPointsOfInterestCreating(modelBuilder);
             OnPointsOfInterestToPointsOfInterestCreating(modelBuilder);
-
             OnPointsOfInterestToRegionsCreating(modelBuilder);
             OnLocalizedRegionsCreating(modelBuilder);
+            OnLocalizedPointsOfInterestCreating(modelBuilder);
             
-            //OnLocalizedPointsOfInterestCreating(modelBuilder);
+
             //OnAirportsCreating(modelBuilder);
             //OnChainsCreating(modelBuilder);
             //OnCategoriesCreating(modelBuilder);
@@ -321,8 +319,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
         }
-
-
+        
 
         private void OnLocalizedPointsOfInterestCreating(DbModelBuilder modelBuilder)
         {
@@ -333,15 +330,15 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .Property(e => e.DateAndTimeOfCreation)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
-            //modelBuilder.Entity<Language>()
-            //    .HasMany(language => language.LocalizedPointsOfInterest)
-            //    .WithRequired(localizedPointsOfInterest => localizedPointsOfInterest.Language)
-            //    .WillCascadeOnDelete(false);
+            modelBuilder.Entity<Language>()
+                .HasMany(language => language.LocalizedPointsOfInterest)
+                .WithRequired(localizedPointsOfInterest => localizedPointsOfInterest.Language)
+                .WillCascadeOnDelete(false);
 
-            //modelBuilder.Entity<User>()
-            //    .HasMany(user => user.CreatedLocalizedPointsOfInterest)
-            //    .WithRequired(localizedPointsOfInterest => localizedPointsOfInterest.Creator)
-            //    .WillCascadeOnDelete(false);
+            modelBuilder.Entity<User>()
+                .HasMany(user => user.CreatedLocalizedPointsOfInterest)
+                .WithRequired(localizedPointsOfInterest => localizedPointsOfInterest.Creator)
+                .WillCascadeOnDelete(false);
         }
 
        

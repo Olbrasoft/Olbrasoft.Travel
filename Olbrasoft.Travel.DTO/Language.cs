@@ -22,7 +22,7 @@ namespace Olbrasoft.Travel.DTO
 
         public virtual ICollection<LocalizedRegion> LocalizedRegions { get; set; }
        
-       // public virtual ICollection<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
+        public virtual ICollection<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
 
     }
 }

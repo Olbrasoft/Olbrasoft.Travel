@@ -33,9 +33,9 @@ namespace Olbrasoft.Travel.EAN.Import
             var continentRepository = Factory.BaseRegions<Continent>();
             ImportContinents(parentRegions, continentRepository, CreatorId);
 
-            var eanRegionIdsToContinentIds = continentRepository.EanRegionIdsToIds;
+            var eanRegionIdsToIds = continentRepository.EanRegionIdsToIds;
 
-            var localizedContinents = BuildLocalizedContinents(parentRegions, eanRegionIdsToContinentIds, CreatorId, DefaultLanguageId);
+            var localizedContinents = BuildLocalizedContinents(parentRegions, eanRegionIdsToIds, CreatorId, DefaultLanguageId);
             ImportLocalizedEntities(localizedContinents, Factory.Travel<LocalizedContinent>(), DefaultLanguageId, Logger);
 
             var subClassesRepository = Factory.BaseNames<SubClass>();
@@ -65,10 +65,16 @@ namespace Olbrasoft.Travel.EAN.Import
             ImportPointsOfInterestToRegions(parentRegions, regEanRegionIdsToIds, poiEanRegionIdsToIds,
                 Factory.Travel<PointOfInterestToRegion>(), CreatorId);
 
+            eanRegionIdsToIds = regionsRepository.EanRegionIdsToIds;
+            
+            var localizedRegions = BuildLocalizedRegions(parentRegions, eanRegionIdsToIds,CreatorId, DefaultLanguageId);
+            ImportLocalizedEntities(localizedRegions, Factory.Travel<LocalizedRegion>(),DefaultLanguageId,Logger);
 
-           ImportLocalizedRegions(parentRegions, Factory.Travel<LocalizedRegion>(), regEanRegionIdsToIds, CreatorId, DefaultLanguageId);
+            eanRegionIdsToIds = pointsOfInterestRepository.EanRegionIdsToIds;
 
-            //ImportLocalizedPointsOfInterest(parentRegionsArray, LocalizedFacade, PointsOfInterestFacade, CreatorId, DefaultLanguageId);
+            var localizedPointsOfInterest = BuildLocalizedPointsOfInterest(parentRegions, eanRegionIdsToIds, CreatorId, DefaultLanguageId);
+            ImportLocalizedEntities(localizedPointsOfInterest,Factory.Travel<LocalizedPointOfInterest>(),DefaultLanguageId,Logger);
+
         }
         
         private static void ImportLocalizedEntities<T>(IReadOnlyCollection<T> localizedEntities,
@@ -230,40 +236,7 @@ namespace Olbrasoft.Travel.EAN.Import
             repository.BulkInsert(regionsToRegions);
             WriteLog("RegionsToRegions Saved.");
         }
-
-        private void ImportLocalizedPointsOfInterest(IEnumerable<ParentRegion> parentRegions, ILocalizedFacade facade,
-            IPointsOfInterestFacade pointsOfInterestFacade, int creatorId, int defaultLanguageId)
-        {
-            WriteLog("LocalizedPoinsOfInterest Build.");
-            var localizedPoinsOfInterest = BuildLocalizedPointsOfInterest(parentRegions,
-                pointsOfInterestFacade.GetMappingEanRegionIdsToIds(true), creatorId, defaultLanguageId);
-            var count = localizedPoinsOfInterest.Length;
-            WriteLog($"LocalizedPoinsOfInterest Builded:{count}.");
-
-            if (count <= 0) return;
-            WriteLog("LocalizedPoinsOfInterest Save.");
-            facade.BulkSave(localizedPoinsOfInterest);
-            WriteLog("LocalizedPoinsOfInterest Saved.");
-        }
-
-
-        private void ImportLocalizedRegions(
-            IEnumerable<ParentRegion> parentRegions, ITravelRepository<LocalizedRegion> repository,
-            IReadOnlyDictionary<long, int> eanRegionIdsToIds,
-            int creatorId, int defaultLanguageId)
-        {
-            WriteLog("LocalizedRegions Build.");
-            var localizedRegions = BuildLocalizedRegions(parentRegions, eanRegionIdsToIds,
-                creatorId, defaultLanguageId);
-
-            var count = localizedRegions.Length;
-            WriteLog($"LocalizedRegions from Regions Builded:{count}.");
-
-            if (count <= 0) return;
-            WriteLog("LocalizedRegions Save.");
-            repository.BulkInsert(localizedRegions);
-            WriteLog("LocalizedRegions Saved.");
-        }
+        
 
         private void ImportPointsOfInterest(ParentRegion[] parentRegions, IBaseRegionsRepository<PointOfInterest> repository,
             IReadOnlyDictionary<string, int> subClasses, int creatorId)
@@ -470,7 +443,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
 
         private static LocalizedPointOfInterest[] BuildLocalizedPointsOfInterest(IEnumerable<ParentRegion> parentRegions,
-            IDictionary<long, int> mappingPointsOfInterestEanRegionIdsToIds, int creatorId, int defaultLanguageId)
+            IReadOnlyDictionary<long, int> mappingPointsOfInterestEanRegionIdsToIds, int creatorId, int defaultLanguageId)
         {
             var localizedPointsOfInterest = new Dictionary<int, LocalizedPointOfInterest>();
             foreach (var parentRegion in parentRegions)
@@ -692,7 +665,7 @@ namespace Olbrasoft.Travel.EAN.Import
             return regions.Values.ToArray();
         }
 
-        private static SubClass[] BuildSubClasses(IEnumerable<ParentRegion> entities, HashSet<string> subClasses, int creatorId)
+        private static SubClass[] BuildSubClasses(IEnumerable<ParentRegion> entities, ICollection<string> subClasses, int creatorId)
         {
             var subClassesOfRegionsToImport = new Dictionary<string, SubClass>();
 
