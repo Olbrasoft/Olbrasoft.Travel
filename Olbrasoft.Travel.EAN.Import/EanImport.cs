@@ -314,6 +314,9 @@ namespace Olbrasoft.Travel.EAN.Import
 
             container.Register(Component.For(typeof(IBaseNamesRepository<>)).ImplementedBy(typeof(BaseNamesRepository<>)));
 
+            container.Register(Component.For(typeof(IManyToManyRepository<>)).ImplementedBy(typeof(ManyToManyRepository<>)));
+
+
             return container;
         }
 
