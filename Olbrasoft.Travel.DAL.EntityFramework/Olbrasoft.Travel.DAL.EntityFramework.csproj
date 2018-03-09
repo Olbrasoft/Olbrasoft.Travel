@@ -215,6 +215,10 @@
     <Compile Include="Migrations\201803090233059_CreatePointsOfInterestToRegions.Designer.cs">
       <DependentUpon>201803090233059_CreatePointsOfInterestToRegions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803090514177_CreateLocalizedRegions.cs" />
+    <Compile Include="Migrations\201803090514177_CreateLocalizedRegions.Designer.cs">
+      <DependentUpon>201803090514177_CreateLocalizedRegions.cs</DependentUpon>
+    </Compile>
     <Compile Include="PointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToPointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToRegionsRepository.cs" />
@@ -288,6 +292,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803090233059_CreatePointsOfInterestToRegions.resx">
       <DependentUpon>201803090233059_CreatePointsOfInterestToRegions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803090514177_CreateLocalizedRegions.resx">
+      <DependentUpon>201803090514177_CreateLocalizedRegions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

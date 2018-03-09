@@ -60,13 +60,13 @@ namespace Olbrasoft.Travel.EAN.Import
             {
                 if (!eanRegionIdsToPointsOfInterestIds.TryGetValue(adeptToLocalizedRegion.Key,
                     out var pointOfInterestId)) continue;
-                adeptToLocalizedRegion.Value.PointOfInterestId = pointOfInterestId;
+                adeptToLocalizedRegion.Value.Id = pointOfInterestId;
                 adeptToLocalizedRegion.Value.LanguageId = defaultLanguageId;
                 adeptToLocalizedRegion.Value.CreatorId = creatorId;
                 adeptToLocalizedRegion.Value.DateAndTimeOfCreation = DateTime.Now;
             }
 
-            var localizedPointsOfInterest = adeptsToLocalizedPointsOfInterest.Values.Where(p => p.PointOfInterestId != 0).ToArray();
+            var localizedPointsOfInterest = adeptsToLocalizedPointsOfInterest.Values.Where(p => p.Id != 0).ToArray();
             var count = localizedPointsOfInterest.Length;
             WriteLog($"LocalizedPoinstsOfInterest Builded:{count} items to insert.");
 

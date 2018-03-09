@@ -17,10 +17,9 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<RegionToRegion> RegionsToRegions { get; set; }
         public virtual IDbSet<PointOfInterest> PointsOfInterest { get; set; }
         public virtual IDbSet<PointOfInterestToPointOfInterest> PointsOfInterestToPointsOfInterest { get; set; }
-        
         public virtual IDbSet<PointOfInterestToRegion> PointsOfInterestToRegions { get; set; }
-
-        //public virtual IDbSet<LocalizedRegion> LocalizedRegions { get; set; }
+        public virtual IDbSet<LocalizedRegion> LocalizedRegions { get; set; }
+        
         //public virtual IDbSet<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
 
         //public virtual IDbSet<Airport> Airports { get; set; }
@@ -56,7 +55,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnPointsOfInterestToPointsOfInterestCreating(modelBuilder);
 
             OnPointsOfInterestToRegionsCreating(modelBuilder);
-            //OnLocalizedRegionsCreating(modelBuilder);
+            OnLocalizedRegionsCreating(modelBuilder);
             
             //OnLocalizedPointsOfInterestCreating(modelBuilder);
             //OnAirportsCreating(modelBuilder);
@@ -72,26 +71,26 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         }
 
-        //private void OnLocalizedRegionsCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<LocalizedRegion>()
-        //        .ToTable(nameof(LocalizedRegions), "geo");
+        private void OnLocalizedRegionsCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<LocalizedRegion>()
+                .ToTable(nameof(LocalizedRegions), "geo");
 
-        //    modelBuilder.Entity<LocalizedRegion>()
-        //        .Property(e => e.DateAndTimeOfCreation)
-        //        .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+            modelBuilder.Entity<LocalizedRegion>()
+                .Property(e => e.DateAndTimeOfCreation)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
-        //    modelBuilder.Entity<Language>()
-        //        .HasMany(language => language.LocalizedRegions)
-        //        .WithRequired(localizedRegion => localizedRegion.Language)
-        //        .WillCascadeOnDelete(false);
+            modelBuilder.Entity<Language>()
+                .HasMany(language => language.LocalizedRegions)
+                .WithRequired(localizedRegion => localizedRegion.Language)
+                .WillCascadeOnDelete(false);
 
-        //    modelBuilder.Entity<User>()
-        //        .HasMany(user => user.CreatedLocalizedRegions)
-        //        .WithRequired(localizedRegion => localizedRegion.Creator)
-        //        .WillCascadeOnDelete(false);
+            modelBuilder.Entity<User>()
+                .HasMany(user => user.CreatedLocalizedRegions)
+                .WithRequired(localizedRegion => localizedRegion.Creator)
+                .WillCascadeOnDelete(false);
 
-        //}
+        }
 
         private void OnPointsOfInterestToRegionsCreating(DbModelBuilder modelBuilder)
         {

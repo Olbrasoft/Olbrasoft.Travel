@@ -85,7 +85,7 @@ namespace Olbrasoft.Travel.EAN.Import
                 if (localizedRegions.ContainsKey(regionId)) continue;
                 var localizedRegion = new LocalizedRegion()
                 {
-                    RegionId = regionId,
+                    Id = regionId,
                     Name = parentRegion.Value,
                     CreatorId = creatorId,
                     LanguageId = defaultLanguageId,

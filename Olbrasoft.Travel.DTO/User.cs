@@ -41,7 +41,7 @@ namespace Olbrasoft.Travel.DTO
 
         public virtual ICollection<PointOfInterestToRegion> CreatedPointsOfInterestToRegions { get; set; }
 
-        //public virtual ICollection<LocalizedRegion> CreatedLocalizedRegions { get; set; }
+        public virtual ICollection<LocalizedRegion> CreatedLocalizedRegions { get; set; }
 
         //public virtual ICollection<LocalizedPointOfInterest> CreatedLocalizedPointsOfInterest { get; set; }
 

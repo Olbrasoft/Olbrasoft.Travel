@@ -1,13 +1,15 @@
 namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CreateLocalizedContinents : DbMigration
+    public partial class CreateLocalizedRegions : DbMigration
     {
         public override void Up()
         {
+           
             CreateTable(
-                "geo.LocalizedContinents",
+                "geo.LocalizedRegions",
                 c => new
                     {
                         Id = c.Int(nullable: false),
@@ -18,7 +20,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
                         DateAndTimeOfCreation = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => new { t.Id, t.LanguageId })
-                .ForeignKey("geo.Continents", t => t.Id, cascadeDelete: true)
+                .ForeignKey("geo.Regions", t => t.Id, cascadeDelete: true)
                 .ForeignKey("dbo.Languages", t => t.LanguageId)
                 .ForeignKey("dbo.Users", t => t.CreatorId)
                 .Index(t => t.Id)
@@ -29,13 +31,14 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
         
         public override void Down()
         {
-            DropForeignKey("geo.LocalizedContinents", "CreatorId", "dbo.Users");
-            DropForeignKey("geo.LocalizedContinents", "LanguageId", "dbo.Languages");
-            DropForeignKey("geo.LocalizedContinents", "Id", "geo.Continents");
-            DropIndex("geo.LocalizedContinents", new[] { "CreatorId" });
-            DropIndex("geo.LocalizedContinents", new[] { "LanguageId" });
-            DropIndex("geo.LocalizedContinents", new[] { "Id" });
-            DropTable("geo.LocalizedContinents");
+            DropForeignKey("geo.LocalizedRegions", "CreatorId", "dbo.Users");
+            DropForeignKey("geo.LocalizedRegions", "LanguageId", "dbo.Languages");
+            DropForeignKey("geo.LocalizedRegions", "Id", "geo.Regions");
+            DropIndex("geo.LocalizedRegions", new[] { "CreatorId" });
+            DropIndex("geo.LocalizedRegions", new[] { "LanguageId" });
+            DropIndex("geo.LocalizedRegions", new[] { "Id" });
+            DropTable("geo.LocalizedRegions");
+           
         }
     }
 }

@@ -3,6 +3,5 @@
     public interface ILocalized
     {
         int LanguageId { get; set; }
-        Language Language { get; set; }
     }
 }

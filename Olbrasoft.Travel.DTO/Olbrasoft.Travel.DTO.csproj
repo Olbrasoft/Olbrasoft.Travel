@@ -62,6 +62,7 @@
     <Compile Include="IKeyId.cs" />
     <Compile Include="ILocalized.cs" />
     <Compile Include="Language.cs" />
+    <Compile Include="Localized.cs" />
     <Compile Include="LocalizedAccommodation.cs" />
     <Compile Include="LocalizedAirport.cs" />
     <Compile Include="LocalizedCategory.cs" />

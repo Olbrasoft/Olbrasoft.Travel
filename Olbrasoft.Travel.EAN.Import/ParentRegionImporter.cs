@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Castle.MicroKernel.ModelBuilder.Descriptors;
 using Olbrasoft.Travel.BLL;
 using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DTO;
@@ -35,7 +36,7 @@ namespace Olbrasoft.Travel.EAN.Import
             var eanRegionIdsToContinentIds = continentRepository.EanRegionIdsToIds;
 
             var localizedContinents = BuildLocalizedContinents(parentRegions, eanRegionIdsToContinentIds, CreatorId, DefaultLanguageId);
-            ImportLocalizedContinents(localizedContinents, Factory.Travel<LocalizedContinent>(), DefaultLanguageId, Logger);
+            ImportLocalizedEntities(localizedContinents, Factory.Travel<LocalizedContinent>(), DefaultLanguageId, Logger);
 
             var subClassesRepository = Factory.BaseNames<SubClass>();
             ImportSubClasses(parentRegions, subClassesRepository, CreatorId);
@@ -65,33 +66,31 @@ namespace Olbrasoft.Travel.EAN.Import
                 Factory.Travel<PointOfInterestToRegion>(), CreatorId);
 
 
-            //ImportLocalizedRegions(parentRegions, Factory.Travel<LocalizedRegion>(), regEanRegionIdsToIds, CreatorId, DefaultLanguageId);
+           ImportLocalizedRegions(parentRegions, Factory.Travel<LocalizedRegion>(), regEanRegionIdsToIds, CreatorId, DefaultLanguageId);
 
             //ImportLocalizedPointsOfInterest(parentRegionsArray, LocalizedFacade, PointsOfInterestFacade, CreatorId, DefaultLanguageId);
         }
-
-
-        private static void ImportLocalizedContinents(IReadOnlyCollection<LocalizedContinent> localizedContinents,
-            ITravelRepository<LocalizedContinent> repository, int defaultLanguageId, ILoggingImports logger)
+        
+        private static void ImportLocalizedEntities<T>(IReadOnlyCollection<T> localizedEntities,
+            ITravelRepository<T> repository, int defaultLanguageId, ILoggingImports logger) where T:Localized
         {
             if (!repository.Exists(lc => lc.LanguageId == defaultLanguageId))
             {
-                logger.Log($"Bulk Insert {localizedContinents.Count} LocalizedContinents.");
-                repository.BulkInsert(localizedContinents);
-                logger.Log($"LocalizedContinents Inserted.");
+                logger.Log($"Bulk Insert {localizedEntities.Count} {typeof(T)}.");
+                repository.BulkInsert(localizedEntities);
+                logger.Log($"{typeof(T)} Inserted.");
             }
             else
             {
                 var storedLocalizedContinentIs =
-                    new HashSet<int>(repository.FindAll(lc => lc.LanguageId == defaultLanguageId,
-                        lc => lc.ContinentId));
+                    new HashSet<int>(repository.FindAll(le => le.LanguageId == defaultLanguageId,le => le.Id));
 
-                var forInsert = new List<LocalizedContinent>();
-                var forUpdate = new List<LocalizedContinent>();
+                var forInsert = new List<T>();
+                var forUpdate = new List<T>();
 
-                foreach (var localizedContinent in localizedContinents)
+                foreach (var localizedContinent in localizedEntities)
                 {
-                    if (!storedLocalizedContinentIs.Contains(localizedContinent.ContinentId))
+                    if (!storedLocalizedContinentIs.Contains(localizedContinent.Id))
                     {
                         forInsert.Add(localizedContinent);
                     }
@@ -103,15 +102,15 @@ namespace Olbrasoft.Travel.EAN.Import
 
                 if (forInsert.Count > 0)
                 {
-                    logger.Log($"Bulk Insert {forInsert.Count} LocalizedContinents.");
+                    logger.Log($"Bulk Insert {forInsert.Count} {typeof(T)}.");
                     repository.BulkInsert(forInsert);
-                    logger.Log($"LocalizedContinents Inserted.");
+                    logger.Log($"{typeof(T)} Inserted.");
                 }
 
                 if (forUpdate.Count <= 0) return;
-                logger.Log($"Bulk Update {forUpdate.Count} LocalizedContinents.");
+                logger.Log($"Bulk Update {forUpdate.Count} {typeof(T)}.");
                 repository.BulkUpdate(forUpdate);
-                logger.Log($"LocalizedContinents Updated.");
+                logger.Log($"{typeof(T)} Updated.");
             }
         }
 
@@ -130,7 +129,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
                 var localizedContinent = new LocalizedContinent
                 {
-                    ContinentId = continentId,
+                    Id = continentId,
                     LanguageId = defaultLanguageId,
                     CreatorId = creatorId,
                     Name = parentRegion.ParentRegionName
@@ -483,7 +482,7 @@ namespace Olbrasoft.Travel.EAN.Import
                     {
                         localizedPointOfInterest = new LocalizedPointOfInterest()
                         {
-                            PointOfInterestId = pointOfInterestId,
+                            Id = pointOfInterestId,
                             Name = parentRegion.ParentRegionName,
                             CreatorId = creatorId,
                             LanguageId = defaultLanguageId,
@@ -503,7 +502,7 @@ namespace Olbrasoft.Travel.EAN.Import
                 if (localizedPointsOfInterest.ContainsKey(pointOfInterestId)) continue;
                 localizedPointOfInterest = new LocalizedPointOfInterest()
                 {
-                    PointOfInterestId = pointOfInterestId,
+                    Id = pointOfInterestId,
                     Name = parentRegion.RegionName,
                     CreatorId = creatorId,
                     LanguageId = defaultLanguageId
@@ -533,7 +532,7 @@ namespace Olbrasoft.Travel.EAN.Import
                     {
                         localizedRegion = new LocalizedRegion()
                         {
-                            RegionId = regionId,
+                            Id = regionId,
                             Name = parentRegion.ParentRegionName,
                             CreatorId = creatorId,
                             LanguageId = defaultLanguageId
@@ -552,7 +551,7 @@ namespace Olbrasoft.Travel.EAN.Import
                 if (localizedRegions.ContainsKey(regionId)) continue;
                 localizedRegion = new LocalizedRegion()
                 {
-                    RegionId = regionId,
+                    Id = regionId,
                     Name = parentRegion.RegionName,
                     CreatorId = creatorId,
                     LanguageId = defaultLanguageId
