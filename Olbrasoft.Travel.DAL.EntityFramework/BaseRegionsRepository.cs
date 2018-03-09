@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Olbrasoft.Travel.DTO;
+using SharpRepository.Repository.Caching;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
@@ -14,7 +16,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
             get
             {
-               return _eanRegionIds ?? (_eanRegionIds = GetAll(p => p.EanRegionId));
+                return _eanRegionIds ?? (_eanRegionIds = GetAll(p => p.EanRegionId));
             }
         }
 

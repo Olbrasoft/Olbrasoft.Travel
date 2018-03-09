@@ -35,6 +35,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             }
 
             return query.AsNoTracking().FirstOrDefault();
+          
         }
 
         public new void Add(T entity)

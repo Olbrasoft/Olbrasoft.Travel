@@ -162,6 +162,7 @@
     <Compile Include="LocalizedPointsOfInterestRepository.cs" />
     <Compile Include="LocalizedRegionsRepository.cs" />
     <Compile Include="LogsOfRegionsRepository.cs" />
+    <Compile Include="ManyToManyRepository.cs" />
     <Compile Include="Migrations\201802281830031_CreateInit.cs" />
     <Compile Include="Migrations\201802281830031_CreateInit.Designer.cs">
       <DependentUpon>201802281830031_CreateInit.cs</DependentUpon>

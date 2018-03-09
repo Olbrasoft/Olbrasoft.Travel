@@ -8,4 +8,6 @@ namespace Olbrasoft.Travel.DAL
         IEnumerable<string> Names { get; }
         IReadOnlyDictionary<string, int> NamesToIds { get; }
     }
+
+
 }

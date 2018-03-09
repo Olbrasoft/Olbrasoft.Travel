@@ -150,6 +150,7 @@
     <Compile Include="ILocalizedPointsOfInterestRepository.cs" />
     <Compile Include="ILocalizedRegionsRepository.cs" />
     <Compile Include="ILogsOfImportsRepository.cs" />
+    <Compile Include="IManyToManyRepository.cs" />
     <Compile Include="IPointsOfInterestRepository.cs" />
     <Compile Include="IPointsOfInterestToPointsOfInterestRepository.cs" />
     <Compile Include="IPointsOfInterestToRegionsRepository.cs" />
