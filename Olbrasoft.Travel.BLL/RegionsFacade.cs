@@ -58,7 +58,7 @@ namespace Olbrasoft.Travel.BLL
         {
             if (_regionIdsToParentRegionIds == null || clearFacadeCache)
                 _regionIdsToParentRegionIds = RegionsToRegionsRepository.GetAll()
-                    .ToDictionary(k => k.RegionId, v => v.ParentRegionId);
+                    .ToDictionary(k => k.Id, v => v.ToId);
 
             return _regionIdsToParentRegionIds;
         }

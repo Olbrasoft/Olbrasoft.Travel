@@ -7,14 +7,23 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 {
     public class BaseRegionsRepository<T> : KeyIdRepository<T>, IBaseRegionsRepository<T> where T : BaseRegion
     {
+        private IEnumerable<long> _eanRegionIds;
         private IReadOnlyDictionary<long, int> _eanRegionIdsToIds;
+
+        public IEnumerable<long> EanRegionIds
+        {
+            get
+            {
+               return _eanRegionIds ?? (_eanRegionIds = GetAll(p => p.EanRegionId));
+            }
+        }
 
         public IReadOnlyDictionary<long, int> EanRegionIdsToIds
         {
             get
             {
                 return _eanRegionIdsToIds ?? (_eanRegionIdsToIds =
-                           FindAll(p => p.EanRegionId > 0, s => new { s.EanRegionId, s.Id })
+                           FindAll(p => p.EanRegionId >= 0, s => new { s.EanRegionId, s.Id })
                                .ToDictionary(k => k.EanRegionId, v => v.Id));
             }
         }
@@ -51,6 +60,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public new void ClearCache()
         {
+            _eanRegionIds = null;
             _eanRegionIdsToIds = null;
             _minEanRegionId = long.MinValue;
             base.ClearCache();

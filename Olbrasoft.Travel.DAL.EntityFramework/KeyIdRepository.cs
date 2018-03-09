@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Olbrasoft.Travel.DTO;
 
+
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
     public class KeyIdRepository<T>:TravelRepository<T> ,IKeyIdRepository<T> where T:class, IKeyId 

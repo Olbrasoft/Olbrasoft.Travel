@@ -14,11 +14,12 @@ namespace Olbrasoft.Travel.DTO
 
         public virtual User Creator { get; set; }
 
-        //public ICollection<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
         public ICollection<PointOfInterestToPointOfInterest> ToParentPointsOfInterest { get; set; }
         public ICollection<PointOfInterestToPointOfInterest> ToChildPointsOfInterest { get; set; }
         public virtual ICollection<PointOfInterestToRegion> PointsOfInterestToRegions { get; set; }
 
+        //public ICollection<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
+        
         // public virtual ICollection<Region> Regions { get; set; }
     }
 }

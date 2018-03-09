@@ -13,7 +13,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201803080404109_CreatePointsOfInterest"; }
+            get { return "201803090220379_CreatePointsOfInterest"; }
         }
         
         string IMigrationMetadata.Source

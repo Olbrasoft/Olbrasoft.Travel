@@ -69,6 +69,7 @@
     <Compile Include="LocalizedPointOfInterest.cs" />
     <Compile Include="LocalizedRegion.cs" />
     <Compile Include="LogOfImport.cs" />
+    <Compile Include="ManyToMany.cs" />
     <Compile Include="MappedEntity.cs" />
     <Compile Include="PointOfInterest.cs" />
     <Compile Include="PointOfInterestToPointOfInterest.cs" />

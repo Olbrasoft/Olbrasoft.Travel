@@ -3,7 +3,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CreateRegionsToregions : DbMigration
+    public partial class CreateRegionsToRegions : DbMigration
     {
         public override void Up()
         {
@@ -11,17 +11,17 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
                 "geo.RegionsToRegions",
                 c => new
                     {
-                        RegionId = c.Int(nullable: false),
-                        ParentRegionId = c.Int(nullable: false),
+                        Id = c.Int(nullable: false),
+                        ToId = c.Int(nullable: false),
                         CreatorId = c.Int(nullable: false),
                         DateAndTimeOfCreation = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => new { t.RegionId, t.ParentRegionId })
-                .ForeignKey("geo.Regions", t => t.ParentRegionId)
-                .ForeignKey("geo.Regions", t => t.RegionId, cascadeDelete: true)
+                .PrimaryKey(t => new { t.Id, t.ToId })
+                .ForeignKey("geo.Regions", t => t.ToId, cascadeDelete: true)
+                .ForeignKey("geo.Regions", t => t.Id)
                 .ForeignKey("dbo.Users", t => t.CreatorId)
-                .Index(t => t.RegionId)
-                .Index(t => t.ParentRegionId)
+                .Index(t => t.Id)
+                .Index(t => t.ToId)
                 .Index(t => t.CreatorId);
             
         }
@@ -29,11 +29,11 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
         public override void Down()
         {
             DropForeignKey("geo.RegionsToRegions", "CreatorId", "dbo.Users");
-            DropForeignKey("geo.RegionsToRegions", "RegionId", "geo.Regions");
-            DropForeignKey("geo.RegionsToRegions", "ParentRegionId", "geo.Regions");
+            DropForeignKey("geo.RegionsToRegions", "Id", "geo.Regions");
+            DropForeignKey("geo.RegionsToRegions", "ToId", "geo.Regions");
             DropIndex("geo.RegionsToRegions", new[] { "CreatorId" });
-            DropIndex("geo.RegionsToRegions", new[] { "ParentRegionId" });
-            DropIndex("geo.RegionsToRegions", new[] { "RegionId" });
+            DropIndex("geo.RegionsToRegions", new[] { "ToId" });
+            DropIndex("geo.RegionsToRegions", new[] { "Id" });
             DropTable("geo.RegionsToRegions");
         }
     }

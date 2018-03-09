@@ -21,7 +21,7 @@ namespace Olbrasoft.Travel.BLL
         {
             if (_pointOfInterestIdsToRegionIds == null || clearFacadeCache)
                 _pointOfInterestIdsToRegionIds =
-                    Repository.GetAll().ToDictionary(k => k.PointOfInterestId, v => v.RegionId);
+                    Repository.GetAll().ToDictionary(k => k.Id, v => v.ToId);
 
             return _pointOfInterestIdsToRegionIds;
         }
@@ -30,7 +30,7 @@ namespace Olbrasoft.Travel.BLL
         {
             if (_regionIdsToPointOfInterestIds == null || clearFacadeCache)
                 _regionIdsToPointOfInterestIds =
-                    Repository.GetAll().ToDictionary(k => k.RegionId, v => v.PointOfInterestId);
+                    Repository.GetAll().ToDictionary(k => k.ToId, v => v.Id);
 
             return _regionIdsToPointOfInterestIds;
         }

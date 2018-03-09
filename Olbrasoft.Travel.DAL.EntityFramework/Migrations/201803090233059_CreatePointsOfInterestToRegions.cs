@@ -1,5 +1,6 @@
 namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
     
     public partial class CreatePointsOfInterestToRegions : DbMigration
@@ -10,17 +11,17 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
                 "geo.PointsOfInterestToRegions",
                 c => new
                     {
-                        PointOfInterestId = c.Int(nullable: false),
-                        RegionId = c.Int(nullable: false),
+                        Id = c.Int(nullable: false),
+                        ToId = c.Int(nullable: false),
                         CreatorId = c.Int(nullable: false),
                         DateAndTimeOfCreation = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => new { t.PointOfInterestId, t.RegionId })
-                .ForeignKey("geo.PointsOfInterest", t => t.PointOfInterestId)
-                .ForeignKey("geo.Regions", t => t.RegionId)
-                .ForeignKey("dbo.Users", t => t.CreatorId, cascadeDelete: true)
-                .Index(t => t.PointOfInterestId)
-                .Index(t => t.RegionId)
+                .PrimaryKey(t => new { t.Id, t.ToId })
+                .ForeignKey("geo.PointsOfInterest", t => t.Id)
+                .ForeignKey("geo.Regions", t => t.ToId, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.CreatorId)
+                .Index(t => t.Id)
+                .Index(t => t.ToId)
                 .Index(t => t.CreatorId);
             
         }
@@ -28,11 +29,11 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
         public override void Down()
         {
             DropForeignKey("geo.PointsOfInterestToRegions", "CreatorId", "dbo.Users");
-            DropForeignKey("geo.PointsOfInterestToRegions", "RegionId", "geo.Regions");
-            DropForeignKey("geo.PointsOfInterestToRegions", "PointOfInterestId", "geo.PointsOfInterest");
+            DropForeignKey("geo.PointsOfInterestToRegions", "ToId", "geo.Regions");
+            DropForeignKey("geo.PointsOfInterestToRegions", "Id", "geo.PointsOfInterest");
             DropIndex("geo.PointsOfInterestToRegions", new[] { "CreatorId" });
-            DropIndex("geo.PointsOfInterestToRegions", new[] { "RegionId" });
-            DropIndex("geo.PointsOfInterestToRegions", new[] { "PointOfInterestId" });
+            DropIndex("geo.PointsOfInterestToRegions", new[] { "ToId" });
+            DropIndex("geo.PointsOfInterestToRegions", new[] { "Id" });
             DropTable("geo.PointsOfInterestToRegions");
         }
     }

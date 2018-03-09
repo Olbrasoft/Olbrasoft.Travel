@@ -37,13 +37,12 @@ namespace Olbrasoft.Travel.EAN.Import
             var localizedContinents = BuildLocalizedContinents(parentRegions, eanRegionIdsToContinentIds, CreatorId, DefaultLanguageId);
             ImportLocalizedContinents(localizedContinents, Factory.Travel<LocalizedContinent>(), DefaultLanguageId, Logger);
 
-            var subClassesRepository = Factory.Travel<SubClass>();
+            var subClassesRepository = Factory.BaseNames<SubClass>();
             ImportSubClasses(parentRegions, subClassesRepository, CreatorId);
 
-            var subClasses = subClassesRepository.GetAll(sc => new { sc.Name, sc.Id }).ToDictionary(k => k.Name, v => v.Id);
+            var subClasses = subClassesRepository.NamesToIds;
 
-            var typesOfRegions = Factory.Travel<TypeOfRegion>().GetAll(tor => new { tor.Name, tor.Id })
-                .ToDictionary(k => k.Name, v => v.Id);
+            var typesOfRegions = Factory.BaseNames<TypeOfRegion>().NamesToIds;
 
             var regionsRepository = Factory.BaseRegions<Region>();
 
@@ -149,11 +148,11 @@ namespace Olbrasoft.Travel.EAN.Import
 
 
         private void ImportContinents(IEnumerable<ParentRegion> parentRegions,
-            ITravelRepository<Continent> continentsRepository,
+            IBaseRegionsRepository<Continent> continentsRepository,
             int creatorId)
         {
             const string s = "Continent";
-            var regionIds = new HashSet<long>(continentsRepository.FindAll(c => c.EanRegionId > 0, c => c.EanRegionId));
+            var regionIds = new HashSet<long>(continentsRepository.EanRegionIds);
 
             var continents = new Dictionary<long, Continent>();
 
@@ -189,7 +188,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             var pointsOfInterestToRegions = BuildPointsOfInterestToRegions(parentRegions,
                 regEanRegionIdsToIds, poiEanRegionIdsToIds,
-                repository.GetAll(ptr => new { ptr.PointOfInterestId, ptr.RegionId })
+                repository.GetAll(ptr => new { PointOfInterestId = ptr.Id, RegionId = ptr.ToId })
                     .ToDictionary(k => k.PointOfInterestId, v => v.RegionId), creatorId);
 
             var count = pointsOfInterestToRegions.Length;
@@ -208,7 +207,7 @@ namespace Olbrasoft.Travel.EAN.Import
             WriteLog("PointsOfInterestToPointsOfInterest Build.");
             var pointsOfInterestToPointsOfInterest = BuildPointsOfInterestToPointsOfInterest(parentRegions,
                 poiEanRegionIdsToIds,
-                repository.GetAll(poi => new { poi.PointOfInterestId, poi.ParentPointOfInterestId })
+                repository.GetAll(poi => new { PointOfInterestId = poi.Id, ParentPointOfInterestId = poi.ToId })
                     .ToDictionary(k => k.PointOfInterestId, v => v.ParentPointOfInterestId), creatorId);
 
             var count = pointsOfInterestToPointsOfInterest.Length;
@@ -224,7 +223,7 @@ namespace Olbrasoft.Travel.EAN.Import
         {
             WriteLog("RegionsToRegions Build.");
             var regionsToRegions = BuildRegionsToRegions(parentRegions, eanRegionIdsToIds,
-                repository.GetAll(rtr => new { rtr.RegionId, rtr.ParentRegionId }).ToDictionary(k => k.RegionId, v => v.ParentRegionId), creatorId);
+                repository.GetAll(rtr => new { rtr.Id, rtr.ToId }).ToDictionary(k => k.Id, v => v.ToId), creatorId);
             var count = regionsToRegions.Length;
             WriteLog($"RegionsToRegions Builded:{count}.");
 
@@ -325,8 +324,8 @@ namespace Olbrasoft.Travel.EAN.Import
 
                 var regionToRegion = new PointOfInterestToRegion
                 {
-                    RegionId = regionId,
-                    PointOfInterestId = pointOfInterestId,
+                    ToId = regionId,
+                    Id = pointOfInterestId,
                     CreatorId = creatorId
                 };
 
@@ -368,8 +367,8 @@ namespace Olbrasoft.Travel.EAN.Import
 
                 var pointOfInterestToPointOfInterest = new PointOfInterestToPointOfInterest()
                 {
-                    PointOfInterestId = pointOfInterestId,
-                    ParentPointOfInterestId = parentPointOfInterestId,
+                    Id = pointOfInterestId,
+                    ToId = parentPointOfInterestId,
                     CreatorId = creatorId
 
                 };
@@ -418,10 +417,10 @@ namespace Olbrasoft.Travel.EAN.Import
         }
 
 
-        private void ImportSubClasses(IEnumerable<ParentRegion> parentRegions, ITravelRepository<SubClass> repository, int creatorId)
+        private void ImportSubClasses(IEnumerable<ParentRegion> parentRegions, IBaseNamesRepository<SubClass> repository, int creatorId)
         {
             WriteLog("SubClasses Build.");
-            var storedSubClasses = new HashSet<string>(repository.GetAll(subClass => subClass.Name));
+            var storedSubClasses =  new HashSet<string>(repository.Names);
             var subClasses = BuildSubClasses(parentRegions, storedSubClasses, creatorId);
             var count = subClasses.Length;
             WriteLog($"SubClasses Builded:{count}.");
@@ -456,8 +455,8 @@ namespace Olbrasoft.Travel.EAN.Import
 
                 var regionToRegion = new RegionToRegion()
                 {
-                    RegionId = regionId,
-                    ParentRegionId = parentRegionId,
+                    Id = regionId,
+                    ToId = parentRegionId,
                     CreatorId = creatorId
 
                 };
@@ -707,7 +706,11 @@ namespace Olbrasoft.Travel.EAN.Import
                 {
                     subClassesOfRegionsToImport.Add(
                         parentRegion.SubClass,
-                        new SubClass { Name = parentRegion.SubClass.ToLower(), CreatorId = creatorId }
+                        new SubClass
+                        {
+                            Name = parentRegion.SubClass.ToLower(),
+                            CreatorId = creatorId
+                        }
                     );
                 }
             }

@@ -8,6 +8,15 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
     public class BaseNamesRepository<T>: KeyIdRepository<T>, IBaseNamesRepository<T> where T : BaseName
     {
         private IReadOnlyDictionary<string, int> _namesToIds;
+        private IEnumerable<string> _names;
+
+        public IEnumerable<string> Names
+        {
+            get
+            {
+               return _names ?? (_names = GetAll(p => p.Name));
+            }
+        }
 
         public IReadOnlyDictionary<string, int> NamesToIds
         {
@@ -30,6 +39,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public new void ClearCache()
         {
+            _names = null;
             _namesToIds = null;
             base.ClearCache();
         }

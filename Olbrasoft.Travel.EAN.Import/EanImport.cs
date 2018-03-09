@@ -100,7 +100,11 @@ namespace Olbrasoft.Travel.EAN.Import
 
             //Logger.Log(container.Resolve<ITravelRepository<Continent>>().Count().ToString());
             //Logger.Log(container.Resolve<IFactoryOfRepositories>().Travel<Continent>().Count().ToString());
-            
+
+
+            //var repository = container.Resolve<ITravelRepository<RegionToRegion>>();
+            //Console.ReadLine();
+
             var parentRegionImporter = container.Resolve<IImport>(nameof(ParentRegionImporter));
             parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
 
@@ -305,7 +309,10 @@ namespace Olbrasoft.Travel.EAN.Import
             container.Register(Component.For<IParserFactory>().ImplementedBy<ParserFactory>());
             
             container.Register(Component.For(typeof(ITravelRepository<>)).ImplementedBy(typeof(TravelRepository<>)));
+
             container.Register(Component.For(typeof(IBaseRegionsRepository<>)).ImplementedBy(typeof(BaseRegionsRepository<>)));
+
+            container.Register(Component.For(typeof(IBaseNamesRepository<>)).ImplementedBy(typeof(BaseNamesRepository<>)));
 
             return container;
         }

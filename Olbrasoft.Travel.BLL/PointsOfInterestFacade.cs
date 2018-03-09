@@ -41,7 +41,7 @@ namespace Olbrasoft.Travel.BLL
         {
             if (_pointOfInterestIdsToParentPointOfInterestIds == null || clearFacadeCache)
                 _pointOfInterestIdsToParentPointOfInterestIds = PointsOfInterestToPointsOfInterestRepository.GetAll()
-                    .ToDictionary(k => k.PointOfInterestId, v => v.ParentPointOfInterestId);
+                    .ToDictionary(k => k.Id, v => v.ToId);
 
             return _pointOfInterestIdsToParentPointOfInterestIds;
         }

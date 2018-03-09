@@ -7,13 +7,13 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class CreatePointsOfInterestToRegions : IMigrationMetadata
+    public sealed partial class CreateRegionsToRegions : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CreatePointsOfInterestToRegions));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateRegionsToRegions));
         
         string IMigrationMetadata.Id
         {
-            get { return "201803080546211_CreatePointsOfInterestToRegions"; }
+            get { return "201803090134332_CreateRegionsToRegions"; }
         }
         
         string IMigrationMetadata.Source

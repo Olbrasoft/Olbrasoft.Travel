@@ -5,6 +5,7 @@ namespace Olbrasoft.Travel.DAL
 {
     public interface IBaseNamesRepository<T> : IKeyIdRepository<T> where T : BaseName
     {
-        IReadOnlyDictionary<string,int> NamesToIds { get; }
+        IEnumerable<string> Names { get; }
+        IReadOnlyDictionary<string, int> NamesToIds { get; }
     }
 }

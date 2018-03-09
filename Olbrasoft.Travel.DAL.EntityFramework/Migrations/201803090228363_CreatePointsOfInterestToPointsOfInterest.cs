@@ -11,17 +11,17 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
                 "geo.PointsOfInterestToPointsOfInterest",
                 c => new
                     {
-                        PointOfInterestId = c.Int(nullable: false),
-                        ParentPointOfInterestId = c.Int(nullable: false),
+                        Id = c.Int(nullable: false),
+                        ToId = c.Int(nullable: false),
                         CreatorId = c.Int(nullable: false),
                         DateAndTimeOfCreation = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => new { t.PointOfInterestId, t.ParentPointOfInterestId })
-                .ForeignKey("geo.PointsOfInterest", t => t.ParentPointOfInterestId)
-                .ForeignKey("geo.PointsOfInterest", t => t.PointOfInterestId, cascadeDelete: true)
+                .PrimaryKey(t => new { t.Id, t.ToId })
+                .ForeignKey("geo.PointsOfInterest", t => t.ToId, cascadeDelete: true)
+                .ForeignKey("geo.PointsOfInterest", t => t.Id)
                 .ForeignKey("dbo.Users", t => t.CreatorId)
-                .Index(t => t.PointOfInterestId)
-                .Index(t => t.ParentPointOfInterestId)
+                .Index(t => t.Id)
+                .Index(t => t.ToId)
                 .Index(t => t.CreatorId);
             
         }
@@ -29,11 +29,11 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
         public override void Down()
         {
             DropForeignKey("geo.PointsOfInterestToPointsOfInterest", "CreatorId", "dbo.Users");
-            DropForeignKey("geo.PointsOfInterestToPointsOfInterest", "PointOfInterestId", "geo.PointsOfInterest");
-            DropForeignKey("geo.PointsOfInterestToPointsOfInterest", "ParentPointOfInterestId", "geo.PointsOfInterest");
+            DropForeignKey("geo.PointsOfInterestToPointsOfInterest", "Id", "geo.PointsOfInterest");
+            DropForeignKey("geo.PointsOfInterestToPointsOfInterest", "ToId", "geo.PointsOfInterest");
             DropIndex("geo.PointsOfInterestToPointsOfInterest", new[] { "CreatorId" });
-            DropIndex("geo.PointsOfInterestToPointsOfInterest", new[] { "ParentPointOfInterestId" });
-            DropIndex("geo.PointsOfInterestToPointsOfInterest", new[] { "PointOfInterestId" });
+            DropIndex("geo.PointsOfInterestToPointsOfInterest", new[] { "ToId" });
+            DropIndex("geo.PointsOfInterestToPointsOfInterest", new[] { "Id" });
             DropTable("geo.PointsOfInterestToPointsOfInterest");
         }
     }
