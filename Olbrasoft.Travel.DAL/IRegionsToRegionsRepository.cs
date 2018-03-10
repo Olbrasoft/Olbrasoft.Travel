@@ -2,7 +2,7 @@
 
 namespace Olbrasoft.Travel.DAL
 {
-    public interface IRegionsToRegionsRepository : ITravelRepository<RegionToRegion>
+    public interface IRegionsToRegionsRepository : IManyToManyRepository<RegionToRegion>
     {
 
     }

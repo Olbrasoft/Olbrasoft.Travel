@@ -7,7 +7,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL
 {
-    public interface ILocalizedRegionsRepository : ITravelRepository<LocalizedRegion>
+    public interface ILocalizedRegionsRepository : ILocalizedRepository<LocalizedRegion>
     {
 
 

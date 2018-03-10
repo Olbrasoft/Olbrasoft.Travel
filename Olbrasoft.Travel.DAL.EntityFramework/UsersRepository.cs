@@ -7,10 +7,15 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class UsersRepository : TravelRepository<User>,IUsersRepository
+    public class UsersRepository : BaseRepository<User>,IUsersRepository
     {
-        public UsersRepository(TravelContext travelContext) : base(travelContext)
+        public UsersRepository(TravelContext context) : base(context)
         {
+        }
+
+        public override void ClearCache()
+        {
+           
         }
     }
 }

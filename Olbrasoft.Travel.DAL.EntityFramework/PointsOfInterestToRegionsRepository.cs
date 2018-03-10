@@ -2,8 +2,8 @@
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class PointsOfInterestToRegionsRepository : TravelRepository<PointOfInterestToRegion>, IPointsOfInterestToRegionsRepository {
-        public PointsOfInterestToRegionsRepository(TravelContext travelContext) : base(travelContext)
+    public class PointsOfInterestToRegionsRepository : ManyToManyRepository<PointOfInterestToRegion>, IPointsOfInterestToRegionsRepository {
+        public PointsOfInterestToRegionsRepository(TravelContext context) : base(context)
         {
 
         }

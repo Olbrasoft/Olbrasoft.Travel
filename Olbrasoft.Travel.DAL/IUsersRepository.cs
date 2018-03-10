@@ -2,7 +2,7 @@
 
 namespace Olbrasoft.Travel.DAL
 {
-    public interface IUsersRepository:ITravelRepository<User>
+    public interface IUsersRepository:IBaseRepository<User>
     {
     }
 }

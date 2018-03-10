@@ -2,9 +2,9 @@
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class ContinentsRepository:TravelRepository<Continent>,IContinentsRepository
+    public class ContinentsRepository:BaseRegionsRepository<Continent>,IContinentsRepository
     {
-        public ContinentsRepository(TravelContext travelContext) : base(travelContext)
+        public ContinentsRepository(TravelContext context) : base(context)
         {
             
 

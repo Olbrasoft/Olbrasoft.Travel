@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Olbrasoft.Travel.BLL;
-using Olbrasoft.Travel.DTO;
+﻿using Olbrasoft.Travel.BLL;
+using Olbrasoft.Travel.DAL;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
@@ -16,17 +11,18 @@ namespace Olbrasoft.Travel.EAN.Import
         public int CreatorId { get; set; }
         public int DefaultLanguageId { get; set; }
         public IImportProvider Provider { get; set; }
-        public ILocalizedFacade LocalizedFacade { get; set; }
+        public readonly IFactoryOfRepositories FactoryOfRepositories;
 
 
-        public ImportOption(IParserFactory parserFactory, ILocalizedFacade localizedFacade , int creatorId, int defaultLanguageId, ILoggingImports logger , int importBatchSize = 90000)
+        public ImportOption(IParserFactory parserFactory,  int creatorId, int defaultLanguageId, ILoggingImports logger , IFactoryOfRepositories factoryOfRepositories, int importBatchSize = 90000)
         {
             Logger = logger;
+            FactoryOfRepositories = factoryOfRepositories;
             ImportBatchSize = importBatchSize;
             ParserFactory = parserFactory;
             CreatorId = creatorId;
             DefaultLanguageId = defaultLanguageId;
-            LocalizedFacade = localizedFacade;
+            
         }
 
     }

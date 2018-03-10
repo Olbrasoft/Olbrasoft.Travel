@@ -2,9 +2,14 @@
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class LanguagesRepository : TravelRepository<Language>, ILanguagesRepository {
-        public LanguagesRepository(TravelContext travelContext) : base(travelContext)
+    public class LanguagesRepository : BaseRepository<Language>, ILanguagesRepository {
+        public LanguagesRepository(TravelContext context) : base(context)
         {
+        }
+
+        public override void ClearCache()
+        {
+           
         }
     }
 }

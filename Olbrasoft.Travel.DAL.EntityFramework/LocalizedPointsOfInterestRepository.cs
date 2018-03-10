@@ -2,9 +2,9 @@
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class LocalizedPointsOfInterestRepository : TravelRepository<LocalizedPointOfInterest>, ILocalizedPointsOfInterestRepository
+    public class LocalizedPointsOfInterestRepository : LocalizedRepository<LocalizedPointOfInterest>, ILocalizedPointsOfInterestRepository
     {
-        public LocalizedPointsOfInterestRepository(TravelContext travelContext) : base(travelContext)
+        public LocalizedPointsOfInterestRepository(TravelContext context) : base(context)
         {
         }
     }

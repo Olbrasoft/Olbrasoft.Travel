@@ -6,5 +6,6 @@ namespace Olbrasoft.Travel.DTO
     {
         public virtual User Creator { get; set; }
         public virtual ICollection<LocalizedContinent> LocalizedContinents { get; set; }
+        public virtual ICollection<Country> Countries { get; set; }
     }
 }

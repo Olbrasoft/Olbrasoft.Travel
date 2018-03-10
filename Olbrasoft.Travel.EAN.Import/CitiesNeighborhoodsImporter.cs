@@ -10,18 +10,18 @@ namespace Olbrasoft.Travel.EAN.Import
     abstract class CitiesNeighborhoodsImporter<T> : Importer<T> where T : CityNeighborhood, new()
     {
 
-        protected new readonly ParentRegionImportOption Option;
+        protected new readonly ImportOption Option;
         protected IRegionsFacade RegionsFacade;
         protected ISubClassesFacade SubClassesFacade;
         protected int TypeOfRegionId;
         protected int SubClassId;
 
         
-        protected CitiesNeighborhoodsImporter(ParentRegionImportOption option) : base(option)
+        protected CitiesNeighborhoodsImporter(ImportOption option) : base(option)
         {
             Option = option;
-            RegionsFacade = Option.RegionsFacade;
-            SubClassesFacade = Option.SubClassesFacade;
+           // RegionsFacade = Option.RegionsFacade;
+           // SubClassesFacade = Option.SubClassesFacade;
             
         }
 
@@ -58,7 +58,7 @@ namespace Olbrasoft.Travel.EAN.Import
             if (count > 0)
             {
                 WriteLog("Regions Save.");
-                RegionsFacade.BulkSave(regions);
+               // RegionsFacade.BulkSave(regions);
                 WriteLog("Regions Saved.");
             }
 
@@ -71,7 +71,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             if (count <= 0) return;
             WriteLog("LocalizedRegions Save.");
-            Option.LocalizedFacade.BulkSave(localizedRegions);
+          //  Option.LocalizedFacade.BulkSave(localizedRegions);
             WriteLog("LocalizedRegions Saved.");
         }
 

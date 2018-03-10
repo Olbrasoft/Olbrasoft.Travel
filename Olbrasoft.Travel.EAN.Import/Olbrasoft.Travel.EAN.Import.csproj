@@ -171,7 +171,6 @@
     <Compile Include="FileImportProvider.cs" />
     <Compile Include="IImportProvider.cs" />
     <Compile Include="NeighborhoodsImporter.cs" />
-    <Compile Include="ParentRegionImportOption.cs" />
     <Compile Include="ConsoleLogger.cs" />
     <Compile Include="IImport.cs" />
     <Compile Include="ILogger.cs" />

@@ -2,6 +2,6 @@
 
 namespace Olbrasoft.Travel.DAL
 {
-    public interface ILocalizedPointsOfInterestRepository : ITravelRepository<LocalizedPointOfInterest>
+    public interface ILocalizedPointsOfInterestRepository : ILocalizedRepository<LocalizedPointOfInterest>
     { }
 }

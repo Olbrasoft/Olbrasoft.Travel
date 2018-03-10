@@ -20,7 +20,8 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<PointOfInterestToRegion> PointsOfInterestToRegions { get; set; }
         public virtual IDbSet<LocalizedRegion> LocalizedRegions { get; set; }
         public virtual IDbSet<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
-
+        public virtual IDbSet<Country> Countries { get; set; }
+        
         //public virtual IDbSet<Airport> Airports { get; set; }
         //public virtual IDbSet<SupportedCulture> SupportedCultures { get; set; }
         //public virtual IDbSet<Category> Categories { get; set; }
@@ -30,7 +31,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         //public virtual IDbSet<Description> Descriptions { get; set; }
         //public virtual IDbSet<LocalizedCategory> LocalizedCategories { get; set; }
         //public virtual IDbSet<LocalizedAccommodation> LocalizedAccommodations { get; set; }
-        //public virtual IDbSet<Country> Countries { get; set; }
 
 
         public TravelContext() : base("name=Travel")
@@ -54,6 +54,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnPointsOfInterestToRegionsCreating(modelBuilder);
             OnLocalizedRegionsCreating(modelBuilder);
             OnLocalizedPointsOfInterestCreating(modelBuilder);
+            OnCountriesCreating(modelBuilder);
             
 
             //OnAirportsCreating(modelBuilder);
@@ -65,8 +66,29 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             //OnDescriptionsCreating(modelBuilder);
             //OnSupportedCulturesCreating(modelBuilder);
             //OnLocalizedAccommodationsCreating(modelBuilder);
-            //OnCountriesCreating(modelBuilder);
 
+        }
+
+        private void OnCountriesCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Country>()
+                .ToTable(nameof(Countries), "geo");
+
+            //modelBuilder.Entity<Country>()
+            //     .Property(e => e.ToId)
+            //    .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+            modelBuilder.Entity<Country>()
+                .HasIndex(p => p.Code).IsUnique();
+
+            modelBuilder.Entity<Country>()
+                .Property(e => e.DateAndTimeOfCreation)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+
+            modelBuilder.Entity<User>()
+                .HasMany(user => user.CreatedCountries)
+                .WithRequired(country => country.Creator)
+                .WillCascadeOnDelete(false);
         }
 
         private void OnLocalizedRegionsCreating(DbModelBuilder modelBuilder)
@@ -367,18 +389,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
         }
 
-        private void OnCountriesCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Country>()
-                .ToTable("Countries", "geo");
-
-            //modelBuilder.Entity<Country>()
-            //     .Property(e => e.ToId)
-            //    .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
-            modelBuilder.Entity<Country>()
-                .HasIndex(p => p.Code).IsUnique();
-        }
+       
 
 
 

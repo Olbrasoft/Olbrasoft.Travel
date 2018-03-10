@@ -2,7 +2,7 @@
 
 namespace Olbrasoft.Travel.DAL
 {
-    public interface ISubClassesRepository : ITravelRepository<SubClass>
+    public interface ISubClassesRepository : IBaseRepository<SubClass>
     {
 
     }

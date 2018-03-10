@@ -2,9 +2,9 @@
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class PointsOfInterestToPointsOfInterestRepository : TravelRepository<PointOfInterestToPointOfInterest>, IPointsOfInterestToPointsOfInterestRepository
+    public class PointsOfInterestToPointsOfInterestRepository :ManyToManyRepository<PointOfInterestToPointOfInterest>, IPointsOfInterestToPointsOfInterestRepository
     {
-        public PointsOfInterestToPointsOfInterestRepository(TravelContext travelContext) : base(travelContext)
+        public PointsOfInterestToPointsOfInterestRepository(TravelContext context) : base(context)
         {
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Olbrasoft.Travel.DAL
 {
-    public interface IRegionsRepository : IKeyIdRepository<Region>
+    public interface IRegionsRepository : IBaseRegionsRepository<Region>
     {
 
     }

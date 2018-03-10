@@ -2,7 +2,7 @@
 
 namespace Olbrasoft.Travel.DAL
 {
-    public interface ILanguagesRepository : ITravelRepository<Language>
+    public interface ILanguagesRepository : IBaseRepository<Language>
     {
 
     }

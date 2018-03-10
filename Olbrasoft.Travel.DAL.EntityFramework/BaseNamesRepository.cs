@@ -5,7 +5,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class BaseNamesRepository<T>: KeyIdRepository<T>, IBaseNamesRepository<T> where T : BaseName
+    public class BaseNamesRepository<T>: BaseRepository<T>, IBaseNamesRepository<T> where T : BaseName
     {
         private IReadOnlyDictionary<string, int> _namesToIds;
         private IEnumerable<string> _names;
@@ -27,21 +27,16 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             }
         }
 
-        public BaseNamesRepository(TravelContext travelContext) : base(travelContext)
+        public BaseNamesRepository(TravelContext context) : base(context)
         {
-            OnSaved += ClearCache;
+            
         }
+        
 
-        private void ClearCache(object sender, EventArgs eventArgs)
-        {
-            ClearCache();
-        }
-
-        public new void ClearCache()
+        public override void ClearCache()
         {
             _names = null;
             _namesToIds = null;
-            base.ClearCache();
         }
 
 

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class Localized : ILocalized
+    public class BaseLocalized : ILocalized
     {
         [Key, Column(Order = 1)]
         public int Id { get; set; }

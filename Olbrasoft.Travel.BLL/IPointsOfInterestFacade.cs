@@ -14,12 +14,8 @@ namespace Olbrasoft.Travel.BLL
 
         IDictionary<int, int> PointOfInterestIdsToParentPointOfInterestIds(bool clearFacadeCache = false);
 
-        IDictionary<int, int> PointOfInterestIdsToRegionIds(bool clearFacadeCache = false);
+       
 
-        void BulkSave(IEnumerable<PointOfInterest> pointsOfInterest);
-
-        void BulkSave(PointOfInterestToPointOfInterest[] pointsOfInterestToPointsOfInterest);
-
-        void BulkSave(PointOfInterestToRegion[] pointsOfInterestToRegions);
+     
     }
 }

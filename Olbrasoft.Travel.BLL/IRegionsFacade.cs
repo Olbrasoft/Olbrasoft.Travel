@@ -13,7 +13,7 @@ namespace Olbrasoft.Travel.BLL
 
         IDictionary<int, int> RegionIdsToParentRegionIds(bool clearFacadeCache = false);
 
-        IDictionary<int, int> RegionIdsToPointOfInterestIds(bool clearFacadeCache = false);
+
 
         bool ExistsTypesOfRegions(Expression<Func<TypeOfRegion, bool>> predicate = null);
 
@@ -23,12 +23,7 @@ namespace Olbrasoft.Travel.BLL
         
         //IDictionary<long, BaseRegion> GetMappingEanRegionIdsToRegions(bool clearFacadeCache=false);
 
-        void BulkSave(IEnumerable<Region> regions);
-
-        void Save(HashSet<TypeOfRegion> typesOfRegions);
-
        
-        void BulkSave(PointOfInterestToRegion[] pointsOfInterestToRegions);
 
     }
 }

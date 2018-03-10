@@ -62,42 +62,42 @@ namespace Olbrasoft.Travel.BLL
             return true;
         }
 
-        public void BulkSave(LocalizedRegion[] localizedRegions)
-        {
-            if (TryGetOneLanguageId(localizedRegions, out var languageId))
-            {
-                if (!Exists<LocalizedRegion>(languageId))
-                {
-                    LocalizedRegionsRepository.BulkInsert(localizedRegions);
-                }
-                else
-                {
-                    LocalizedRegionsRepository.BulkInsertOrUpdate(localizedRegions);
-                }
-            }
-            else
-            {
-                LocalizedRegionsRepository.BulkInsertOrUpdate(localizedRegions);
-            }
-        }
+        //public void BulkSave(LocalizedRegion[] localizedRegions)
+        //{
+        //    if (TryGetOneLanguageId(localizedRegions, out var languageId))
+        //    {
+        //        if (!Exists<LocalizedRegion>(languageId))
+        //        {
+        //            LocalizedRegionsRepository.BulkInsert(localizedRegions);
+        //        }
+        //        else
+        //        {
+        //            LocalizedRegionsRepository.BulkInsertOrUpdate(localizedRegions);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        LocalizedRegionsRepository.BulkInsertOrUpdate(localizedRegions);
+        //    }
+        //}
 
-        public void BulkSave(LocalizedPointOfInterest[] localizedPointsOfInterest)
-        {
-            if (TryGetOneLanguageId(localizedPointsOfInterest, out var languageId))
-            {
-                if (!Exists<LocalizedPointOfInterest>(languageId))
-                {
-                    LocalizedPointsOfInterestRepository.BulkInsert(localizedPointsOfInterest);
-                }
-                else
-                {
-                    LocalizedPointsOfInterestRepository.BulkInsertOrUpdate(localizedPointsOfInterest);
-                }
-            }
-            else
-            {
-                LocalizedPointsOfInterestRepository.BulkInsertOrUpdate(localizedPointsOfInterest);
-            }
-        }
+        //public void BulkSave(LocalizedPointOfInterest[] localizedPointsOfInterest)
+        //{
+        //    if (TryGetOneLanguageId(localizedPointsOfInterest, out var languageId))
+        //    {
+        //        if (!Exists<LocalizedPointOfInterest>(languageId))
+        //        {
+        //            LocalizedPointsOfInterestRepository.BulkInsert(localizedPointsOfInterest);
+        //        }
+        //        else
+        //        {
+        //            LocalizedPointsOfInterestRepository.BulkInsertOrUpdate(localizedPointsOfInterest);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        LocalizedPointsOfInterestRepository.BulkInsertOrUpdate(localizedPointsOfInterest);
+        //    }
+        //}
     }
 }

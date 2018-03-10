@@ -6,9 +6,9 @@ namespace Olbrasoft.Travel.BLL
 {
     public class TravelFacade<T> : ITravelFacade<T> where T : class
     {
-        protected readonly ITravelRepository<T> Repository;
+        protected readonly IBaseRepository<T> Repository;
 
-        public TravelFacade(ITravelRepository<T> repository)
+        public TravelFacade(IBaseRepository<T> repository)
         {
             Repository = repository;
         }

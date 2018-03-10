@@ -141,6 +141,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirportsFacade.cs" />
     <Compile Include="ContinentsFacade.cs" />
     <Compile Include="IAirportsFacade.cs" />
     <Compile Include="IContinentsFacade.cs" />
@@ -149,7 +150,6 @@
     <Compile Include="ILoggingImports.cs" />
     <Compile Include="ImportsLogger.cs" />
     <Compile Include="IPointsOfInterestFacade.cs" />
-    <Compile Include="IPointsOfInterestToRegionsFacade.cs" />
     <Compile Include="IRegionsFacade.cs" />
     <Compile Include="ISubClassesFacade.cs" />
     <Compile Include="ITravelFacade.cs" />
@@ -158,7 +158,6 @@
     <Compile Include="LanguagesFacade.cs" />
     <Compile Include="LocalizedFacade.cs" />
     <Compile Include="PointsOfInterestFacade.cs" />
-    <Compile Include="PointsOfInterestToRegionsFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionsFacade.cs" />
     <Compile Include="SubClassesFacade.cs" />

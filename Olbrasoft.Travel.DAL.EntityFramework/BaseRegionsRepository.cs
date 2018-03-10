@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Olbrasoft.Travel.DTO;
-using SharpRepository.Repository.Caching;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class BaseRegionsRepository<T> : KeyIdRepository<T>, IBaseRegionsRepository<T> where T : BaseRegion
+    public class BaseRegionsRepository<T> : BaseRepository<T>, IBaseRegionsRepository<T> where T : BaseRegion
     {
         private IEnumerable<long> _eanRegionIds;
         private IReadOnlyDictionary<long, int> _eanRegionIdsToIds;
@@ -50,23 +47,18 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         }
 
-        public BaseRegionsRepository(TravelContext travelContext) : base(travelContext)
+        public BaseRegionsRepository(TravelContext context) : base(context)
         {
-            OnSaved += ClearCache;
+            
         }
 
-        private void ClearCache(object sender, EventArgs eventArgs)
-        {
-            ClearCache();
-        }
-
-        public new void ClearCache()
+       
+        public override void ClearCache()
         {
             _eanRegionIds = null;
             _eanRegionIdsToIds = null;
             _minEanRegionId = long.MinValue;
-            base.ClearCache();
-
+           
         }
 
 

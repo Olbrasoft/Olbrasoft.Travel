@@ -72,8 +72,8 @@ namespace Olbrasoft.Travel.EAN.Import
             
            
             container.Register(
-                Component.For<ParentRegionImportOption>()
-                .ImplementedBy<ParentRegionImportOption>()
+                Component.For<ImportOption>()
+                .ImplementedBy<ImportOption>()
                 .DependsOn(Dependency.OnValue("creatorId", user.Id),Dependency.OnValue("defaultLanguageId", defaultLanguage.Id))
             );
             
@@ -98,11 +98,11 @@ namespace Olbrasoft.Travel.EAN.Import
             container.AddFacility<TypedFactoryFacility>();
             container.Register(Component.For<IFactoryOfRepositories>().AsFactory());
 
-            //Logger.Log(container.Resolve<ITravelRepository<Continent>>().Count().ToString());
+            //Logger.Log(container.Resolve<IBaseRepository<Continent>>().Count().ToString());
             //Logger.Log(container.Resolve<IFactoryOfRepositories>().Travel<Continent>().Count().ToString());
 
 
-            //var repository = container.Resolve<ITravelRepository<RegionToRegion>>();
+            //var repository = container.Resolve<IBaseRepository<RegionToRegion>>();
             //Console.ReadLine();
 
             var parentRegionImporter = container.Resolve<IImport>(nameof(ParentRegionImporter));
@@ -290,6 +290,7 @@ namespace Olbrasoft.Travel.EAN.Import
             var container = new WindsorContainer();
 
             container.Register(Component.For<TravelContext>().ImplementedBy<TravelContext>());
+            //container.Register(Component.For<DbContext>().ImplementedBy<TravelContext>());
 
             container.Register(FromAssemblyNamed("Olbrasoft.Travel.BLL")
                 .Where(type => type.Name.EndsWith("Facade"))
@@ -307,14 +308,14 @@ namespace Olbrasoft.Travel.EAN.Import
          container.Register(Component.For<ILoggingImports>().ImplementedBy<ImportsLogger>());
 #endif
             container.Register(Component.For<IParserFactory>().ImplementedBy<ParserFactory>());
-            
-            container.Register(Component.For(typeof(ITravelRepository<>)).ImplementedBy(typeof(TravelRepository<>)));
-
+          
             container.Register(Component.For(typeof(IBaseRegionsRepository<>)).ImplementedBy(typeof(BaseRegionsRepository<>)));
 
             container.Register(Component.For(typeof(IBaseNamesRepository<>)).ImplementedBy(typeof(BaseNamesRepository<>)));
 
             container.Register(Component.For(typeof(IManyToManyRepository<>)).ImplementedBy(typeof(ManyToManyRepository<>)));
+
+            container.Register(Component.For(typeof(ILocalizedRepository<>)).ImplementedBy(typeof(LocalizedRepository<>)));
 
 
             return container;

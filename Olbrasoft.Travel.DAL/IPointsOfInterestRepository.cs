@@ -3,7 +3,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL
 {
-    public interface IPointsOfInterestRepository : IKeyIdRepository<PointOfInterest>
+    public interface IPointsOfInterestRepository : IBaseRepository<PointOfInterest>
     {
         IDictionary<long, BasePointOfInterest> EanRegionIdsToBasePointsOfInterest(bool clearCache = false);
     }

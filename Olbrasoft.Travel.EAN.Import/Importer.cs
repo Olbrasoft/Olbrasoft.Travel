@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Olbrasoft.Travel.BLL;
+using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DTO;
 using Olbrasoft.Travel.EAN.DTO.Geography;
 
@@ -21,7 +22,7 @@ namespace Olbrasoft.Travel.EAN.Import
         protected int CreatorId;
         protected int DefaultLanguageId;
         protected IImportProvider Provider;
-        protected ILocalizedFacade LocalizedFacade;
+        protected IFactoryOfRepositories FactoryOfRepositories;
 
         protected int BatchCount;
 
@@ -37,7 +38,7 @@ namespace Olbrasoft.Travel.EAN.Import
             Provider = Option.Provider;
             CreatorId = Option.CreatorId;
             DefaultLanguageId = Option.DefaultLanguageId;
-            LocalizedFacade = Option.LocalizedFacade;
+            FactoryOfRepositories = Option.FactoryOfRepositories;
 
             var countLines = Provider.GetCountLines(path);
             BatchCount = GetBatchCount(countLines, BatchSize);

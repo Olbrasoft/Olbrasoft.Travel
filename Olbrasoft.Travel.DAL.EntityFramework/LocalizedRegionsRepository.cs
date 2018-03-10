@@ -7,9 +7,9 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class LocalizedRegionsRepository:TravelRepository<LocalizedRegion>,ILocalizedRegionsRepository
+    public class LocalizedRegionsRepository:LocalizedRepository<LocalizedRegion>,ILocalizedRegionsRepository
     {
-        public LocalizedRegionsRepository(TravelContext travelContext) : base(travelContext)
+        public LocalizedRegionsRepository(TravelContext context) : base(context)
         {
         }
     }

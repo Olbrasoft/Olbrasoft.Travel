@@ -2,7 +2,7 @@
 
 namespace Olbrasoft.Travel.DAL
 {
-    public interface ILocalizedContinentsRepository : ITravelRepository<LocalizedContinent>
+    public interface ILocalizedContinentsRepository : ILocalizedRepository<LocalizedContinent>
     {
 
     }

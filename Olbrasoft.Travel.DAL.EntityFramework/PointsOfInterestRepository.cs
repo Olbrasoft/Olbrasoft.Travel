@@ -5,7 +5,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class PointsOfInterestRepository : KeyIdRepository<PointOfInterest>, IPointsOfInterestRepository
+    public class PointsOfInterestRepository : BaseRegionsRepository<PointOfInterest>, IPointsOfInterestRepository
     {
         private IDictionary<long, BasePointOfInterest> _eanRegionIdsToBasePointsOfInterest;
 
@@ -30,18 +30,18 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         }
         
-        public PointsOfInterestRepository(TravelContext travelContext) : base(travelContext)
+        public PointsOfInterestRepository(TravelContext context) : base(context)
         {
-            OnSaved += ClearCache;
+           
         }
-
-        private void ClearCache(object sender, EventArgs eventArgs)
+        
+        public new void ClearCache()
         {
             _eanRegionIdsToBasePointsOfInterest = null;
             _minEanRegionId = long.MinValue;
-            ClearCache();
+            base.ClearCache();
         }
-
+        
 
         public new void Add(PointOfInterest pointOfInterest)
         {
@@ -53,7 +53,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             base.Add(pointOfInterest);
         }
 
-        private IEnumerable<PointOfInterest> Rebuild(PointOfInterest[] pointsOfInterest)
+        private IEnumerable<PointOfInterest> RebuildEanRegionIds(PointOfInterest[] pointsOfInterest)
         {
             if (pointsOfInterest.All(p => p.EanRegionId != long.MinValue)) return pointsOfInterest;
 
@@ -69,22 +69,19 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public new void Add(IEnumerable<PointOfInterest> pointsOfInterest)
         {
-            base.Add(Rebuild(pointsOfInterest.ToArray()));
+            base.Add(RebuildEanRegionIds(pointsOfInterest.ToArray()));
         }
         
         public new void BulkInsert(IEnumerable<PointOfInterest> pointsOfInterest)
         {
-            base.BulkInsert(Rebuild(pointsOfInterest.ToArray()));
+            base.BulkInsert(RebuildEanRegionIds(pointsOfInterest.ToArray()));
         }
         
         public new void BulkUpdate(IEnumerable<PointOfInterest> pointsOfInterest)
         {
-            base.BulkUpdate(Rebuild(pointsOfInterest.ToArray()));
+            base.BulkUpdate(RebuildEanRegionIds(pointsOfInterest.ToArray()));
         }
-        public new void BulkInsertOrUpdate(PointOfInterest[] pointsOfInterest)
-        {
-            base.BulkInsertOrUpdate(Rebuild(pointsOfInterest.ToArray()).ToArray());
-        }
+      
 
         public IDictionary<long, BasePointOfInterest> EanRegionIdsToBasePointsOfInterest(bool clearCache = false)
         {

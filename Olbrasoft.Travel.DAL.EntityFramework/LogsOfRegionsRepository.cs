@@ -2,10 +2,15 @@
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class LogsOfRegionsRepository: TravelRepository<LogOfImport>,ILogsOfImportsRepository
+    public class LogsOfRegionsRepository: BaseRepository<LogOfImport>,ILogsOfImportsRepository
     {
-        public LogsOfRegionsRepository(TravelContext travelContext) : base(travelContext)
+        public LogsOfRegionsRepository(TravelContext context) : base(context)
         {
+        }
+
+        public override void ClearCache()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

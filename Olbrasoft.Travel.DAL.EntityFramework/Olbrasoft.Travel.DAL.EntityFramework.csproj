@@ -156,11 +156,11 @@
     <Compile Include="BaseRegionsRepository.cs" />
     <Compile Include="ContinentsRepository.cs" />
     <Compile Include="CustomSqlServerMigrationSqlGenerator.cs" />
-    <Compile Include="KeyIdRepository.cs" />
     <Compile Include="LanguagesRepository.cs" />
     <Compile Include="LocalizedContinentsRepository.cs" />
     <Compile Include="LocalizedPointsOfInterestRepository.cs" />
     <Compile Include="LocalizedRegionsRepository.cs" />
+    <Compile Include="LocalizedRepository.cs" />
     <Compile Include="LogsOfRegionsRepository.cs" />
     <Compile Include="ManyToManyRepository.cs" />
     <Compile Include="Migrations\201802281830031_CreateInit.cs" />
@@ -223,6 +223,10 @@
     <Compile Include="Migrations\201803091308504_CreateLocalizedPointsOfInterest.Designer.cs">
       <DependentUpon>201803091308504_CreateLocalizedPointsOfInterest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803100004545_CreateCountries.cs" />
+    <Compile Include="Migrations\201803100004545_CreateCountries.Designer.cs">
+      <DependentUpon>201803100004545_CreateCountries.cs</DependentUpon>
+    </Compile>
     <Compile Include="PointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToPointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToRegionsRepository.cs" />
@@ -232,7 +236,7 @@
     <Compile Include="SubClassesRepository.cs" />
     <Compile Include="TravelContext.cs" />
     <Compile Include="Migrations\TravelMigrationsConfiguration.cs" />
-    <Compile Include="TravelRepository.cs" />
+    <Compile Include="BaseRepository.cs" />
     <Compile Include="TypesOfRegionsRepository.cs" />
     <Compile Include="UsersRepository.cs" />
   </ItemGroup>
@@ -252,6 +256,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="repository.default.json" />
     <None Include="repository.ef.json" />
@@ -302,6 +307,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803091308504_CreateLocalizedPointsOfInterest.resx">
       <DependentUpon>201803091308504_CreateLocalizedPointsOfInterest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803100004545_CreateCountries.resx">
+      <DependentUpon>201803100004545_CreateCountries.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -14,7 +14,7 @@ namespace Olbrasoft.Travel.BLL
         protected readonly ISubClassesRepository SubClassesRepository;
         protected readonly IPointsOfInterestRepository PointsOfInterestRepository;
         protected readonly IRegionsToRegionsRepository RegionsToRegionsRepository;
-        protected readonly IPointsOfInterestToRegionsFacade PointsOfInterestToRegionsFacade;
+
 
         private HashSet<long> _eanRegionsIds;
         private IDictionary<long, int> _mappingEanRegionIdsToIds;
@@ -23,25 +23,16 @@ namespace Olbrasoft.Travel.BLL
        
         private IDictionary<long, BaseRegion> _mappingEanRegionIdsToRegions;
 
-        public RegionsFacade(ITravelRepository<Region> repository, ITypesOfRegionsRepository typesOfRegionsRepository, ISubClassesRepository subClassesRepository, IPointsOfInterestRepository pointsOfInterestRepository, IRegionsToRegionsRepository regionsToRegionsRepository, IPointsOfInterestToRegionsFacade pointsOfInterestToRegionsFacade) : base(repository)
+        public RegionsFacade(IBaseRepository<Region> repository, ITypesOfRegionsRepository typesOfRegionsRepository, ISubClassesRepository subClassesRepository, IPointsOfInterestRepository pointsOfInterestRepository, IRegionsToRegionsRepository regionsToRegionsRepository) : base(repository)
         {
             TypesOfRegionsRepository = typesOfRegionsRepository;
             SubClassesRepository = subClassesRepository;
             PointsOfInterestRepository = pointsOfInterestRepository;
             RegionsToRegionsRepository = regionsToRegionsRepository;
-            PointsOfInterestToRegionsFacade = pointsOfInterestToRegionsFacade;
+            
         }
 
-        //public HashSet<long> GetEanRegionsIds(bool clearFacadeCache = false)
-        //{
-        //    if (_eanRegionsIds == null || clearFacadeCache)
-        //    {
-        //        _eanRegionsIds = new HashSet<long>(Repository.AsQueryable()
-        //            .Where(region => region.EanRegionId != null).Select(region => (long)region.EanRegionId));
-        //    }
-
-        //    return _eanRegionsIds;
-        //}
+   
 
         public IDictionary<long, int> GetMappingEanRegionIdsToIds(bool clearFacadeCache = false)
         {
@@ -63,10 +54,7 @@ namespace Olbrasoft.Travel.BLL
             return _regionIdsToParentRegionIds;
         }
 
-        public IDictionary<int, int> RegionIdsToPointOfInterestIds(bool clearFacadeCache = false)
-        {
-            return PointsOfInterestToRegionsFacade.RegionIdsToPointOfInterestIds();
-        }
+      
 
 
         public bool ExistsTypesOfRegions(Expression<Func<TypeOfRegion, bool>> predicate)
@@ -116,12 +104,6 @@ namespace Olbrasoft.Travel.BLL
         //}
 
 
-        public void BulkSave(IEnumerable<Region> regions)
-        {
-            var regionsArray = regions as Region[] ?? regions.ToArray();
-            Repository.BulkInsert(regionsArray.Where(region => region.Id == 0));
-            Repository.BulkUpdate(regionsArray.Where(region => region.Id != 0));
-        }
 
         public void Save(HashSet<TypeOfRegion> typesOfRegions)
         {
@@ -142,9 +124,6 @@ namespace Olbrasoft.Travel.BLL
 
        
 
-        public void BulkSave(PointOfInterestToRegion[] pointsOfInterestToRegions)
-        {
-            PointsOfInterestToRegionsFacade.BulkSave(pointsOfInterestToRegions);
-        }
+       
     }
 }

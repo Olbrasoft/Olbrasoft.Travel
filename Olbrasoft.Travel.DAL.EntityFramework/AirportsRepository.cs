@@ -5,7 +5,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-   public class AirportsRepository : TravelRepository<Airport>, IAirportsRepository
+   public class AirportsRepository : BaseRepository<Airport>, IAirportsRepository
     {
         private IDictionary<long, BaseAirport> _eanAirportIdsToBaseAirports;
         private long _minEanAirportId = long.MinValue;
@@ -27,17 +27,12 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             }
         }
 
-        public AirportsRepository(TravelContext travelContext) : base(travelContext)
+        public AirportsRepository(TravelContext context) : base(context)
         {
-            OnSaved += ClearCache;
+            
         }
 
-        private void ClearCache(object sender, EventArgs e)
-        {
-            _eanAirportIdsToBaseAirports = null;
-            _minEanAirportId = long.MinValue;
-            ClearCache();
-        }
+       
 
         public new void Add(Airport airport)
         {
@@ -76,9 +71,16 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
             base.BulkUpdate(Rebuild(airports.ToArray()));
         }
+
+        public override void ClearCache()
+        {
+            _eanAirportIdsToBaseAirports = null;
+            _minEanAirportId = long.MinValue;
+        }
+
         public new void BulkInsertOrUpdate(Airport[] airports)
         {
-            base.BulkInsertOrUpdate(Rebuild(airports.ToArray()).ToArray());
+          //  base.BulkInsertOrUpdate(Rebuild(airports.ToArray()).ToArray());
         }
 
         public IDictionary<long, BaseAirport> EanAirportsToBaseAirports()

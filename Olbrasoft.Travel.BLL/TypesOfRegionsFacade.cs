@@ -9,7 +9,7 @@ using SharpRepository.Repository.Queries;
 namespace Olbrasoft.Travel.BLL
 {
     public class TypesOfRegionsFacade : TravelFacade<TypeOfRegion>, ITypesOfRegionsFacade {
-        public TypesOfRegionsFacade(ITravelRepository<TypeOfRegion> repository) : base(repository)
+        public TypesOfRegionsFacade(IBaseRepository<TypeOfRegion> repository) : base(repository)
         {
 
         }

@@ -2,9 +2,9 @@
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class RegionsRepository : KeyIdRepository<Region>, IRegionsRepository
+    public class RegionsRepository : BaseRegionsRepository<Region>, IRegionsRepository
     {
-        public RegionsRepository(TravelContext travelContext) : base(travelContext)
+        public RegionsRepository(TravelContext context) : base(context)
         {
         }
     }

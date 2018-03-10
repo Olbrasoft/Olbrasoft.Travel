@@ -5,7 +5,7 @@ namespace Olbrasoft.Travel.EAN.Import
 {
     class NeighborhoodsImporter : CitiesNeighborhoodsImporter<Neighborhood>
     {
-        public NeighborhoodsImporter(ParentRegionImportOption option) : base(option)
+        public NeighborhoodsImporter(ImportOption option) : base(option)
         {
         }
 

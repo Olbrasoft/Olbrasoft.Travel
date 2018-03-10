@@ -9,16 +9,16 @@ namespace Olbrasoft.Travel.EAN.Import
 {
     class PointsOfInterestImporter : Importer<PointOfInterest>
     {
-        protected new readonly ParentRegionImportOption Option;
+        protected new readonly ImportOption Option;
         protected readonly ISubClassesFacade SubClassesFacade;
         protected readonly IPointsOfInterestFacade PointsOfInterestFacade;
 
 
-        public PointsOfInterestImporter(ParentRegionImportOption option) : base(option)
+        public PointsOfInterestImporter(ImportOption option) : base(option)
         {
             Option = option;
-            SubClassesFacade = Option.SubClassesFacade;
-            PointsOfInterestFacade = Option.PointsOfInterestFacade;
+            //SubClassesFacade = Option.SubClassesFacade;
+            //PointsOfInterestFacade = Option.PointsOfInterestFacade;
         }
 
         protected override void ImportBatch(PointOfInterest[] parentRegions)
@@ -42,8 +42,8 @@ namespace Olbrasoft.Travel.EAN.Import
                 ImportPointsOfInterest(parentRegions, PointsOfInterestFacade, defaultBasePointOfInterest,
                     SubClassesFacade.SubClassesAsReverseDictionary(true));
 
-            ImportLocalizedRegions(adeptsToLocalizedPointsOfInterest, LocalizedFacade,
-                PointsOfInterestFacade.GetMappingEanRegionIdsToIds(true), DefaultLanguageId, CreatorId);
+            //ImportLocalizedRegions(adeptsToLocalizedPointsOfInterest, LocalizedFacade,
+            //    PointsOfInterestFacade.GetMappingEanRegionIdsToIds(true), DefaultLanguageId, CreatorId);
 
         }
 
@@ -72,7 +72,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             if (count <= 0) return;
             WriteLog("LocalizedPoinstsOfInterest Save.");
-            localizedFacade.BulkSave(localizedPointsOfInterest);
+            //localizedFacade.BulkSave(localizedPointsOfInterest);
             WriteLog("LocalizedPoinstsOfInterest Save.");
         }
 
@@ -99,7 +99,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             if (count <= 0) return adeptsToLocalizedPointsOfInterests;
             WriteLog("PoinstsOfInterest Save.");
-            pointsOfInterestFacade.BulkSave(pointsOfInterest);
+           // pointsOfInterestFacade.BulkSave(pointsOfInterest);
             WriteLog("PoinstsOfInterest Saved.");
 
             return adeptsToLocalizedPointsOfInterests;

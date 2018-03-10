@@ -51,6 +51,7 @@
     <Compile Include="Airport.cs" />
     <Compile Include="BaseAirport.cs" />
     <Compile Include="BaseLocalizedAirport.cs" />
+    <Compile Include="BaseLocalizedRegion.cs" />
     <Compile Include="BasePointOfInterest.cs" />
     <Compile Include="BaseRegion.cs" />
     <Compile Include="BaseName.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="IKeyId.cs" />
     <Compile Include="ILocalized.cs" />
     <Compile Include="Language.cs" />
-    <Compile Include="Localized.cs" />
+    <Compile Include="BaseLocalized.cs" />
     <Compile Include="LocalizedAccommodation.cs" />
     <Compile Include="LocalizedAirport.cs" />
     <Compile Include="LocalizedCategory.cs" />
@@ -88,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

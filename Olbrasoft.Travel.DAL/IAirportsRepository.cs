@@ -3,7 +3,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL
 {
-    public interface IAirportsRepository : ITravelRepository<Airport>
+    public interface IAirportsRepository : IBaseRepository<Airport>
     {
         IDictionary<long, BaseAirport> EanAirportsToBaseAirports();
     }

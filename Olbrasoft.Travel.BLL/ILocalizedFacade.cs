@@ -10,8 +10,8 @@ namespace Olbrasoft.Travel.BLL
     {
         bool Exists<T>(int languageId);
 
-        void BulkSave(LocalizedRegion[] localizedRegions);
-        void BulkSave(LocalizedPointOfInterest[] localizedPointsOfInterest);
+        //void BulkSave(LocalizedRegion[] localizedRegions);
+        //void BulkSave(LocalizedPointOfInterest[] localizedPointsOfInterest);
 
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class SubClassesRepository: TravelRepository<SubClass>, ISubClassesRepository
+    public class SubClassesRepository: BaseNamesRepository<SubClass>, ISubClassesRepository
     {
-        public SubClassesRepository(TravelContext travelContext) : base(travelContext)
+        public SubClassesRepository(TravelContext context) : base(context)
         {
             
         }

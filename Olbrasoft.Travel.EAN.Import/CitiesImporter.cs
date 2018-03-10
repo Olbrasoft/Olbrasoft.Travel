@@ -4,7 +4,7 @@ using Olbrasoft.Travel.EAN.DTO.Geography;
 namespace Olbrasoft.Travel.EAN.Import
 {
     class CitiesImporter : CitiesNeighborhoodsImporter<City> {
-        public CitiesImporter(ParentRegionImportOption option) : base(option)
+        public CitiesImporter(ImportOption option) : base(option)
         {
         }
 
