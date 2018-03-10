@@ -81,6 +81,10 @@ namespace Olbrasoft.Travel.EAN.Import
                 .ImplementedBy<ParentRegionImporter>()
                 .Named(nameof(ParentRegionImporter)));
 
+            container.Register(Component.For<IImport>()
+                .ImplementedBy<CountriesImporter>()
+                .Named(nameof(CountriesImporter)));
+
 
             container.Register(Component.For<IImport>()
                 .ImplementedBy<CitiesImporter>()
@@ -105,12 +109,19 @@ namespace Olbrasoft.Travel.EAN.Import
             //var repository = container.Resolve<IBaseRepository<RegionToRegion>>();
             //Console.ReadLine();
 
-            var parentRegionImporter = container.Resolve<IImport>(nameof(ParentRegionImporter));
-            parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
+            //var parentRegionImporter = container.Resolve<IImport>(nameof(ParentRegionImporter));
+            //parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
+
+            var countriesImporter = container.Resolve<IImport>(nameof(CountriesImporter));
+            countriesImporter.Import(@"D:\Ean\CountryList.txt");
+
+
+
+
 
             //var citiesImporter = container.Resolve<IImport>(nameof(CitiesImporter));
             //citiesImporter.Import(@"D:\Ean\CityCoordinatesList.Txt");
-            
+
             //var neighborhoodsImporter = container.Resolve<IImport>(nameof(NeighborhoodsImporter));
             //neighborhoodsImporter.Import(@"D:\Ean\NeighborhoodCoordinatesList.Txt");
 
@@ -127,7 +138,7 @@ namespace Olbrasoft.Travel.EAN.Import
             //var parser = parserFactory.Travel<Airport>(lines.FirstOrDefault());
             //foreach (var line in lines.Skip(1))
             //{
-                
+
             //    if (parser.TryParse(line, out var airoport))
             //    {
             //        using (var context= new TravelContext())
@@ -136,7 +147,7 @@ namespace Olbrasoft.Travel.EAN.Import
             //            context.SaveChanges();
             //        }
             //    }            
-                
+
             //}
 
 

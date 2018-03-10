@@ -15,7 +15,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
       
         protected BaseRepository(DbContext context) : base(context)
         {
-            
         }
 
 
@@ -30,8 +29,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             base.Add(entity);
             OnSaved(EventArgs.Empty);
         }
-
-
+        
         public void BulkInsert(IEnumerable<T> entities)
         {
             var batchesToInsert = BaseRepository<T>.SplitList(entities, 90000);

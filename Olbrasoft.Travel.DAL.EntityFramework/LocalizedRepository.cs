@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Olbrasoft.EntityFramework.Bulk;
 using Olbrasoft.Travel.DTO;
 
@@ -15,7 +16,48 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
         }
 
-        public void BulkUpdate(IEnumerable<T> entities)
+        public void BulkSave(IEnumerable<T> entities)
+        {
+            var entitiesArray = entities as T[] ?? entities.ToArray();
+            foreach (var languageId in entitiesArray.GroupBy(entity => entity.LanguageId).Select(grp => grp.First()).Select(p=>p.LanguageId))
+            {
+                if (!Exists(languageId))
+                {
+                    BulkInsert(entitiesArray);
+                }
+                else
+                {
+                    var storedLocalizedIds =
+                        new HashSet<int>(FindIds(languageId));
+
+                    var forInsert = new List<T>();
+                    var forUpdate = new List<T>();
+
+                    foreach (var entity in entitiesArray)
+                    {
+                        if (!storedLocalizedIds.Contains(entity.Id))
+                        {
+                            forInsert.Add(entity);
+                        }
+                        else
+                        {
+                            forUpdate.Add(entity);
+                        }
+                    }
+
+                    if (forInsert.Count > 0)
+                    {
+                       BulkInsert(forInsert);
+                    }
+
+                    if (forUpdate.Count <= 0) return;
+                    BulkUpdate(forUpdate);
+                }
+            }
+
+        }
+
+        protected void BulkUpdate(IEnumerable<T> entities)
         {
             var batchesToUpdate = BaseRepository<T>.SplitList(entities, 90000);
 
@@ -32,7 +74,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 OnSaved(EventArgs.Empty);
             }
         }
-
+        
         public bool Exists(int languageId)
         {
             return Exists(l => l.LanguageId == languageId);

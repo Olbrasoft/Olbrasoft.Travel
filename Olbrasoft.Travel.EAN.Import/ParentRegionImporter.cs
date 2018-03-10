@@ -10,9 +10,8 @@ namespace Olbrasoft.Travel.EAN.Import
 {
     internal class ParentRegionImporter : Importer<ParentRegion>
     {
-    
+   
        
-        
         public ParentRegionImporter(ImportOption option) : base(option)
         {
             
@@ -25,8 +24,15 @@ namespace Olbrasoft.Travel.EAN.Import
 
             var eanRegionIdsToIds = continentRepository.EanRegionIdsToIds;
 
+            Logger.Log($"LocalizedContinents Build.");
             var localizedContinents = BuildLocalizedContinents(parentRegions, eanRegionIdsToIds, CreatorId, DefaultLanguageId);
-            ImportLocalizedEntities(localizedContinents, FactoryOfRepositories.Localized<LocalizedContinent>(), DefaultLanguageId, Logger);
+            Logger.Log($"LocalizedContinents builded count:{localizedContinents.Length}");
+
+            Logger.Log("LocalizedContinents Save");
+            FactoryOfRepositories.Localized<LocalizedContinent>().BulkSave(localizedContinents);
+            Logger.Log("LocalizedContinents Saved");
+
+            //BulkSaveLocalized(localizedContinents, FactoryOfRepositories.Localized<LocalizedContinent>(), DefaultLanguageId, Logger);
 
             var subClassesRepository = FactoryOfRepositories.BaseNames<SubClass>();
             ImportSubClasses(parentRegions, subClassesRepository, CreatorId);
@@ -63,58 +69,26 @@ namespace Olbrasoft.Travel.EAN.Import
             var localizedRegions = BuildLocalizedRegions<LocalizedRegion>(parentRegions, eanRegionIdsToIds, CreatorId, DefaultLanguageId);
             Logger.Log($"LocalizedRegions builded count:{localizedRegions.Length}");
 
-            ImportLocalizedEntities(localizedRegions, FactoryOfRepositories.Localized<LocalizedRegion>(), DefaultLanguageId, Logger);
-
+            //BulkSaveLocalized(localizedRegions, FactoryOfRepositories.Localized<LocalizedRegion>(), DefaultLanguageId, Logger);
+            Logger.Log("LocalizedRegions Save");
+            FactoryOfRepositories.Localized<LocalizedRegion>().BulkSave(localizedRegions);
+            Logger.Log("LocalizedRegions Saved.");
+            
             eanRegionIdsToIds = pointsOfInterestRepository.EanRegionIdsToIds;
 
+            Logger.Log($"LocalizedPointsOfInterest Build.");
             var localizedPointsOfInterest = BuildLocalizedRegions<LocalizedPointOfInterest>(parentRegions, eanRegionIdsToIds, CreatorId, DefaultLanguageId);
-            ImportLocalizedEntities(localizedPointsOfInterest, FactoryOfRepositories.Localized<LocalizedPointOfInterest>(), DefaultLanguageId, Logger);
+            Logger.Log($"LocalizedPointsOfInterest builded count:{localizedPointsOfInterest.Length}");
+
+            Logger.Log($"LocalizedPointsOfInterest Save.");
+            FactoryOfRepositories.Localized<LocalizedPointOfInterest>().BulkSave(localizedPointsOfInterest);
+            Logger.Log($"LocalizedPointsOfInterest Saved.");
+
+            //BulkSaveLocalized(localizedPointsOfInterest, FactoryOfRepositories.Localized<LocalizedPointOfInterest>(), DefaultLanguageId, Logger);
 
         }
 
-        private static void ImportLocalizedEntities<T>(IReadOnlyCollection<T> localizedEntities,
-            ILocalizedRepository<T> repository, int defaultLanguageId, ILoggingImports logger) where T : BaseLocalized
-        {
-            if (!repository.Exists(defaultLanguageId))
-            {
-                logger.Log($"Bulk Insert {localizedEntities.Count} {typeof(T)}.");
-                repository.BulkInsert(localizedEntities);
-                logger.Log($"{typeof(T)} Inserted.");
-            }
-            else
-            {
-                var storedLocalizedContinentIs =
-                    new HashSet<int>(repository.FindIds(defaultLanguageId));
-
-                var forInsert = new List<T>();
-                var forUpdate = new List<T>();
-
-                foreach (var localizedContinent in localizedEntities)
-                {
-                    if (!storedLocalizedContinentIs.Contains(localizedContinent.Id))
-                    {
-                        forInsert.Add(localizedContinent);
-                    }
-                    else
-                    {
-                        forUpdate.Add(localizedContinent);
-                    }
-                }
-
-                if (forInsert.Count > 0)
-                {
-                    logger.Log($"Bulk Insert {forInsert.Count} {typeof(T)}.");
-                    repository.BulkInsert(forInsert);
-                    logger.Log($"{typeof(T)} Inserted.");
-                }
-
-                if (forUpdate.Count <= 0) return;
-                logger.Log($"Bulk Update {forUpdate.Count} {typeof(T)}.");
-                repository.BulkUpdate(forUpdate);
-                logger.Log($"{typeof(T)} Updated.");
-            }
-        }
-
+       
 
         private static LocalizedContinent[] BuildLocalizedContinents(IEnumerable<ParentRegion> parentRegions, IReadOnlyDictionary<long, int> eanRegionIdsToContinentIds, int creatorId, int defaultLanguageId)
         {
@@ -152,7 +126,7 @@ namespace Olbrasoft.Travel.EAN.Import
             int creatorId)
         {
             const string s = "Continent";
-            var regionIds = new HashSet<long>(continentsRepository.EanRegionIds);
+            var eanRegionIds = new HashSet<long>(continentsRepository.EanRegionIds);
 
             var continents = new Dictionary<long, Continent>();
 
@@ -160,7 +134,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             foreach (var parentRegion in parentRegions)
             {
-                if (parentRegion.ParentRegionType != s || regionIds.Contains(parentRegion.ParentRegionID) ||
+                if (parentRegion.ParentRegionType != s || eanRegionIds.Contains(parentRegion.ParentRegionID) ||
                      continents.ContainsKey(parentRegion.ParentRegionID)) continue;
 
                 continents.Add(parentRegion.ParentRegionID, new Continent

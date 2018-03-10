@@ -11,4 +11,5 @@ namespace Olbrasoft.Travel.DTO
         [StringLength(510)]
         public string LongName { get; set; }
     }
+
 }

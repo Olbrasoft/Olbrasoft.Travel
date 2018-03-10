@@ -71,12 +71,12 @@ namespace Olbrasoft.Travel.EAN.Import
 
         public static DbGeography CreatePoint(double latitude, double longitude)
         {
-            var point = string.Format(CultureInfo.InvariantCulture.NumberFormat,
+            var point = String.Format(CultureInfo.InvariantCulture.NumberFormat,
                 "POINT({0} {1})", longitude, latitude);
             // 4326 is most common coordinate system used by GPS/Maps
             return DbGeography.PointFromText(point, 4326);
         }
-
+        
         public static DbGeography CreatePoligon(string s)
         {
             var spl = s.Split(':');
@@ -89,7 +89,7 @@ namespace Olbrasoft.Travel.EAN.Import
                 var latLon = s1.Split(';');
                 var lotLanString = $"{latLon[1]} {latLon[0]}";
                 pointsString.Append(lotLanString + ",");
-                if (string.IsNullOrEmpty(lastPoint)) lastPoint = lotLanString;
+                if (String.IsNullOrEmpty(lastPoint)) lastPoint = lotLanString;
             }
 
             pointsString.Append(lastPoint);
@@ -98,11 +98,54 @@ namespace Olbrasoft.Travel.EAN.Import
 
         }
 
+
+      //protected static void BulkSaveLocalized<TL>(IReadOnlyCollection<TL> localizedEntities,
+      //      ILocalizedRepository<TL> repository, int defaultLanguageId, ILoggingImports logger) where TL : BaseLocalized
+      //  {
+      //      if (!repository.Exists(defaultLanguageId))
+      //      {
+      //          logger.Log($"Bulk Insert {localizedEntities.Count} {typeof(TL)}.");
+      //          repository.BulkInsert(localizedEntities);
+      //          logger.Log($"{typeof(TL)} Inserted.");
+      //      }
+      //      else
+      //      {
+      //          var storedLocalizedIds =
+      //              new HashSet<int>(repository.FindIds(defaultLanguageId));
+
+      //          var forInsert = new List<TL>();
+      //          var forUpdate = new List<TL>();
+
+      //          foreach (var localizedEntity in localizedEntities)
+      //          {
+      //              if (!storedLocalizedIds.Contains(localizedEntity.Id))
+      //              {
+      //                  forInsert.Add(localizedEntity);
+      //              }
+      //              else
+      //              {
+      //                  forUpdate.Add(localizedEntity);
+      //              }
+      //          }
+
+      //          if (forInsert.Count > 0)
+      //          {
+      //              logger.Log($"Bulk Insert {forInsert.Count} {typeof(TL)}.");
+      //              repository.BulkInsert(forInsert);
+      //              logger.Log($"{typeof(TL)} Inserted.");
+      //          }
+
+      //          if (forUpdate.Count <= 0) return;
+      //          logger.Log($"Bulk Update {forUpdate.Count} {typeof(TL)}.");
+      //          repository.BulkUpdate(forUpdate);
+      //          logger.Log($"{typeof(TL)} Updated.");
+      //      }
+      //  }
+
         protected void WriteLog(object obj)
         {
             Logger?.Log(obj.ToString());
         }
-
     }
 
 

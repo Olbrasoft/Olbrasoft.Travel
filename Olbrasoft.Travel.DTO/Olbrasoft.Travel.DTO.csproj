@@ -68,6 +68,7 @@
     <Compile Include="LocalizedAirport.cs" />
     <Compile Include="LocalizedCategory.cs" />
     <Compile Include="LocalizedContinent.cs" />
+    <Compile Include="LocalizedCountry.cs" />
     <Compile Include="LocalizedPointOfInterest.cs" />
     <Compile Include="LocalizedRegion.cs" />
     <Compile Include="LogOfImport.cs" />

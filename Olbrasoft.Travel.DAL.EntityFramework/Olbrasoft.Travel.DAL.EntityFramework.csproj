@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201803100004545_CreateCountries.Designer.cs">
       <DependentUpon>201803100004545_CreateCountries.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803100122004_CreateLocalizedCountries.cs" />
+    <Compile Include="Migrations\201803100122004_CreateLocalizedCountries.Designer.cs">
+      <DependentUpon>201803100122004_CreateLocalizedCountries.cs</DependentUpon>
+    </Compile>
     <Compile Include="PointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToPointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToRegionsRepository.cs" />
@@ -310,6 +314,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803100004545_CreateCountries.resx">
       <DependentUpon>201803100004545_CreateCountries.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803100122004_CreateLocalizedCountries.resx">
+      <DependentUpon>201803100122004_CreateLocalizedCountries.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

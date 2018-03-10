@@ -21,7 +21,9 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<LocalizedRegion> LocalizedRegions { get; set; }
         public virtual IDbSet<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
         public virtual IDbSet<Country> Countries { get; set; }
-        
+        public virtual IDbSet<LocalizedCountry> LocalizedCountries { get; set; }
+
+
         //public virtual IDbSet<Airport> Airports { get; set; }
         //public virtual IDbSet<SupportedCulture> SupportedCultures { get; set; }
         //public virtual IDbSet<Category> Categories { get; set; }
@@ -55,7 +57,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnLocalizedRegionsCreating(modelBuilder);
             OnLocalizedPointsOfInterestCreating(modelBuilder);
             OnCountriesCreating(modelBuilder);
-            
+            OnLocalizedCountriesCreating(modelBuilder);
 
             //OnAirportsCreating(modelBuilder);
             //OnChainsCreating(modelBuilder);
@@ -67,6 +69,26 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             //OnSupportedCulturesCreating(modelBuilder);
             //OnLocalizedAccommodationsCreating(modelBuilder);
 
+        }
+
+        private void OnLocalizedCountriesCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<LocalizedCountry>()
+                .ToTable(nameof(LocalizedCountries), "geo");
+
+            modelBuilder.Entity<LocalizedCountry>()
+                .Property(e => e.DateAndTimeOfCreation)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+
+            modelBuilder.Entity<Language>()
+                .HasMany(language => language.LocalizedCountries)
+                .WithRequired(localizedCountry => localizedCountry.Language)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<User>()
+                .HasMany(user => user.CreatedLocalizedCountries)
+                .WithRequired(localizedCountry => localizedCountry.Creator)
+                .WillCascadeOnDelete(false);
         }
 
         private void OnCountriesCreating(DbModelBuilder modelBuilder)

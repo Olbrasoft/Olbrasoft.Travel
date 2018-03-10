@@ -47,6 +47,8 @@ namespace Olbrasoft.Travel.DTO
         
         public virtual ICollection<Country> CreatedCountries { get; set; }
 
+        public virtual ICollection<LocalizedCountry> CreatedLocalizedCountries { get; set; }
+
         //public virtual ICollection<Airport> CreatedAirports { get; set; }
         #endregion
     }

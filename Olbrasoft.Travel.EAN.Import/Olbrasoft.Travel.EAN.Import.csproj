@@ -168,6 +168,7 @@
     <Compile Include="AirportsImporter.cs" />
     <Compile Include="CitiesImporter.cs" />
     <Compile Include="CitiesNeighborhoodsImporter.cs" />
+    <Compile Include="CountriesImporter.cs" />
     <Compile Include="FileImportProvider.cs" />
     <Compile Include="IImportProvider.cs" />
     <Compile Include="NeighborhoodsImporter.cs" />

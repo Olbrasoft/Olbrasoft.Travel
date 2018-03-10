@@ -3,10 +3,11 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL
 {
-    public interface ILocalizedRepository<T> : IBaseRepository<T, int, int>,IBulk<T>
+    public interface ILocalizedRepository<T> : IBaseRepository<T, int, int>
         where T : BaseLocalized
     {
-        bool Exists(int languageId);
-        IEnumerable<int> FindIds(int languageId);     
+        //bool Exists(int languageId);
+        //IEnumerable<int> FindIds(int languageId);     
+        void BulkSave(IEnumerable<T> localizedEntities);
     }
 }
