@@ -160,16 +160,19 @@ namespace Olbrasoft.Travel.EAN.Import
         {
             WriteLog("PointsOfInterestToRegions Build.");
 
-            var pointsOfInterestToRegions = BuildPointsOfInterestToRegions(parentRegions,
+            var pointsOfInterestToRegions = BuildPointsOfInterestToRegions(
+                parentRegions,
                 regEanRegionIdsToIds, poiEanRegionIdsToIds,
-                repository.IdsToToIds, creatorId);
+                //repository.IdsToToIds,
+                creatorId
+                );
 
             var count = pointsOfInterestToRegions.Length;
             WriteLog($"PointsOfInterestToRegions Builded:{count}.");
 
             if (count <= 0) return;
             WriteLog("PointsOfInterestToPointsOfInterest Save.");
-            repository.BulkInsert(pointsOfInterestToRegions);
+            repository.BulkSave(pointsOfInterestToRegions);
             WriteLog("PointsOfInterestToPointsOfInterest Saved.");
         }
 
@@ -178,30 +181,40 @@ namespace Olbrasoft.Travel.EAN.Import
             IManyToManyRepository<PointOfInterestToPointOfInterest> repository, int creatorId)
         {
             WriteLog("PointsOfInterestToPointsOfInterest Build.");
-            var pointsOfInterestToPointsOfInterest = BuildPointsOfInterestToPointsOfInterest(parentRegions,
+            var pointsOfInterestToPointsOfInterest = BuildPointsOfInterestToPointsOfInterest(
+                parentRegions,
                 poiEanRegionIdsToIds,
-                repository.IdsToToIds, creatorId);
+                //repository.IdsToToIds, 
+                creatorId
+                );
 
             var count = pointsOfInterestToPointsOfInterest.Length;
             WriteLog($"PointsOfInterestToPointsOfInterest Builded:{count}.");
 
             if (count <= 0) return;
             WriteLog("PointsOfInterestToPointsOfInterest Save.");
-            repository.BulkInsert(pointsOfInterestToPointsOfInterest);
+            repository.BulkSave(pointsOfInterestToPointsOfInterest);
             WriteLog("PointsOfInterestToPointsOfInterest Saved.");
         }
 
         private void ImportRegionsToRegions(IEnumerable<ParentRegion> parentRegions, IReadOnlyDictionary<long, int> eanRegionIdsToIds, IManyToManyRepository<RegionToRegion> repository, int creatorId)
         {
             WriteLog("RegionsToRegions Build.");
-            var regionsToRegions = BuildRegionsToRegions(parentRegions, eanRegionIdsToIds,
-                repository.IdsToToIds, creatorId);
+
+            var regionsToRegions = BuildRegionsToRegions(
+                parentRegions,
+                eanRegionIdsToIds,
+                //repository.IdsToToIds,
+                creatorId
+                );
+
             var count = regionsToRegions.Length;
+
             WriteLog($"RegionsToRegions Builded:{count}.");
 
             if (count <= 0) return;
             WriteLog("RegionsToRegions Save.");
-            repository.BulkInsert(regionsToRegions);
+            repository.BulkSave(regionsToRegions);
             WriteLog("RegionsToRegions Saved.");
         }
 
@@ -246,8 +259,9 @@ namespace Olbrasoft.Travel.EAN.Import
             IEnumerable<ParentRegion> parentRegions,
             IReadOnlyDictionary<long, int> mappingRegionIdsToIds,
             IReadOnlyDictionary<long, int> mappingPointsOfInterestEanRegionIdsToIds,
-            IReadOnlyDictionary<int, int> storedPointsOfInterestToRegions,
-            int creatorId)
+            //IReadOnlyDictionary<int, int> storedPointsOfInterestToRegions,
+            int creatorId
+            )
         {
             var pointsOfInterestToRegions = new HashSet<PointOfInterestToRegion>();
             foreach (var parentRegion in parentRegions)
@@ -258,8 +272,8 @@ namespace Olbrasoft.Travel.EAN.Import
                     !mappingPointsOfInterestEanRegionIdsToIds.TryGetValue(parentRegion.RegionID, out var pointOfInterestId)
                 ) continue;
 
-                if (storedPointsOfInterestToRegions.TryGetValue(pointOfInterestId, out var storedParentRegionId) && storedParentRegionId == regionId)
-                    continue;
+                //if (storedPointsOfInterestToRegions.TryGetValue(pointOfInterestId, out var storedParentRegionId) && storedParentRegionId == regionId)
+                //    continue;
 
                 var regionToRegion = new PointOfInterestToRegion
                 {
@@ -282,7 +296,7 @@ namespace Olbrasoft.Travel.EAN.Import
         (
             IEnumerable<ParentRegion> parentRegions,
             IReadOnlyDictionary<long, int> eanRegionIdsToIds,
-            IReadOnlyDictionary<int, int> storedPointsOfInterestToPointsOfInterest,
+           // IReadOnlyDictionary<int, int> storedPointsOfInterestToPointsOfInterest,
             int creatorId
         )
         {
@@ -299,10 +313,10 @@ namespace Olbrasoft.Travel.EAN.Import
                     !eanRegionIdsToIds.TryGetValue(parentRegion.RegionID, out var pointOfInterestId)
                 ) continue;
 
-                if (storedPointsOfInterestToPointsOfInterest.TryGetValue(pointOfInterestId, out var storedParentRegionId)
-                    &&
-                    storedParentRegionId == parentPointOfInterestId)
-                    continue;
+                //if (storedPointsOfInterestToPointsOfInterest.TryGetValue(pointOfInterestId, out var storedParentRegionId)
+                //    &&
+                //    storedParentRegionId == parentPointOfInterestId)
+                //    continue;
 
                 var pointOfInterestToPointOfInterest = new PointOfInterestToPointOfInterest()
                 {
@@ -372,7 +386,8 @@ namespace Olbrasoft.Travel.EAN.Import
 
 
         private static RegionToRegion[] BuildRegionsToRegions(IEnumerable<ParentRegion> parentRegions,
-            IReadOnlyDictionary<long, int> eanRegionIdsToIds, IReadOnlyDictionary<int, int> storedRegionsToRegions,
+            IReadOnlyDictionary<long, int> eanRegionIdsToIds, 
+            //IReadOnlyDictionary<int, int> storedRegionsToRegions,
             int creatorId)
         {
             var regionsToRegions = new HashSet<RegionToRegion>();
@@ -389,8 +404,8 @@ namespace Olbrasoft.Travel.EAN.Import
                     continue;
                 }
 
-                if (storedRegionsToRegions.TryGetValue(regionId, out var storedParentRegionId) && storedParentRegionId == parentRegionId)
-                    continue;
+                //if (storedRegionsToRegions.TryGetValue(regionId, out var storedParentRegionId) && storedParentRegionId == parentRegionId)
+                //    continue;
 
                 var regionToRegion = new RegionToRegion()
                 {

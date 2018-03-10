@@ -109,14 +109,13 @@ namespace Olbrasoft.Travel.EAN.Import
             //var repository = container.Resolve<IBaseRepository<RegionToRegion>>();
             //Console.ReadLine();
 
-            //var parentRegionImporter = container.Resolve<IImport>(nameof(ParentRegionImporter));
-            //parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
+            var parentRegionImporter = container.Resolve<IImport>(nameof(ParentRegionImporter));
+            parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
 
             var countriesImporter = container.Resolve<IImport>(nameof(CountriesImporter));
             countriesImporter.Import(@"D:\Ean\CountryList.txt");
 
-
-
+            
 
 
             //var citiesImporter = container.Resolve<IImport>(nameof(CitiesImporter));

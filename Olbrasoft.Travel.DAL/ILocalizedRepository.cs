@@ -8,6 +8,6 @@ namespace Olbrasoft.Travel.DAL
     {
         //bool Exists(int languageId);
         //IEnumerable<int> FindIds(int languageId);     
-        void BulkSave(IEnumerable<T> localizedEntities);
+        //void BulkSave(IEnumerable<T> localizedEntities);
     }
 }

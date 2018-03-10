@@ -5,7 +5,9 @@ namespace Olbrasoft.Travel.DAL
 {
     public interface IManyToManyRepository<T> : IBaseRepository<T, int, int> where T : ManyToMany
     {
-        IReadOnlyDictionary<int, int> IdsToToIds { get; }
+        //IReadOnlyDictionary<int, int> IdsToToIds { get; }
+
+
     }
     
 }

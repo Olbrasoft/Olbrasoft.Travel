@@ -16,7 +16,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
         }
 
-        public void BulkSave(IEnumerable<T> entities)
+        public override void BulkSave(IEnumerable<T> entities)
         {
             var entitiesArray = entities as T[] ?? entities.ToArray();
             foreach (var languageId in entitiesArray.GroupBy(entity => entity.LanguageId).Select(grp => grp.First()).Select(p=>p.LanguageId))
@@ -54,7 +54,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                     BulkUpdate(forUpdate);
                 }
             }
-
         }
 
         protected void BulkUpdate(IEnumerable<T> entities)

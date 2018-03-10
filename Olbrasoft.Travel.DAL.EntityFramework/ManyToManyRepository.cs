@@ -7,7 +7,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
     public class ManyToManyRepository<T> : BaseRepository<T, int, int>, IManyToManyRepository<T> where T : ManyToMany
     {
         private IReadOnlyDictionary<int, int> _idsToToIds;
-        
+
         public IReadOnlyDictionary<int, int> IdsToToIds
         {
             get
@@ -19,7 +19,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public ManyToManyRepository(TravelContext context) : base(context)
         {
-            
         }
 
         public override void ClearCache()
@@ -27,6 +26,21 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             _idsToToIds = null;
         }
 
+        public override void BulkSave(IEnumerable<T> manyToManyEntities)
+        {
+            var forInsert = new List<T>();
+
+            foreach (var manyToMany in manyToManyEntities)
+            {
+                if (IdsToToIds.TryGetValue(manyToMany.Id, out var toId) && toId == manyToMany.ToId) continue;
+
+                if (forInsert.Exists(mtm => mtm.Id == manyToMany.Id && mtm.ToId == manyToMany.ToId)) continue;
+
+                forInsert.Add(manyToMany);
+            }
+
+            BulkInsert(forInsert);
+        }
 
     }
 }

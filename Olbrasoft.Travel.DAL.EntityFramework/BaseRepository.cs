@@ -7,16 +7,14 @@ using Olbrasoft.EntityFramework.Bulk;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-
     #region BaseRepository<T, TKey, TKey2>
     public abstract class BaseRepository<T, TKey, TKey2> : SharpRepository.EfRepository.EfRepository<T, TKey, TKey2>, IBaseRepository<T, TKey, TKey2> where T : class
     {
         public event EventHandler Saved;
-      
+
         protected BaseRepository(DbContext context) : base(context)
         {
         }
-
 
         public new void Add(IEnumerable<T> entities)
         {
@@ -29,8 +27,11 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             base.Add(entity);
             OnSaved(EventArgs.Empty);
         }
-        
-        public void BulkInsert(IEnumerable<T> entities)
+
+        public abstract void BulkSave(IEnumerable<T> entities);
+
+
+        protected void BulkInsert(IEnumerable<T> entities)
         {
             var batchesToInsert = BaseRepository<T>.SplitList(entities, 90000);
 
@@ -67,10 +68,10 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
     public abstract class BaseRepository<T> : SharpRepository.EfRepository.EfRepository<T>, IBaseRepository<T> where T : class
     {
         public event EventHandler Saved;
-        
+
         protected BaseRepository(DbContext context) : base(context)
         {
-           
+
         }
 
         public new TResult Min<TResult>(Expression<Func<T, TResult>> selector)
@@ -155,9 +156,9 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             ClearCache();
             base.ClearCache();
         }
-        
+
         public new abstract void ClearCache();
-       
+
         public static IEnumerable<List<T>> SplitList(IEnumerable<T> locations, int nSize = 30)
         {
             var result = locations.ToList();

@@ -12,10 +12,10 @@ namespace Olbrasoft.Travel.DAL
 
     }
 
-    public interface IBaseRepository<T, TKey, TKey2> : SharpRepository.Repository.ICompoundKeyRepository<T, TKey, TKey2>,IBulkInsert<T>,ICanClearCache
+    public interface IBaseRepository<T, TKey, TKey2> : SharpRepository.Repository.ICompoundKeyRepository<T, TKey, TKey2>,ICanClearCache
         where T : class
     {
-        
+        void BulkSave(IEnumerable<T> entities);
     }
 
 }
