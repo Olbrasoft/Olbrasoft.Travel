@@ -74,5 +74,23 @@ namespace Olbrasoft.Travel.EAN.Import.Test
             Assert.IsTrue(result.Count==3);
 
         }
+
+        [TestMethod]
+        public void HashSetTupleContainsTest()
+        {
+            //Arrange
+            var hashSet= new HashSet<Tuple<int,int>>();
+            hashSet.Add(new Tuple<int, int>(1, 1));
+            hashSet.Add(new Tuple<int, int>(1, 2));
+            var tup= new Tuple<int,int>(1,1);
+
+            //Act
+            var result = hashSet.Contains(tup);
+
+            
+            //Assert
+            Assert.IsTrue(result);
+        }
+
     }
 }

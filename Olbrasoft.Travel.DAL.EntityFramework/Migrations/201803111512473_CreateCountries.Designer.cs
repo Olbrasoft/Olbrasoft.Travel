@@ -7,13 +7,13 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class CreateCities : IMigrationMetadata
+    public sealed partial class CreateCountries : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateCities));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateCountries));
         
         string IMigrationMetadata.Id
         {
-            get { return "201803101802594_CreateCities"; }
+            get { return "201803111512473_CreateCountries"; }
         }
         
         string IMigrationMetadata.Source

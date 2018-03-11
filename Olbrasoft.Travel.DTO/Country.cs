@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Olbrasoft.Travel.DTO
 {
@@ -13,6 +14,9 @@ namespace Olbrasoft.Travel.DTO
         public int ContinentId { get; set; }
 
         public Continent Continent { get; set; }
+
         public virtual User Creator { get; set; }
+
+        public virtual ICollection<LocalizedCountry> LocalizedCountries { get; set; }
     }
 }

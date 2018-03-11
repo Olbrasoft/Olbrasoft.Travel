@@ -52,6 +52,7 @@
     <Compile Include="BaseAirport.cs" />
     <Compile Include="BaseLocalizedAirport.cs" />
     <Compile Include="BaseLocalizedRegion.cs" />
+    <Compile Include="BaseLocalizedRegionWithLongName.cs" />
     <Compile Include="BasePointOfInterest.cs" />
     <Compile Include="BaseRegion.cs" />
     <Compile Include="BaseName.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="LocalizedCity.cs" />
     <Compile Include="LocalizedContinent.cs" />
     <Compile Include="LocalizedCountry.cs" />
+    <Compile Include="LocalizedNeighborhood.cs" />
     <Compile Include="LocalizedPointOfInterest.cs" />
     <Compile Include="LocalizedRegion.cs" />
     <Compile Include="LogOfImport.cs" />

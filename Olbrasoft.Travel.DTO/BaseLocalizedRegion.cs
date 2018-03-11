@@ -8,8 +8,6 @@ namespace Olbrasoft.Travel.DTO
         [StringLength(255)]
         public string Name { get; set; }
 
-        [StringLength(510)]
-        public string LongName { get; set; }
+        
     }
-
 }

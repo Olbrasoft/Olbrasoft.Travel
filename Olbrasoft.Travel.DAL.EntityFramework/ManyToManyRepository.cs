@@ -1,23 +1,26 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
     public class ManyToManyRepository<T> : BaseRepository<T, int, int>, IManyToManyRepository<T> where T : ManyToMany
     {
-        private IReadOnlyDictionary<int, int> _idsToToIds;
+        private HashSet<Tuple<int, int>> _idsToToIds;
 
-        public IReadOnlyDictionary<int, int> IdsToToIds
+        public HashSet<Tuple<int, int>> IdsToToIds
         {
             get
             {
                 return _idsToToIds ??
-                       (_idsToToIds = GetAll(p => new { p.Id, p.ToId }).ToDictionary(k => k.Id, v => v.ToId));
+                       (
+                           _idsToToIds = new HashSet<Tuple<int, int>>( GetAll(p => new Tuple<int,int>( p.Id, p.ToId)))
+                        ) ;
             }
         }
 
-        public ManyToManyRepository(TravelContext context) : base(context)
+        public ManyToManyRepository(DbContext context) : base(context)
         {
         }
 
@@ -28,18 +31,20 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public override void BulkSave(IEnumerable<T> manyToManyEntities)
         {
-            var forInsert = new List<T>();
-
+            var forInsert = new Dictionary<Tuple<int, int>, T>();
+            
             foreach (var manyToMany in manyToManyEntities)
             {
-                if (IdsToToIds.TryGetValue(manyToMany.Id, out var toId) && toId == manyToMany.ToId) continue;
+                var tup = new Tuple<int, int>(manyToMany.Id, manyToMany.ToId);
 
-                if (forInsert.Exists(mtm => mtm.Id == manyToMany.Id && mtm.ToId == manyToMany.ToId)) continue;
+                if (IdsToToIds.Contains(tup)) continue;
+                
+                if (forInsert.ContainsKey(tup)) continue;
 
-                forInsert.Add(manyToMany);
+                forInsert.Add(tup,manyToMany);
             }
 
-            BulkInsert(forInsert);
+            BulkInsert(forInsert.Values);
         }
 
     }

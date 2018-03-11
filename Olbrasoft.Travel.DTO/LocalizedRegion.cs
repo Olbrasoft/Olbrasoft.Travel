@@ -1,7 +1,10 @@
-﻿namespace Olbrasoft.Travel.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Olbrasoft.Travel.DTO
 {
-    public class LocalizedRegion : BaseLocalizedRegion
+    public class LocalizedRegion : BaseLocalizedRegionWithLongName
     {
+       
         public User Creator { get; set; }
 
         public virtual Region Region { get; set; }

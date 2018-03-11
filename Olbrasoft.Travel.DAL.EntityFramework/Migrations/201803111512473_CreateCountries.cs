@@ -23,6 +23,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
                 .ForeignKey("dbo.Users", t => t.CreatorId)
                 .Index(t => t.Code, unique: true)
                 .Index(t => t.ContinentId)
+                .Index(t => t.EanRegionId, unique: true)
                 .Index(t => t.CreatorId);
             
         }
@@ -32,6 +33,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
             DropForeignKey("geo.Countries", "CreatorId", "dbo.Users");
             DropForeignKey("geo.Countries", "ContinentId", "geo.Continents");
             DropIndex("geo.Countries", new[] { "CreatorId" });
+            DropIndex("geo.Countries", new[] { "EanRegionId" });
             DropIndex("geo.Countries", new[] { "ContinentId" });
             DropIndex("geo.Countries", new[] { "Code" });
             DropTable("geo.Countries");

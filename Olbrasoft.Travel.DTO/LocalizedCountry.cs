@@ -1,13 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Olbrasoft.Travel.DTO
+﻿namespace Olbrasoft.Travel.DTO
 {
-    public class LocalizedCountry: BaseLocalized
+    public class LocalizedCountry: BaseLocalizedRegion
     {
-        [Required]
-        [StringLength(255)]
-        public string Name { get; set; }
-
         public User Creator { get; set; }
 
         public virtual Country Country { get; set; }

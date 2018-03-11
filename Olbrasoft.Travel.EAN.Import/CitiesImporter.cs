@@ -6,30 +6,6 @@ using City = Olbrasoft.Travel.EAN.DTO.Geography.City;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    
-    internal class NeighborhoodsImporter : Importer<DTO.Geography.Neighborhood>
-    {
-        public NeighborhoodsImporter(ImportOption option) : base(option)
-        {
-         
-        }
-
-        public override void ImportBatch(DTO.Geography.Neighborhood[] eanNeighBorhoods)
-        {
-            var neighborhoodsRepository = FactoryOfRepositories.BaseRegions<Travel.DTO.Neighborhood>();
-            var typeName = typeof(Travel.DTO.Neighborhood).Name;
-
-            Logger.Log($"{typeName} Build.");
-            var neighborhoods = BuildCitiesOrNeighborhoods<Travel.DTO.Neighborhood>(eanNeighBorhoods, CreatorId);
-            Logger.Log(neighborhoods.Length.ToString());
-
-            Logger.Log($"{typeName} Save.");
-            neighborhoodsRepository.BulkSave(neighborhoods);
-            Logger.Log($"{typeName} Saved.");
-        }
-    }
-
-
     internal class CitiesImporter : Importer<City>
     {
         private readonly object _lockMe = new object();
@@ -65,6 +41,8 @@ namespace Olbrasoft.Travel.EAN.Import
             
         }
 
+
+
         private LocalizedCity[] BuildLocalizedCities(City[] eanCities, IReadOnlyDictionary<long, int> eanRegionIdsToIds, int languageId, int creatorId)
         {
             var localizedCities = new Queue<LocalizedCity>();
@@ -72,6 +50,12 @@ namespace Olbrasoft.Travel.EAN.Import
             Parallel.ForEach(eanCities, eanCity =>
             {
                 if (!eanRegionIdsToIds.TryGetValue(eanCity.RegionID, out var id)) return;
+
+
+                //Name is EanLongName. Name is in ParentRegionList, in CityCoordinatesList is LongName.   
+                //Name=Lipany LongName=Lipany, Slovakia
+                //Name=Aberdeen LongName=Aberdeen, South Dakota, United States of America
+                //Name=St-Aubert LongName=St-Aubert, Quebec, Canada
                 var localizedCity = new LocalizedCity
                 {
                     Id = id,
