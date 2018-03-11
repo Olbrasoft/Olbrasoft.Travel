@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    interface IImportProvider
+    public interface IImportProvider
     {
         string GetFirstLine(string path);
 

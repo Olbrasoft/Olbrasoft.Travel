@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using Olbrasoft.EntityFramework.Bulk;
+
 using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
     public class LocalizedRepository<T> : BaseRepository<T, int, int>, ILocalizedRepository<T> where T : BaseLocalized
     {
-        public LocalizedRepository(TravelContext context) : base(context)
+        public LocalizedRepository(DbContext context) : base(context)
         {
         }
 
@@ -58,20 +58,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         protected void BulkUpdate(IEnumerable<T> entities)
         {
-            var batchesToUpdate = BaseRepository<T>.SplitList(entities, 90000);
-
-            foreach (var batch in batchesToUpdate)
-            {
-                Context.BulkUpdate(batch, new BulkConfig()
-                {
-                    BatchSize = 45000,
-                    BulkCopyTimeout = 480,
-                    IgnoreColumns = new HashSet<string>(new[] { "DateAndTimeOfCreation" }),
-                    IgnoreColumnsUpdate = new HashSet<string>(new[] { "CreatorId" })
-                });
-
-                OnSaved(EventArgs.Empty);
-            }
+           Context.BulkUpdate(entities,OnSaved);
         }
         
         public bool Exists(int languageId)

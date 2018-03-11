@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    interface IImport
+   public interface IImport<in T>
     {
         void Import(string path);
+        void ImportBatch(T[] eanEntities);
     }
 }

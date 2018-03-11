@@ -72,16 +72,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             base.Add(RebuildEanRegionIds(pointsOfInterest.ToArray()));
         }
         
-        public new void BulkInsert(IEnumerable<PointOfInterest> pointsOfInterest)
-        {
-            base.BulkInsert(RebuildEanRegionIds(pointsOfInterest.ToArray()));
-        }
-        
-        public new void BulkUpdate(IEnumerable<PointOfInterest> pointsOfInterest)
-        {
-            base.BulkUpdate(RebuildEanRegionIds(pointsOfInterest.ToArray()));
-        }
-      
+       
 
         public IDictionary<long, BasePointOfInterest> EanRegionIdsToBasePointsOfInterest(bool clearCache = false)
         {

@@ -21,7 +21,7 @@ namespace Olbrasoft.Travel.EAN.Import
             //PointsOfInterestFacade = Option.PointsOfInterestFacade;
         }
 
-        protected override void ImportBatch(PointOfInterest[] parentRegions)
+        public override void ImportBatch(PointOfInterest[] parentRegions)
         {
             const string subClassName = "neighbor";
 

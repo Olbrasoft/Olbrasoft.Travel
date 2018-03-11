@@ -9,19 +9,19 @@ namespace Olbrasoft.Travel.EAN.Import
         {
         }
 
-        protected override void SetTypeOfRegionIdAndSubClassId(IRegionsFacade regionsFacade, ISubClassesFacade subClassesFacade)
-        {
-            WriteLog("It will be imported Neighborhoods.");
+        //protected override void SetTypeOfRegionIdAndSubClassId(IRegionsFacade regionsFacade, ISubClassesFacade subClassesFacade)
+        //{
+        //    WriteLog("It will be imported Neighborhoods.");
 
-            if (RegionsFacade.TypesOfRegionsAsReverseDictionary().TryGetValue("Neighborhood", out var typeOfRegionCityId))
-            {
-                TypeOfRegionId = typeOfRegionCityId;
-            }
+        //    if (RegionsFacade.TypesOfRegionsAsReverseDictionary().TryGetValue("Neighborhood", out var typeOfRegionCityId))
+        //    {
+        //        TypeOfRegionId = typeOfRegionCityId;
+        //    }
 
-            if (SubClassesFacade.SubClassesAsReverseDictionary().TryGetValue("neighbor", out var subClassCityId))
-            {
-                SubClassId = subClassCityId;
-            }
-        }
+        //    if (SubClassesFacade.SubClassesAsReverseDictionary().TryGetValue("neighbor", out var subClassCityId))
+        //    {
+        //        SubClassId = subClassCityId;
+        //    }
+        //}
     }
 }

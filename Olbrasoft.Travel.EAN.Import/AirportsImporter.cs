@@ -12,9 +12,9 @@ namespace Olbrasoft.Travel.EAN.Import
         public AirportsImporter(ImportOption option) : base(option)
         {
         }
-         
 
-        protected override void ImportBatch(Airport[] parentRegions)
+
+        public override void ImportBatch(Airport[] parentRegions)
         {
 
             throw new NotImplementedException();

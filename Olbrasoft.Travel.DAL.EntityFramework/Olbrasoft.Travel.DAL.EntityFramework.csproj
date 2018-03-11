@@ -156,6 +156,7 @@
     <Compile Include="BaseRegionsRepository.cs" />
     <Compile Include="ContinentsRepository.cs" />
     <Compile Include="CustomSqlServerMigrationSqlGenerator.cs" />
+    <Compile Include="ExDbContext.cs" />
     <Compile Include="LanguagesRepository.cs" />
     <Compile Include="LocalizedContinentsRepository.cs" />
     <Compile Include="LocalizedPointsOfInterestRepository.cs" />
@@ -230,6 +231,14 @@
     <Compile Include="Migrations\201803100122004_CreateLocalizedCountries.cs" />
     <Compile Include="Migrations\201803100122004_CreateLocalizedCountries.Designer.cs">
       <DependentUpon>201803100122004_CreateLocalizedCountries.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803101802594_CreateCities.cs" />
+    <Compile Include="Migrations\201803101802594_CreateCities.Designer.cs">
+      <DependentUpon>201803101802594_CreateCities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803110235007_CreateLocalizedCities.cs" />
+    <Compile Include="Migrations\201803110235007_CreateLocalizedCities.Designer.cs">
+      <DependentUpon>201803110235007_CreateLocalizedCities.cs</DependentUpon>
     </Compile>
     <Compile Include="PointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToPointsOfInterestRepository.cs" />
@@ -317,6 +326,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803100122004_CreateLocalizedCountries.resx">
       <DependentUpon>201803100122004_CreateLocalizedCountries.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803101802594_CreateCities.resx">
+      <DependentUpon>201803101802594_CreateCities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803110235007_CreateLocalizedCities.resx">
+      <DependentUpon>201803110235007_CreateLocalizedCities.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

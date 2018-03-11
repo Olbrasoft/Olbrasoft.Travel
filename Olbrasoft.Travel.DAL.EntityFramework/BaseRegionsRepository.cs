@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
@@ -49,57 +50,77 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public BaseRegionsRepository(TravelContext context) : base(context)
         {
-            
+
         }
 
-       
+
         public override void ClearCache()
         {
             _eanRegionIds = null;
             _eanRegionIdsToIds = null;
             _minEanRegionId = long.MinValue;
-           
+
         }
 
 
-        public new void Add(T entity)
+        public new void Add(T baseRegion)
         {
-            if (entity.EanRegionId == long.MinValue)
+            if (baseRegion.EanRegionId == long.MinValue)
             {
-                entity.EanRegionId = MinEanRegionId;
+                baseRegion.EanRegionId = MinEanRegionId;
             }
 
-            base.Add(entity);
+            base.Add(baseRegion);
         }
 
-        private IEnumerable<T> Rebuild(IEnumerable<T> entities)
+        private IEnumerable<T> RebuildEanRegionIds(IEnumerable<T> baseRegions)
         {
-            var entitiesArray = entities as T[] ?? entities.ToArray();
+            var regions = baseRegions as T[] ?? baseRegions.ToArray();
 
-            if (entitiesArray.All(p => p.EanRegionId != long.MinValue)) return entitiesArray;
+            if (regions.All(p => p.EanRegionId != long.MinValue)) return regions;
 
-            foreach (var pointOfInterest in entitiesArray.Where(p => p.EanRegionId == long.MinValue))
+            //Parallel.ForEach(regions.Where(p => p.EanRegionId == long.MinValue), baseRegion =>
+            //{
+            //    baseRegion.EanRegionId = MinEanRegionId;
+            //    _minEanRegionId = (_minEanRegionId - 1);
+            //});
+
+            foreach (var baseRegion in regions.Where(p => p.EanRegionId == long.MinValue))
             {
-                pointOfInterest.EanRegionId = MinEanRegionId;
+                baseRegion.EanRegionId = MinEanRegionId;
                 _minEanRegionId = (_minEanRegionId - 1);
             }
 
-            return entitiesArray;
+            return regions;
         }
 
-        public new void Add(IEnumerable<T> entities)
+        public new void Add(IEnumerable<T> baseRegions)
         {
-            base.Add(Rebuild(entities));
+            base.Add(RebuildEanRegionIds(baseRegions));
         }
 
-        public new void BulkInsert(IEnumerable<T> entities)
+        public override void BulkSave(IEnumerable<T> baseRegions)
         {
-            base.BulkInsert(Rebuild(entities));
-        }
+            var regions = baseRegions as T[] ?? baseRegions.ToArray();
 
-        public new void BulkUpdate(IEnumerable<T> entities)
-        {
-            base.BulkUpdate(Rebuild(entities));
+            //Parallel.ForEach(regions.Where(p => p.EanRegionId >= 0 && p.Id == 0),
+            //    region =>
+            //    {
+            //        if (EanRegionIdsToIds.TryGetValue(region.EanRegionId, out var id))
+            //        {
+            //            region.Id = id;
+            //        }
+            //    }
+            //);
+
+
+            foreach (var region in regions.Where(p => p.EanRegionId >= 0 && p.Id == 0))
+            {
+                if (!EanRegionIdsToIds.TryGetValue(region.EanRegionId, out var id)) continue;
+                region.Id = id;
+            }
+
+            base.BulkSave(RebuildEanRegionIds(regions));
         }
     }
 }

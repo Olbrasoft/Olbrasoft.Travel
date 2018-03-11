@@ -57,12 +57,12 @@ namespace Olbrasoft.Travel.EAN
 
         public IEnumerable<TEan> Parse(IEnumerable<string> lines)
         {
-            var entities = new HashSet<TEan>();
+            var entities = new Queue<TEan>();
             foreach (var line in lines)
             {
                 if (TryParse(line, out var entity))
                 {
-                    entities.Add(entity);
+                    entities.Enqueue(entity);
                 }
             }
 

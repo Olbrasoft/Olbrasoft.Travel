@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DTO;
@@ -13,7 +12,7 @@ namespace Olbrasoft.Travel.EAN.Import
         {
         }
 
-        protected override void ImportBatch(Country[] eanCountries)
+        public override void ImportBatch(Country[] eanCountries)
         {
             var continentsEanRegionIdsToIds = FactoryOfRepositories.BaseRegions<Continent>().EanRegionIdsToIds;
             var countriesRepository = FactoryOfRepositories.BaseRegions<Travel.DTO.Country>();
@@ -29,17 +28,15 @@ namespace Olbrasoft.Travel.EAN.Import
 
             var eanRegionIdsToIds = countriesRepository.EanRegionIdsToIds;
 
+            typeName = typeof(Travel.DTO.LocalizedCountry).Name;
             Logger.Log($"{typeName} Build.");
             var localizedCountries = BuildLocalizedCountries(eanCountries, eanRegionIdsToIds, DefaultLanguageId, CreatorId);
-            Logger.Log($"{typeName} Builded to insert:{localizedCountries.Count(c => c.Id == 0)} to update:{localizedCountries.Count(c => c.Id != 0)}.");
+            Logger.Log($"{typeName} Builded: {localizedCountries.Length}.");
 
             Logger.Log($"{typeName} Save.");
             FactoryOfRepositories.Localized<LocalizedCountry>().BulkSave(localizedCountries);
             Logger.Log($"{typeName} Saved");
-
-
-            //BulkSaveLocalized(localizedCountries, FactoryOfRepositories.Localized<LocalizedCountry>(),
-            //    DefaultLanguageId, Logger);
+        
         }
 
         public static LocalizedCountry[] BuildLocalizedCountries(Country[] eanCountries,
@@ -67,8 +64,6 @@ namespace Olbrasoft.Travel.EAN.Import
 
         public static  Travel.DTO.Country[] BuildCountries (Country[] eanCountries, IReadOnlyDictionary<long,int> continentsEanRegionIdsToIds ,IBaseRegionsRepository<Travel.DTO.Country> repository, int creatorId)
         {
-            var eanRegionIdsToIds = repository.EanRegionIdsToIds;
-
             var countries = new Dictionary<long, Travel.DTO.Country>();
 
             foreach (var eanCountry in eanCountries)
@@ -80,19 +75,11 @@ namespace Olbrasoft.Travel.EAN.Import
                 {
                     ContinentId = continentId,
                     EanRegionId = eanCountry.CountryID,
-                    Code = eanCountry.CountryCode
-                    
+                    Code = eanCountry.CountryCode,
+                    CreatorId = creatorId
                 };
+                
 
-                if (eanRegionIdsToIds.TryGetValue(eanCountry.CountryID, out var id))
-                {
-                    country.Id = id;
-                }
-                else
-                {
-                    country.CreatorId = creatorId;
-                }
-               
                 countries.Add(eanCountry.CountryID,country);
             }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +13,9 @@ using Olbrasoft.Travel.EAN.DTO.Geography;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    abstract class Importer<T>:IImport where T : class, new()
+    internal abstract class Importer<T>:IImport<T> where T : class, new()
     {
+        private readonly object _lockMe = new object();
         protected readonly ImportOption Option;
         protected  ILoggingImports Logger;
         protected int BatchSize;
@@ -30,7 +32,16 @@ namespace Olbrasoft.Travel.EAN.Import
         {
             Option = option ?? throw new ArgumentNullException(nameof(option));
         }
-        
+
+        public static IEnumerable<List<T>> SplitList<T>(IEnumerable<T> locations, int nSize = 90000)
+        {
+            var result = locations.ToList();
+            for (var i = 0; i < result.Count; i += nSize)
+            {
+                yield return result.GetRange(i, Math.Min(nSize, result.Count - i));
+            }
+        }
+
         public virtual void Import(string path)
         {
             Logger = Option.Logger;
@@ -52,7 +63,15 @@ namespace Olbrasoft.Travel.EAN.Import
 
             ParserFactory = Option.ParserFactory;
             Parser = ParserFactory.Create<T>(Provider.GetFirstLine(path));
-            
+
+            //var listLines = SplitList( File.ReadAllLines(path).Skip(1));
+            //foreach (var lines in listLines)
+            //{
+            //    var entities = Parser.Parse(lines);
+            //    ImportBatch(entities.ToArray());
+            //}
+
+
             for (var batch = 1; batch <= BatchCount; batch++)
             {
                 var lines = Provider.GetBatchLines(path, batch, BatchSize);
@@ -60,8 +79,8 @@ namespace Olbrasoft.Travel.EAN.Import
                 ImportBatch(entities.ToArray());
             }
         }
-        
-        protected abstract void ImportBatch(T[] parentRegions);
+
+        public abstract void ImportBatch(T[] parentRegions);
        
         public static int GetBatchCount(int countLines, int batchSize = 90000, bool skipFirstLine = true)
         {
@@ -77,70 +96,66 @@ namespace Olbrasoft.Travel.EAN.Import
             return DbGeography.PointFromText(point, 4326);
         }
         
-        public static DbGeography CreatePoligon(string s)
+        public  DbGeography CreatePoligon(string s)
         {
             var spl = s.Split(':');
             var pointsString = new StringBuilder();
-
-            string lastPoint = null;
-
+            
             foreach (var s1 in spl)
             {
                 var latLon = s1.Split(';');
-                var lotLanString = $"{latLon[1]} {latLon[0]}";
-                pointsString.Append(lotLanString + ",");
-                if (String.IsNullOrEmpty(lastPoint)) lastPoint = lotLanString;
+               // var lotLanString = $"{latLon[1]} {latLon[0]},";
+                pointsString.Append($"{latLon[1]} {latLon[0]},");
             }
 
-            pointsString.Append(lastPoint);
+            pointsString.Append(pointsString.ToString().Split(',').First());
 
             return DbGeography.PolygonFromText($"POLYGON(({pointsString}))", 4326);
-
         }
+        
 
+        //protected static void BulkSaveLocalized<TL>(IReadOnlyCollection<TL> localizedEntities,
+        //      ILocalizedRepository<TL> repository, int defaultLanguageId, ILoggingImports logger) where TL : BaseLocalized
+        //  {
+        //      if (!repository.Exists(defaultLanguageId))
+        //      {
+        //          logger.Log($"Bulk Insert {localizedEntities.Count} {typeof(TL)}.");
+        //          repository.BulkInsert(localizedEntities);
+        //          logger.Log($"{typeof(TL)} Inserted.");
+        //      }
+        //      else
+        //      {
+        //          var storedLocalizedIds =
+        //              new HashSet<int>(repository.FindIds(defaultLanguageId));
 
-      //protected static void BulkSaveLocalized<TL>(IReadOnlyCollection<TL> localizedEntities,
-      //      ILocalizedRepository<TL> repository, int defaultLanguageId, ILoggingImports logger) where TL : BaseLocalized
-      //  {
-      //      if (!repository.Exists(defaultLanguageId))
-      //      {
-      //          logger.Log($"Bulk Insert {localizedEntities.Count} {typeof(TL)}.");
-      //          repository.BulkInsert(localizedEntities);
-      //          logger.Log($"{typeof(TL)} Inserted.");
-      //      }
-      //      else
-      //      {
-      //          var storedLocalizedIds =
-      //              new HashSet<int>(repository.FindIds(defaultLanguageId));
+        //          var forInsert = new List<TL>();
+        //          var forUpdate = new List<TL>();
 
-      //          var forInsert = new List<TL>();
-      //          var forUpdate = new List<TL>();
+        //          foreach (var localizedEntity in localizedEntities)
+        //          {
+        //              if (!storedLocalizedIds.Contains(localizedEntity.Id))
+        //              {
+        //                  forInsert.Add(localizedEntity);
+        //              }
+        //              else
+        //              {
+        //                  forUpdate.Add(localizedEntity);
+        //              }
+        //          }
 
-      //          foreach (var localizedEntity in localizedEntities)
-      //          {
-      //              if (!storedLocalizedIds.Contains(localizedEntity.Id))
-      //              {
-      //                  forInsert.Add(localizedEntity);
-      //              }
-      //              else
-      //              {
-      //                  forUpdate.Add(localizedEntity);
-      //              }
-      //          }
+        //          if (forInsert.Count > 0)
+        //          {
+        //              logger.Log($"Bulk Insert {forInsert.Count} {typeof(TL)}.");
+        //              repository.BulkInsert(forInsert);
+        //              logger.Log($"{typeof(TL)} Inserted.");
+        //          }
 
-      //          if (forInsert.Count > 0)
-      //          {
-      //              logger.Log($"Bulk Insert {forInsert.Count} {typeof(TL)}.");
-      //              repository.BulkInsert(forInsert);
-      //              logger.Log($"{typeof(TL)} Inserted.");
-      //          }
-
-      //          if (forUpdate.Count <= 0) return;
-      //          logger.Log($"Bulk Update {forUpdate.Count} {typeof(TL)}.");
-      //          repository.BulkUpdate(forUpdate);
-      //          logger.Log($"{typeof(TL)} Updated.");
-      //      }
-      //  }
+        //          if (forUpdate.Count <= 0) return;
+        //          logger.Log($"Bulk Update {forUpdate.Count} {typeof(TL)}.");
+        //          repository.BulkUpdate(forUpdate);
+        //          logger.Log($"{typeof(TL)} Updated.");
+        //      }
+        //  }
 
         protected void WriteLog(object obj)
         {

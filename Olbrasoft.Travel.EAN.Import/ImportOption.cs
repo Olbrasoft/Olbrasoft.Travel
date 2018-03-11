@@ -3,7 +3,7 @@ using Olbrasoft.Travel.DAL;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    class ImportOption
+    internal class ImportOption
     {
         public int ImportBatchSize { get; set; }
         public ILoggingImports Logger { get; set; }

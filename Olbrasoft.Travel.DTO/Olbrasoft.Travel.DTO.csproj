@@ -57,6 +57,7 @@
     <Compile Include="BaseName.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Chain.cs" />
+    <Compile Include="City.cs" />
     <Compile Include="Continent.cs" />
     <Compile Include="Country.cs" />
     <Compile Include="Description.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="LocalizedAccommodation.cs" />
     <Compile Include="LocalizedAirport.cs" />
     <Compile Include="LocalizedCategory.cs" />
+    <Compile Include="LocalizedCity.cs" />
     <Compile Include="LocalizedContinent.cs" />
     <Compile Include="LocalizedCountry.cs" />
     <Compile Include="LocalizedPointOfInterest.cs" />

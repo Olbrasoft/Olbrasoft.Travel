@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Olbrasoft.Travel.DTO
 {
@@ -48,6 +45,10 @@ namespace Olbrasoft.Travel.DTO
         public virtual ICollection<Country> CreatedCountries { get; set; }
 
         public virtual ICollection<LocalizedCountry> CreatedLocalizedCountries { get; set; }
+
+        public virtual ICollection<City> CreatedCities { get; set; }
+
+        public virtual ICollection<LocalizedCity> CreatedLocalizedCities { get; set; }
 
         //public virtual ICollection<Airport> CreatedAirports { get; set; }
         #endregion

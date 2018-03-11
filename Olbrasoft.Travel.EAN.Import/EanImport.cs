@@ -76,28 +76,46 @@ namespace Olbrasoft.Travel.EAN.Import
                 .ImplementedBy<ImportOption>()
                 .DependsOn(Dependency.OnValue("creatorId", user.Id),Dependency.OnValue("defaultLanguageId", defaultLanguage.Id))
             );
-            
-            container.Register(Component.For<IImport>()
-                .ImplementedBy<ParentRegionImporter>()
-                .Named(nameof(ParentRegionImporter)));
 
-            container.Register(Component.For<IImport>()
+            container.Register(Component.For(typeof(IImport<ParentRegion>))
+                .ImplementedBy(typeof(ParentRegionImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+            //container.Register(Component.For<IImport>()
+            //    .ImplementedBy<ParentRegionImporter>()
+            //    .Named(nameof(ParentRegionImporter)));
+
+            //container.Register(Component.For<IImport>()
+            //    .ImplementedBy<CountriesImporter>()
+            //    .Named(nameof(CountriesImporter))
+            //    .Interceptors<IInterceptor>()
+            //);
+
+            container.Register(Component.For(typeof(IImport<DTO.Geography.Country>))
                 .ImplementedBy<CountriesImporter>()
-                .Named(nameof(CountriesImporter)));
+                .Interceptors<IInterceptor>()
+            );
 
-
-            container.Register(Component.For<IImport>()
+            //container.Register(Component.For<IImport>()
+            //    .ImplementedBy<CitiesImporter>()
+            //    .Named(nameof(CitiesImporter))
+            //    .Interceptors<IInterceptor>()
+            //);
+            container.Register(Component.For(typeof(IImport<DTO.Geography.City>))
                 .ImplementedBy<CitiesImporter>()
-                .Named(nameof(CitiesImporter)));
-
-            container.Register(Component.For<IImport>()
-                .ImplementedBy<NeighborhoodsImporter>()
-                .Named(nameof(NeighborhoodsImporter)));
+                .Interceptors<IInterceptor>()
+            );
 
 
-            container.Register(Component.For<IImport>()
-                .ImplementedBy<PointsOfInterestImporter>()
-                .Named(nameof(PointsOfInterestImporter)));
+            //container.Register(Component.For<IImport>()
+            //    .ImplementedBy<NeighborhoodsImporter>()
+            //    .Named(nameof(NeighborhoodsImporter)));
+
+
+            //container.Register(Component.For<IImport>()
+            //    .ImplementedBy<PointsOfInterestImporter>()
+            //    .Named(nameof(PointsOfInterestImporter)));
 
             container.AddFacility<TypedFactoryFacility>();
             container.Register(Component.For<IFactoryOfRepositories>().AsFactory());
@@ -109,17 +127,17 @@ namespace Olbrasoft.Travel.EAN.Import
             //var repository = container.Resolve<IBaseRepository<RegionToRegion>>();
             //Console.ReadLine();
 
-            var parentRegionImporter = container.Resolve<IImport>(nameof(ParentRegionImporter));
-            parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
+            //var parentRegionImporter = container.Resolve<IImport<DTO.Geography.ParentRegion>>();
+            //parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
 
-            var countriesImporter = container.Resolve<IImport>(nameof(CountriesImporter));
-            countriesImporter.Import(@"D:\Ean\CountryList.txt");
-
-            
+            //var countriesImporter = container.Resolve<IImport<DTO.Geography.Country>>();
+            //countriesImporter.Import(@"D:\Ean\CountryList.txt");
 
 
-            //var citiesImporter = container.Resolve<IImport>(nameof(CitiesImporter));
-            //citiesImporter.Import(@"D:\Ean\CityCoordinatesList.Txt");
+            var citiesImporter = container.Resolve<IImport<DTO.Geography.City>>();
+            citiesImporter.Import(@"D:\Ean\CityCoordinatesList.Txt");
+
+
 
             //var neighborhoodsImporter = container.Resolve<IImport>(nameof(NeighborhoodsImporter));
             //neighborhoodsImporter.Import(@"D:\Ean\NeighborhoodCoordinatesList.Txt");
@@ -300,7 +318,7 @@ namespace Olbrasoft.Travel.EAN.Import
             var container = new WindsorContainer();
 
             container.Register(Component.For<TravelContext>().ImplementedBy<TravelContext>());
-            //container.Register(Component.For<DbContext>().ImplementedBy<TravelContext>());
+            container.Register(Component.For<DbContext>().ImplementedBy<TravelContext>().Named(nameof(TravelContext)));
 
             container.Register(FromAssemblyNamed("Olbrasoft.Travel.BLL")
                 .Where(type => type.Name.EndsWith("Facade"))
@@ -327,13 +345,11 @@ namespace Olbrasoft.Travel.EAN.Import
 
             container.Register(Component.For(typeof(ILocalizedRepository<>)).ImplementedBy(typeof(LocalizedRepository<>)));
 
+            container.Register(Component.For<IInterceptor>().ImplementedBy<ImportInterceptor>());
 
             return container;
         }
-
-
-
-
+        
 
         public static void Write(object s)
         {
@@ -342,4 +358,5 @@ namespace Olbrasoft.Travel.EAN.Import
 #endif
         }
     }
+
 }

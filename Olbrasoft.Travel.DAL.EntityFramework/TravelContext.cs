@@ -22,6 +22,8 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
         public virtual IDbSet<Country> Countries { get; set; }
         public virtual IDbSet<LocalizedCountry> LocalizedCountries { get; set; }
+        public virtual IDbSet<City> Cities { get; set; }
+        public virtual IDbSet<LocalizedCity> LocalizedCities { get; set; }
 
 
         //public virtual IDbSet<Airport> Airports { get; set; }
@@ -58,6 +60,8 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnLocalizedPointsOfInterestCreating(modelBuilder);
             OnCountriesCreating(modelBuilder);
             OnLocalizedCountriesCreating(modelBuilder);
+            OnCitiesCreating(modelBuilder);
+            OnLocalizedCitiesCreating(modelBuilder);
 
             //OnAirportsCreating(modelBuilder);
             //OnChainsCreating(modelBuilder);
@@ -70,6 +74,34 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             //OnLocalizedAccommodationsCreating(modelBuilder);
 
         }
+
+        private void OnLocalizedCitiesCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<LocalizedCity>()
+                .ToTable(nameof(LocalizedCities), "geo")
+                .Property(e => e.DateAndTimeOfCreation)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+
+            modelBuilder.Entity<Language>()
+                .HasMany(language => language.LocalizedCities)
+                .WithRequired(localizedCity => localizedCity.Language)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<User>()
+                .HasMany(user => user.CreatedLocalizedCities)
+                .WithRequired(localizedCity => localizedCity.Creator)
+                .WillCascadeOnDelete(false);
+        }
+
+        private void OnCitiesCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<City>()
+                .ToTable(nameof(Cities), "geo")
+                .Property(e => e.DateAndTimeOfCreation)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+            
+        }
+
 
         private void OnLocalizedCountriesCreating(DbModelBuilder modelBuilder)
         {

@@ -53,16 +53,18 @@ namespace Olbrasoft.EntityFramework.Bulk
         {
             var value = base.GetValue(i);
 
-            if (value is DbGeography dbgeo)
+            switch (value)
             {
-                var chars = new SqlChars(dbgeo.WellKnownValue.WellKnownText);
-                return SqlGeography.STGeomFromText(chars, dbgeo.CoordinateSystemId);
-            }
-
-            if (value is DbGeometry dbgeom)
-            {
-                var chars = new SqlChars(dbgeom.WellKnownValue.WellKnownText);
-                return SqlGeometry.STGeomFromText(chars, dbgeom.CoordinateSystemId);
+                case DbGeography dbgeo:
+                {
+                    var chars = new SqlChars(dbgeo.WellKnownValue.WellKnownText);
+                    return SqlGeography.STGeomFromText(chars, dbgeo.CoordinateSystemId);
+                }
+                case DbGeometry dbgeom:
+                {
+                    var chars = new SqlChars(dbgeom.WellKnownValue.WellKnownText);
+                    return SqlGeometry.STGeomFromText(chars, dbgeom.CoordinateSystemId);
+                }
             }
 
             return value;

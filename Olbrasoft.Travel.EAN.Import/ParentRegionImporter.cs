@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Olbrasoft.Travel.BLL;
 using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DTO;
 using Olbrasoft.Travel.EAN.DTO.Geography;
@@ -17,7 +16,7 @@ namespace Olbrasoft.Travel.EAN.Import
             
         }
 
-        protected override void ImportBatch(ParentRegion[] parentRegions)
+        public override void ImportBatch(ParentRegion[] parentRegions)
         {
             var continentRepository = FactoryOfRepositories.BaseRegions<Continent>();
             ImportContinents(parentRegions, continentRepository, CreatorId);

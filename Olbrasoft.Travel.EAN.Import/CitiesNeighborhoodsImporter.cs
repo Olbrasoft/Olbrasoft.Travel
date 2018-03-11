@@ -11,68 +11,64 @@ namespace Olbrasoft.Travel.EAN.Import
     {
 
         protected new readonly ImportOption Option;
-        protected IRegionsFacade RegionsFacade;
-        protected ISubClassesFacade SubClassesFacade;
-        protected int TypeOfRegionId;
-        protected int SubClassId;
 
-        
+        //protected int TypeOfRegionId;
+        //protected int SubClassId;
+
+
         protected CitiesNeighborhoodsImporter(ImportOption option) : base(option)
         {
             Option = option;
-           // RegionsFacade = Option.RegionsFacade;
-           // SubClassesFacade = Option.SubClassesFacade;
-            
+            // RegionsFacade = Option.RegionsFacade;
+            // SubClassesFacade = Option.SubClassesFacade;
+
         }
 
-        protected abstract void SetTypeOfRegionIdAndSubClassId(IRegionsFacade regionsFacade,
-            ISubClassesFacade subClassesFacade);
 
-
-        protected override void ImportBatch(T[] parentRegions)
+        public override void ImportBatch(T[] parentRegions)
         {
 
-            SetTypeOfRegionIdAndSubClassId(RegionsFacade, SubClassesFacade);
+            //  SetTypeOfRegionIdAndSubClassId(RegionsFacade, SubClassesFacade);
 
-            if (TypeOfRegionId == 0)
-            {
-                WriteLog($"{nameof(TypeOfRegionId)} is 0 import will be terminated.");
-                return;
-            }
+            //if (TypeOfRegionId == 0)
+            //{
+            //    WriteLog($"{nameof(TypeOfRegionId)} is 0 import will be terminated.");
+            //    return;
+            //}
 
-            if (SubClassId == 0)
-            {
-                WriteLog($"{nameof(SubClassId)} is 0 import will be terminated.");
-                return;
-            }
+            //if (SubClassId == 0)
+            //{
+            //    WriteLog($"{nameof(SubClassId)} is 0 import will be terminated.");
+            //    return;
+            //}
 
-            var storedRegions = new Dictionary<long,Region>();  // RegionsFacade.GetMappingEanRegionIdsToRegions(true);
+            var storedRegions = new Dictionary<long, Region>();  // RegionsFacade.GetMappingEanRegionIdsToRegions(true);
 
-            var defaltBaseRegion = new Region { TypeOfRegionId = TypeOfRegionId, SubClassId = SubClassId, CreatorId = CreatorId };
+            //  var defaltBaseRegion = new Region { TypeOfRegionId = TypeOfRegionId, SubClassId = SubClassId, CreatorId = CreatorId };
 
             WriteLog("Regions Build.");
-            var regions = BuildRegions(parentRegions, storedRegions, defaltBaseRegion, out var adeptsToLocalizedRegions);
-            var count = regions.Length;
-            WriteLog($"Regions Builded:{count}.");
+           // var regions = BuildRegions(parentRegions, storedRegions, defaltBaseRegion, out var adeptsToLocalizedRegions);
+            //var count = regions.Length;
+            //WriteLog($"Regions Builded:{count}.");
 
-            if (count > 0)
-            {
-                WriteLog("Regions Save.");
-               // RegionsFacade.BulkSave(regions);
-                WriteLog("Regions Saved.");
-            }
+            //if (count > 0)
+            //{
+            //    WriteLog("Regions Save.");
+            //    // RegionsFacade.BulkSave(regions);
+            //    WriteLog("Regions Saved.");
+            //}
 
-            WriteLog("LocalizedRegions Build.");
-            var localizedRegions = BuildLocalizedRegions(adeptsToLocalizedRegions,
-                RegionsFacade.GetMappingEanRegionIdsToIds(true), CreatorId, DefaultLanguageId);
+            //WriteLog("LocalizedRegions Build.");
+            //var localizedRegions = BuildLocalizedRegions(adeptsToLocalizedRegions,
+            //    RegionsFacade.GetMappingEanRegionIdsToIds(true), CreatorId, DefaultLanguageId);
 
-            count = localizedRegions.Length;
-            WriteLog($"LocalizedRegions Builded:{count}.");
+            // count = localizedRegions.Length;
+           // WriteLog($"LocalizedRegions Builded:{count}.");
 
-            if (count <= 0) return;
-            WriteLog("LocalizedRegions Save.");
-          //  Option.LocalizedFacade.BulkSave(localizedRegions);
-            WriteLog("LocalizedRegions Saved.");
+            //if (count <= 0) return;
+            //WriteLog("LocalizedRegions Save.");
+            ////  Option.LocalizedFacade.BulkSave(localizedRegions);
+            //WriteLog("LocalizedRegions Saved.");
         }
 
         private static LocalizedRegion[] BuildLocalizedRegions(IDictionary<long, string> adeptsToLocalizedRegions,
@@ -100,7 +96,7 @@ namespace Olbrasoft.Travel.EAN.Import
         }
 
 
-        private static Region[] BuildRegions(
+        private  Region[] BuildRegions(
             IEnumerable<CityNeighborhood> eanEntities,
             IDictionary<long, Region> storedRegions,
             Region defaultBaseRegion,
@@ -118,14 +114,14 @@ namespace Olbrasoft.Travel.EAN.Import
                     region.SubClassId = baseRegion.SubClassId;
                     region.TypeOfRegionId = baseRegion.TypeOfRegionId;
                     region.CreatorId = baseRegion.CreatorId;
-                    region.DateAndTimeOfCreation = baseRegion.DateAndTimeOfCreation;
+                   
                 }
                 else
                 {
                     region.SubClassId = defaultBaseRegion.SubClassId;
                     region.TypeOfRegionId = defaultBaseRegion.TypeOfRegionId;
                     region.CreatorId = defaultBaseRegion.CreatorId;
-                    region.DateAndTimeOfCreation = DateTime.Now;
+                    
 
                     if (!adeptsToLocalizedRegions.ContainsKey(city.RegionID))
                     {
