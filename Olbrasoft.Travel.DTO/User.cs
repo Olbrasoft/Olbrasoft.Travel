@@ -50,6 +50,8 @@ namespace Olbrasoft.Travel.DTO
 
         public virtual ICollection<LocalizedCity> CreatedLocalizedCities { get; set; }
 
+        public virtual ICollection<Neighborhood> CreatedNeighborhood { get; set; }
+
         //public virtual ICollection<Airport> CreatedAirports { get; set; }
         #endregion
     }

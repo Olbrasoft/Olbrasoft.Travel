@@ -1,13 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity.Spatial;
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class City : BaseRegion
+    public class City : BaseRegionCoordinates
     {
-        public DbGeography Coordinates { get; set; }
-        public virtual User Creator { get; set; }
+       public virtual User Creator { get; set; }
     }
-
-  
 }

@@ -240,6 +240,10 @@
     <Compile Include="Migrations\201803110235007_CreateLocalizedCities.Designer.cs">
       <DependentUpon>201803110235007_CreateLocalizedCities.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803110308574_CreateNeighborhoods.cs" />
+    <Compile Include="Migrations\201803110308574_CreateNeighborhoods.Designer.cs">
+      <DependentUpon>201803110308574_CreateNeighborhoods.cs</DependentUpon>
+    </Compile>
     <Compile Include="PointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToPointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToRegionsRepository.cs" />
@@ -332,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803110235007_CreateLocalizedCities.resx">
       <DependentUpon>201803110235007_CreateLocalizedCities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803110308574_CreateNeighborhoods.resx">
+      <DependentUpon>201803110308574_CreateNeighborhoods.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

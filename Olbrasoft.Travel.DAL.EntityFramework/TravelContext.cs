@@ -24,6 +24,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<LocalizedCountry> LocalizedCountries { get; set; }
         public virtual IDbSet<City> Cities { get; set; }
         public virtual IDbSet<LocalizedCity> LocalizedCities { get; set; }
+        public virtual IDbSet<Neighborhood> Neighborhoods { get; set; }
 
 
         //public virtual IDbSet<Airport> Airports { get; set; }
@@ -62,6 +63,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnLocalizedCountriesCreating(modelBuilder);
             OnCitiesCreating(modelBuilder);
             OnLocalizedCitiesCreating(modelBuilder);
+            OnNeighborhoodsCreating(modelBuilder);
 
             //OnAirportsCreating(modelBuilder);
             //OnChainsCreating(modelBuilder);
@@ -73,6 +75,14 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             //OnSupportedCulturesCreating(modelBuilder);
             //OnLocalizedAccommodationsCreating(modelBuilder);
 
+        }
+
+        private void OnNeighborhoodsCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Neighborhood>()
+                .ToTable(nameof(Neighborhood), "geo")
+                .Property(e => e.DateAndTimeOfCreation)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
         }
 
         private void OnLocalizedCitiesCreating(DbModelBuilder modelBuilder)

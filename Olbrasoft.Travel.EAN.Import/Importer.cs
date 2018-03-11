@@ -112,7 +112,31 @@ namespace Olbrasoft.Travel.EAN.Import
 
             return DbGeography.PolygonFromText($"POLYGON(({pointsString}))", 4326);
         }
-        
+
+
+        protected TCn[] BuildCitiesOrNeighborhoods<TCn>(IEnumerable<CityNeighborhood> eanCities, int creatorId) where TCn:BaseRegionCoordinates,new()
+        {
+            var cities = new Queue<TCn>();
+            Parallel.ForEach(eanCities, eanCity =>
+            {
+                var city = new TCn
+                {
+                    EanRegionId = eanCity.RegionID,
+                    Coordinates = CreatePoligon(eanCity.Coordinates),
+                    CreatorId = creatorId
+                };
+
+                lock (_lockMe)
+                {
+                    cities.Enqueue(city);
+                }
+
+            });
+            
+            return cities.ToArray();
+        }
+
+
 
         //protected static void BulkSaveLocalized<TL>(IReadOnlyCollection<TL> localizedEntities,
         //      ILocalizedRepository<TL> repository, int defaultLanguageId, ILoggingImports logger) where TL : BaseLocalized

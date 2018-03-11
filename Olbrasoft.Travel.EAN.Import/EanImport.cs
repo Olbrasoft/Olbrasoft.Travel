@@ -107,6 +107,11 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Interceptors<IInterceptor>()
             );
 
+            container.Register(Component.For(typeof(IImport<DTO.Geography.Neighborhood>))
+                .ImplementedBy<NeighborhoodsImporter>()
+                .Interceptors<IInterceptor>()
+            );
+
 
             //container.Register(Component.For<IImport>()
             //    .ImplementedBy<NeighborhoodsImporter>()
@@ -134,20 +139,18 @@ namespace Olbrasoft.Travel.EAN.Import
             //countriesImporter.Import(@"D:\Ean\CountryList.txt");
 
 
-            var citiesImporter = container.Resolve<IImport<DTO.Geography.City>>();
-            citiesImporter.Import(@"D:\Ean\CityCoordinatesList.Txt");
+            //var citiesImporter = container.Resolve<IImport<DTO.Geography.City>>();
+            //citiesImporter.Import(@"D:\Ean\CityCoordinatesList.Txt");
+            
+
+            var neighborhoodsImporter = container.Resolve<IImport<DTO.Geography.Neighborhood>>();
+            neighborhoodsImporter.Import(@"D:\Ean\NeighborhoodCoordinatesList.Txt");
 
 
-
-            //var neighborhoodsImporter = container.Resolve<IImport>(nameof(NeighborhoodsImporter));
-            //neighborhoodsImporter.Import(@"D:\Ean\NeighborhoodCoordinatesList.Txt");
 
             //var pointsOfInterestImporter = container.Resolve<IImport>(nameof(PointsOfInterestImporter));
             //pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
-
-
-
-
+            
 
             //var path = @"D:/Ean/AirportCoordinatesList.txt";
             //var lines = File.ReadAllLines(path);

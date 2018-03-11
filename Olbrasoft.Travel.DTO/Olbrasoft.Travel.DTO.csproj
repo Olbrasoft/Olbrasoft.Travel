@@ -55,6 +55,7 @@
     <Compile Include="BasePointOfInterest.cs" />
     <Compile Include="BaseRegion.cs" />
     <Compile Include="BaseName.cs" />
+    <Compile Include="BaseRegionCoordinates.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Chain.cs" />
     <Compile Include="City.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="LogOfImport.cs" />
     <Compile Include="ManyToMany.cs" />
     <Compile Include="MappedEntity.cs" />
+    <Compile Include="Neighborhood.cs" />
     <Compile Include="PointOfInterest.cs" />
     <Compile Include="PointOfInterestToPointOfInterest.cs" />
     <Compile Include="PointOfInterestToRegion.cs" />
