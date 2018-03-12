@@ -2,11 +2,12 @@
 using System.Reflection;
 using log4net;
 using log4net.Config;
+using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    public class ConsoleLogger : ILogger, Travel.BLL.ILoggingImports 
+    public class ConsoleLogger : ILogger ,ILoggingImports 
     {
         protected readonly ILog Logger;
 

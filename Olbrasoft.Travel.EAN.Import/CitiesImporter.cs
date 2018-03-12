@@ -1,7 +1,4 @@
-﻿using Olbrasoft.Travel.DAL;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Olbrasoft.Travel.DTO;
+﻿using Olbrasoft.Travel.DTO;
 using City = Olbrasoft.Travel.EAN.DTO.Geography.City;
 
 namespace Olbrasoft.Travel.EAN.Import

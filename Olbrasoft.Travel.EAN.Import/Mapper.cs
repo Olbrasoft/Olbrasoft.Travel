@@ -1,7 +1,5 @@
 ﻿using System.Data.Entity.Spatial;
-using System.Media;
 using Olbrasoft.Travel.DTO;
-using Olbrasoft.Travel.EAN.DTO;
 
 
 namespace Olbrasoft.Travel.EAN.Import

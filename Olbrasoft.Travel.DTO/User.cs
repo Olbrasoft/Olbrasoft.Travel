@@ -56,7 +56,7 @@ namespace Olbrasoft.Travel.DTO
 
         public virtual ICollection<PointOfInterestToSubClass> CreatedPointsOfInterestToSubClasses { get; set; }
 
-        //public virtual ICollection<Airport> CreatedAirports { get; set; }
+        public virtual ICollection<Airport> CreatedAirports { get; set; }
         #endregion
     }
 }

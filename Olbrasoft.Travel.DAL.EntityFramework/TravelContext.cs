@@ -26,11 +26,11 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<LocalizedCity> LocalizedCities { get; set; }
         public virtual IDbSet<Neighborhood> Neighborhoods { get; set; }
         public virtual IDbSet<LocalizedNeighborhood> LocalizedNeighborhoods { get; set; }
-
         public virtual IDbSet<PointOfInterestToSubClass> PointsOfInterestToSubClasses { get; set; }
-
-
-        //public virtual IDbSet<Airport> Airports { get; set; }
+        public virtual IDbSet<Airport> Airports { get; set; }
+        
+        
+        
         //public virtual IDbSet<SupportedCulture> SupportedCultures { get; set; }
         //public virtual IDbSet<Category> Categories { get; set; }
         //public virtual IDbSet<Accommodation> Accommodations { get; set; }
@@ -70,8 +70,8 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnNeighborhoodsCreating(modelBuilder);
             OnLocalizedNeighborhoodsCreating(modelBuilder);
             OnPointsOfInterestToSubClassesCreating(modelBuilder);
-
-            //OnAirportsCreating(modelBuilder);
+            OnAirportsCreating(modelBuilder);
+            
             //OnChainsCreating(modelBuilder);
             //OnCategoriesCreating(modelBuilder);
             //OnAccommodationsCreating(modelBuilder);
@@ -438,29 +438,28 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .HasMany(user => user.CreatedLanguages)
                 .WithRequired(language => language.Creator);
         }
-
-
+        
         private void OnAirportsCreating(DbModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Airport>()
-            //    .ToTable(nameof(Airports), "geo");
-
-            //modelBuilder.Entity<User>()
-            //    .HasMany(user => user.CreatedAirports)
-            //    .WithRequired(airport => airport.Creator)
-            //    .WillCascadeOnDelete(false);
-
+            modelBuilder.Entity<Airport>()
+                .ToTable(nameof(Airports), "geo")
+                .HasIndex(p=>p.EanAirportId)
+                .IsUnique();
+            
             modelBuilder.Entity<Airport>()
                 .Property(e => e.DateAndTimeOfCreation)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
+            modelBuilder.Entity<User>()
+                .HasMany(user => user.CreatedAirports)
+                .WithRequired(airport => airport.Creator);
         }
         
 
         private void OnLocalizedPointsOfInterestCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<LocalizedPointOfInterest>()
-                .ToTable("LocalizedPointsOfInterest", "geo");
+                .ToTable(nameof(LocalizedPointsOfInterest), "geo");
 
             modelBuilder.Entity<LocalizedPointOfInterest>()
                 .Property(e => e.DateAndTimeOfCreation)

@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Castle.MicroKernel.ModelBuilder.Descriptors;
-using Olbrasoft.Travel.BLL;
 using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DTO;
 using Olbrasoft.Travel.EAN.DTO.Geography;

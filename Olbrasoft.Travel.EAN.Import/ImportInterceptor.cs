@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Castle.DynamicProxy;
-using Olbrasoft.Travel.BLL;
+using Olbrasoft.Travel.DAL;
 
 
 namespace Olbrasoft.Travel.EAN.Import

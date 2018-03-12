@@ -1,5 +1,4 @@
-﻿using Olbrasoft.Travel.BLL;
-using Olbrasoft.Travel.DAL;
+﻿using Olbrasoft.Travel.DAL;
 
 namespace Olbrasoft.Travel.EAN.Import
 {

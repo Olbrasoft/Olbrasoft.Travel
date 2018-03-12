@@ -199,10 +199,6 @@
       <Project>{1326ba62-f609-4b14-9505-80e49ad3e5b0}</Project>
       <Name>Olbrasoft.EntityFramework.Bulk</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Olbrasoft.Travel.BLL\Olbrasoft.Travel.BLL.csproj">
-      <Project>{0E52ADB7-931E-4A4F-B87E-BA0B3728F9B2}</Project>
-      <Name>Olbrasoft.Travel.BLL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Olbrasoft.Travel.DAL.EntityFramework\Olbrasoft.Travel.DAL.EntityFramework.csproj">
       <Project>{F51F9E95-A609-45C1-B1BE-804958AB9C43}</Project>
       <Name>Olbrasoft.Travel.DAL.EntityFramework</Name>

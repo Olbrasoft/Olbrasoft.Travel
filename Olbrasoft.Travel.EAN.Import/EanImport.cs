@@ -1,27 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Spatial;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
-using Olbrasoft.EntityFramework.Bulk;
 #pragma warning disable 618
 using static Castle.MicroKernel.Registration.AllTypes;
 #pragma warning restore 618
-using Olbrasoft.Travel.BLL;
 using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DAL.EntityFramework;
 using Olbrasoft.Travel.DTO;
 using Olbrasoft.Travel.EAN.DTO.Geography;
-using PointOfInterest = Olbrasoft.Travel.DTO.PointOfInterest;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
@@ -40,9 +32,12 @@ namespace Olbrasoft.Travel.EAN.Import
 
             var container = BuildContainer();
             WriteContent(container);
-            
-            var usersFacade = container.Resolve<IUsersFacade>();
-            usersFacade.AddIfNotExist(ref user);
+
+            container.AddFacility<TypedFactoryFacility>();
+            container.Register(Component.For<IFactoryOfRepositories>().AsFactory());
+
+            var usersRepository = container.Resolve<IFactoryOfRepositories>().Users();
+            usersRepository.AddIfNotExist(ref user);
 
             Write($"Id to a user with a UserName {user.UserName} is {user.Id}.");
             
@@ -119,8 +114,7 @@ namespace Olbrasoft.Travel.EAN.Import
             //    .ImplementedBy<PointsOfInterestCoordinatesImporter>()
             //    .Named(nameof(PointsOfInterestCoordinatesImporter)));
 
-            container.AddFacility<TypedFactoryFacility>();
-            container.Register(Component.For<IFactoryOfRepositories>().AsFactory());
+
 
             //Logger.Log(container.Resolve<IBaseRepository<Continent>>().Count().ToString());
             //  Logger.Log(container.Resolve<IFactoryOfRepositories>().ToSubClass<PointOfInterestToSubClass>().Count().ToString());
@@ -144,6 +138,8 @@ namespace Olbrasoft.Travel.EAN.Import
 
             var pointsOfInterestImporter = container.Resolve<IImport<PointOfInterestCoordinates>>();
             pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
+
+
 
 
 
@@ -318,10 +314,10 @@ namespace Olbrasoft.Travel.EAN.Import
             container.Register(Component.For<TravelContext>().ImplementedBy<TravelContext>());
             container.Register(Component.For<DbContext>().ImplementedBy<TravelContext>().Named(nameof(TravelContext)));
 
-            container.Register(FromAssemblyNamed("Olbrasoft.Travel.BLL")
-                .Where(type => type.Name.EndsWith("Facade"))
-                .WithService.AllInterfaces()
-            );
+            //container.Register(FromAssemblyNamed("Olbrasoft.Travel.BLL")
+            //    .Where(type => type.Name.EndsWith("Facade"))
+            //    .WithService.AllInterfaces()
+            //);
 
             container.Register(FromAssemblyNamed("Olbrasoft.Travel.DAL.EntityFramework")
                 .Where(type => type.Name.EndsWith("Repository"))

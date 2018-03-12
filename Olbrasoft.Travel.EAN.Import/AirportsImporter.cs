@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Olbrasoft.Travel.EAN.DTO.Geography;
 
 namespace Olbrasoft.Travel.EAN.Import
@@ -20,16 +16,7 @@ namespace Olbrasoft.Travel.EAN.Import
             throw new NotImplementedException();
         }
 
-        private static Travel.DTO.Airport[] BuildAirports(
-
-            IEnumerable<Airport> eanAirports,
-            IDictionary<long, Travel.DTO.BaseAirport> storedBaseAirports
-            
-            )
-        {
-            throw new NotImplementedException();
-        }
-
+        
         
     }
 }

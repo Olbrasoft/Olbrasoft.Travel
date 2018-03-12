@@ -147,7 +147,6 @@
     <Compile Include="IContinentsFacade.cs" />
     <Compile Include="ILanguagesFacade.cs" />
     <Compile Include="ILocalizedFacade.cs" />
-    <Compile Include="ILoggingImports.cs" />
     <Compile Include="ImportsLogger.cs" />
     <Compile Include="IPointsOfInterestFacade.cs" />
     <Compile Include="IRegionsFacade.cs" />

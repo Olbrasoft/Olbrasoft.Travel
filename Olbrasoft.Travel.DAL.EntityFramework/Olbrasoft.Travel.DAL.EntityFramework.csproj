@@ -264,6 +264,10 @@
     <Compile Include="Migrations\201803121604510_CreatePointsOfInterestToSubClassses.Designer.cs">
       <DependentUpon>201803121604510_CreatePointsOfInterestToSubClassses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803122111443_CreateAirports.cs" />
+    <Compile Include="Migrations\201803122111443_CreateAirports.Designer.cs">
+      <DependentUpon>201803122111443_CreateAirports.cs</DependentUpon>
+    </Compile>
     <Compile Include="PointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToPointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToRegionsRepository.cs" />
@@ -374,6 +378,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803121604510_CreatePointsOfInterestToSubClassses.resx">
       <DependentUpon>201803121604510_CreatePointsOfInterestToSubClassses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803122111443_CreateAirports.resx">
+      <DependentUpon>201803122111443_CreateAirports.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -14,6 +14,8 @@ namespace Olbrasoft.Travel.DAL
 
         ILocalizedRepository<T> Localized<T>() where T : BaseLocalized;
 
+        IUsersRepository Users();
+
         IRegionsRepository CreateRegionsRepository();
     }
 }
