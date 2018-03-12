@@ -164,6 +164,7 @@
     <Compile Include="IFactoryOfRepositories.cs" />
     <Compile Include="ISubClassesRepository.cs" />
     <Compile Include="IBaseRepository.cs" />
+    <Compile Include="IToSubClassesRepository.cs" />
     <Compile Include="ITypesOfRegionsRepository.cs" />
     <Compile Include="IUsersRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

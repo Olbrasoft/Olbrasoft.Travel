@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Castle.MicroKernel.ModelBuilder.Descriptors;
 using Olbrasoft.Travel.BLL;
 using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DTO;
@@ -113,8 +114,38 @@ namespace Olbrasoft.Travel.EAN.Import
             return DbGeography.PolygonFromText($"POLYGON(({pointsString}))", 4326);
         }
 
+        protected  TLr[] BuildLocalizedRegions<TLr>(IEnumerable<IHaveRegionIdRegionNameRegionNameLong> eanEntities,
+            IReadOnlyDictionary<long,int> eanRegionIdsToIds,
+            int langiageId,
+            int creatorId
+        ) where TLr : LocalizedRegionWithNameAndLongName, new()
+        {
+            var localizedRegions= new Queue<TLr>();
 
-        protected TCn[] BuildCitiesOrNeighborhoods<TCn>(IEnumerable<CityNeighborhood> eanCities, int creatorId) where TCn:BaseRegionCoordinates,new()
+            Parallel.ForEach(eanEntities, eL =>
+            {
+                if(!eanRegionIdsToIds.TryGetValue(eL.RegionID, out var id)) return;
+
+                var localizedRegion = new TLr
+                {
+                    Id = id,
+                    LanguageId = langiageId,
+                    Name = eL.RegionName
+                };
+
+                if (eL.RegionName != eL.RegionNameLong)
+                    localizedRegion.LongName = eL.RegionNameLong;
+
+                lock (_lockMe)
+                {
+                    localizedRegions.Enqueue(localizedRegion);
+                }
+            });
+
+            return localizedRegions.ToArray();
+        }
+
+        protected TCn[] BuildCitiesOrNeighborhoods<TCn>(IEnumerable<CityNeighborhood> eanCities, int creatorId) where TCn:BaseRegionWithCoordinates,new()
         {
             var cities = new Queue<TCn>();
             Parallel.ForEach(eanCities, eanCity =>
@@ -135,51 +166,55 @@ namespace Olbrasoft.Travel.EAN.Import
             
             return cities.ToArray();
         }
+        
+        protected TLe[] BuildLocalizedCitiesOrNeighborhoods<TLe>(
+            IEnumerable<CityNeighborhood> eanCities, 
+            IReadOnlyDictionary<long, int> eanRegionIdsToIds, 
+            int languageId, 
+            int creatorId
+            ) where TLe: LocalizedRegionWithNameAndLongName,new()
+        {
+            var localizedCities = new Queue<TLe>();
+
+            Parallel.ForEach(eanCities, eanCity =>
+            {
+                if (!eanRegionIdsToIds.TryGetValue(eanCity.RegionID, out var id)) return;
+                
+                var localizedCity = new TLe
+                {
+                    Id = id,
+                    LanguageId = languageId,
+                    Name = eanCity.RegionName,
+                    CreatorId = creatorId
+                };
+
+                lock (_lockMe)
+                {
+                    localizedCities.Enqueue(localizedCity);
+                }
+            });
+            return localizedCities.ToArray();
+        }
 
 
+        protected void LogBuilded(int count)
+        {
+            WriteLog(count);
+        }
 
-        //protected static void BulkSaveLocalized<TL>(IReadOnlyCollection<TL> localizedEntities,
-        //      ILocalizedRepository<TL> repository, int defaultLanguageId, ILoggingImports logger) where TL : BaseLocalized
-        //  {
-        //      if (!repository.Exists(defaultLanguageId))
-        //      {
-        //          logger.Log($"Bulk Insert {localizedEntities.Count} {typeof(TL)}.");
-        //          repository.BulkInsert(localizedEntities);
-        //          logger.Log($"{typeof(TL)} Inserted.");
-        //      }
-        //      else
-        //      {
-        //          var storedLocalizedIds =
-        //              new HashSet<int>(repository.FindIds(defaultLanguageId));
+        protected void LogBuild<TL>()
+        {
+            WriteLog($"{typeof(TL)} Build.");
+        }
 
-        //          var forInsert = new List<TL>();
-        //          var forUpdate = new List<TL>();
-
-        //          foreach (var localizedEntity in localizedEntities)
-        //          {
-        //              if (!storedLocalizedIds.Contains(localizedEntity.Id))
-        //              {
-        //                  forInsert.Add(localizedEntity);
-        //              }
-        //              else
-        //              {
-        //                  forUpdate.Add(localizedEntity);
-        //              }
-        //          }
-
-        //          if (forInsert.Count > 0)
-        //          {
-        //              logger.Log($"Bulk Insert {forInsert.Count} {typeof(TL)}.");
-        //              repository.BulkInsert(forInsert);
-        //              logger.Log($"{typeof(TL)} Inserted.");
-        //          }
-
-        //          if (forUpdate.Count <= 0) return;
-        //          logger.Log($"Bulk Update {forUpdate.Count} {typeof(TL)}.");
-        //          repository.BulkUpdate(forUpdate);
-        //          logger.Log($"{typeof(TL)} Updated.");
-        //      }
-        //  }
+        protected void LogSave<TL>( )
+        {
+            WriteLog($"{typeof(TL)} Save.");
+        }
+        protected void LogSaved<TL>()
+        {
+            WriteLog($"{typeof(TL)} Saved.");
+        }
 
         protected void WriteLog(object obj)
         {

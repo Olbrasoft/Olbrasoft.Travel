@@ -9,6 +9,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 {
     public static class ExDbContext
     {
+        
         public static void BulkUpdate<T>(this DbContext context, IEnumerable<T> entities, Action<EventArgs> onSaved) where T : class
         {
             var batchesToUpdate = SplitList(entities);

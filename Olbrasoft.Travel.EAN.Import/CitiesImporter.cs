@@ -6,6 +6,7 @@ using City = Olbrasoft.Travel.EAN.DTO.Geography.City;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
+   
     internal class CitiesImporter : Importer<City>
     {
         private readonly object _lockMe = new object();
@@ -32,7 +33,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             typeName = typeof(LocalizedCity).Name;
             Logger.Log($"{typeName} Build.");
-            var localizedCities = BuildLocalizedCities(eanCities, eanRegionIdsToIds, DefaultLanguageId, CreatorId);
+            var localizedCities = BuildLocalizedCitiesOrNeighborhoods<LocalizedCity>(eanCities, eanRegionIdsToIds, DefaultLanguageId, CreatorId);
             Logger.Log($"{typeName} Builded:{localizedCities.Length}.");
 
             Logger.Log($"{typeName} Save.");
@@ -41,35 +42,8 @@ namespace Olbrasoft.Travel.EAN.Import
             
         }
 
-
-
-        private LocalizedCity[] BuildLocalizedCities(City[] eanCities, IReadOnlyDictionary<long, int> eanRegionIdsToIds, int languageId, int creatorId)
-        {
-            var localizedCities = new Queue<LocalizedCity>();
-
-            Parallel.ForEach(eanCities, eanCity =>
-            {
-                if (!eanRegionIdsToIds.TryGetValue(eanCity.RegionID, out var id)) return;
-
-
-                //Name is EanLongName. Name is in ParentRegionList, in CityCoordinatesList is LongName.   
-                //Name=Lipany LongName=Lipany, Slovakia
-                //Name=Aberdeen LongName=Aberdeen, South Dakota, United States of America
-                //Name=St-Aubert LongName=St-Aubert, Quebec, Canada
-                var localizedCity = new LocalizedCity
-                {
-                    Id = id,
-                    LanguageId = languageId,
-                    Name = eanCity.RegionName,
-                    CreatorId = creatorId
-                };
-                lock (_lockMe)
-                {
-                    localizedCities.Enqueue(localizedCity);
-                }
-            });           
-            return localizedCities.ToArray();
-        }
+        
+       
 
         //private Travel.DTO.City[] BuildCities(IEnumerable<City> eanCities,  int creatorId)
         //{

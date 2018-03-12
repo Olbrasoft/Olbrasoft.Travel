@@ -20,7 +20,7 @@ namespace Olbrasoft.Travel.EAN.Test
         {
             //Arrange
             //704|Barter Island|Barter Island, Alaska, United States of America|70.129562|-143.662949|tree
-            PointOfInterest pointOfInterest =new PointOfInterest
+            PointOfInterestCoordinates pointOfInterestCoordinates =new PointOfInterestCoordinates
             {
                 RegionID = 704,
                 RegionName = "Barter Island",
@@ -34,7 +34,7 @@ namespace Olbrasoft.Travel.EAN.Test
             //act
             var validationResults = new List<ValidationResult>();
             var actual = Validator.TryValidateObject(
-                pointOfInterest, new ValidationContext(pointOfInterest), validationResults, true);
+                pointOfInterestCoordinates, new ValidationContext(pointOfInterestCoordinates), validationResults, true);
 
             // Assert
             Assert.IsTrue(actual, "Expected validation to succeed.");
@@ -49,7 +49,7 @@ namespace Olbrasoft.Travel.EAN.Test
         {
             //Arrange
             //704|Barter Island|Barter Island, Alaska, United States of America|70.129562|-143.662949|tree
-            PointOfInterest pointOfInterest = new PointOfInterest
+            PointOfInterestCoordinates pointOfInterestCoordinates = new PointOfInterestCoordinates
             {
                 RegionID = 704,
                 //RegionName = "Barter Island",
@@ -63,7 +63,7 @@ namespace Olbrasoft.Travel.EAN.Test
             //act
             var validationResults = new List<ValidationResult>();
             var actual = Validator.TryValidateObject(
-                pointOfInterest, new ValidationContext(pointOfInterest), validationResults, true);
+                pointOfInterestCoordinates, new ValidationContext(pointOfInterestCoordinates), validationResults, true);
 
             // Assert
             Assert.IsFalse(actual, "Expected validation to succeed.");

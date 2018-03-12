@@ -18,6 +18,8 @@ namespace Olbrasoft.Travel.DTO
         public ICollection<PointOfInterestToPointOfInterest> ToChildPointsOfInterest { get; set; }
         public virtual ICollection<PointOfInterestToRegion> PointsOfInterestToRegions { get; set; }
 
+        public virtual PointOfInterestToSubClass ToSubClass { get; set; }
+
         //public ICollection<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
         
         // public virtual ICollection<Region> Regions { get; set; }

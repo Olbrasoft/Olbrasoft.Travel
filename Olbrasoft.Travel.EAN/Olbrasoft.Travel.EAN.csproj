@@ -46,9 +46,10 @@
     <Compile Include="DTO\Geography\CityNeighborhood.cs" />
     <Compile Include="DTO\Geography\Country.cs" />
     <Compile Include="DTO\Geography\CountryMultiLanguage.cs" />
+    <Compile Include="DTO\Geography\IHaveRegionIdRegionNameRegionNameLong.cs" />
     <Compile Include="DTO\Geography\Neighborhood.cs" />
     <Compile Include="DTO\Geography\ParentRegion.cs" />
-    <Compile Include="DTO\Geography\PointOfInterest.cs" />
+    <Compile Include="DTO\Geography\PointOfInterestCoordinates.cs" />
     <Compile Include="DTO\Geography\RegionCenter.cs" />
     <Compile Include="DTO\Geography\RegionMultiLanguage.cs" />
     <Compile Include="DTO\Geography\TrainMetroStation.cs" />

@@ -1,13 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Olbrasoft.Travel.DTO
+﻿namespace Olbrasoft.Travel.DTO
 {
-    public class LocalizedNeighborhood : BaseLocalized
+    public class LocalizedNeighborhood : LocalizedRegionWithNameAndLongName
     {
-        [Required]
-        [StringLength(255)]
-        public string Name { get; set; }
-
         public virtual Neighborhood Neighborhood { get; set; }
 
         public User Creator { get; set; }

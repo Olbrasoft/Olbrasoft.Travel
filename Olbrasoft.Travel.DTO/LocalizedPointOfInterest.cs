@@ -1,6 +1,6 @@
 ﻿namespace Olbrasoft.Travel.DTO
 {
-    public class LocalizedPointOfInterest : BaseLocalizedRegionWithLongName
+    public class LocalizedPointOfInterest : LocalizedRegionWithNameAndLongName
     {
         
         public User Creator { get; set; }

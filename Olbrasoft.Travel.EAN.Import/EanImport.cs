@@ -81,16 +81,7 @@ namespace Olbrasoft.Travel.EAN.Import
                 .ImplementedBy(typeof(ParentRegionImporter))
                 .Interceptors<IInterceptor>()
             );
-
-            //container.Register(Component.For<IImport>()
-            //    .ImplementedBy<ParentRegionImporter>()
-            //    .Named(nameof(ParentRegionImporter)));
-
-            //container.Register(Component.For<IImport>()
-            //    .ImplementedBy<CountriesImporter>()
-            //    .Named(nameof(CountriesImporter))
-            //    .Interceptors<IInterceptor>()
-            //);
+            
 
             container.Register(Component.For(typeof(IImport<DTO.Geography.Country>))
                 .ImplementedBy<CountriesImporter>()
@@ -102,6 +93,7 @@ namespace Olbrasoft.Travel.EAN.Import
             //    .Named(nameof(CitiesImporter))
             //    .Interceptors<IInterceptor>()
             //);
+
             container.Register(Component.For(typeof(IImport<DTO.Geography.City>))
                 .ImplementedBy<CitiesImporter>()
                 .Interceptors<IInterceptor>()
@@ -112,6 +104,11 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Interceptors<IInterceptor>()
             );
 
+            container.Register(Component.For(typeof(IImport<PointOfInterestCoordinates>))
+                .ImplementedBy<PointsOfInterestCoordinatesImporter>()
+                .Interceptors<IInterceptor>()
+            );
+
 
             //container.Register(Component.For<IImport>()
             //    .ImplementedBy<NeighborhoodsImporter>()
@@ -119,21 +116,21 @@ namespace Olbrasoft.Travel.EAN.Import
 
 
             //container.Register(Component.For<IImport>()
-            //    .ImplementedBy<PointsOfInterestImporter>()
-            //    .Named(nameof(PointsOfInterestImporter)));
+            //    .ImplementedBy<PointsOfInterestCoordinatesImporter>()
+            //    .Named(nameof(PointsOfInterestCoordinatesImporter)));
 
             container.AddFacility<TypedFactoryFacility>();
             container.Register(Component.For<IFactoryOfRepositories>().AsFactory());
 
             //Logger.Log(container.Resolve<IBaseRepository<Continent>>().Count().ToString());
-            //Logger.Log(container.Resolve<IFactoryOfRepositories>().Travel<Continent>().Count().ToString());
+            //  Logger.Log(container.Resolve<IFactoryOfRepositories>().ToSubClass<PointOfInterestToSubClass>().Count().ToString());
 
 
             //var repository = container.Resolve<IBaseRepository<RegionToRegion>>();
             //Console.ReadLine();
 
-            var parentRegionImporter = container.Resolve<IImport<DTO.Geography.ParentRegion>>();
-            parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
+            //var parentRegionImporter = container.Resolve<IImport<DTO.Geography.ParentRegion>>();
+            //parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
 
             //var countriesImporter = container.Resolve<IImport<DTO.Geography.Country>>();
             //countriesImporter.Import(@"D:\Ean\CountryList.txt");
@@ -142,14 +139,12 @@ namespace Olbrasoft.Travel.EAN.Import
             //var citiesImporter = container.Resolve<IImport<DTO.Geography.City>>();
             //citiesImporter.Import(@"D:\Ean\CityCoordinatesList.Txt");
 
-
             //var neighborhoodsImporter = container.Resolve<IImport<DTO.Geography.Neighborhood>>();
             //neighborhoodsImporter.Import(@"D:\Ean\NeighborhoodCoordinatesList.Txt");
 
+            var pointsOfInterestImporter = container.Resolve<IImport<PointOfInterestCoordinates>>();
+            pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
 
-
-            //var pointsOfInterestImporter = container.Resolve<IImport>(nameof(PointsOfInterestImporter));
-            //pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
 
 
             //var path = @"D:/Ean/AirportCoordinatesList.txt";
@@ -347,6 +342,8 @@ namespace Olbrasoft.Travel.EAN.Import
             container.Register(Component.For(typeof(IManyToManyRepository<>)).ImplementedBy(typeof(ManyToManyRepository<>)));
 
             container.Register(Component.For(typeof(ILocalizedRepository<>)).ImplementedBy(typeof(LocalizedRepository<>)));
+
+            container.Register(Component.For(typeof(IToSubClassesRepository<>)).ImplementedBy(typeof(ToSubClassesRepository<>)));
 
             container.Register(Component.For<IInterceptor>().ImplementedBy<ImportInterceptor>());
 

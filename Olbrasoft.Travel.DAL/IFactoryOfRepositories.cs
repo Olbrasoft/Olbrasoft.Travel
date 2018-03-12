@@ -10,6 +10,8 @@ namespace Olbrasoft.Travel.DAL
 
         IManyToManyRepository<T> ManyToMany<T>() where T : ManyToMany;
 
+        IToSubClassesRepository<T> ToSubClass<T>() where T : ToSubClass;
+
         ILocalizedRepository<T> Localized<T>() where T : BaseLocalized;
 
         IRegionsRepository CreateRegionsRepository();

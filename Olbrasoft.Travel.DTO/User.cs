@@ -46,13 +46,15 @@ namespace Olbrasoft.Travel.DTO
 
         public virtual ICollection<LocalizedCountry> CreatedLocalizedCountries { get; set; }
 
-       // public virtual ICollection<City> CreatedCities { get; set; }
+        public virtual ICollection<City> CreatedCities { get; set; }
 
-       // public virtual ICollection<LocalizedCity> CreatedLocalizedCities { get; set; }
+        public virtual ICollection<LocalizedCity> CreatedLocalizedCities { get; set; }
 
-       // public virtual ICollection<Neighborhood> CreatedNeighborhood { get; set; }
+        public virtual ICollection<Neighborhood> CreatedNeighborhood { get; set; }
 
-       // public virtual ICollection<LocalizedNeighborhood> CreatedLocalizedNeighborhoods { get; set; }
+        public virtual ICollection<LocalizedNeighborhood> CreatedLocalizedNeighborhoods { get; set; }
+
+        public virtual ICollection<PointOfInterestToSubClass> CreatedPointsOfInterestToSubClasses { get; set; }
 
         //public virtual ICollection<Airport> CreatedAirports { get; set; }
         #endregion

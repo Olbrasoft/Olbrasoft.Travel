@@ -52,11 +52,11 @@
     <Compile Include="BaseAirport.cs" />
     <Compile Include="BaseLocalizedAirport.cs" />
     <Compile Include="BaseLocalizedRegion.cs" />
-    <Compile Include="BaseLocalizedRegionWithLongName.cs" />
+    <Compile Include="LocalizedRegionWithNameAndLongName.cs" />
     <Compile Include="BasePointOfInterest.cs" />
     <Compile Include="BaseRegion.cs" />
     <Compile Include="BaseName.cs" />
-    <Compile Include="BaseRegionCoordinates.cs" />
+    <Compile Include="BaseRegionWithCoordinates.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Chain.cs" />
     <Compile Include="City.cs" />
@@ -83,11 +83,13 @@
     <Compile Include="PointOfInterest.cs" />
     <Compile Include="PointOfInterestToPointOfInterest.cs" />
     <Compile Include="PointOfInterestToRegion.cs" />
+    <Compile Include="PointOfInterestToSubClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Region.cs" />
     <Compile Include="RegionToRegion.cs" />
     <Compile Include="SubClass.cs" />
     <Compile Include="SupportedCulture.cs" />
+    <Compile Include="ToSubClass.cs" />
     <Compile Include="TravelEntity.cs" />
     <Compile Include="NameOfDescription.cs" />
     <Compile Include="TypeOfDescription.cs" />

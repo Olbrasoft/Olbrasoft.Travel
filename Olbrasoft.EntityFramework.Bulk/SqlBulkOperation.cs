@@ -26,6 +26,7 @@ namespace Olbrasoft.EntityFramework.Bulk
             {
                 using (var sqlBulkCopy = GetSqlBulkCopy(sqlConnection, transaction, tableInfo.BulkConfig.KeepIdentity))
                 {
+                    sqlBulkCopy.BulkCopyTimeout = 960;
                     tableInfo.SetSqlBulkCopyConfig(sqlBulkCopy, entities, progress);
                     using (var reader = ObjectReaderEx.Create(entities, tableInfo.ShadowProperties, context, tableInfo.PropertyColumnNamesDict.Keys.ToArray()))
                     {
@@ -71,7 +72,7 @@ namespace Olbrasoft.EntityFramework.Bulk
             tableInfo.InsertToTempTable = true;
             tableInfo.CheckHasIdentity(context);
 
-            context.Database.CommandTimeout = 480;
+            context.Database.CommandTimeout = 960;
 
             context.Database.ExecuteSqlCommand(SqlQueryBuilder.CreateTableCopy(tableInfo.FullTableName, tableInfo.FullTempTableName));
             

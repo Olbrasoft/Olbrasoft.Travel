@@ -2,7 +2,7 @@
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class BaseRegionCoordinates:BaseRegion
+    public class BaseRegionWithCoordinates:BaseRegion
     {
         public DbGeography Coordinates { get; set; }
     }

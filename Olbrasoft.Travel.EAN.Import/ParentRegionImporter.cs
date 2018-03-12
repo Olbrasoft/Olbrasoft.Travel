@@ -473,7 +473,7 @@ namespace Olbrasoft.Travel.EAN.Import
         //}
 
         private static T[] BuildLocalizedRegions<T>(IEnumerable<ParentRegion> parentRegions,
-            IReadOnlyDictionary<long, int> eanRegionIdsToIds, int creatorId, int defaultLanguageId) where T : BaseLocalizedRegionWithLongName, new()
+            IReadOnlyDictionary<long, int> eanRegionIdsToIds, int creatorId, int defaultLanguageId) where T : LocalizedRegionWithNameAndLongName, new()
         {
             var localizedRegions = new Dictionary<int, T>();
             foreach (var parentRegion in parentRegions)

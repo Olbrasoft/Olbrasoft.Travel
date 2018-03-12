@@ -180,7 +180,7 @@
     <Compile Include="EanImport.cs" />
     <Compile Include="NeighborhoodsImporter.cs" />
     <Compile Include="ParentRegionImporter.cs" />
-    <Compile Include="PointsOfInterestImporter.cs" />
+    <Compile Include="PointsOfInterestCoordinatesImporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

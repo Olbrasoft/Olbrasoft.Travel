@@ -2,7 +2,7 @@
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class LocalizedContinent : BaseLocalizedRegionWithLongName
+    public class LocalizedContinent : LocalizedRegionWithNameAndLongName
     {
        
         public User Creator { get; set; }

@@ -54,7 +54,7 @@ namespace Olbrasoft.Travel.EAN
                 new EanFile(
                     new Uri("https://www.ian.com/affiliatecenter/include/V2/new/PointsOfInterestCoordinatesList.zip"),
                     TypeOfEanFile.Geography,
-                    typeof(PointOfInterest)
+                    typeof(PointOfInterestCoordinates)
                 ),
                 new EanFile(
                     new Uri("https://www.ian.com/affiliatecenter/include/V2/new/AirportCoordinatesList.zip"),
