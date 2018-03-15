@@ -4,30 +4,27 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class Language
+    public class Language : Creator
     {
-        [Key]
-        public int Id { get; set; }
-        
+      
         [StringLength(5)]
         public string EanLanguageCode { get; set; }
-
-        public int CreatorId { get; set; }
-
-        public DateTime DateAndTimeOfCreation { get; set; }
         
         public User Creator { get; set; }
 
         public virtual ICollection<LocalizedContinent> LocalizedContinents { get; set; }
 
+        public virtual ICollection<LocalizedCountry> LocalizedCountries { get; set; }
+        
+        public virtual ICollection<LocalizedCity> LocalizedCities { get; set; }
+        
+        public virtual ICollection<LocalizedNeighborhood> LocalizedNeighborhoods { get; set; }
+        
         public virtual ICollection<LocalizedRegion> LocalizedRegions { get; set; }
-       
+
         public virtual ICollection<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
 
-        public virtual ICollection<LocalizedCountry> LocalizedCountries { get; set; }
 
-        public virtual ICollection<LocalizedCity> LocalizedCities { get; set; }
 
-        public virtual ICollection<LocalizedNeighborhood> LocalizedNeighborhoods { get; set; }
     }
 }

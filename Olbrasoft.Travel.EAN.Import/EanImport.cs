@@ -37,7 +37,7 @@ namespace Olbrasoft.Travel.EAN.Import
             container.Register(Component.For<IFactoryOfRepositories>().AsFactory());
 
             var usersRepository = container.Resolve<IFactoryOfRepositories>().Users();
-            usersRepository.AddIfNotExist(ref user);
+            user = usersRepository.AddIfNotExist(user);
 
             Write($"Id to a user with a UserName {user.UserName} is {user.Id}.");
             
@@ -73,80 +73,88 @@ namespace Olbrasoft.Travel.EAN.Import
             );
 
             container.Register(Component.For(typeof(IImport<ParentRegion>))
-                .ImplementedBy(typeof(ParentRegionImporter))
+                .ImplementedBy(typeof(ParentRegionBatchImporter))
                 .Interceptors<IInterceptor>()
             );
             
 
             container.Register(Component.For(typeof(IImport<DTO.Geography.Country>))
-                .ImplementedBy<CountriesImporter>()
+                .ImplementedBy<CountriesBatchImporter>()
                 .Interceptors<IInterceptor>()
             );
 
             //container.Register(Component.For<IImport>()
-            //    .ImplementedBy<CitiesImporter>()
-            //    .Named(nameof(CitiesImporter))
+            //    .ImplementedBy<CitiesBatchImporter>()
+            //    .Named(nameof(CitiesBatchImporter))
             //    .Interceptors<IInterceptor>()
             //);
 
-            container.Register(Component.For(typeof(IImport<DTO.Geography.City>))
-                .ImplementedBy<CitiesImporter>()
+            container.Register(Component.For(typeof(IImport<CityCoordinates>))
+                .ImplementedBy<CitiesBatchImporter>()
                 .Interceptors<IInterceptor>()
             );
 
-            container.Register(Component.For(typeof(IImport<DTO.Geography.Neighborhood>))
-                .ImplementedBy<NeighborhoodsImporter>()
+            container.Register(Component.For(typeof(IImport<DTO.Geography.NeighborhoodCoordinates>))
+                .ImplementedBy<NeighborhoodsBatchImporter>()
                 .Interceptors<IInterceptor>()
             );
 
             container.Register(Component.For(typeof(IImport<PointOfInterestCoordinates>))
-                .ImplementedBy<PointsOfInterestCoordinatesImporter>()
+                .ImplementedBy<PointsOfInterestCoordinatesBatchImporter>()
+                .Interceptors<IInterceptor>()
+            );
+
+            container.Register(Component.For(typeof(IImport<DTO.Geography.AirportCoordinates>))
+                .ImplementedBy<AirportsBatchImporter>()
+                .Interceptors<IInterceptor>()
+            );
+
+            container.Register(Component.For(typeof(IImport<ParentContinet>))
+                .ImplementedBy<ContinentsImporter>()
                 .Interceptors<IInterceptor>()
             );
 
 
-            //container.Register(Component.For<IImport>()
-            //    .ImplementedBy<NeighborhoodsImporter>()
-            //    .Named(nameof(NeighborhoodsImporter)));
-
-
-            //container.Register(Component.For<IImport>()
-            //    .ImplementedBy<PointsOfInterestCoordinatesImporter>()
-            //    .Named(nameof(PointsOfInterestCoordinatesImporter)));
-
-
-
-            //Logger.Log(container.Resolve<IBaseRepository<Continent>>().Count().ToString());
-            //  Logger.Log(container.Resolve<IFactoryOfRepositories>().ToSubClass<PointOfInterestToSubClass>().Count().ToString());
-
-
-            //var repository = container.Resolve<IBaseRepository<RegionToRegion>>();
-            //Console.ReadLine();
-
-            //var parentRegionImporter = container.Resolve<IImport<DTO.Geography.ParentRegion>>();
-            //parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
+            //var parentContinents = container.Resolve<IImport<DTO.Geography.ParentContinet>>();
+            //parentContinents.Import(@"D:\Ean\ParentRegionList.txt");
 
             //var countriesImporter = container.Resolve<IImport<DTO.Geography.Country>>();
             //countriesImporter.Import(@"D:\Ean\CountryList.txt");
 
-
-            //var citiesImporter = container.Resolve<IImport<DTO.Geography.City>>();
+            //var citiesImporter = container.Resolve<IImport<CityCoordinates>>();
             //citiesImporter.Import(@"D:\Ean\CityCoordinatesList.Txt");
-
-            //var neighborhoodsImporter = container.Resolve<IImport<DTO.Geography.Neighborhood>>();
+            
+            //var neighborhoodsImporter = container.Resolve<IImport<NeighborhoodCoordinates>>();
             //neighborhoodsImporter.Import(@"D:\Ean\NeighborhoodCoordinatesList.Txt");
 
-            var pointsOfInterestImporter = container.Resolve<IImport<PointOfInterestCoordinates>>();
-            pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
+
+            var parentRegionImporter = container.Resolve<IImport<ParentRegion>>();
+            parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
+
+            
+            //container.Register(Component.For<IImport>()
+            //    .ImplementedBy<PointsOfInterestCoordinatesBatchImporter>()
+            //    .Named(nameof(PointsOfInterestCoordinatesBatchImporter)));
+            
+
+            //var repository = container.Resolve<IBaseRepository<RegionToRegion>>();
+            //Console.ReadLine();
+            
 
 
+
+            //var pointsOfInterestImporter = container.Resolve<IImport<PointOfInterestCoordinates>>();
+            //pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
+
+            //var airportsImporter = container.Resolve<IImport<AirportCoordinates>>();
+            //airportsImporter.Import(@"D:\Ean\AirportCoordinatesList.txt");
 
 
 
             //var path = @"D:/Ean/AirportCoordinatesList.txt";
             //var lines = File.ReadAllLines(path);
             //var parserFactory = container.Resolve<IParserFactory>();
-            //var parser = parserFactory.Travel<Airport>(lines.FirstOrDefault());
+            //var parser = parserFactory.Travel<AirportCoordinates>(lines.FirstOrDefault());
             //foreach (var line in lines.Skip(1))
             //{
 
@@ -183,10 +191,10 @@ namespace Olbrasoft.Travel.EAN.Import
 
             //loogerImports.Log("EanCities Load.");
             //const string cityCityCoordinatesListFullPath = @"D:\Ean\CityCoordinatesList.Txt";
-            //var eanCities = new HashSet<DTO.Geography.City>();
+            //var eanCities = new HashSet<DTO.Geography.CityCoordinates>();
             //using (var reader = new StreamReader(cityCityCoordinatesListFullPath))
             //{
-            //    var parserCities = parserFactory.Travel<DTO.Geography.City>(reader.ReadLine());
+            //    var parserCities = parserFactory.Travel<DTO.Geography.CityCoordinates>(reader.ReadLine());
 
             //    while (!reader.EndOfStream)
             //    {
@@ -203,7 +211,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             //loogerImports.Log("Regions from CityCoordinatesList Build");
             //var storedEanRegionsIds = regionsFacade.GetEanRegionsIds(true);
-            //var typeOfRegionCity = typesOfRegionsFacade.Travel("City");
+            //var typeOfRegionCity = typesOfRegionsFacade.Travel("CityCoordinates");
             //var subClassCity = subClassesFacade.Travel("city");
 
             //var regions = new HashSet<Region>();
@@ -213,7 +221,7 @@ namespace Olbrasoft.Travel.EAN.Import
             //    if (storedEanRegionsIds.Contains(city.RegionID)) continue;
             //    var region = new Region
             //    {
-            //        EanRegionId = city.RegionID,
+            //        EanId = city.RegionID,
             //        TypeOfRegionId = typeOfRegionCity.Id,
             //        SubClassId = subClassCity.Id,
             //        CreatorId = user.Id,
@@ -230,7 +238,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             //var storedRegions = regionsFacade.GetMappingEanRegionIdsToRegions();
 
-            //loogerImports.Log("Regions type of City for update coordinates Build.");
+            //loogerImports.Log("Regions type of CityCoordinates for update coordinates Build.");
             //var cities = new List<Region>();
 
             //foreach (var eanCity in eanCities)
@@ -241,10 +249,10 @@ namespace Olbrasoft.Travel.EAN.Import
             //    }
             //    else
             //    {
-            //        loogerImports.Log($"Region EanRegionId: {eanCity.RegionID} not found in the Cities.");
+            //        loogerImports.Log($"Region EanId: {eanCity.RegionID} not found in the Cities.");
             //    }
             //}
-            //loogerImports.Log("Regions type of City for update coordinates Builded.");
+            //loogerImports.Log("Regions type of CityCoordinates for update coordinates Builded.");
 
             //var citiesImportOption = new ParentRegionImportOption(
             //    container.Resolve<IRegionsFacade>(),
@@ -340,6 +348,8 @@ namespace Olbrasoft.Travel.EAN.Import
             container.Register(Component.For(typeof(ILocalizedRepository<>)).ImplementedBy(typeof(LocalizedRepository<>)));
 
             container.Register(Component.For(typeof(IToSubClassesRepository<>)).ImplementedBy(typeof(ToSubClassesRepository<>)));
+
+            container.Register(Component.For(typeof(IGeoRepository<>)).ImplementedBy(typeof(GeoRepository<>)));
 
             container.Register(Component.For<IInterceptor>().ImplementedBy<ImportInterceptor>());
 

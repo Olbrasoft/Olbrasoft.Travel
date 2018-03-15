@@ -4,6 +4,6 @@ namespace Olbrasoft.Travel.DAL
 {
     public interface IUsersRepository:IBaseRepository<User>
     {
-        void AddIfNotExist(ref User user);
+        User AddIfNotExist( User user);
     }
 }

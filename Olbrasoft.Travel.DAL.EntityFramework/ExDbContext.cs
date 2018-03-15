@@ -10,6 +10,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
     public static class ExDbContext
     {
         
+        
         public static void BulkUpdate<T>(this DbContext context, IEnumerable<T> entities, Action<EventArgs> onSaved) where T : class
         {
             var batchesToUpdate = SplitList(entities);
@@ -25,7 +26,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 });
                 onSaved(EventArgs.Empty);
             }
-
         }
 
 
@@ -42,7 +42,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                         BatchSize = 45000,
                         BulkCopyTimeout = 480,
                         IgnoreColumns = new HashSet<string>(new[] {"DateAndTimeOfCreation"})
-
                     });
                 
                 onSaved(EventArgs.Empty);

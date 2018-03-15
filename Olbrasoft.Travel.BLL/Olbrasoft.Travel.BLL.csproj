@@ -156,7 +156,6 @@
     <Compile Include="IUsersFacade.cs" />
     <Compile Include="LanguagesFacade.cs" />
     <Compile Include="LocalizedFacade.cs" />
-    <Compile Include="PointsOfInterestFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionsFacade.cs" />
     <Compile Include="SubClassesFacade.cs" />

@@ -44,12 +44,12 @@ namespace Olbrasoft.Travel.EAN
                 new EanFile(
                     new Uri("https://www.ian.com/affiliatecenter/include/V2/new/CityCoordinatesList.zip"),
                     TypeOfEanFile.Geography,
-                    typeof(City)
+                    typeof(CityCoordinates)
                 ),
                 new EanFile(
                     new Uri("https://www.ian.com/affiliatecenter/include/V2/new/NeighborhoodCoordinatesList.zip"),
                     TypeOfEanFile.Geography,
-                    typeof(Neighborhood)
+                    typeof(NeighborhoodCoordinates)
                 ),
                 new EanFile(
                     new Uri("https://www.ian.com/affiliatecenter/include/V2/new/PointsOfInterestCoordinatesList.zip"),
@@ -59,7 +59,7 @@ namespace Olbrasoft.Travel.EAN
                 new EanFile(
                     new Uri("https://www.ian.com/affiliatecenter/include/V2/new/AirportCoordinatesList.zip"),
                     TypeOfEanFile.Geography,
-                    typeof(Airport)
+                    typeof(AirportCoordinates)
                 ),
                 new EanFile(
                     new Uri("https://www.ian.com/affiliatecenter/include/V2/new/TrainMetroStationCoordinatesList.zip"),

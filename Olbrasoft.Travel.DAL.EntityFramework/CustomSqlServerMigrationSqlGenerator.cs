@@ -32,7 +32,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
             if (column.Name == "DateAndTimeOfCreation")
             {
-                column.DefaultValueSql = "GETDATE()";
+                column.DefaultValueSql = "GETUTCDATE()";
             }
         }
     }

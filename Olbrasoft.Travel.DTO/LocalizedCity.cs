@@ -2,14 +2,12 @@
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class LocalizedCity : LocalizedRegionWithNameAndLongName
+    public class LocalizedCity : BaseLocalizedRegion
     {
-    
         public virtual City City { get; set; }
 
         public User Creator { get; set; }
 
         public virtual Language Language { get; set; }
-
     }
 }

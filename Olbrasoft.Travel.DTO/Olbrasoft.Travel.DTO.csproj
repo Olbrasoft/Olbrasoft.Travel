@@ -52,11 +52,13 @@
     <Compile Include="BaseAirport.cs" />
     <Compile Include="BaseLocalizedAirport.cs" />
     <Compile Include="BaseLocalizedRegion.cs" />
+    <Compile Include="CreationInfo.cs" />
+    <Compile Include="Creator.cs" />
+    <Compile Include="IMapToPartners.cs" />
     <Compile Include="LocalizedRegionWithNameAndLongName.cs" />
-    <Compile Include="BasePointOfInterest.cs" />
-    <Compile Include="BaseRegion.cs" />
+    <Compile Include="BaseGeo.cs" />
     <Compile Include="BaseName.cs" />
-    <Compile Include="BaseRegionWithCoordinates.cs" />
+    <Compile Include="GeoWithCoordinates.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Chain.cs" />
     <Compile Include="City.cs" />

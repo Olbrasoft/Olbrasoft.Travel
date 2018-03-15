@@ -21,7 +21,7 @@ namespace Olbrasoft.Travel.BLL
 
         IDictionary<string, int> TypesOfRegionsAsReverseDictionary(bool clearFacadeCache = false);
         
-        //IDictionary<long, BaseRegion> GetMappingEanRegionIdsToRegions(bool clearFacadeCache=false);
+        //IDictionary<long, Geo> GetMappingEanRegionIdsToRegions(bool clearFacadeCache=false);
 
        
 

@@ -1,6 +1,6 @@
 ﻿namespace Olbrasoft.Travel.DTO
 {
-    public class LocalizedNeighborhood : LocalizedRegionWithNameAndLongName
+    public class LocalizedNeighborhood : BaseLocalizedRegion
     {
         public virtual Neighborhood Neighborhood { get; set; }
 

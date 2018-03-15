@@ -141,7 +141,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAirportsRepository.cs" />
+    <Compile Include="IGeoRepository.cs" />
+    <Compile Include="IMapTo.cs" />
     <Compile Include="IBaseNamesRepository.cs" />
     <Compile Include="IBaseRegionsRepository.cs" />
     <Compile Include="IBulk.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="ILoggingImports.cs" />
     <Compile Include="ILogsOfImportsRepository.cs" />
     <Compile Include="IManyToManyRepository.cs" />
+    <Compile Include="IMapToPartnersRepository.cs" />
     <Compile Include="ISaved.cs" />
     <Compile Include="IPointsOfInterestRepository.cs" />
     <Compile Include="IPointsOfInterestToPointsOfInterestRepository.cs" />

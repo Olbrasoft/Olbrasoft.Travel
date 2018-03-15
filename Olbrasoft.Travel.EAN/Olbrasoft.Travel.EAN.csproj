@@ -41,13 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\Geography\Airport.cs" />
-    <Compile Include="DTO\Geography\City.cs" />
+    <Compile Include="DTO\Geography\AirportCoordinates.cs" />
+    <Compile Include="DTO\Geography\CityCoordinates.cs" />
     <Compile Include="DTO\Geography\CityNeighborhood.cs" />
     <Compile Include="DTO\Geography\Country.cs" />
     <Compile Include="DTO\Geography\CountryMultiLanguage.cs" />
     <Compile Include="DTO\Geography\IHaveRegionIdRegionNameRegionNameLong.cs" />
-    <Compile Include="DTO\Geography\Neighborhood.cs" />
+    <Compile Include="DTO\Geography\NeighborhoodCoordinates.cs" />
     <Compile Include="DTO\Geography\ParentRegion.cs" />
     <Compile Include="DTO\Geography\PointOfInterestCoordinates.cs" />
     <Compile Include="DTO\Geography\RegionCenter.cs" />

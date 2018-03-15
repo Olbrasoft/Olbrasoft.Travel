@@ -4,7 +4,7 @@ using SharpRepository.Repository;
 
 namespace Olbrasoft.Travel.DAL
 {
-    public interface IBaseRegionsRepository<T> : IBaseRepository<T> where T : BaseRegion
+    public interface IBaseRegionsRepository<T> : IBaseRepository<T> where T : BaseGeo
     {
         IEnumerable<long> EanRegionIds { get; }
         IReadOnlyDictionary<long, int> EanRegionIdsToIds { get; }

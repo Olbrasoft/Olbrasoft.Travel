@@ -165,22 +165,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AirportsImporter.cs" />
-    <Compile Include="CitiesImporter.cs" />
-    <Compile Include="CountriesImporter.cs" />
+    <Compile Include="AirportsBatchImporter.cs" />
+    <Compile Include="BaseImporter.cs" />
+    <Compile Include="CitiesBatchImporter.cs" />
+    <Compile Include="ContinentsImporter.cs" />
+    <Compile Include="CountriesBatchImporter.cs" />
     <Compile Include="FileImportProvider.cs" />
     <Compile Include="IImportProvider.cs" />
     <Compile Include="ImportInterceptor.cs" />
     <Compile Include="ConsoleLogger.cs" />
     <Compile Include="IImport.cs" />
     <Compile Include="ILogger.cs" />
-    <Compile Include="Importer.cs" />
+    <Compile Include="BatchImporter.cs" />
     <Compile Include="ImportOption.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="EanImport.cs" />
-    <Compile Include="NeighborhoodsImporter.cs" />
-    <Compile Include="ParentRegionImporter.cs" />
-    <Compile Include="PointsOfInterestCoordinatesImporter.cs" />
+    <Compile Include="NeighborhoodsBatchImporter.cs" />
+    <Compile Include="ParentRegionBatchImporter.cs" />
+    <Compile Include="PointsOfInterestCoordinatesBatchImporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -21,7 +21,7 @@ namespace Olbrasoft.Travel.BLL
         private IDictionary<string, int> _typesOfRegionsAsReverseDictionary;
         private IDictionary<int, int> _regionIdsToParentRegionIds;
        
-        private IDictionary<long, BaseRegion> _mappingEanRegionIdsToRegions;
+        private IDictionary<long, BaseGeo> _mappingEanRegionIdsToRegions;
 
         public RegionsFacade(IBaseRepository<Region> repository, ITypesOfRegionsRepository typesOfRegionsRepository, ISubClassesRepository subClassesRepository, IPointsOfInterestRepository pointsOfInterestRepository, IRegionsToRegionsRepository regionsToRegionsRepository) : base(repository)
         {
@@ -39,8 +39,8 @@ namespace Olbrasoft.Travel.BLL
             if (_mappingEanRegionIdsToIds == null || clearFacadeCache)
             {
                 _mappingEanRegionIdsToIds = Repository.AsQueryable()
-                    .Where(p => p.EanRegionId != null)
-                    .Select(p => new { EanRegionId = (long)p.EanRegionId, p.Id }).ToDictionary(key => key.EanRegionId, val => val.Id);
+                    .Where(p => p.EanId != null)
+                    .Select(p => new { EanRegionId = (long)p.EanId, p.Id }).ToDictionary(key => key.EanRegionId, val => val.Id);
             }
             return _mappingEanRegionIdsToIds;
         }
@@ -81,20 +81,20 @@ namespace Olbrasoft.Travel.BLL
 
        
 
-        //public IDictionary<long, BaseRegion> GetMappingEanRegionIdsToRegions(bool clearFacadeCache = false)
+        //public IDictionary<long, Geo> GetMappingEanRegionIdsToRegions(bool clearFacadeCache = false)
         //{
         //    if (_mappingEanRegionIdsToRegions == null || clearFacadeCache)
         //    {
         //        _mappingEanRegionIdsToRegions = Repository.AsQueryable()
-        //            .Where(region=>region.EanRegionId!=null).ToDictionary(k =>
+        //            .Where(region=>region.EanId!=null).ToDictionary(k =>
         //            {
-        //                if (k.EanRegionId != null) return (long) k.EanRegionId;
+        //                if (k.EanId != null) return (long) k.EanId;
         //                return 0;
-        //            }, v => new BaseRegion
+        //            }, v => new Geo
         //            {
         //                Id = v.Id,
         //                CreatorId = v.CreatorId,
-        //                EanRegionId = v.EanRegionId,
+        //                EanId = v.EanId,
         //                TypeOfRegionId = v.TypeOfRegionId,
         //                DateAndTimeOfCreation = v.DateAndTimeOfCreation,
         //                SubClassId = v.SubClassId

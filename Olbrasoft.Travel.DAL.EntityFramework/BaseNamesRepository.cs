@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Olbrasoft.Travel.DTO;
 
@@ -27,7 +27,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             }
         }
 
-        public BaseNamesRepository(TravelContext context) : base(context)
+        public BaseNamesRepository(DbContext context) : base(context)
         {
             
         }

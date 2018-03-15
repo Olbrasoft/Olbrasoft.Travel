@@ -2,6 +2,12 @@
 
 namespace Olbrasoft.Travel.EAN.DTO.Geography
 {
+
+    public class ParentContinet : ParentRegion
+    {
+
+    }
+
     /// <summary>
     /// https://support.ean.com/hc/en-us/articles/115005784405-V3-Database-Files-Geography-Data
     /// File Name: ParentRegionList.txt

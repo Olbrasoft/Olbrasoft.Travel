@@ -2,7 +2,7 @@
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class City : BaseRegionWithCoordinates
+    public class City : GeoWithCoordinates
     {
        public virtual User Creator { get; set; }
 

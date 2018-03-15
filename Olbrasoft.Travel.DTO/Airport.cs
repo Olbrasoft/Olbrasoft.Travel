@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Spatial;
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class Airport
+    public class Airport : Creator, IMapToPartners<long>
     {
         [Key]
         public int Id { get; set; }
@@ -18,13 +17,9 @@ namespace Olbrasoft.Travel.DTO
         
         [Required]
         public DbGeography Coordinates { get; set; }
+
+        public long EanId { get; set; } = long.MinValue;
         
-        public long EanAirportId { get; set; } = long.MinValue;
-
-        public int CreatorId { get; set; }
-
-        public DateTime DateAndTimeOfCreation { get; set; }
-
         public User Creator { get; set; }
     }
 }

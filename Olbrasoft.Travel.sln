@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Olbrasoft.Travel.DAL", "Olb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Olbrasoft.EntityFramework.Bulk", "Olbrasoft.EntityFramework.Bulk\Olbrasoft.EntityFramework.Bulk.csproj", "{1326BA62-F609-4B14-9505-80E49AD3E5B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Olbrasoft.Travel.DAL.EntityFramework.Test", "Olbrasoft.Travel.DAL.EntityFramework.Test\Olbrasoft.Travel.DAL.EntityFramework.Test.csproj", "{64106972-73F4-49DE-975E-F1F694B9A152}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{1326BA62-F609-4B14-9505-80E49AD3E5B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1326BA62-F609-4B14-9505-80E49AD3E5B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1326BA62-F609-4B14-9505-80E49AD3E5B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64106972-73F4-49DE-975E-F1F694B9A152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64106972-73F4-49DE-975E-F1F694B9A152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64106972-73F4-49DE-975E-F1F694B9A152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64106972-73F4-49DE-975E-F1F694B9A152}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

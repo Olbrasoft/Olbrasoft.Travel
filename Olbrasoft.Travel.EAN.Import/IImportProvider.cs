@@ -9,5 +9,7 @@ namespace Olbrasoft.Travel.EAN.Import
         int GetCountLines(string path);
 
         IEnumerable<string> GetBatchLines(string path, int batch, int batchSize);
+
+        IEnumerable<string> GetAllLines(string path);
     }
 }

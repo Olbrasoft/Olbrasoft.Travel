@@ -20,5 +20,10 @@ namespace Olbrasoft.Travel.EAN.Import
         {
             return File.ReadLines(path).Skip((batch - 1) * batchSize + 1).Take(batchSize);
         }
+
+        public IEnumerable<string> GetAllLines(string path)
+        {
+            return File.ReadAllLines(path);
+        }
     }
 }

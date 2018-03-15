@@ -33,22 +33,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         protected void BulkInsert(IEnumerable<T> entities)
         {
             Context.BulkInsert(entities,OnSaved);
-
-            //var batchesToInsert = BaseRepository<T>.SplitList(entities, 90000);
-
-            //foreach (var batch in batchesToInsert)
-            //{
-            //    Context.BulkInsert(batch,
-            //        new BulkConfig
-            //        {
-            //            BatchSize = 45000,
-            //            BulkCopyTimeout = 480,
-            //            IgnoreColumns = new HashSet<string>(new[] { "DateAndTimeOfCreation" })
-
-            //        });
-
-            //    OnSaved(EventArgs.Empty);
-            //}
+            
         }
 
         protected void OnSaved(EventArgs eventArgs)
@@ -61,7 +46,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public abstract void ClearCache();
 
     }
-
     #endregion
 
 
@@ -109,47 +93,20 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
 
              Context.BulkInsert(entities, OnSaved);
-            //var batchesToInsert = SplitList(entities, 90000);
-
-            //foreach (var batch in batchesToInsert)
-            //{
-            //    Context.BulkInsert(batch,
-            //        new BulkConfig
-            //        {
-            //            BatchSize = 45000,
-            //            BulkCopyTimeout = 480,
-            //            IgnoreColumns = new HashSet<string>(new[] { "DateAndTimeOfCreation" })
-
-            //        });
-
-            //    OnSaved(EventArgs.Empty);
-            //}
+            
         }
 
         protected void BulkUpdate(IEnumerable<T> entities)
         {
 
             Context.BulkUpdate(entities,OnSaved);
-
-            //var batchesToUpdate = SplitList(entities, 90000);
-
-            //foreach (var batch in batchesToUpdate)
-            //{
-            //    Context.BulkUpdate(batch, new BulkConfig()
-            //    {
-            //        BatchSize = 45000,
-            //        BulkCopyTimeout = 480,
-            //        IgnoreColumns = new HashSet<string>(new[] { "DateAndTimeOfCreation" }),
-            //        IgnoreColumnsUpdate = new HashSet<string>(new[] { "CreatorId" })
-            //    });
-            //    OnSaved(EventArgs.Empty);
-            //}
-
+            
         }
 
         public virtual void BulkSave(IEnumerable<T> entities)
         {
             var entitiesArray = entities as T[] ?? entities.ToArray();
+
 
             if (entitiesArray.Any(p => GetPrimaryKey(p) == 0)) 
             {

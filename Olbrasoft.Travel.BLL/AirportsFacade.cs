@@ -5,9 +5,9 @@ namespace Olbrasoft.Travel.BLL
 {
     public class AirportsFacade : TravelFacade<Airport>, IAirportsFacade
     {
-        protected new readonly IAirportsRepository Repository;
+        protected new readonly IMapTo Repository;
 
-        public AirportsFacade(IAirportsRepository repository) : base(repository)
+        public AirportsFacade(IMapTo repository) : base(repository)
         {
             Repository = repository;
         }
