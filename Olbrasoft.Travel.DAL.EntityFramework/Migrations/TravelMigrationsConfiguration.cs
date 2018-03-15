@@ -40,7 +40,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
                     "Continent",
                     "Country",
                     "City",
-                    "Province (State)",
+                    "Province (StateOrProvince)",
                     "Multi-Region (within a country)",
                     "Multi-City (Vicinity)",
                     "Neighborhood"

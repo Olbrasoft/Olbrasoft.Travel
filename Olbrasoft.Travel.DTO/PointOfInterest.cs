@@ -12,8 +12,6 @@ namespace Olbrasoft.Travel.DTO
 
         public bool Shadow { get; set; }
 
-        public virtual User Creator { get; set; }
-
         public ICollection<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
 
 

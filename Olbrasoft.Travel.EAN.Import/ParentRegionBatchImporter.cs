@@ -15,6 +15,12 @@ namespace Olbrasoft.Travel.EAN.Import
 
         public override void ImportBatch(ParentRegion[] parentRegions)
         {
+            var staEanIdsToInds = ImportStatesOrProvinces(parentRegions,
+                FactoryOfRepositories.Geo<State>(),
+                FactoryOfRepositories.Geo<Travel.DTO.Country>().EanIdsToIds, CreatorId);
+
+
+
             var subClasses = ImportSubClasses(parentRegions, FactoryOfRepositories.BaseNames<SubClass>(), CreatorId);
 
             var typesOfRegions = FactoryOfRepositories.BaseNames<TypeOfRegion>().NamesToIds;
@@ -47,6 +53,47 @@ namespace Olbrasoft.Travel.EAN.Import
             //BulkSaveLocalized(localizedPointsOfInterest, FactoryOfRepositories.Localized<LocalizedPointOfInterest>(), DefaultLanguageId, Logger);
 
         }
+
+        private IReadOnlyDictionary<long, int> ImportStatesOrProvinces(ParentRegion[] parentRegions, 
+            IGeoRepository<State> repository, 
+            IReadOnlyDictionary<long, int> countriesEanIdsToIds, 
+            int creatorId
+            )
+        {
+            LogBuild<State>();
+            var statesOrProvinces = BuildStatesOrCountries( parentRegions,countriesEanIdsToIds,creatorId);
+            var count = statesOrProvinces.Length;
+            LogBuilded(count);
+
+            if (count == 0) return repository.EanIdsToIds;
+            LogSave<State>();
+            repository.BulkSave(statesOrProvinces);
+            LogSaved<State>();
+
+            return repository.EanIdsToIds;
+        }
+
+        private State[] BuildStatesOrCountries(ParentRegion[] parentRegions, IReadOnlyDictionary<long, int> countriesEanIdsToIds, int creatorId)
+        {
+
+            var statesOrProvinces= new Queue<State>();
+            foreach (var parentRegion in parentRegions)
+            {
+                if(parentRegion.RegionType != "Province (State)" || !countriesEanIdsToIds.TryGetValue(parentRegion.ParentRegionID,out var countryId)) continue;
+
+                var stateOrProvince = new State
+                {
+                    EanId = parentRegion.RegionID,
+                    CountryId = countryId,
+                    CreatorId = creatorId
+                };
+
+                statesOrProvinces.Enqueue(stateOrProvince);
+            }
+
+            return statesOrProvinces.ToArray();
+        }
+
 
         private void ImportLocalizedPointsOfInterest(IEnumerable<ParentRegion> parentRegions,
             IBaseRepository<LocalizedPointOfInterest, int, int> repository,

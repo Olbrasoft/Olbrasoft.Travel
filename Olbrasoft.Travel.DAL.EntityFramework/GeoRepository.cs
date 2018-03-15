@@ -5,7 +5,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class GeoRepository<T> : MapToPartnersRepository<T,long>,IGeoRepository<T> where T : Creator, IMapToPartners<long> 
+    public class GeoRepository<T> : MapToPartnersRepository<T,long>,IGeoRepository<T> where T : CreatorInfo, IMapToPartners<long> 
     {
         private long _minEanId = long.MinValue;
 

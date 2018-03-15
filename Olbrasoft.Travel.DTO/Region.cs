@@ -2,7 +2,7 @@
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class Region : BaseGeo
+    public class Region : Geo
     {
         public int TypeOfRegionId { get; set; }
 
@@ -12,12 +12,12 @@ namespace Olbrasoft.Travel.DTO
 
         public SubClass SubClass { get; set; }
 
-        public virtual User Creator { get; set; }
-
         public ICollection<LocalizedRegion> LocalizedRegions { get; set; }
         public ICollection<RegionToRegion> ToParentRegions { get; set; }
         public ICollection<RegionToRegion> ToChildRegions { get; set; }
 
+
+    
 
         // public virtual ICollection<PointOfInterestToRegion> PointsOfInterestToRegions { get; set; }
 

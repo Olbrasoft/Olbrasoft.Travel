@@ -149,7 +149,6 @@
     <Compile Include="ILocalizedFacade.cs" />
     <Compile Include="ImportsLogger.cs" />
     <Compile Include="IPointsOfInterestFacade.cs" />
-    <Compile Include="IRegionsFacade.cs" />
     <Compile Include="ISubClassesFacade.cs" />
     <Compile Include="ITravelFacade.cs" />
     <Compile Include="ITypesOfRegionsFacade.cs" />
@@ -157,7 +156,6 @@
     <Compile Include="LanguagesFacade.cs" />
     <Compile Include="LocalizedFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegionsFacade.cs" />
     <Compile Include="SubClassesFacade.cs" />
     <Compile Include="TravelFacade.cs" />
     <Compile Include="TypesOfRegionsFacade.cs" />

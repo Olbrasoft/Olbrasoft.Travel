@@ -5,7 +5,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class BaseRegionsRepository<T> : BaseRepository<T>, IBaseRegionsRepository<T> where T : BaseGeo
+    public class BaseRegionsRepository<T> : BaseRepository<T>, IBaseRegionsRepository<T> where T : Geo
     {
         private IEnumerable<long> _eanRegionIds;
         private IReadOnlyDictionary<long, int> _eanRegionIdsToIds;

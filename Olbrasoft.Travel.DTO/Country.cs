@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class Country : BaseGeo
+    public class Country : Geo
     {
         //todo change https://en.wikipedia.org/wiki/ISO_3166-1
         
@@ -14,9 +14,10 @@ namespace Olbrasoft.Travel.DTO
         public int ContinentId { get; set; }
 
         public Continent Continent { get; set; }
+        
 
-        public virtual User Creator { get; set; }
+        public virtual ICollection<LocalizedCountry> LocalizedCountries { get; set; }
 
-      //  public virtual ICollection<LocalizedCountry> LocalizedCountries { get; set; }
+        public virtual ICollection<State> StatesOrProvinces { get; set; }
     }
 }

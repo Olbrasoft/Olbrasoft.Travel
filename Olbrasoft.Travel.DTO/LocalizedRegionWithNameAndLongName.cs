@@ -4,6 +4,8 @@ namespace Olbrasoft.Travel.DTO
 {
     public class LocalizedRegionWithNameAndLongName : BaseLocalizedRegion
     {
+      
+
         //added for the correct order of the columns in the Name, LongName table. 
         [Required]
         [StringLength(255)]
@@ -11,5 +13,7 @@ namespace Olbrasoft.Travel.DTO
 
         [StringLength(510)]
         public string LongName { get; set; }
+
+      
     }
 }

@@ -1,7 +1,10 @@
 ﻿namespace Olbrasoft.Travel.DTO
 {
-    public class Creator : CreationInfo
+    public class CreatorInfo : CreationInfo
     {
         public int CreatorId { get; set; }
+
+        public User Creator { get; set; }
+
     }
 }

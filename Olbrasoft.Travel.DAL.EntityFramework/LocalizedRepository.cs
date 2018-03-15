@@ -6,7 +6,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class LocalizedRepository<T> : BaseRepository<T, int, int>, ILocalizedRepository<T> where T : BaseLocalized
+    public class LocalizedRepository<T> : BaseRepository<T, int, int>, ILocalizedRepository<T> where T : Localized
     {
         public LocalizedRepository(DbContext context) : base(context)
         {

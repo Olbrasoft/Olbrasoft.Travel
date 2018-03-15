@@ -4,7 +4,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public abstract class MapToPartnersRepository<T, TEanId> : BaseRepository<T>, IMapToPartnersRepository<T, TEanId> where T : Creator, IMapToPartners<TEanId>
+    public abstract class MapToPartnersRepository<T, TEanId> : BaseRepository<T>, IMapToPartnersRepository<T, TEanId> where T : CreatorInfo, IMapToPartners<TEanId>
     {
         public abstract IReadOnlyDictionary<TEanId, int> EanIdsToIds { get; }
 

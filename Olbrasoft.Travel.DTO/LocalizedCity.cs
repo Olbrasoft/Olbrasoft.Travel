@@ -6,8 +6,5 @@ namespace Olbrasoft.Travel.DTO
     {
         public virtual City City { get; set; }
 
-        public User Creator { get; set; }
-
-        public virtual Language Language { get; set; }
     }
 }

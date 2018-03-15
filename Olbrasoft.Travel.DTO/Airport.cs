@@ -3,10 +3,8 @@ using System.Data.Entity.Spatial;
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class Airport : Creator, IMapToPartners<long>
+    public class Airport : CreatorInfo, IMapToPartners<long>
     {
-        [Key]
-        public int Id { get; set; }
         
         /// <summary>
         /// https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A
@@ -20,6 +18,5 @@ namespace Olbrasoft.Travel.DTO
 
         public long EanId { get; set; } = long.MinValue;
         
-        public User Creator { get; set; }
     }
 }

@@ -15,14 +15,14 @@ namespace Olbrasoft.Travel.EAN.Import
             BatchSize = Option.ImportBatchSize;
         }
 
-        public static IEnumerable<List<T>> SplitList<T>(IEnumerable<T> locations, int nSize = 90000)
-        {
-            var result = locations.ToList();
-            for (var i = 0; i < result.Count; i += nSize)
-            {
-                yield return result.GetRange(i, Math.Min(nSize, result.Count - i));
-            }
-        }
+        //public static IEnumerable<List<T>> SplitList<T>(IEnumerable<T> locations, int nSize = 90000)
+        //{
+        //    var result = locations.ToList();
+        //    for (var i = 0; i < result.Count; i += nSize)
+        //    {
+        //        yield return result.GetRange(i, Math.Min(nSize, result.Count - i));
+        //    }
+        //}
         
         public override void Import(string path)
         {
@@ -49,8 +49,6 @@ namespace Olbrasoft.Travel.EAN.Import
             if (skipFirstLine) countLines = countLines - 1;
             return (int)Math.Ceiling(countLines / (double)batchSize);
         }
-
-
 
     }
 
