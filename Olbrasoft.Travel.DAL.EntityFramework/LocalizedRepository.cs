@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-
+using System.Linq.Expressions;
 using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
@@ -16,7 +17,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
         }
 
-        public override void BulkSave(IEnumerable<T> entities)
+        public override void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
             var entitiesArray = entities as T[] ?? entities.ToArray();
             foreach (var languageId in entitiesArray.GroupBy(entity => entity.LanguageId).Select(grp => grp.First()).Select(p=>p.LanguageId))
@@ -51,14 +52,14 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                     }
 
                     if (forUpdate.Count <= 0) return;
-                    BulkUpdate(forUpdate);
+                    BulkUpdate(forUpdate,ignorePropertiesWhenUpdating);
                 }
             }
         }
 
-        protected void BulkUpdate(IEnumerable<T> entities)
+        protected void BulkUpdate(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
-           Context.BulkUpdate(entities,OnSaved);
+           Context.BulkUpdate(entities,OnSaved,ignorePropertiesWhenUpdating);
         }
         
         public bool Exists(int languageId)

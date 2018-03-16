@@ -27,10 +27,9 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             _ids = null;
         }
 
-        public override void BulkSave(IEnumerable<T> entitiesToSubClases)
+        public void BulkSave(IEnumerable<T> entitiesToSubClases  )
         {
             var forInsert = entitiesToSubClases.Where(entityToSubClass => !Ids.Contains(entityToSubClass.Id)); 
-
             Context.BulkInsert(forInsert, OnSaved);
         }
     }

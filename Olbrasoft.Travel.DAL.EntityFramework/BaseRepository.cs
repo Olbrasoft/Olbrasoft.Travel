@@ -27,13 +27,15 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnSaved(EventArgs.Empty);
         }
 
-        public abstract void BulkSave(IEnumerable<T> entities);
+        public abstract void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating);
+
+      
 
 
         protected void BulkInsert(IEnumerable<T> entities)
         {
-            Context.BulkInsert(entities,OnSaved);
-            
+            Context.BulkInsert(entities, OnSaved);
+
         }
 
         protected void OnSaved(EventArgs eventArgs)
@@ -92,30 +94,29 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         protected virtual void BulkInsert(IEnumerable<T> entities)
         {
 
-             Context.BulkInsert(entities, OnSaved);
-            
+            Context.BulkInsert(entities, OnSaved);
+
         }
 
-        protected void BulkUpdate(IEnumerable<T> entities)
+        protected void BulkUpdate(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
 
-            Context.BulkUpdate(entities,OnSaved);
-            
+            Context.BulkUpdate(entities, OnSaved, ignorePropertiesWhenUpdating);
+
         }
 
-        public virtual void BulkSave(IEnumerable<T> entities)
+        public virtual void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
             var entitiesArray = entities as T[] ?? entities.ToArray();
 
-
-            if (entitiesArray.Any(p => GetPrimaryKey(p) == 0)) 
+            if (entitiesArray.Any(p => GetPrimaryKey(p) == 0))
             {
-               BulkInsert(entitiesArray.Where(p => GetPrimaryKey(p) == 0));
+                BulkInsert(entitiesArray.Where(p => GetPrimaryKey(p) == 0));
             }
 
             if (entitiesArray.Any(p => GetPrimaryKey(p) != 0))
             {
-                BulkUpdate(entitiesArray.Where(p => GetPrimaryKey(p) != 0));
+                BulkUpdate(entitiesArray.Where(p => GetPrimaryKey(p) != 0), ignorePropertiesWhenUpdating);
             }
         }
 

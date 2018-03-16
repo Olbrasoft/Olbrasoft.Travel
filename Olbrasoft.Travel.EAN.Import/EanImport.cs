@@ -339,7 +339,7 @@ namespace Olbrasoft.Travel.EAN.Import
 #endif
             container.Register(Component.For<IParserFactory>().ImplementedBy<ParserFactory>());
           
-            container.Register(Component.For(typeof(IBaseRegionsRepository<>)).ImplementedBy(typeof(BaseRegionsRepository<>)));
+          //  container.Register(Component.For(typeof(IBaseRegionsRepository<>)).ImplementedBy(typeof(BaseRegionsRepository<>)));
 
             container.Register(Component.For(typeof(IBaseNamesRepository<>)).ImplementedBy(typeof(BaseNamesRepository<>)));
 

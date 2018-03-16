@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq.Expressions;
 using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
@@ -27,9 +29,9 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             base.Add(RebuildPartnersIds(entities));
         }
 
-        public override void BulkSave(IEnumerable<T> entities)
+        public override void BulkSave(IEnumerable<T> entities, params Expression<Func<T,object>>[] ignorePropertiesWhenUpdating)
         {
-            base.BulkSave(RebuildPartnersIds(entities));
+            base.BulkSave(RebuildPartnersIds(entities),ignorePropertiesWhenUpdating);
         }
         
     }

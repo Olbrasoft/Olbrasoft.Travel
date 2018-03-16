@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DTO;
 using Olbrasoft.Travel.EAN.DTO.Geography;
@@ -11,15 +12,27 @@ namespace Olbrasoft.Travel.EAN.Import
     {
         public ParentRegionBatchImporter(ImportOption option) : base(option)
         {
+
         }
 
         public override void ImportBatch(ParentRegion[] parentRegions)
         {
-            var staEanIdsToInds = ImportStatesOrProvinces(parentRegions,
+            var staEanIdsToIds = ImportStatesOrProvinces(parentRegions,
                 FactoryOfRepositories.Geo<State>(),
                 FactoryOfRepositories.Geo<Travel.DTO.Country>().EanIdsToIds, CreatorId);
 
+            ImportLocalizedRegions(parentRegions, FactoryOfRepositories.Localized<LocalizedState>(), staEanIdsToIds, DefaultLanguageId, CreatorId);
 
+            LogBuild<City>();
+            var cities = BuildCities(parentRegions, CreatorId);
+            LogBuilded(cities.Length);
+            
+            LogSave<City>();
+            FactoryOfRepositories.Geo<City>().BulkSave(cities, c => c.Coordinates);
+            LogSaved<City>();
+
+
+            
 
             var subClasses = ImportSubClasses(parentRegions, FactoryOfRepositories.BaseNames<SubClass>(), CreatorId);
 
@@ -37,7 +50,8 @@ namespace Olbrasoft.Travel.EAN.Import
 
             var poiEanIdsToIds = ImportPointsOfInterest(parentRegions, pointsOfInterestRepository, subClasses, CreatorId);
 
-            ImportLocalizedPointsOfInterest(parentRegions, FactoryOfRepositories.Localized<LocalizedPointOfInterest>(), poiEanIdsToIds, CreatorId, DefaultLanguageId);
+            ImportLocalizedRegions(parentRegions, FactoryOfRepositories.Localized<LocalizedPointOfInterest>(), poiEanIdsToIds, CreatorId, DefaultLanguageId);
+
 
 
             //  ImportPointsOfInterestToPointsOfInterest(
@@ -49,19 +63,50 @@ namespace Olbrasoft.Travel.EAN.Import
             //  Logger.Log($"Load EanAirportIdsToIds from Regions");
             //var  eanRegionIdsToIds = regionsRepository.EanRegionIdsToIds;
             //  Logger.Log($"Ids regions loaded count:{eanRegionIdsToIds.Count}");
-            
+
             //BulkSaveLocalized(localizedPointsOfInterest, FactoryOfRepositories.Localized<LocalizedPointOfInterest>(), DefaultLanguageId, Logger);
 
         }
 
-        private IReadOnlyDictionary<long, int> ImportStatesOrProvinces(ParentRegion[] parentRegions, 
-            IGeoRepository<State> repository, 
-            IReadOnlyDictionary<long, int> countriesEanIdsToIds, 
+        private static City[] BuildCities(IEnumerable<ParentRegion> parentRegions, int creatorId)
+        {
+          return parentRegions.Where(pr => pr.RegionType == "City")
+                .Select(pr => new City { EanId = pr.RegionID, CreatorId = creatorId }).ToArray();
+        }
+
+        
+
+        private void ImportLocalizedRegions<T>(
+            IEnumerable<ParentRegion> parentRegions,
+            IBaseRepository<T, int, int> repository,
+            IReadOnlyDictionary<long, int> eanIdsToIds,
+            int languageId,
+            int creatorId
+
+        ) where T : LocalizedRegionWithNameAndLongName, new()
+        {
+            LogBuild<T>();
+            var localizedEntities = BuildLocalizedRegions<T>(parentRegions, eanIdsToIds, creatorId, languageId);
+            var count = localizedEntities.Length;
+            LogBuilded(count);
+
+            if (count <= 0) return;
+
+            LogSave<T>();
+            repository.BulkSave(localizedEntities);
+            LogSaved<T>();
+        }
+
+
+
+        private IReadOnlyDictionary<long, int> ImportStatesOrProvinces(ParentRegion[] parentRegions,
+            IGeoRepository<State> repository,
+            IReadOnlyDictionary<long, int> countriesEanIdsToIds,
             int creatorId
             )
         {
             LogBuild<State>();
-            var statesOrProvinces = BuildStatesOrCountries( parentRegions,countriesEanIdsToIds,creatorId);
+            var statesOrProvinces = BuildStates(parentRegions, countriesEanIdsToIds, creatorId);
             var count = statesOrProvinces.Length;
             LogBuilded(count);
 
@@ -73,13 +118,13 @@ namespace Olbrasoft.Travel.EAN.Import
             return repository.EanIdsToIds;
         }
 
-        private State[] BuildStatesOrCountries(ParentRegion[] parentRegions, IReadOnlyDictionary<long, int> countriesEanIdsToIds, int creatorId)
+        private static State[] BuildStates(IEnumerable<ParentRegion> parentRegions, IReadOnlyDictionary<long, int> countriesEanIdsToIds, int creatorId)
         {
 
-            var statesOrProvinces= new Queue<State>();
+            var statesOrProvinces = new Queue<State>();
             foreach (var parentRegion in parentRegions)
             {
-                if(parentRegion.RegionType != "Province (State)" || !countriesEanIdsToIds.TryGetValue(parentRegion.ParentRegionID,out var countryId)) continue;
+                if (parentRegion.RegionType != "Province (State)" || !countriesEanIdsToIds.TryGetValue(parentRegion.ParentRegionID, out var countryId)) continue;
 
                 var stateOrProvince = new State
                 {
@@ -95,39 +140,39 @@ namespace Olbrasoft.Travel.EAN.Import
         }
 
 
-        private void ImportLocalizedPointsOfInterest(IEnumerable<ParentRegion> parentRegions,
-            IBaseRepository<LocalizedPointOfInterest, int, int> repository,
-            IReadOnlyDictionary<long, int> eanIdsToIds,
-            int creatorId,
-            int languageId
-            )
-        {
-            LogBuild<LocalizedPointOfInterest>();
-            var localizedPointsOfInterest = BuildLocalizedRegions<LocalizedPointOfInterest>(parentRegions, eanIdsToIds, creatorId, languageId);
-            LogBuilded(localizedPointsOfInterest.Length);
+        //private void ImportLocalizedPointsOfInterest(IEnumerable<ParentRegion> parentRegions,
+        //    IBaseRepository<LocalizedPointOfInterest, int, int> repository,
+        //    IReadOnlyDictionary<long, int> eanIdsToIds,
+        //    int creatorId,
+        //    int languageId
+        //    )
+        //{
+        //    LogBuild<LocalizedPointOfInterest>();
+        //    var localizedPointsOfInterest = BuildLocalizedRegions<LocalizedPointOfInterest>(parentRegions, eanIdsToIds, creatorId, languageId);
+        //    LogBuilded(localizedPointsOfInterest.Length);
 
-            LogSave<LocalizedPointOfInterest>();
-            repository.BulkSave(localizedPointsOfInterest);
-            LogSaved<LocalizedPointOfInterest>();
-        }
+        //    LogSave<LocalizedPointOfInterest>();
+        //    repository.BulkSave(localizedPointsOfInterest);
+        //    LogSaved<LocalizedPointOfInterest>();
+        //}
 
 
-        private void ImportLocalizedRegions(IEnumerable<ParentRegion> parentRegions,
-            IBaseRepository<LocalizedRegion, int, int> repository,
-            IReadOnlyDictionary<long, int> eanIdsToIds,
-            int creatorId,
-            int languageId
-            )
-        {
-            LogBuild<LocalizedRegion>();
-            var localizedRegions =
-                BuildLocalizedRegions<LocalizedRegion>(parentRegions, eanIdsToIds, creatorId, languageId);
-            LogBuilded(localizedRegions.Length);
+        //private void ImportLocalizedRegions(IEnumerable<ParentRegion> parentRegions,
+        //    IBaseRepository<LocalizedRegion, int, int> repository,
+        //    IReadOnlyDictionary<long, int> eanIdsToIds,
+        //    int creatorId,
+        //    int languageId
+        //    )
+        //{
+        //    LogBuild<LocalizedRegion>();
+        //    var localizedRegions =
+        //        BuildLocalizedRegions<LocalizedRegion>(parentRegions, eanIdsToIds, creatorId, languageId);
+        //    LogBuilded(localizedRegions.Length);
 
-            LogSaved<LocalizedRegion>();
-            repository.BulkSave(localizedRegions);
-            LogSaved<LocalizedRegion>();
-        }
+        //    LogSaved<LocalizedRegion>();
+        //    repository.BulkSave(localizedRegions);
+        //    LogSaved<LocalizedRegion>();
+        //}
 
 
         private void ImportPointsOfInterestToRegions(

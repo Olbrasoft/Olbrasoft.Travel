@@ -154,7 +154,6 @@
     <Compile Include="MapToPartnersRepository.cs" />
     <Compile Include="BaseNamesRepository.cs" />
     <Compile Include="BaseRegionsRepository.cs" />
-    <Compile Include="ContinentsRepository.cs" />
     <Compile Include="CustomSqlServerMigrationSqlGenerator.cs" />
     <Compile Include="ExDbContext.cs" />
     <Compile Include="LanguagesRepository.cs" />
@@ -265,7 +264,6 @@
     <Compile Include="PointsOfInterestToPointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToRegionsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegionsRepository.cs" />
     <Compile Include="RegionsToRegionsRepository.cs" />
     <Compile Include="SubClassesRepository.cs" />
     <Compile Include="ToSubClassesRepository.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq.Expressions;
 using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
@@ -29,7 +30,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             _idsToToIds = null;
         }
 
-        public override void BulkSave(IEnumerable<T> manyToManyEntities)
+        public override void BulkSave(IEnumerable<T> manyToManyEntities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
             var forInsert = new Dictionary<Tuple<int, int>, T>();
             
