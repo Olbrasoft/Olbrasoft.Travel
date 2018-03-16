@@ -260,6 +260,10 @@
     <Compile Include="Migrations\201803152044484_LocalizedStates.Designer.cs">
       <DependentUpon>201803152044484_LocalizedStates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803160209576_AddLongNameToLocalizedCities.cs" />
+    <Compile Include="Migrations\201803160209576_AddLongNameToLocalizedCities.Designer.cs">
+      <DependentUpon>201803160209576_AddLongNameToLocalizedCities.cs</DependentUpon>
+    </Compile>
     <Compile Include="PointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToPointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToRegionsRepository.cs" />
@@ -365,6 +369,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803152044484_LocalizedStates.resx">
       <DependentUpon>201803152044484_LocalizedStates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803160209576_AddLongNameToLocalizedCities.resx">
+      <DependentUpon>201803160209576_AddLongNameToLocalizedCities.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

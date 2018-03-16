@@ -23,17 +23,12 @@ namespace Olbrasoft.Travel.EAN.Import
 
             ImportLocalizedRegions(parentRegions, FactoryOfRepositories.Localized<LocalizedState>(), staEanIdsToIds, DefaultLanguageId, CreatorId);
 
-            LogBuild<City>();
-            var cities = BuildCities(parentRegions, CreatorId);
-            LogBuilded(cities.Length);
+            var citiesRepository = FactoryOfRepositories.Geo<City>();
+
+            var citiesEanIdsToIds = ImportCities(parentRegions, citiesRepository, CreatorId);
+
+            ImportLocalizedCities(parentRegions, FactoryOfRepositories.Localized<LocalizedCity>(), citiesEanIdsToIds, DefaultLanguageId, CreatorId);
             
-            LogSave<City>();
-            FactoryOfRepositories.Geo<City>().BulkSave(cities, c => c.Coordinates);
-            LogSaved<City>();
-
-
-            
-
             var subClasses = ImportSubClasses(parentRegions, FactoryOfRepositories.BaseNames<SubClass>(), CreatorId);
 
             var typesOfRegions = FactoryOfRepositories.BaseNames<TypeOfRegion>().NamesToIds;
@@ -51,8 +46,7 @@ namespace Olbrasoft.Travel.EAN.Import
             var poiEanIdsToIds = ImportPointsOfInterest(parentRegions, pointsOfInterestRepository, subClasses, CreatorId);
 
             ImportLocalizedRegions(parentRegions, FactoryOfRepositories.Localized<LocalizedPointOfInterest>(), poiEanIdsToIds, CreatorId, DefaultLanguageId);
-
-
+            
 
             //  ImportPointsOfInterestToPointsOfInterest(
             //      parentRegions, poiEanRegionIdsToIds, FactoryOfRepositories.ManyToMany<PointOfInterestToPointOfInterest>(), CreatorId);
@@ -68,13 +62,51 @@ namespace Olbrasoft.Travel.EAN.Import
 
         }
 
-        private static City[] BuildCities(IEnumerable<ParentRegion> parentRegions, int creatorId)
+        private void ImportLocalizedCities(IEnumerable<ParentRegion> parentRegions,
+            IBaseRepository<LocalizedCity, int, int> repository,
+            IReadOnlyDictionary<long, int> eanIdsToIds,
+            int languageId,
+            int creatorId
+            )
         {
-          return parentRegions.Where(pr => pr.RegionType == "City")
-                .Select(pr => new City { EanId = pr.RegionID, CreatorId = creatorId }).ToArray();
+            LogBuild<LocalizedCity>();
+            var localizedCities = BuildLocalizedRegions<LocalizedCity>(parentRegions, eanIdsToIds, creatorId, languageId);
+            var count = localizedCities.Length;
+            LogBuilded(count);
+
+            if (count <= 0) return;
+
+            LogSave<LocalizedCity>();
+            repository.BulkSave(localizedCities, lc => lc.Name);
+            LogSaved<LocalizedCity>();
         }
 
-        
+        private IReadOnlyDictionary<long, int> ImportCities(ParentRegion[] parentRegions,
+            IGeoRepository<City> repository,
+            int creatorId
+            )
+        {
+            LogBuild<City>();
+            var cities = BuildCities(parentRegions, creatorId);
+            var count = cities.Length;
+            LogBuilded(count);
+
+            if (count <= 0) return repository.EanIdsToIds;
+
+            LogSave<City>();
+            repository.BulkSave(cities, c => c.Coordinates);
+            LogSaved<City>();
+
+            return repository.EanIdsToIds;
+        }
+
+        private static City[] BuildCities(IEnumerable<ParentRegion> parentRegions, int creatorId)
+        {
+            return parentRegions.Where(pr => pr.RegionType == "City")
+                  .Select(pr => new City { EanId = pr.RegionID, CreatorId = creatorId }).ToArray();
+        }
+
+
 
         private void ImportLocalizedRegions<T>(
             IEnumerable<ParentRegion> parentRegions,
@@ -518,7 +550,7 @@ namespace Olbrasoft.Travel.EAN.Import
         //}
 
         private static T[] BuildLocalizedRegions<T>(IEnumerable<ParentRegion> parentRegions,
-            IReadOnlyDictionary<long, int> eanRegionIdsToIds, int creatorId, int defaultLanguageId) where T : LocalizedRegionWithNameAndLongName, new()
+            IReadOnlyDictionary<long, int> eanRegionIdsToIds, int creatorId, int languageId) where T : LocalizedRegionWithNameAndLongName, new()
         {
             var localizedRegions = new Dictionary<int, T>();
             foreach (var parentRegion in parentRegions)
@@ -533,7 +565,7 @@ namespace Olbrasoft.Travel.EAN.Import
                             Id = regionId,
                             Name = parentRegion.ParentRegionName,
                             CreatorId = creatorId,
-                            LanguageId = defaultLanguageId
+                            LanguageId = languageId
                         };
 
                         if (parentRegion.ParentRegionName.Trim() != parentRegion.ParentRegionNameLong.Trim())
@@ -552,7 +584,7 @@ namespace Olbrasoft.Travel.EAN.Import
                     Id = regionId,
                     Name = parentRegion.RegionName,
                     CreatorId = creatorId,
-                    LanguageId = defaultLanguageId
+                    LanguageId = languageId
                 };
 
                 if (parentRegion.RegionName.Trim() != parentRegion.RegionNameLong.Trim())

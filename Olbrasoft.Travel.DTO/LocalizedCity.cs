@@ -2,7 +2,7 @@
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class LocalizedCity : BaseLocalizedRegion
+    public class LocalizedCity : LocalizedRegionWithNameAndLongName
     {
         public virtual City City { get; set; }
 
