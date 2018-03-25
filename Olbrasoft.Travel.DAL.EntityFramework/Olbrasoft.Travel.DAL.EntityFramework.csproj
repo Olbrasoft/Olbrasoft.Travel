@@ -151,9 +151,50 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MapToPartnersRepository.cs" />
-    <Compile Include="BaseNamesRepository.cs" />
-    <Compile Include="BaseRegionsRepository.cs" />
+    <Compile Include="CountriesRepository.cs" />
+    <Compile Include="Migrations\201803241118192_Regions.cs" />
+    <Compile Include="Migrations\201803241118192_Regions.Designer.cs">
+      <DependentUpon>201803241118192_Regions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803241130033_Languages.cs" />
+    <Compile Include="Migrations\201803241130033_Languages.Designer.cs">
+      <DependentUpon>201803241130033_Languages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803241139031_SubClasses.cs" />
+    <Compile Include="Migrations\201803241139031_SubClasses.Designer.cs">
+      <DependentUpon>201803241139031_SubClasses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803241703423_RegionsToTypes.cs" />
+    <Compile Include="Migrations\201803241703423_RegionsToTypes.Designer.cs">
+      <DependentUpon>201803241703423_RegionsToTypes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803241706446_LocalizedRegions.cs" />
+    <Compile Include="Migrations\201803241706446_LocalizedRegions.Designer.cs">
+      <DependentUpon>201803241706446_LocalizedRegions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803241708351_RegionsToRegions.cs" />
+    <Compile Include="Migrations\201803241708351_RegionsToRegions.Designer.cs">
+      <DependentUpon>201803241708351_RegionsToRegions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803241710142_Countries.cs" />
+    <Compile Include="Migrations\201803241710142_Countries.Designer.cs">
+      <DependentUpon>201803241710142_Countries.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803241938021_SpatialIndexToRegionsOnCoordinates.cs" />
+    <Compile Include="Migrations\201803241938021_SpatialIndexToRegionsOnCoordinates.Designer.cs">
+      <DependentUpon>201803241938021_SpatialIndexToRegionsOnCoordinates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803250015529_SpatialIndexToRegionsOnCenterCoordinates.cs" />
+    <Compile Include="Migrations\201803250015529_SpatialIndexToRegionsOnCenterCoordinates.Designer.cs">
+      <DependentUpon>201803250015529_SpatialIndexToRegionsOnCenterCoordinates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803250123172_Airports.cs" />
+    <Compile Include="Migrations\201803250123172_Airports.Designer.cs">
+      <DependentUpon>201803250123172_Airports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegionsToTypesRepository.cs" />
+    <Compile Include="TravelRepository.cs" />
+    <Compile Include="TypesRepository.cs" />
     <Compile Include="CustomSqlServerMigrationSqlGenerator.cs" />
     <Compile Include="ExDbContext.cs" />
     <Compile Include="LanguagesRepository.cs" />
@@ -163,7 +204,7 @@
     <Compile Include="LocalizedRepository.cs" />
     <Compile Include="LogsOfRegionsRepository.cs" />
     <Compile Include="ManyToManyRepository.cs" />
-    <Compile Include="GeoRepository.cs" />
+    <Compile Include="RegionsRepository.cs" />
     <Compile Include="Migrations\201803132033312_Init.cs" />
     <Compile Include="Migrations\201803132033312_Init.Designer.cs">
       <DependentUpon>201803132033312_Init.cs</DependentUpon>
@@ -176,101 +217,16 @@
     <Compile Include="Migrations\201803132047153_LogsOfImports.Designer.cs">
       <DependentUpon>201803132047153_LogsOfImports.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803132100506_Continents.cs" />
-    <Compile Include="Migrations\201803132100506_Continents.Designer.cs">
-      <DependentUpon>201803132100506_Continents.cs</DependentUpon>
+    <Compile Include="Migrations\201803191207203_TypesOfRegions.cs" />
+    <Compile Include="Migrations\201803191207203_TypesOfRegions.Designer.cs">
+      <DependentUpon>201803191207203_TypesOfRegions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803132108088_Languages.cs" />
-    <Compile Include="Migrations\201803132108088_Languages.Designer.cs">
-      <DependentUpon>201803132108088_Languages.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803132234243_LocalizedContinents.cs" />
-    <Compile Include="Migrations\201803132234243_LocalizedContinents.Designer.cs">
-      <DependentUpon>201803132234243_LocalizedContinents.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803140019219_Countries.cs" />
-    <Compile Include="Migrations\201803140019219_Countries.Designer.cs">
-      <DependentUpon>201803140019219_Countries.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803140709134_LocalizedCountries.cs" />
-    <Compile Include="Migrations\201803140709134_LocalizedCountries.Designer.cs">
-      <DependentUpon>201803140709134_LocalizedCountries.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803140748474_Cities.cs" />
-    <Compile Include="Migrations\201803140748474_Cities.Designer.cs">
-      <DependentUpon>201803140748474_Cities.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803140750534_SpatialIndexToCitiesOnCoordinates.cs" />
-    <Compile Include="Migrations\201803140750534_SpatialIndexToCitiesOnCoordinates.Designer.cs">
-      <DependentUpon>201803140750534_SpatialIndexToCitiesOnCoordinates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803140816296_LocalizedCities.cs" />
-    <Compile Include="Migrations\201803140816296_LocalizedCities.Designer.cs">
-      <DependentUpon>201803140816296_LocalizedCities.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803140908343_Neighborhoods.cs" />
-    <Compile Include="Migrations\201803140908343_Neighborhoods.Designer.cs">
-      <DependentUpon>201803140908343_Neighborhoods.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803140910117_SpatialIndexToNeighborhoodsOnCoordinates.cs" />
-    <Compile Include="Migrations\201803140910117_SpatialIndexToNeighborhoodsOnCoordinates.Designer.cs">
-      <DependentUpon>201803140910117_SpatialIndexToNeighborhoodsOnCoordinates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803140916334_LocalizedNeighborhoods.cs" />
-    <Compile Include="Migrations\201803140916334_LocalizedNeighborhoods.Designer.cs">
-      <DependentUpon>201803140916334_LocalizedNeighborhoods.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803140949425_TypesOfRegions.cs" />
-    <Compile Include="Migrations\201803140949425_TypesOfRegions.Designer.cs">
-      <DependentUpon>201803140949425_TypesOfRegions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803140957149_SubClasses.cs" />
-    <Compile Include="Migrations\201803140957149_SubClasses.Designer.cs">
-      <DependentUpon>201803140957149_SubClasses.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803141205293_Regions.cs" />
-    <Compile Include="Migrations\201803141205293_Regions.Designer.cs">
-      <DependentUpon>201803141205293_Regions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803141231008_LocalizedRegions.cs" />
-    <Compile Include="Migrations\201803141231008_LocalizedRegions.Designer.cs">
-      <DependentUpon>201803141231008_LocalizedRegions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803141334048_RegionsToRegions.cs" />
-    <Compile Include="Migrations\201803141334048_RegionsToRegions.Designer.cs">
-      <DependentUpon>201803141334048_RegionsToRegions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803142000426_PointsOfInterest.cs" />
-    <Compile Include="Migrations\201803142000426_PointsOfInterest.Designer.cs">
-      <DependentUpon>201803142000426_PointsOfInterest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803151248280_SpatialIndexToPointsOfInterestOnCoordinates.cs" />
-    <Compile Include="Migrations\201803151248280_SpatialIndexToPointsOfInterestOnCoordinates.Designer.cs">
-      <DependentUpon>201803151248280_SpatialIndexToPointsOfInterestOnCoordinates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803151301278_LocalizedPointsOfInterest.cs" />
-    <Compile Include="Migrations\201803151301278_LocalizedPointsOfInterest.Designer.cs">
-      <DependentUpon>201803151301278_LocalizedPointsOfInterest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803151809244_States.cs" />
-    <Compile Include="Migrations\201803151809244_States.Designer.cs">
-      <DependentUpon>201803151809244_States.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803152044484_LocalizedStates.cs" />
-    <Compile Include="Migrations\201803152044484_LocalizedStates.Designer.cs">
-      <DependentUpon>201803152044484_LocalizedStates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803160209576_AddLongNameToLocalizedCities.cs" />
-    <Compile Include="Migrations\201803160209576_AddLongNameToLocalizedCities.Designer.cs">
-      <DependentUpon>201803160209576_AddLongNameToLocalizedCities.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToPointsOfInterestRepository.cs" />
     <Compile Include="PointsOfInterestToRegionsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionsToRegionsRepository.cs" />
     <Compile Include="SubClassesRepository.cs" />
-    <Compile Include="ToSubClassesRepository.cs" />
+    <Compile Include="OneToManyRepository.cs" />
     <Compile Include="TravelContext.cs" />
     <Compile Include="Migrations\TravelMigrationsConfiguration.cs" />
     <Compile Include="BaseRepository.cs" />
@@ -290,6 +246,10 @@
       <Project>{a6dbd632-6e70-4f9d-88e0-3d00730ad38e}</Project>
       <Name>Olbrasoft.Travel.DTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Olbrasoft.Travel.EAN\Olbrasoft.Travel.EAN.csproj">
+      <Project>{0b602752-c834-4a56-bb99-2c7b22d88e42}</Project>
+      <Name>Olbrasoft.Travel.EAN</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -307,71 +267,38 @@
     <EmbeddedResource Include="Migrations\201803132047153_LogsOfImports.resx">
       <DependentUpon>201803132047153_LogsOfImports.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803132100506_Continents.resx">
-      <DependentUpon>201803132100506_Continents.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803191207203_TypesOfRegions.resx">
+      <DependentUpon>201803191207203_TypesOfRegions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803132108088_Languages.resx">
-      <DependentUpon>201803132108088_Languages.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803241118192_Regions.resx">
+      <DependentUpon>201803241118192_Regions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803132234243_LocalizedContinents.resx">
-      <DependentUpon>201803132234243_LocalizedContinents.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803241130033_Languages.resx">
+      <DependentUpon>201803241130033_Languages.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803140019219_Countries.resx">
-      <DependentUpon>201803140019219_Countries.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803241139031_SubClasses.resx">
+      <DependentUpon>201803241139031_SubClasses.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803140709134_LocalizedCountries.resx">
-      <DependentUpon>201803140709134_LocalizedCountries.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803241703423_RegionsToTypes.resx">
+      <DependentUpon>201803241703423_RegionsToTypes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803140748474_Cities.resx">
-      <DependentUpon>201803140748474_Cities.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803241706446_LocalizedRegions.resx">
+      <DependentUpon>201803241706446_LocalizedRegions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803140750534_SpatialIndexToCitiesOnCoordinates.resx">
-      <DependentUpon>201803140750534_SpatialIndexToCitiesOnCoordinates.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803241708351_RegionsToRegions.resx">
+      <DependentUpon>201803241708351_RegionsToRegions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803140816296_LocalizedCities.resx">
-      <DependentUpon>201803140816296_LocalizedCities.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803241710142_Countries.resx">
+      <DependentUpon>201803241710142_Countries.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803140908343_Neighborhoods.resx">
-      <DependentUpon>201803140908343_Neighborhoods.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803241938021_SpatialIndexToRegionsOnCoordinates.resx">
+      <DependentUpon>201803241938021_SpatialIndexToRegionsOnCoordinates.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803140910117_SpatialIndexToNeighborhoodsOnCoordinates.resx">
-      <DependentUpon>201803140910117_SpatialIndexToNeighborhoodsOnCoordinates.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803250015529_SpatialIndexToRegionsOnCenterCoordinates.resx">
+      <DependentUpon>201803250015529_SpatialIndexToRegionsOnCenterCoordinates.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803140916334_LocalizedNeighborhoods.resx">
-      <DependentUpon>201803140916334_LocalizedNeighborhoods.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803140949425_TypesOfRegions.resx">
-      <DependentUpon>201803140949425_TypesOfRegions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803140957149_SubClasses.resx">
-      <DependentUpon>201803140957149_SubClasses.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803141205293_Regions.resx">
-      <DependentUpon>201803141205293_Regions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803141231008_LocalizedRegions.resx">
-      <DependentUpon>201803141231008_LocalizedRegions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803141334048_RegionsToRegions.resx">
-      <DependentUpon>201803141334048_RegionsToRegions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803142000426_PointsOfInterest.resx">
-      <DependentUpon>201803142000426_PointsOfInterest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803151248280_SpatialIndexToPointsOfInterestOnCoordinates.resx">
-      <DependentUpon>201803151248280_SpatialIndexToPointsOfInterestOnCoordinates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803151301278_LocalizedPointsOfInterest.resx">
-      <DependentUpon>201803151301278_LocalizedPointsOfInterest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803151809244_States.resx">
-      <DependentUpon>201803151809244_States.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803152044484_LocalizedStates.resx">
-      <DependentUpon>201803152044484_LocalizedStates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803160209576_AddLongNameToLocalizedCities.resx">
-      <DependentUpon>201803160209576_AddLongNameToLocalizedCities.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803250123172_Airports.resx">
+      <DependentUpon>201803250123172_Airports.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

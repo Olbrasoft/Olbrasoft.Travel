@@ -22,7 +22,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             var entitiesArray = entities as T[] ?? entities.ToArray();
             foreach (var languageId in entitiesArray.GroupBy(entity => entity.LanguageId).Select(grp => grp.First()).Select(p=>p.LanguageId))
             {
-                if (!Exists(languageId))
+                if (!AsQueryable().Any(l=>l.LanguageId==languageId))
                 {
                     BulkInsert(entitiesArray);
                 }
@@ -69,7 +69,10 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public IEnumerable<int> FindIds(int languageId)
         {
-            return FindAll(l => l.LanguageId == languageId, l => l.Id);
+
+            return AsQueryable().Where(lr => lr.LanguageId == languageId).Select(lr => lr.Id);
+
+            //  return   FindAll(l => l.LanguageId == languageId, l => l.Id);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Olbrasoft.Travel.EAN.DTO.Geography
     /// Zip File Name: https://www.ian.com/affiliatecenter/include/V2/new/RegionCenterCoordinatesList.zip 
     /// This file lists the center point of high level regions, multi-city, city and neighborhood regions.
     /// </summary>
-    public class RegionCenter
+    public class RegionCenter : IHaveRegionIdRegionName
     {
         // ReSharper disable once InconsistentNaming
         [Key]

@@ -166,9 +166,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AirportsBatchImporter.cs" />
+    <Compile Include="BaseCitiesAndNeighborhoodImporter.cs" />
     <Compile Include="BaseImporter.cs" />
     <Compile Include="CitiesBatchImporter.cs" />
-    <Compile Include="ContinentsImporter.cs" />
     <Compile Include="CountriesBatchImporter.cs" />
     <Compile Include="FileImportProvider.cs" />
     <Compile Include="IImportProvider.cs" />
@@ -184,6 +184,8 @@
     <Compile Include="ParentRegionBatchImporter.cs" />
     <Compile Include="PointsOfInterestCoordinatesBatchImporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionCenterBatchImporter.cs" />
+    <Compile Include="TrainMetroStationsBatchImporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

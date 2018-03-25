@@ -8,34 +8,32 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
     {
         public virtual IDbSet<User> Users { get; set; }
         public virtual IDbSet<LogOfImport> LogsOfImports { get; set; }
-        public virtual IDbSet<Continent> Continents { get; set; }
-        public virtual IDbSet<Language> Languages { get; set; }
-        public virtual IDbSet<LocalizedContinent> LocalizedContinents { get; set; }
-        public virtual IDbSet<Country> Countries { get; set; }
-        public virtual IDbSet<LocalizedCountry> LocalizedCountries { get; set; }
-        public virtual IDbSet<City> Cities { get; set; }
-        public virtual IDbSet<LocalizedCity> LocalizedCities { get; set; }
-        public virtual IDbSet<Neighborhood> Neighborhoods { get; set; }
-        public virtual IDbSet<LocalizedNeighborhood> LocalizedNeighborhoods { get; set; }
         public virtual IDbSet<TypeOfRegion> TypesOfRegions { get; set; }
-        public virtual IDbSet<SubClass> SubClasses { get; set; }
         public virtual IDbSet<Region> Regions { get; set; }
+
+        public virtual IDbSet<SubClass> SubClasses { get; set; }
+
+        public virtual IDbSet<Language> Languages { get; set; }
+
+        public virtual IDbSet<RegionToType> RegionsToTypes { get; set; }
+
         public virtual IDbSet<LocalizedRegion> LocalizedRegions { get; set; }
+
         public virtual IDbSet<RegionToRegion> RegionsToRegions { get; set; }
-        public virtual IDbSet<PointOfInterest> PointsOfInterest { get; set; }
-        public virtual IDbSet<LocalizedPointOfInterest> LocalizedPointsOfInterest { get; set; }
 
-        /// <summary>
-        /// States and Provinces
-        /// </summary>
-        public virtual IDbSet<State> States { get; set; }
+        public virtual IDbSet<Country> Countries { get; set; }
 
-        /// <summary>
-        /// Localized information about the State or Province in the current language
-        /// </summary>
-        public virtual IDbSet<LocalizedState> LocalizedStates { get; set; }
+        public virtual IDbSet<Airport> Airports { get; set; }
 
+        //public virtual IDbSet<Travel.EAN.DTO.Geography.RegionCenter> RegionsCenters { get; set; }
 
+        //public virtual IDbSet<NotFoundCountry> NotFoundCountries { get; set; }
+
+        //public virtual IDbSet<DupNeighborhood> Neighborhoods { get; set; }   
+
+        //public virtual IDbSet<DupCity> Cities { get; set; }
+
+        //public virtual IDbSet<DupPoint> Points { get; set; }
 
         //public virtual IDbSet<PointOfInterestToPointOfInterest> PointsOfInterestToPointsOfInterest { get; set; }
         //public virtual IDbSet<PointOfInterestToRegion> PointsOfInterestToRegions { get; set; }
@@ -59,32 +57,30 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+            //modelBuilder.Entity<EAN.DTO.Geography.RegionCenter>().Property(p => p.RegionID)
+            //    .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
             OnUsersCreating(modelBuilder);
             OnLogsOfImportsCreating(modelBuilder);
-            OnContinentsCreating(modelBuilder);
-            OnLanguagesCreating(modelBuilder);
-            OnLocalizedContinentsCreating(modelBuilder);
-            OnCountriesCreating(modelBuilder);
-            OnLocalizedCountriesCreating(modelBuilder);
-            OnCitiesCreating(modelBuilder);
-            OnLocalizedCitiesCreating(modelBuilder);
-            OnNeighborhoodsCreating(modelBuilder);
-            OnLocalizedNeighborhoodsCreating(modelBuilder);
             OnTypesOfRegionsCreating(modelBuilder);
-            OnSubClassesCreating(modelBuilder);
             OnRegionsCreating(modelBuilder);
-            OnLocalizedRegionsCreating(modelBuilder);
+            OnSubClassesCreating(modelBuilder);
+            OnLanguagesCreating(modelBuilder);
+            OnRegionsToTypes(modelBuilder);
+            OnLocalizedRegions(modelBuilder);
+
             OnRegionsToRegionsCreating(modelBuilder);
-            OnPointsOfInterestCreating(modelBuilder);
-            OnLocalizedPointsOfInterestCreating(modelBuilder);
-            OnStatesCreating(modelBuilder);
-            OnLocalizedStates(modelBuilder);
+            OnCountriesCreating(modelBuilder);
+            OnAirportsCreating(modelBuilder);
+
+            //OnNeighborhoodsCreating(modelBuilder);
+            //OnCitiesCreating(modelBuilder);
+            //OnPointsCreating(modelBuilder);
 
             //OnPointsOfInterestToPointsOfInterestCreating(modelBuilder);
             //OnPointsOfInterestToRegionsCreating(modelBuilder);
-
             //OnPointsOfInterestToSubClassesCreating(modelBuilder);
-            //OnAirportsCreating(modelBuilder);
 
             //OnChainsCreating(modelBuilder);
             //OnCategoriesCreating(modelBuilder);
@@ -97,36 +93,134 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         }
 
-        private void OnLocalizedStates(DbModelBuilder modelBuilder)
+        private void OnRegionsToTypes(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<LocalizedState>()
-                .ToTable(nameof(LocalizedStates), "geo")
+            modelBuilder.Entity<RegionToType>()
+                .ToTable(nameof(RegionsToTypes), "geo")
                 .Property(e => e.DateAndTimeOfCreation)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
-
-            modelBuilder.Entity<LocalizedState>()
-                .HasRequired(ls => ls.Language)
-                .WithMany(l => l.LocalizedStates)
+            modelBuilder.Entity<RegionToType>().HasRequired(rtp => rtp.Creator).WithMany(user => user.RegionsToTypes)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<RegionToType>().HasRequired(rtp => rtp.Region).WithMany(region => region.RegionsToTypes)
+                .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<LocalizedState>()
-                .HasRequired(ls => ls.Creator)
-                .WithMany(u => u.LocalizedStates)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<RegionToType>().HasRequired(rtt => rtt.TypeOfRegion).WithMany(tor => tor.RegionsToTypes)
+                .HasForeignKey(p => p.ToId).WillCascadeOnDelete(false);
+
+
         }
 
-        private void OnStatesCreating(DbModelBuilder modelBuilder)
+        //private void OnPointsCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<DupPoint>()
+        //        .ToTable(nameof(Points),"geo")
+        //        .Property(p => p.RegionId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+        //}
+
+        //private void OnCitiesCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<DupCity>().ToTable(nameof(Cities), "geo")
+        //        .Property(c => c.RegionId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+        //}
+
+        //private void OnNeighborhoodsCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<DupNeighborhood>()
+        //        .ToTable(nameof(Neighborhoods), "geo")
+        //        .Property(n => n.RegionId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+        //}
+
+        private void OnAirportsCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<State>()
-                .ToTable(nameof(States), "geo")
+            modelBuilder.Entity<Airport>()
+                .ToTable(nameof(Airports), "geo")
+                .Property(c => c.DateAndTimeOfCreation)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+
+            modelBuilder.Entity<Airport>().HasIndex(c => c.Id).IsUnique();
+            modelBuilder.Entity<Airport>().HasIndex(c => c.Code).IsUnique();
+            modelBuilder.Entity<Airport>().HasRequired(c => c.Region).WithOptional(r => r.AdditionalAirportProperties).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Airport>().HasRequired(c => c.Creator).WithMany(user => user.Airports).WillCascadeOnDelete(false);
+        }
+
+
+        private void OnCountriesCreating(DbModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<Country>()
+                .ToTable(nameof(Countries), "geo").Property(c => c.DateAndTimeOfCreation)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+
+            modelBuilder.Entity<Country>().HasIndex(c => c.Id).IsUnique();
+            modelBuilder.Entity<Country>().HasIndex(c => c.Code).IsUnique();
+
+
+            modelBuilder.Entity<Country>().HasRequired(c => c.Region).WithOptional(r => r.AdditionalCountryProperties).WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Country>().HasRequired(c => c.Creator).WithMany(user => user.Countries).WillCascadeOnDelete(false);
+
+        }
+
+        private void OnRegionsToRegionsCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<RegionToRegion>()
+                .ToTable(nameof(RegionsToRegions), "geo")
                 .Property(e => e.DateAndTimeOfCreation)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
-            modelBuilder.Entity<State>()
-                .HasRequired(state => state.Creator)
-                .WithMany(user => user.States)
+            modelBuilder.Entity<RegionToRegion>()
+                .HasRequired(regionToRegion => regionToRegion.Region)
+                .WithMany(region => region.ToChildRegions)
+                .HasForeignKey(regionToRegion => regionToRegion.Id)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<RegionToRegion>()
+                .HasRequired(regionToRegion => regionToRegion.ParentRegion)
+                .WithMany(region => region.ToParentRegions)
+                .HasForeignKey(regionToRegion => regionToRegion.ToId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<RegionToRegion>().HasRequired(rtr => rtr.Creator)
+                .WithMany(u => u.RegionsToRegions).WillCascadeOnDelete(false);
+
+        }
+
+        //private void OnRegionsToSubClasses(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<RegionToSubClass>()
+        //        .ToTable(nameof(RegionsToSubClasses), "geo")
+        //        .Property(e => e.DateAndTimeOfCreation)
+        //        .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+
+        //    modelBuilder.Entity<RegionToSubClass>()
+        //        .HasRequired(rts => rts.Creator).WithMany(user => user.RegionsToSubClasses).WillCascadeOnDelete(false);
+
+        //    modelBuilder.Entity<RegionToSubClass>()
+        //        .HasRequired(rts => rts.Region).WithRequiredDependent(r => r.ToSubClass);
+
+        //    modelBuilder.Entity<RegionToSubClass>().HasRequired(rts => rts.SubClass)
+        //        .WithMany(sc => sc.RegionsToSubClasses);
+
+        //}
+
+        private void OnLocalizedRegions(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<LocalizedRegion>()
+                .ToTable(nameof(LocalizedRegions), "geo")
+                .Property(e => e.DateAndTimeOfCreation)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+
+            modelBuilder.Entity<LocalizedRegion>()
+                .HasRequired(lr => lr.Creator)
+                .WithMany(user => user.LocalizedRegions)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<LocalizedRegion>()
+                .HasRequired(lr => lr.Language)
+                .WithMany(l => l.LocalizedRegions)
                 .WillCascadeOnDelete(false);
 
         }
@@ -142,7 +236,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         //    modelBuilder.Entity<PointOfInterestToSubClass>()
         //        .HasRequired(pointOfInterestToSubClass
         //            => pointOfInterestToSubClass.PointOfInterest)
-        //        .WithRequiredDependent(p => p.ToSubClass);
+        //        .WithRequiredDependent(p => p.OneToMany);
 
         //    modelBuilder.Entity<User>()
         //        .HasMany(user => user.CreatedPointsOfInterestToSubClasses)
@@ -151,121 +245,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         //}
 
-
-        private void OnLocalizedNeighborhoodsCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<LocalizedNeighborhood>()
-                .ToTable(nameof(LocalizedNeighborhoods), "geo")
-                .Property(e => e.DateAndTimeOfCreation)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-
-            modelBuilder.Entity<LocalizedNeighborhood>()
-                 .HasRequired(ln => ln.Language)
-                 .WithMany(lan => lan.LocalizedNeighborhoods)
-                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<LocalizedNeighborhood>()
-                .HasRequired(ln => ln.Creator)
-                .WithMany(user => user.CreatedLocalizedNeighborhoods)
-                .WillCascadeOnDelete(false);
-
-
-        }
-
-        private void OnNeighborhoodsCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Neighborhood>()
-                .ToTable(nameof(Neighborhoods), "geo")
-                .Property(e => e.DateAndTimeOfCreation)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-
-            modelBuilder.Entity<Neighborhood>()
-                .HasIndex(p => p.EanId)
-                .IsUnique();
-        }
-
-        private void OnLocalizedCitiesCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<LocalizedCity>()
-                .ToTable(nameof(LocalizedCities), "geo")
-                .Property(e => e.DateAndTimeOfCreation)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-
-            modelBuilder.Entity<LocalizedCity>()
-                .HasRequired(lc => lc.Language)
-                .WithMany(lan => lan.LocalizedCities)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<LocalizedCity>()
-                .HasRequired(lc => lc.Creator)
-                .WithMany(user => user.CreatedLocalizedCities)
-                .WillCascadeOnDelete(false);
-        }
-
-        private void OnCitiesCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<City>()
-                .ToTable(nameof(Cities), "geo")
-                .Property(e => e.DateAndTimeOfCreation)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-
-            modelBuilder.Entity<City>().HasRequired(c => c.Creator).WithMany(u => u.CreatedCities);
-
-            modelBuilder.Entity<City>().HasIndex(p => p.EanId).IsUnique();
-        }
-
-
-        private void OnLocalizedCountriesCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<LocalizedCountry>()
-                .ToTable(nameof(LocalizedCountries), "geo");
-
-            modelBuilder.Entity<LocalizedCountry>()
-                .Property(e => e.DateAndTimeOfCreation)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-
-            modelBuilder.Entity<LocalizedCountry>()
-                .HasRequired(lc => lc.Language)
-                .WithMany(lan => lan.LocalizedCountries).WillCascadeOnDelete(false);
-
-
-            modelBuilder.Entity<LocalizedCountry>().HasRequired(lc => lc.Creator).WithMany(user => user.CreatedLocalizedCountries).WillCascadeOnDelete(false);
-        }
-
-        private void OnCountriesCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Country>()
-                .ToTable(nameof(Countries), "geo")
-                .HasIndex(p => p.EanId).IsUnique();
-            
-            modelBuilder.Entity<Country>()
-                .HasIndex(p => p.Code).IsUnique();
-
-            modelBuilder.Entity<Country>()
-                .Property(e => e.DateAndTimeOfCreation)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-
-            modelBuilder.Entity<Country>().HasRequired(c => c.Creator).WithMany(u => u.CreatedCountries).WillCascadeOnDelete(false);
-
-        }
-
-        private void OnLocalizedRegionsCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<LocalizedRegion>()
-                .ToTable(nameof(LocalizedRegions), "geo");
-
-            modelBuilder.Entity<LocalizedRegion>()
-                .Property(e => e.DateAndTimeOfCreation)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-
-
-            modelBuilder.Entity<LocalizedRegion>().HasRequired(lr => lr.Language).WithMany(l => l.LocalizedRegions)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<LocalizedRegion>().HasRequired(lr => lr.Creator)
-                .WithMany(u => u.CreatedLocalizedRegions).WillCascadeOnDelete(false);
-
-        }
 
         //private void OnPointsOfInterestToRegionsCreating(DbModelBuilder modelBuilder)
         //{
@@ -308,8 +287,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         //    modelBuilder.Entity<PointOfInterestToRegion>()
         //        .Property(pointOfInterestToRegion => pointOfInterestToRegion.DateAndTimeOfCreation)
         //        .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-
-
         //}
 
         //private void OnPointsOfInterestToPointsOfInterestCreating(DbModelBuilder modelBuilder)
@@ -344,54 +321,19 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         //}
 
-        private void OnPointsOfInterestCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<PointOfInterest>()
-                .ToTable(nameof(PointsOfInterest), "geo")
-                .HasIndex(pointOfInterest => pointOfInterest.EanId).IsUnique();
-
-            modelBuilder.Entity<PointOfInterest>()
-                .Property(e => e.DateAndTimeOfCreation)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-        }
-
-        private void OnRegionsToRegionsCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<RegionToRegion>()
-                .ToTable(nameof(RegionsToRegions), "geo")
-                .Property(e => e.DateAndTimeOfCreation)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-
-            modelBuilder.Entity<RegionToRegion>()
-                .HasRequired(regionToRegion => regionToRegion.Region)
-                 .WithMany(region => region.ToChildRegions)
-                .HasForeignKey(regionToRegion => regionToRegion.Id)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<RegionToRegion>()
-                .HasRequired(regionToRegion => regionToRegion.ParentRegion)
-                .WithMany(region => region.ToParentRegions)
-                .HasForeignKey(regionToRegion => regionToRegion.ToId)
-                .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<RegionToRegion>().HasRequired(rtr => rtr.Creator)
-                .WithMany(u => u.CreatedRegionsToRegions).WillCascadeOnDelete(false);
-
-        }
-
-
         private void OnRegionsCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Region>()
                 .ToTable(nameof(Regions), "geo")
                 .HasIndex(p => p.EanId).IsUnique();
 
+
             modelBuilder.Entity<Region>()
                 .Property(e => e.DateAndTimeOfCreation)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
-            modelBuilder.Entity<Region>().HasRequired(r=>r.Creator).WithMany(u=>u.CreatedRegions).WillCascadeOnDelete(false);
-            
+            modelBuilder.Entity<Region>().HasRequired(r => r.Creator).WithMany(u => u.Regions).WillCascadeOnDelete(false);
+
         }
 
         private static void OnTypesOfRegionsCreating(DbModelBuilder modelBuilder)
@@ -416,31 +358,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
         }
 
-        private void OnLocalizedContinentsCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<LocalizedContinent>()
-                .ToTable(nameof(LocalizedContinents), "geo");
-
-            modelBuilder.Entity<LocalizedContinent>()
-                .Property(e => e.DateAndTimeOfCreation)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-
-            modelBuilder.Entity<LocalizedContinent>().HasRequired(lc => lc.Language)
-                .WithMany(l => l.LocalizedContinents).WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<LocalizedContinent>().HasRequired(lc => lc.Creator)
-                .WithMany(u => u.CreatedLocalizedContinents).WillCascadeOnDelete(false);
-        }
-
-        private void OnContinentsCreating(DbModelBuilder modelBuilder)
-        {
-            
-            modelBuilder.Entity<Continent>()
-                .ToTable(nameof(Continents), "geo")
-                .Property(continent => continent.DateAndTimeOfCreation)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-            
-        }
 
         private void OnLanguagesCreating(DbModelBuilder modelBuilder)
         {
@@ -456,41 +373,13 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .Property(e => e.DateAndTimeOfCreation)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
-            modelBuilder.Entity<Language>().HasRequired(l => l.Creator).WithMany(u => u.CreatedLanguages);
+            modelBuilder.Entity<Language>().HasRequired(l => l.Creator).WithMany(u => u.Languages);
         }
 
-        //private void OnAirportsCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Airport>()
-        //        .ToTable(nameof(Airports), "geo")
-        //        .HasIndex(p => p.EanId)
-        //        .IsUnique();
-
-        //    modelBuilder.Entity<Airport>()
-        //        .Property(e => e.DateAndTimeOfCreation)
-        //        .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-
-        //    modelBuilder.Entity<User>()
-        //        .HasMany(user => user.CreatedAirports)
-        //        .WithRequired(airport => airport.Creator);
-        //}
 
 
-        private void OnLocalizedPointsOfInterestCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<LocalizedPointOfInterest>()
-                .ToTable(nameof(LocalizedPointsOfInterest), "geo")
-                .Property(e => e.DateAndTimeOfCreation)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-
-            modelBuilder.Entity<LocalizedPointOfInterest>().HasRequired(lpoi => lpoi.Language)
-                .WithMany(l => l.LocalizedPointsOfInterest).WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<LocalizedPointOfInterest>().HasRequired(localizedPointOfInterest => localizedPointOfInterest.Creator)
-                .WithMany(user => user.CreatedLocalizedPointsOfInterest).WillCascadeOnDelete(false);
 
 
-        }
 
 
         private void OnLogsOfImportsCreating(DbModelBuilder modelBuilder)

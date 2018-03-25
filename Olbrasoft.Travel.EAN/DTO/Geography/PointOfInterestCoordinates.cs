@@ -9,7 +9,7 @@ namespace Olbrasoft.Travel.EAN.DTO.Geography
     /// This file is a listing of all points of interest by latitude and longitude.
     /// The SubClassification shows what type of POI it is.
     /// </summary>
-    public class PointOfInterestCoordinates :IHaveRegionIdRegionNameRegionNameLong
+    public class PointOfInterestCoordinates : IHaveRegionIdRegionNameRegionNameLong, IHaveRegionIdLatitudeLongitude
     {
         // ReSharper disable once InconsistentNaming
         [Key]

@@ -7,6 +7,6 @@
 
         public virtual SubClass SubClass { get; set; }
 
-        public virtual User Creator { get; set; }
+ 
     }
 }

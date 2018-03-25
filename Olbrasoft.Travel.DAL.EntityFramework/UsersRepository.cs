@@ -17,11 +17,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         }
 
-
-        public override void ClearCache()
-        {
-
-        }
+        
 
         public User AddIfNotExist(User user)
         {

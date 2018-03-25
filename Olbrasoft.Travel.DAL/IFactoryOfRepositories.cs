@@ -4,20 +4,22 @@ namespace Olbrasoft.Travel.DAL
 {
     public interface IFactoryOfRepositories
     {
-        IBaseRegionsRepository<T> BaseRegions<T>() where T : Geo;
+        ITravelRepository<T> Travel<T>() where T : CreationInfo;
 
-        IBaseNamesRepository<T> BaseNames<T>() where T : BaseName;
+        ITypesRepository<T> BaseNames<T>() where T : BaseName;
+
+        IOneToManyRepository<T> OneToMany<T>() where T : CreatorInfo;
 
         IManyToManyRepository<T> ManyToMany<T>() where T : ManyToMany;
 
-        IToSubClassesRepository<T> ToSubClass<T>() where T : ToSubClass;
-
         ILocalizedRepository<T> Localized<T>() where T : Localized;
+        
+        IRegionsRepository Regions();
 
-        IGeoRepository<T> Geo<T>() where T : CreatorInfo, IMapToPartners<long>;
-            
+        IRegionsToTypesRepository RegionsToTypes();
+
+        ICountriesRepository Countries();
+
         IUsersRepository Users();
-
-        IRegionsRepository CreateRegionsRepository();
     }
 }

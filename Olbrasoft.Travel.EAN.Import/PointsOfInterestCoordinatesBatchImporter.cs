@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DTO;
 using Olbrasoft.Travel.EAN.DTO.Geography;
 
@@ -14,120 +12,108 @@ namespace Olbrasoft.Travel.EAN.Import
 
         public override void ImportBatch(PointOfInterestCoordinates[] pointsOfInterestCoordinates)
         {
-            var pointsOfInterestRepository = FactoryOfRepositories.BaseRegions<PointOfInterest>();
+            var regionsRepository = FactoryOfRepositories.Regions();
+            var typeOfRegionPointOfInterestId = FactoryOfRepositories.BaseNames<TypeOfRegion>().GetId("Point of Interest");
 
-            ImportPointsOfInterest(pointsOfInterestCoordinates,
-                pointsOfInterestRepository,
-                CreatorId
-                );
-            
-            var eanRegionIdsToIds = pointsOfInterestRepository.EanRegionIdsToIds;
-            
-            ImportPointsOfInterestToSubClasses(pointsOfInterestCoordinates, 
-                eanRegionIdsToIds, 
-                FactoryOfRepositories.BaseNames<SubClass>().NamesToIds,
-                FactoryOfRepositories.ToSubClass<PointOfInterestToSubClass>(), 
-                CreatorId
-                );
+            LogBuild<Region>();
+            var regions = BuildRegions(pointsOfInterestCoordinates, CreatorId);
+            var count = regions.Length;
+            LogBuilded(count);
 
-            
-            ImportLocalizedPointsOfInterest(pointsOfInterestCoordinates,
-                eanRegionIdsToIds,
-                FactoryOfRepositories.Localized<LocalizedPointOfInterest>(),
-                DefaultLanguageId,
-                CreatorId
-                );
+            if (count <= 0) return;
+            LogSave<Region>();
+            regionsRepository.BulkSave(regions, r => r.Coordinates);
+            LogSaved<Region>();
 
+            var eanIdsToIds = regionsRepository.EanIdsToIds;
+
+            LogBuild<RegionToType>();
+            var regionsToTypes = BuildRegionsToTypes(pointsOfInterestCoordinates, eanIdsToIds,
+                FactoryOfRepositories.BaseNames<SubClass>().NamesToIds, typeOfRegionPointOfInterestId, CreatorId);
+            count = regionsToTypes.Length;
+            LogBuilded(count);
+
+            if (count > 0)
+            {
+                LogSave<RegionToType>();
+                FactoryOfRepositories.RegionsToTypes().BulkSave(regionsToTypes);
+                LogSaved<RegionToType>();
+            }
+
+            LogBuild<LocalizedRegion>();
+            var localizedRegions = BuildLocalizedRegions(pointsOfInterestCoordinates, eanIdsToIds,
+                DefaultLanguageId, CreatorId);
+            count = localizedRegions.Length;
+            LogBuilded(count);
+
+            if (count <= 0) return;
+            LogSave<LocalizedRegion>();
+            FactoryOfRepositories.Localized<LocalizedRegion>().BulkSave(localizedRegions);
+            LogSaved<LocalizedRegion>();
         }
-        
 
-        private void ImportLocalizedPointsOfInterest(IEnumerable<PointOfInterestCoordinates> pointsOfInterestCoordinates,
-            IReadOnlyDictionary<long, int> eanRegionIdsToIds,
-            IBaseRepository<LocalizedPointOfInterest, int, int> repository,
+
+        private static RegionToType[] BuildRegionsToTypes(IEnumerable<PointOfInterestCoordinates> pointsOfInterestCoordinates,
+            IReadOnlyDictionary<long, int> eanIdsToIds,
+            IReadOnlyDictionary<string, int> subClasses,
+            int typeOfRegionId,
+            int creatorId
+            )
+        {
+            var regionsToTypes= new Queue<RegionToType>();
+
+            foreach (var eanPoint in pointsOfInterestCoordinates)
+            {
+                if (!eanIdsToIds.TryGetValue(eanPoint.RegionID, out var id)) continue;
+
+                var regionToType = new RegionToType
+                {
+                    Id=id,
+                    ToId = typeOfRegionId,
+                    CreatorId = creatorId
+                };
+
+                var subClassName = GetSubClassName(eanPoint.SubClassification);
+                
+                if (!string.IsNullOrEmpty(subClassName) && subClasses.TryGetValue(subClassName , out var subClassId))
+                {
+                    regionToType.SubClassId = subClassId;
+                }
+
+                regionsToTypes.Enqueue(regionToType);
+            }
+            return regionsToTypes.ToArray();
+        }
+
+        
+        private static LocalizedRegion[] BuildLocalizedRegions(IEnumerable<PointOfInterestCoordinates> pointsOfInterestCoordinates,
+            IReadOnlyDictionary<long, int> eanIdsToIds,
             int languageId,
             int creatorId
             )
         {
-           
-           LogBuild<LocalizedPointOfInterest>();
-            var localizedPointsOfInterest = BuildLocalizedRegions<LocalizedPointOfInterest>(pointsOfInterestCoordinates,
-                eanRegionIdsToIds, languageId, creatorId);
-            LogBuilded(localizedPointsOfInterest.Length);
+            var localizedRegions = new Queue<LocalizedRegion>();
 
-            LogSave<LocalizedPointOfInterest>();
-            repository.BulkSave(localizedPointsOfInterest);
-            LogSaved<LocalizedPointOfInterest>();
-        }
-
-
-
-        private void ImportPointsOfInterestToSubClasses(IEnumerable<PointOfInterestCoordinates> pointsOfInterestCoordinates,
-            IReadOnlyDictionary<long, int> eanRegionIdsToIds,
-            IReadOnlyDictionary<string, int> subClassesNamesToIds,
-            IBaseRepository<PointOfInterestToSubClass> repository,
-                int creatorId
-            )
-        {
-            LogBuild<PointOfInterestToSubClass>();
-            var pointsOfInterestToSubClasses = BuildPointsOfInterestToSubClases(pointsOfInterestCoordinates, eanRegionIdsToIds, subClassesNamesToIds, creatorId);
-            LogBuilded(pointsOfInterestToSubClasses.Length);
-
-            LogSave<PointOfInterestToSubClass>();
-            repository.BulkSave(pointsOfInterestToSubClasses);
-            LogSaved<PointOfInterestToSubClass>();
-
-        }
-
-
-        private void ImportPointsOfInterest(IEnumerable<PointOfInterestCoordinates> pointsOfInterestCoordinates,
-            IBaseRepository<PointOfInterest> repository,
-            int creatorId
-            )
-        {
-            LogBuild<PointOfInterest>();
-            var pointsOfInterest = BuildPointsOfInterest(pointsOfInterestCoordinates, creatorId);
-            LogBuilded(pointsOfInterest.Length);
-
-            LogSave<PointOfInterest>();
-            repository.BulkSave(pointsOfInterest);
-            LogSaved<PointOfInterest>();
-        }
-
-
-
-        private static PointOfInterestToSubClass[] BuildPointsOfInterestToSubClases(IEnumerable<PointOfInterestCoordinates> pointsOfInterestCoordinates,
-            IReadOnlyDictionary<long, int> eanRegionIdsToIds, IReadOnlyDictionary<string, int> subClassesNamesToIds, int creatorId)
-        {
-            var pointsOfInterestToSubClasses = new Queue<PointOfInterestToSubClass>();
-            foreach (var pointOfInterestCoordinates in pointsOfInterestCoordinates.Where(p => !string.IsNullOrEmpty(p.SubClassification)))
+            foreach (var eanPoint in pointsOfInterestCoordinates)
             {
-                if (!eanRegionIdsToIds.TryGetValue(pointOfInterestCoordinates.RegionID, out var id) ||
-                    !subClassesNamesToIds.TryGetValue(pointOfInterestCoordinates.SubClassification.ToLower().Replace("musuems", "museums"), out var subClassId))
-                {
-                    throw new KeyNotFoundException();
-                }
+                if (!eanIdsToIds.TryGetValue(eanPoint.RegionID, out var id)) continue;
 
-                pointsOfInterestToSubClasses.Enqueue(new PointOfInterestToSubClass
+                var localizedRegion = new LocalizedRegion
                 {
                     Id = id,
-                    SubClassId = subClassId,
+                    LanguageId = languageId,
+                    Name = eanPoint.RegionName,
+                    LongName = eanPoint.RegionNameLong,
                     CreatorId = creatorId
-                });
+                };
 
+                localizedRegions.Enqueue(localizedRegion);
             }
-            return pointsOfInterestToSubClasses.ToArray();
+
+            return localizedRegions.ToArray();
         }
 
-        private static PointOfInterest[] BuildPointsOfInterest(IEnumerable<PointOfInterestCoordinates> pointsOfInterestCoordinates, int creatorId)
-        {
-            return pointsOfInterestCoordinates.Select(
-                p => new PointOfInterest
-                {
-                    EanId = p.RegionID,
-                    Coordinates = CreatePoint(p.Latitude, p.Longitude),
-                    CreatorId = creatorId
-                }).ToArray();
-        }
-        
+
+       
     }
 }

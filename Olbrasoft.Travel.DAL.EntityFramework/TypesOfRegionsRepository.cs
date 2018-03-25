@@ -2,7 +2,7 @@
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class TypesOfRegionsRepository : BaseNamesRepository<TypeOfRegion>, ITypesOfRegionsRepository
+    public class TypesOfRegionsRepository : TypesRepository<TypeOfRegion>, ITypesOfRegionsRepository
     {
         protected new TravelContext Context;
 

@@ -93,13 +93,13 @@ namespace Olbrasoft.EntityFramework.Bulk
                     var dp = SqlQueryBuilder.DropTable(tableInfo.FullTempOutputTableName);
                     context.Database.ExecuteSqlCommand(dp);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     context.Database.ExecuteSqlCommand(SqlQueryBuilder.DropTable(tableInfo.FullTempOutputTableName));
                     throw;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 context.Database.ExecuteSqlCommand(SqlQueryBuilder.DropTable(tableInfo.FullTempTableName));
                 throw;

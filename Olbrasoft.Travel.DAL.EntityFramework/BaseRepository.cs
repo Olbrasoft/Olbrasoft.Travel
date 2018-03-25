@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using SharpRepository.Repository;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
@@ -30,8 +31,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public abstract void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating);
 
       
-
-
         protected void BulkInsert(IEnumerable<T> entities)
         {
             Context.BulkInsert(entities, OnSaved);
@@ -51,18 +50,24 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
     #endregion
 
 
-    public abstract class BaseRepository<T> : SharpRepository.EfRepository.EfRepository<T>, IBaseRepository<T> where T : class
+
+
+    public class BaseRepository<T> : SharpRepository.EfRepository.EfRepository<T>, IBaseRepository<T> where T : class 
     {
         public event EventHandler Saved;
 
         protected BaseRepository(DbContext context) : base(context)
         {
-
         }
 
         public new TResult Min<TResult>(Expression<Func<T, TResult>> selector)
         {
             return Context.Set<T>().Min(selector);
+        }
+
+        public new IEnumerable<TResult> GetAll<TResult>(Expression<Func<T, TResult>> selector)
+        {
+            return AsQueryable().Select(selector).ToArray();
         }
 
         public T Find(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includePaths)
@@ -76,7 +81,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             }
 
             return query.AsNoTracking().FirstOrDefault();
-
         }
 
         public new void Add(T entity)
@@ -102,35 +106,21 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
 
             Context.BulkUpdate(entities, OnSaved, ignorePropertiesWhenUpdating);
-
         }
 
-        public virtual void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
-        {
-            var entitiesArray = entities as T[] ?? entities.ToArray();
-
-            if (entitiesArray.Any(p => GetPrimaryKey(p) == 0))
-            {
-                BulkInsert(entitiesArray.Where(p => GetPrimaryKey(p) == 0));
-            }
-
-            if (entitiesArray.Any(p => GetPrimaryKey(p) != 0))
-            {
-                BulkUpdate(entitiesArray.Where(p => GetPrimaryKey(p) != 0), ignorePropertiesWhenUpdating);
-            }
-        }
-
-
+        
 
         protected void OnSaved(EventArgs eventArgs)
         {
             var handler = Saved;
             handler?.Invoke(this, eventArgs);
             ClearCache();
-            base.ClearCache();
         }
 
-        public new abstract void ClearCache();
+        public new virtual void ClearCache()
+        {
+            base.ClearCache();
+        }
 
         //public static IEnumerable<List<T>> SplitList(IEnumerable<T> locations, int nSize = 30)
         //{

@@ -67,10 +67,15 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         }
 
 
-        public static void  BulkInsert<T>(this DbContext context, IEnumerable<T> entities, Action<EventArgs> onSaved) where T : class
+        public static void  BulkInsert<T>(this DbContext context, IEnumerable<T> entities, Action<EventArgs> onSaved, params Expression<Func<T, object>>[] ignoreProperties) where T : class
         {
             var batchesToInsert = SplitList(entities);
+            var ignoreColmnsInsert = new HashSet<string>(ignoreProperties.Select(GetPropertyName));
 
+
+            const string createDateColumn = "DateAndTimeOfCreation";
+            if (!ignoreColmnsInsert.Contains(createDateColumn)) ignoreColmnsInsert.Add(createDateColumn);
+            
             foreach (var batch in batchesToInsert)
             {
 
@@ -79,7 +84,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                     {
                         BatchSize = 45000,
                         BulkCopyTimeout = 480,
-                        IgnoreColumns = new HashSet<string>(new[] {"DateAndTimeOfCreation"})
+                        IgnoreColumns = ignoreColmnsInsert
                     });
                 
                 onSaved(EventArgs.Empty);

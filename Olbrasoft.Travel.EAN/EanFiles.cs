@@ -64,7 +64,7 @@ namespace Olbrasoft.Travel.EAN
                 new EanFile(
                     new Uri("https://www.ian.com/affiliatecenter/include/V2/new/TrainMetroStationCoordinatesList.zip"),
                     TypeOfEanFile.Geography,
-                    typeof(TrainMetroStation)
+                    typeof(TrainMetroStationCoordinates)
                 ),
                 new EanFile(
                     new Uri("https://www.ian.com/affiliatecenter/include/V2/new/RegionCenterCoordinatesList.zip"),

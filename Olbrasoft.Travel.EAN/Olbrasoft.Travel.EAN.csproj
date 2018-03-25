@@ -46,13 +46,16 @@
     <Compile Include="DTO\Geography\CityNeighborhood.cs" />
     <Compile Include="DTO\Geography\Country.cs" />
     <Compile Include="DTO\Geography\CountryMultiLanguage.cs" />
+    <Compile Include="DTO\Geography\IHaveRegionId.cs" />
+    <Compile Include="DTO\Geography\IHaveRegionIdLatitudeLongitude.cs" />
     <Compile Include="DTO\Geography\IHaveRegionIdRegionNameRegionNameLong.cs" />
+    <Compile Include="DTO\Geography\IHaveRegionIdRegionName.cs" />
     <Compile Include="DTO\Geography\NeighborhoodCoordinates.cs" />
     <Compile Include="DTO\Geography\ParentRegion.cs" />
     <Compile Include="DTO\Geography\PointOfInterestCoordinates.cs" />
     <Compile Include="DTO\Geography\RegionCenter.cs" />
     <Compile Include="DTO\Geography\RegionMultiLanguage.cs" />
-    <Compile Include="DTO\Geography\TrainMetroStation.cs" />
+    <Compile Include="DTO\Geography\TrainMetroStationCoordinates.cs" />
     <Compile Include="DTO\Property\ActiveProperty.cs" />
     <Compile Include="DTO\Property\ActivePropertyMultiLanguage.cs" />
     <Compile Include="DTO\Property\AmenitiesMultiLanguage.cs" />

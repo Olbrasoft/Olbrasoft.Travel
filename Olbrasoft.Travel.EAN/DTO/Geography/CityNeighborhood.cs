@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Olbrasoft.Travel.EAN.DTO.Geography
 {
-   public class CityNeighborhood
+    public class CityNeighborhood : IHaveRegionIdRegionName
     {
         // ReSharper disable once InconsistentNaming
         [Key]

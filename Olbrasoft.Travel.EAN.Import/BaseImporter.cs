@@ -31,7 +31,12 @@ namespace Olbrasoft.Travel.EAN.Import
             CreatorId = Option.CreatorId;
             DefaultLanguageId = Option.DefaultLanguageId;
             FactoryOfRepositories = Option.FactoryOfRepositories;
-            
+        }
+
+
+        protected static string GetSubClassName(string name)
+        {
+            return string.IsNullOrEmpty(name) ? null : name.ToLower().Replace("musuems", "museums");
         }
 
         protected IParser<T> CreateParser(string path)
@@ -39,11 +44,11 @@ namespace Olbrasoft.Travel.EAN.Import
             if (Option.ParserFactory == null)
             {
                 WriteLog($"{nameof(Option.ParserFactory)} is Null {typeof(T)} import will be terminated.");
-                throw   new Exception("Create parser error!");
+                throw new Exception("Create parser error!");
             }
 
             ParserFactory = Option.ParserFactory;
-          return ParserFactory.Create<T>(Provider.GetFirstLine(path));
+            return ParserFactory.Create<T>(Provider.GetFirstLine(path));
 
         }
 
@@ -108,56 +113,128 @@ namespace Olbrasoft.Travel.EAN.Import
             return localizedRegions.ToArray();
         }
 
-        protected TCn[] BuildCitiesOrNeighborhoods<TCn>(IEnumerable<CityNeighborhood> eanCities, int creatorId) where TCn : GeoWithCoordinates, new()
+
+        protected Region[] BuildRegions(IEnumerable<CityNeighborhood> eanCitiesOrNeighborhoods, int creatorId)
         {
-            var cities = new Queue<TCn>();
-            Parallel.ForEach(eanCities, eanCity =>
+            var regions = new Queue<Region>();
+
+            Parallel.ForEach(eanCitiesOrNeighborhoods, eanCityOrNeighborhood =>
             {
-                var city = new TCn
+                var region = new Region
                 {
-                    EanId = eanCity.RegionID,
-                    Coordinates = CreatePoligon(eanCity.Coordinates),
+                    EanId = eanCityOrNeighborhood.RegionID,
+                    Coordinates = CreatePoligon(eanCityOrNeighborhood.Coordinates),
                     CreatorId = creatorId
                 };
 
                 lock (LockMe)
                 {
-                    cities.Enqueue(city);
+                    regions.Enqueue(region);
+                }
+            });
+
+            return regions.ToArray();
+        }
+
+        protected Region[] BuildRegions(IEnumerable<IHaveRegionIdLatitudeLongitude> entities,
+            int cretorId
+        )
+        {
+            var regions = new Queue<Region>();
+            
+            //foreach (var entity in entities)
+            //{
+            //    var region = new Region
+            //    {
+            //        EanId = entity.RegionID,
+            //        CenterCoordinates = CreatePoint(entity.Latitude, entity.Longitude),
+            //        CreatorId = cretorId
+            //    };
+
+            //     regions.Enqueue(region);
+                
+            //}
+            
+            Parallel.ForEach(entities, entity =>
+            {
+                var region = new Region
+                {
+                    EanId = entity.RegionID,
+                    CenterCoordinates = CreatePoint(entity.Latitude, entity.Longitude),
+                    CreatorId = cretorId
+                };
+
+                lock (LockMe)
+                {
+                    regions.Enqueue(region);
+                }
+            });
+
+            return regions.ToArray();
+        }
+
+
+        protected RegionToType[] BuildRegionsToTypes(IEnumerable<IHaveRegionId> eanEntities,
+            IReadOnlyDictionary<long, int> eanIdsToIds,
+            int typeOfRegionId,
+            int subClassId,
+            int creatorId
+        )
+        {
+            var regionsToTypes = new Queue<RegionToType>();
+            Parallel.ForEach(eanEntities, eanEntity =>
+            {
+                if (!eanIdsToIds.TryGetValue(eanEntity.RegionID, out var id)) return;
+
+                var regionToType = new RegionToType
+                {
+                    Id = id,
+                    ToId = typeOfRegionId,
+                    SubClassId = subClassId,
+                    CreatorId = creatorId
+                };
+
+                lock (LockMe)
+                {
+                    regionsToTypes.Enqueue(regionToType);
                 }
 
             });
 
-            return cities.ToArray();
+            return regionsToTypes.ToArray();
         }
 
-        protected TLr[] BuildLocalizedRegions<TLr>(
-            IEnumerable<CityNeighborhood> eanCities,
-            IReadOnlyDictionary<long, int> eanRegionIdsToIds,
-            int languageId,
-            int creatorId
-        ) where TLr : BaseLocalizedRegion, new()
+
+        protected LocalizedRegion[] BuildLocalizedRegions(IEnumerable<IHaveRegionIdRegionName> eanEntities,
+        IReadOnlyDictionary<long, int> eanIdsToIds,
+        int languageId,
+        int creatorId
+        )
         {
-            var localizedCities = new Queue<TLr>();
-
-            Parallel.ForEach(eanCities, eanCity =>
+            var localizedRegions = new Queue<LocalizedRegion>();
+            Parallel.ForEach(eanEntities, eanEntity =>
             {
-                if (!eanRegionIdsToIds.TryGetValue(eanCity.RegionID, out var id)) return;
+                if (!eanIdsToIds.TryGetValue(eanEntity.RegionID, out var id)) return;
 
-                var localizedCity = new TLr
+                var localizedRegion = new LocalizedRegion()
                 {
                     Id = id,
                     LanguageId = languageId,
-                    Name = eanCity.RegionName,
-                    CreatorId = creatorId
+                    CreatorId = creatorId,
+                    Name = eanEntity.RegionName
                 };
 
                 lock (LockMe)
                 {
-                    localizedCities.Enqueue(localizedCity);
+                    localizedRegions.Enqueue(localizedRegion);
                 }
             });
-            return localizedCities.ToArray();
+
+            return localizedRegions.ToArray();
         }
+
+
+
 
         protected void LogBuilded(int count)
         {

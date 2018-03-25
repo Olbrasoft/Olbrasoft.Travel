@@ -3,90 +3,49 @@ using Olbrasoft.Travel.EAN.DTO.Geography;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-
-    internal class CitiesBatchImporter : BatchImporter<CityCoordinates>
+    internal class CitiesBatchImporter : BaseCitiesAndNeighborhoodImporter<CityCoordinates>
     {
-
         public CitiesBatchImporter(ImportOption option) : base(option)
         {
-
+            TypeOfRegionId = FactoryOfRepositories.BaseNames<TypeOfRegion>().GetId("City");
+            SubClassId = FactoryOfRepositories.BaseNames<SubClass>().GetId("city");
         }
 
-        public override void ImportBatch(CityCoordinates[] eanCitiesCoordinates)
-        {
-            var citiesRepository = FactoryOfRepositories.Geo<City>();
-
-            LogBuild<City>();
-            var cities = BuildCitiesOrNeighborhoods<City>(eanCitiesCoordinates, CreatorId);
-            LogBuilded(cities.Length);
-
-            LogSave<City>();
-            citiesRepository.BulkSave(cities);
-            LogSaved<City>();
-
-            var eanRegionIdsToIds = citiesRepository.EanIdsToIds;
-
-            LogBuild<LocalizedCity>();
-            var localizedCities = BuildLocalizedRegions<LocalizedCity>(
-                eanCitiesCoordinates,
-                eanRegionIdsToIds, DefaultLanguageId, CreatorId);
-            LogBuilded(localizedCities.Length);
-
-            LogSave<LocalizedCity>();
-            FactoryOfRepositories.Localized<LocalizedCity>().BulkSave(localizedCities);
-            LogSaved<LocalizedCity>();
-        }
-        
-
-
-        //private Travel.DTO.CityCoordinates[] BuildCities(IEnumerable<CityCoordinates> eanCitiesCoordinates,  int creatorId)
+        //public override void ImportBatch(CityCoordinates[] eanEntities)
         //{
-        //    //var eanRegionIdsToIds = repository.EanAirportIdsToIds;
-        //    // var cities = new Dictionary<long, Travel.DTO.CityCoordinates>();
 
-        //    // var cities=new List<Travel.DTO.CityCoordinates>();
-        //    // Parallel.ForEach(sourceCollection, item => BuildCity(item));
-        //    var cities = new Queue<Travel.DTO.CityCoordinates>();
-        //    Parallel.ForEach(eanCitiesCoordinates, eanCity =>
+        //    var repository = FactoryOfRepositories.Geo<Region>();
+
+        //    var ids = repository.FindAll(r => r.TypeOfRegionId != 7, r => r.EanId).ToArray();
+
+
+        //    var cities = new Queue<DupCity>();
+        //    foreach (var eanEntity in eanEntities)
         //    {
-        //        var city = new Travel.DTO.CityCoordinates
+        //        if (!ids.Contains(eanEntity.RegionID)) continue;
+        //        var neighborhood = new DupCity()
         //        {
-        //            EanId = eanCity.RegionID,
-        //            Coordinates = CreatePoligon(eanCity.Coordinates),
-        //            CreatorId = creatorId
+        //            RegionId = eanEntity.RegionID,
+        //            RegionName = eanEntity.RegionName,
+        //            Coordinates = CreatePoligon(eanEntity.Coordinates)
         //        };
 
-        //        lock (_lockMe)
+        //        cities.Enqueue(neighborhood);
+
+        //    }
+
+        //    if (cities.Count > 0)
+        //    {
+
+        //        using (var ctx = new TravelContext())
         //        {
-        //            cities.Enqueue(city);
+        //            ctx.BulkInsert(cities);
         //        }
 
-        //    });
+        //    }
 
-
-        //    //foreach (var eanCity in eanCitiesCoordinates)
-        //    //{
-        //    //    if (cities.ContainsKey(eanCity.RegionID)) continue;
-
-        //    //    var city = new Travel.DTO.CityCoordinates
-        //    //    {
-        //    //        EanId = eanCity.RegionID,
-        //    //        Coordinates = CreatePoligon(eanCity.Coordinates),
-        //    //        CreatorId = creatorId
-
-        //    //    };
-
-        //    //    cities.Add(eanCity.RegionID, city);
-        //    //}
-
-        //    // return cities.Values.ToArray();
-
-        //    return cities.ToArray();
+        //    //base.ImportBatch(eanEntities);
         //}
-
-
     }
-
-
 
 }

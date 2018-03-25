@@ -141,11 +141,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IGeoRepository.cs" />
+    <Compile Include="IBulkRepository.cs" />
+    <Compile Include="ICountriesRepository.cs" />
+    <Compile Include="IRegionsRepository.cs" />
     <Compile Include="IMapTo.cs" />
-    <Compile Include="IBaseNamesRepository.cs" />
+    <Compile Include="IRegionsToTypesRepository.cs" />
+    <Compile Include="ITravelRepository.cs" />
+    <Compile Include="ITypesRepository.cs" />
     <Compile Include="IBaseRegionsRepository.cs" />
-    <Compile Include="IBulk.cs" />
     <Compile Include="IBulkInsert.cs" />
     <Compile Include="ICanClearCache.cs" />
     <Compile Include="IContinentsRepository.cs" />
@@ -157,17 +160,15 @@
     <Compile Include="ILoggingImports.cs" />
     <Compile Include="ILogsOfImportsRepository.cs" />
     <Compile Include="IManyToManyRepository.cs" />
-    <Compile Include="IMapToPartnersRepository.cs" />
     <Compile Include="ISaved.cs" />
     <Compile Include="IPointsOfInterestRepository.cs" />
     <Compile Include="IPointsOfInterestToPointsOfInterestRepository.cs" />
     <Compile Include="IPointsOfInterestToRegionsRepository.cs" />
-    <Compile Include="IRegionsRepository.cs" />
     <Compile Include="IRegionsToRegionsRepository.cs" />
     <Compile Include="IFactoryOfRepositories.cs" />
     <Compile Include="ISubClassesRepository.cs" />
     <Compile Include="IBaseRepository.cs" />
-    <Compile Include="IToSubClassesRepository.cs" />
+    <Compile Include="IOneToManyRepository.cs" />
     <Compile Include="ITypesOfRegionsRepository.cs" />
     <Compile Include="IUsersRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

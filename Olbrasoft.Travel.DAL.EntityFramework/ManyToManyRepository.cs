@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Linq.Expressions;
 using Olbrasoft.Travel.DTO;
 
@@ -14,12 +15,18 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
             get
             {
-                return _idsToToIds ??
-                       (
-                           _idsToToIds = new HashSet<Tuple<int, int>>( GetAll(p => new Tuple<int,int>( p.Id, p.ToId)))
-                        ) ;
+                if (_idsToToIds != null) return _idsToToIds;
+          
+                _idsToToIds = new HashSet<Tuple<int, int>>(AsQueryable().Select(p => new {p.Id, p.ToId}).ToArray()
+                    .Select(p => new Tuple<int, int>(p.Id, p.ToId)));
+
+                return _idsToToIds;
+                
             }
+
+            private set => _idsToToIds = value;
         }
+
 
         public ManyToManyRepository(DbContext context) : base(context)
         {
@@ -27,22 +34,23 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public override void ClearCache()
         {
-            _idsToToIds = null;
+            IdsToToIds = null;
         }
 
         public override void BulkSave(IEnumerable<T> manyToManyEntities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
             var forInsert = new Dictionary<Tuple<int, int>, T>();
-            
+
             foreach (var manyToMany in manyToManyEntities)
             {
                 var tup = new Tuple<int, int>(manyToMany.Id, manyToMany.ToId);
 
                 if (IdsToToIds.Contains(tup)) continue;
-                
-                if (forInsert.ContainsKey(tup)) continue;
 
-                forInsert.Add(tup,manyToMany);
+                if (!forInsert.ContainsKey(tup))
+                {
+                    forInsert.Add(tup, manyToMany);
+                }
             }
 
             BulkInsert(forInsert.Values);

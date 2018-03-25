@@ -29,7 +29,7 @@ namespace Olbrasoft.Travel.EAN.Import
             var countLines = Provider.GetCountLines(path);
             BatchCount = GetBatchCount(countLines, BatchSize);
 
-            WriteLog($"Start Import {typeof(T)} from:{path} import batch size is:{BatchSize} count lines is:{countLines} bacth count is:{BatchCount}.");
+            WriteLog($"Start Import {typeof(T)} from:{path} import batch size is:{BatchSize} count lines is:{countLines} batch count is:{BatchCount}.");
 
             var parser = CreateParser(path);
             

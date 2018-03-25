@@ -13,7 +13,7 @@ namespace Olbrasoft.Travel.EAN.Import
         public readonly IFactoryOfRepositories FactoryOfRepositories;
 
 
-        public ImportOption(IParserFactory parserFactory,  int creatorId, int defaultLanguageId, ILoggingImports logger , IFactoryOfRepositories factoryOfRepositories, int importBatchSize = 90000)
+        public ImportOption(IParserFactory parserFactory,  int creatorId, int defaultLanguageId, ILoggingImports logger , IFactoryOfRepositories factoryOfRepositories, int importBatchSize = 80000)
         {
             Logger = logger;
             FactoryOfRepositories = factoryOfRepositories;

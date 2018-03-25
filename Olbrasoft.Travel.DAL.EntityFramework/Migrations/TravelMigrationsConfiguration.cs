@@ -33,19 +33,23 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
             }
 
             var storedNamesTypesOfRegions = new HashSet<string>(context.Set<TypeOfRegion>().Select(t => t.Name));
-            
+
             var regionNames = new HashSet<string>
             {
                     "World",
                     "Continent",
                     "Country",
-                    "City",
-                    "Province (StateOrProvince)",
+                    "Province (State)",
                     "Multi-Region (within a country)",
                     "Multi-City (Vicinity)",
-                    "Neighborhood"
+                    "City",
+                    "Neighborhood",
+                    "Point of Interest",
+                    "Point of Interest Shadow",
+                    "Airport",
+                    "Train Station"
             };
-            
+
             foreach (var regionName in regionNames)
             {
                 if (!storedNamesTypesOfRegions.Contains(regionName))

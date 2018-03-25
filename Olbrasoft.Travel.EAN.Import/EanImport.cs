@@ -82,12 +82,7 @@ namespace Olbrasoft.Travel.EAN.Import
                 .ImplementedBy<CountriesBatchImporter>()
                 .Interceptors<IInterceptor>()
             );
-
-            //container.Register(Component.For<IImport>()
-            //    .ImplementedBy<CitiesBatchImporter>()
-            //    .Named(nameof(CitiesBatchImporter))
-            //    .Interceptors<IInterceptor>()
-            //);
+            
 
             container.Register(Component.For(typeof(IImport<CityCoordinates>))
                 .ImplementedBy<CitiesBatchImporter>()
@@ -109,45 +104,50 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Interceptors<IInterceptor>()
             );
 
-            container.Register(Component.For(typeof(IImport<ParentContinet>))
-                .ImplementedBy<ContinentsImporter>()
+            container.Register(Component.For(typeof(IImport<TrainMetroStationCoordinates>))
+                .ImplementedBy<TrainMetroStationsBatchImporter>()
+                .Interceptors<IInterceptor>()
+            );
+
+            container.Register(Component.For(typeof(IImport<RegionCenter>))
+                .ImplementedBy<RegionCenterBatchImporter>()
                 .Interceptors<IInterceptor>()
             );
 
 
-            //var parentContinents = container.Resolve<IImport<DTO.Geography.ParentContinet>>();
-            //parentContinents.Import(@"D:\Ean\ParentRegionList.txt");
+            //var parentRegionImporter = container.Resolve<IImport<ParentRegion>>();
+            //parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
 
             //var countriesImporter = container.Resolve<IImport<DTO.Geography.Country>>();
             //countriesImporter.Import(@"D:\Ean\CountryList.txt");
 
-            //var citiesImporter = container.Resolve<IImport<CityCoordinates>>();
-            //citiesImporter.Import(@"D:\Ean\CityCoordinatesList.Txt");
-            
             //var neighborhoodsImporter = container.Resolve<IImport<NeighborhoodCoordinates>>();
             //neighborhoodsImporter.Import(@"D:\Ean\NeighborhoodCoordinatesList.Txt");
 
-
-            var parentRegionImporter = container.Resolve<IImport<ParentRegion>>();
-            parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
-
-            
-            //container.Register(Component.For<IImport>()
-            //    .ImplementedBy<PointsOfInterestCoordinatesBatchImporter>()
-            //    .Named(nameof(PointsOfInterestCoordinatesBatchImporter)));
-            
-
-            //var repository = container.Resolve<IBaseRepository<RegionToRegion>>();
-            //Console.ReadLine();
-            
-
-
+            //var citiesImporter = container.Resolve<IImport<CityCoordinates>>();
+            //citiesImporter.Import(@"D:\Ean\CityCoordinatesList.Txt");
 
             //var pointsOfInterestImporter = container.Resolve<IImport<PointOfInterestCoordinates>>();
             //pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
 
             //var airportsImporter = container.Resolve<IImport<AirportCoordinates>>();
             //airportsImporter.Import(@"D:\Ean\AirportCoordinatesList.txt");
+
+            //var trainMetroStationsImporter = container.Resolve<IImport<TrainMetroStationCoordinates>>();
+            //trainMetroStationsImporter.Import(@"D:\Ean\TrainMetroStationCoordinatesList.txt");
+            
+            //var regionCenterImporter = container.Resolve<IImport<RegionCenter>>();
+            //regionCenterImporter.Import(@"D:\Ean\RegionCenterCoordinatesList.txt");
+
+            
+
+
+            //container.Register(Component.For<IImport>()
+            //    .ImplementedBy<PointsOfInterestCoordinatesBatchImporter>()
+            //    .Named(nameof(PointsOfInterestCoordinatesBatchImporter)));
+            
+            //var repository = container.Resolve<IBaseRepository<RegionToRegion>>();
+            //Console.ReadLine();
 
 
 
@@ -338,18 +338,19 @@ namespace Olbrasoft.Travel.EAN.Import
          container.Register(Component.For<ILoggingImports>().ImplementedBy<ImportsLogger>());
 #endif
             container.Register(Component.For<IParserFactory>().ImplementedBy<ParserFactory>());
-          
-          //  container.Register(Component.For(typeof(IBaseRegionsRepository<>)).ImplementedBy(typeof(BaseRegionsRepository<>)));
 
-            container.Register(Component.For(typeof(IBaseNamesRepository<>)).ImplementedBy(typeof(BaseNamesRepository<>)));
+            //  container.Register(Component.For(typeof(IBaseRegionsRepository<>)).ImplementedBy(typeof(BaseRegionsRepository<>)));
+
+            container.Register(Component.For(typeof(ITravelRepository<>)).ImplementedBy(typeof(TravelRepository<>)));
+
+            container.Register(Component.For(typeof(ITypesRepository<>)).ImplementedBy(typeof(TypesRepository<>)));
 
             container.Register(Component.For(typeof(IManyToManyRepository<>)).ImplementedBy(typeof(ManyToManyRepository<>)));
 
             container.Register(Component.For(typeof(ILocalizedRepository<>)).ImplementedBy(typeof(LocalizedRepository<>)));
 
-            container.Register(Component.For(typeof(IToSubClassesRepository<>)).ImplementedBy(typeof(ToSubClassesRepository<>)));
-
-            container.Register(Component.For(typeof(IGeoRepository<>)).ImplementedBy(typeof(GeoRepository<>)));
+            container.Register(Component.For(typeof(IOneToManyRepository<>)).ImplementedBy(typeof(OneToManyRepository<>)));
+            
 
             container.Register(Component.For<IInterceptor>().ImplementedBy<ImportInterceptor>());
 
