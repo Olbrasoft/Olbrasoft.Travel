@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class Description
+    public class Description : ILocalized
     {
         [Key]
         [Column(Order = 1)]
@@ -15,15 +16,22 @@ namespace Olbrasoft.Travel.DTO
 
         [Key]
         [Column(Order = 3)]
-        public int SupportedCultureId { get; set; }
+        public int LanguageId { get; set; }
 
         [Required]
         public string Text { get; set; }
 
+        public int CreatorId { get; set; }
+
+        public DateTime DateAndTimeOfCreation { get; set; }
+
         public virtual Accommodation Accommodation { get; set; }
 
-        public virtual NameOfDescription NameOfDescription { get; set; }
+        public virtual TypeOfDescription TypeOfDescription { get; set; }
+         
+        public virtual  Language Language { get; set; }
 
-        public virtual SupportedCulture SupportedCulture { get; set; }
+        public User Creator { get; set; }
+        
     }
 }

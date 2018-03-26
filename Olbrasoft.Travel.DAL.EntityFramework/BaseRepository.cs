@@ -48,9 +48,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
     }
     #endregion
-
-
-
+    
 
     public class BaseRepository<T> : SharpRepository.EfRepository.EfRepository<T>, IBaseRepository<T> where T : class 
     {

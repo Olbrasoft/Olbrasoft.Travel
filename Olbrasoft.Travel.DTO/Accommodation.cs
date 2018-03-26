@@ -4,31 +4,34 @@ using System.Data.Entity.Spatial;
 
 namespace Olbrasoft.Travel.DTO
 {
-  
-    public partial class Accommodation:MappedEntity
+    public class Accommodation : CreatorInfo, IHaveEanId<int>
     {
-        [Required]
-        [StringLength(70)]
-        public string Name { get; set; }
+      
+        public int SequenceNumber { get; set; }
 
         [Required]
         [StringLength(50)]
         public string Address { get; set; }
 
-        [Required]
-        public DbGeography Coordinates { get; set; }
+        public int CountryId { get; set; }
 
         [Required]
-        public int CategoryId { get; set; }
+        public DbGeography CenterCoordinates { get; set; }
 
-        [Required]
+        public int TypeOfAccommodationId { get; set; }
+
         public int ChainId { get; set; }
-        
-        public virtual Category Category { get; set; }
+
+        public int EanId { get; set; } = int.MinValue;
+
+        public virtual Country Country { get; set; }
+
+        public virtual TypeOfAccommodation TypeOfAccommodation { get; set; }
 
         public virtual Chain Chain { get; set; }
 
-        public virtual ICollection<Description> Descriptions { get; set; }
         public virtual ICollection<LocalizedAccommodation> LocalizedAccommodations { get; set; }
+
+        public virtual ICollection<Description> Descriptions { get; set; }
     }
 }

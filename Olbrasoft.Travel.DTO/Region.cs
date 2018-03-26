@@ -3,7 +3,7 @@ using System.Data.Entity.Spatial;
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class Region : Geo
+    public class Region : CreatorInfo
     {
 
         public Region()
@@ -17,6 +17,8 @@ namespace Olbrasoft.Travel.DTO
         public DbGeography Coordinates { get; set; }
 
         public DbGeography CenterCoordinates { get; set; }
+
+        public long EanId { get; set; } = long.MinValue;
 
         public ICollection<RegionToType> RegionsToTypes { get; set; }
 

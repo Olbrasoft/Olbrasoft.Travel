@@ -2,7 +2,7 @@
 
 namespace Olbrasoft.Travel.DTO
 {
-    public class BaseName : CreatorInfo
+    public class BaseName : CreatorInfo, IHaveName
     {
         [Required]
         [StringLength(50)]

@@ -142,19 +142,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AirportsFacade.cs" />
-    <Compile Include="ContinentsFacade.cs" />
     <Compile Include="IAirportsFacade.cs" />
-    <Compile Include="IContinentsFacade.cs" />
     <Compile Include="ILanguagesFacade.cs" />
-    <Compile Include="ILocalizedFacade.cs" />
     <Compile Include="ImportsLogger.cs" />
-    <Compile Include="IPointsOfInterestFacade.cs" />
     <Compile Include="ISubClassesFacade.cs" />
     <Compile Include="ITravelFacade.cs" />
     <Compile Include="ITypesOfRegionsFacade.cs" />
     <Compile Include="IUsersFacade.cs" />
     <Compile Include="LanguagesFacade.cs" />
-    <Compile Include="LocalizedFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubClassesFacade.cs" />
     <Compile Include="TravelFacade.cs" />

@@ -7,7 +7,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
-    public class TypesRepository<T> : BaseRepository<T>, ITypesRepository<T> where T : BaseName
+    public class TypesRepository<T> : BaseRepository<T>, ITypesRepository<T> where T : CreationInfo, IHaveName
     {
         private IReadOnlyDictionary<string, int> _namesToIds;
         private IEnumerable<string> _names;

@@ -13,14 +13,9 @@ namespace Olbrasoft.Travel.DTO
 
         public virtual Region Region { get; set; }
 
-        //public int ContinentId { get; set; }
+        public virtual ICollection<Accommodation> Accommodations { get; set; }
 
-        //public Continent Continent { get; set; }
 
-        //public virtual ICollection<LocalizedCountry> LocalizedCountries { get; set; }
-
-        //public virtual ICollection<State> StatesOrProvinces { get; set; }
-
-        //public virtual ICollection<CityToCountry> CitiesToCountries { get; set; }
+       
     }
 }

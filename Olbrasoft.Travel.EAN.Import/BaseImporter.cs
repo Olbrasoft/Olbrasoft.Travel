@@ -79,22 +79,21 @@ namespace Olbrasoft.Travel.EAN.Import
 
             return DbGeography.PolygonFromText($"POLYGON(({pointsString}))", 4326);
         }
+        
 
-
-
-        protected TLr[] BuildLocalizedRegions<TLr>(IEnumerable<IHaveRegionIdRegionNameRegionNameLong> eanEntities,
+        protected LocalizedRegion[] BuildLocalizedRegions(IEnumerable<IHaveRegionIdRegionNameRegionNameLong> eanEntities,
             IReadOnlyDictionary<long, int> eanRegionIdsToIds,
             int langiageId,
             int creatorId
-        ) where TLr : LocalizedRegionWithNameAndLongName, new()
+        ) 
         {
-            var localizedRegions = new Queue<TLr>();
+            var localizedRegions = new Queue<LocalizedRegion>();
 
             Parallel.ForEach(eanEntities, eL =>
             {
                 if (!eanRegionIdsToIds.TryGetValue(eL.RegionID, out var id)) return;
 
-                var localizedRegion = new TLr
+                var localizedRegion = new LocalizedRegion
                 {
                     Id = id,
                     LanguageId = langiageId,

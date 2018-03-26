@@ -3,7 +3,7 @@ using Olbrasoft.Travel.EAN.DTO.Geography;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    internal class TrainMetroStationsBatchImporter:BatchImporter<TrainMetroStationCoordinates>
+    internal class TrainMetroStationsBatchImporter : BatchImporter<TrainMetroStationCoordinates>
     {
         public TrainMetroStationsBatchImporter(ImportOption option) : base(option)
         {
@@ -24,9 +24,9 @@ namespace Olbrasoft.Travel.EAN.Import
                 regionsRepository.BulkSave(regions, r => r.Coordinates);
                 LogSaved<Region>();
             }
-            
+
             var eanIdsToIds = regionsRepository.EanIdsToIds;
-            
+
             var typeOfRegionTrainStationId = FactoryOfRepositories.BaseNames<TypeOfRegion>().GetId("Train Station");
             var subClassTrainId = FactoryOfRepositories.BaseNames<SubClass>().GetId("train");
 
@@ -54,28 +54,6 @@ namespace Olbrasoft.Travel.EAN.Import
             LogSaved<LocalizedRegion>();
 
         }
-        
 
-
-        //private static  Region[]  BuildRegions(IEnumerable<TrainMetroStationCoordinates> eanTrainStations, 
-        //    int creatorId
-        //)
-        //{
-        //    var regions = new Queue<Region>();
-
-        //    foreach (var eanTrainStation in eanTrainStations)
-        //    {
-        //        var region = new Region
-        //        {
-        //            CenterCoordinates = CreatePoint(eanTrainStation.Latitude,eanTrainStation.Longitude),
-        //            EanId = eanTrainStation.RegionID,
-        //            CreatorId = creatorId
-        //        };
-
-        //        regions.Enqueue(region);
-        //    }
-
-        //    return regions.ToArray();
-        //}
     }
 }

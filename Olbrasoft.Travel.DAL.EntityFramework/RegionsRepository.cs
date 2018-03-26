@@ -9,7 +9,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 {
     public class RegionsRepository : BaseRepository<Region>, IRegionsRepository
     {
-        private long _minEanRegionId = long.MinValue;
+        private long _minEanId = long.MinValue;
        
         private IReadOnlyDictionary<long, int> _eanIdsToIds;
 
@@ -30,23 +30,23 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             private set => _eanIdsToIds = value;
         }
         
-        private long MinEanRegionId
+        private long MinEanId
         {
             get
             {
-                if (_minEanRegionId != long.MinValue) return _minEanRegionId;
+                if (_minEanId != long.MinValue) return _minEanId;
                 if (Exists(region => region.EanId < 0))
                 {
-                    _minEanRegionId = Min(region => region.EanId) - 1;
+                    _minEanId = Min(region => region.EanId) - 1;
                 }
                 else
                 {
-                    _minEanRegionId = -1;
+                    _minEanId = -1;
                 }
-                return _minEanRegionId;
+                return _minEanId;
             }
 
-            set => _minEanRegionId = value;
+            set => _minEanId = value;
         }
 
        
@@ -102,8 +102,8 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
             foreach (var region in regions.Where(p => p.EanId == long.MinValue))
             {
-                region.EanId = MinEanRegionId;
-                MinEanRegionId = MinEanRegionId - 1;
+                region.EanId = MinEanId;
+                MinEanId = MinEanId - 1;
             }
 
             return regions;
@@ -111,7 +111,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         
         public override void ClearCache()
         {
-            MinEanRegionId = long.MinValue;
+            MinEanId = long.MinValue;
             EanIdsToIds = null;
            base.ClearCache();
         }
