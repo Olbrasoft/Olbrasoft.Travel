@@ -5,7 +5,6 @@ namespace Olbrasoft.Travel.DTO
 {
     public class Language : CreatorInfo
     {
-
         [StringLength(5)]
         public string EanLanguageCode { get; set; }
 
@@ -19,5 +18,6 @@ namespace Olbrasoft.Travel.DTO
 
         public virtual ICollection<LocalizedCaption> LocalizedCaptions { get; set; }
 
+        public virtual ICollection<LocalizedTypeOfRoom> LocalizedTypesOfRooms { get; set; }
     }
 }

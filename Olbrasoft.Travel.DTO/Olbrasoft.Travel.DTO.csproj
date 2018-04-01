@@ -68,6 +68,7 @@
     <Compile Include="LocalizedCaption.cs" />
     <Compile Include="LocalizedRegion.cs" />
     <Compile Include="LocalizedTypeOfAccommodation.cs" />
+    <Compile Include="LocalizedTypeOfRoom.cs" />
     <Compile Include="LogOfImport.cs" />
     <Compile Include="ManyToMany.cs" />
     <Compile Include="PathToPhoto.cs" />

@@ -9,7 +9,7 @@ namespace Olbrasoft.Travel.DTO
         [Required]
         [StringLength(255)]
         public string UserName { get; set; }
-        
+
         #region Child Properties
 
         public virtual ICollection<TypeOfRegion> CreatedTypesOfRegions { get; set; }
@@ -96,7 +96,7 @@ namespace Olbrasoft.Travel.DTO
         /// Paths of Photos created by the User
         /// </summary>
         public virtual ICollection<PathToPhoto> PathsOfPhotos { get; set; }
-        
+
         /// <summary>
         /// Files Extensions created by the User.
         /// </summary>
@@ -122,10 +122,12 @@ namespace Olbrasoft.Travel.DTO
         /// </summary>
         public virtual ICollection<TypeOfRoom> TypesOfRooms { get; set; }
 
+        /// <summary>
+        /// Localized Types of Rooms created by the User.
+        /// </summary>
+        public virtual ICollection<LocalizedTypeOfRoom> LocalizedTypesOfRooms { get; set; }
 
-       
 
-        
 
 
         #endregion
