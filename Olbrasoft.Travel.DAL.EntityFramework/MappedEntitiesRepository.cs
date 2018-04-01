@@ -10,7 +10,21 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
     public class MappedEntitiesRepository<T> : BaseRepository<T>, IMappedEntitiesRepository<T> where T : CreationInfo, IHaveEanId<int>
     {
         private int _minEanId = int.MinValue;
+        private HashSet<int> _eanIds;
         private IReadOnlyDictionary<int, int> _eanIdsToIds;
+
+
+        public HashSet<int> EanIds
+        {
+            get
+            {
+                return _eanIds ?? (_eanIds = _eanIdsToIds != null
+                           ? new HashSet<int>(_eanIdsToIds.Keys)
+                           : new HashSet<int>(AsQueryable().Where(p => p.EanId >= 0).Select(p => p.EanId)));
+            }
+
+            private set => _eanIds = value;
+        }
 
         public IReadOnlyDictionary<int, int> EanIdsToIds
         {
@@ -91,8 +105,8 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public override void ClearCache()
         {
-
             MinEanId = int.MinValue;
+            EanIds = null;
             EanIdsToIds = null;
             base.ClearCache();
         }

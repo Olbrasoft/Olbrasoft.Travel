@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Olbrasoft.Travel.DAL.EntityFramework;
 using Olbrasoft.Travel.DTO;
 using Olbrasoft.Travel.EAN.DTO.Property;
 
@@ -24,71 +20,65 @@ namespace Olbrasoft.Travel.EAN.Import
         public override void ImportBatch(RoomType[] roomsTypes)
         {
 
-
-
-            var pathsToPhotosRepository = FactoryOfRepositories.PathsToPhotos();
-            LogBuild<PathToPhoto>();
-            var pathsToPhotos = BuildPathsToPhotos(roomsTypes, pathsToPhotosRepository.Paths, CreatorId);
-            var count = pathsToPhotos.Length;
+            LogBuild<TypeOfRoom>();
+            var typesOfRooms = BuildTypesOfRooms(roomsTypes, FactoryOfRepositories.MappedEntities<Accommodation>().EanIdsToIds, CreatorId);
+            var count = typesOfRooms.Length;
             LogBuilded(count);
+
+            var typesOfRoomsRepository = FactoryOfRepositories.MappedEntities<TypeOfRoom>();
 
             if (count > 0)
             {
-                LogSave<PathToPhoto>();
-                pathsToPhotosRepository.BulkSave(pathsToPhotos);
-                LogSaved<PathToPhoto>();
+                LogSave<TypeOfRoom>();
+                typesOfRoomsRepository.BulkSave(typesOfRooms);
+                LogSaved<TypeOfRoom>();
             }
 
 
+            var urls = roomsTypes.Where(p => !string.IsNullOrEmpty(p.RoomTypeImage)).Select(p => p.RoomTypeImage).ToArray();
+            
+            var pathsToIds = ImportPathsToPhotos(urls, FactoryOfRepositories.PathsToPhotos(), CreatorId);
 
-            //LogBuild<TypeOfRoom>();
-            //var typesOfRooms = BuildTypesOfRooms(roomsTypes, CreatorId);
-            //var count = typesOfRooms.Length;
-            //LogBuilded(count);
+            var extensionsToIds = ImportFilesExtensions(urls, FactoryOfRepositories.FilesExtensions(), CreatorId);
 
-            //LogSave<TypeOfRoom>();
-            //using (var ctx = new TravelContext())
-            //{
-            //   ctx.BulkInsert(typesOfRooms,OnSaved);
-            //}
-            //LogSaved<TypeOfRoom>();
+
+
 
         }
 
+        
+       
 
-        private static PathToPhoto[] BuildPathsToPhotos(IEnumerable<RoomType> eanEntities,
-            ICollection<string> paths,
-            int creatorId
+
+
+        private static PhotoOfAccommodation[] BuildPhotosOfAccommodations(IEnumerable<RoomType> roomsTypes,
+        IReadOnlyDictionary<string, int> pathsToIds,
+        IReadOnlyDictionary<string, int> extensionsToIds,
+        int creatorId
         )
         {
-            var group = eanEntities.Where(p=>!string.IsNullOrEmpty(p.RoomTypeImage)).Select(p => ParsePath(p.RoomTypeImage)).Distinct();
+            var photosOfAccommodations = new Queue<PhotoOfAccommodation>();
 
-            return group.Where(ptp => !paths.Contains(ptp)).Select(ptp => new PathToPhoto()
-            {
-                Path = ptp,
-                CreatorId = creatorId
-
-            }).ToArray();
+            return photosOfAccommodations.ToArray();
         }
 
 
-        TypeOfRoom[] BuildTypesOfRooms(IEnumerable<RoomType> roomTypes,
 
-            int creatorId
+        private static TypeOfRoom[] BuildTypesOfRooms(IEnumerable<RoomType> roomTypes,
+            IReadOnlyDictionary<int, int> accommodationsEnaIdsToIds,
+                int creatorId
             )
         {
             var typesOfRooms = new Queue<TypeOfRoom>();
 
             foreach (var roomType in roomTypes)
             {
+                if (!accommodationsEnaIdsToIds.TryGetValue(roomType.EANHotelID, out var accommodationId)) continue;
+
                 var typeOfRoom = new TypeOfRoom()
                 {
-                    EANHotelID = roomType.EANHotelID,
-                    RoomTypeID = roomType.RoomTypeID,
-                    LanguageCode = roomType.LanguageCode,
-                    RoomTypeImage = roomType.RoomTypeImage,
-                    RoomTypeName = roomType.RoomTypeName,
-                    RoomTypeDescription = roomType.RoomTypeDescription,
+                    EanId = roomType.RoomTypeID,
+                    AccommodationId = accommodationId,
                     CreatorId = creatorId
 
                 };

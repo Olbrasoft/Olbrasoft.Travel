@@ -32,5 +32,6 @@ namespace Olbrasoft.Travel.DTO
 
         public Caption Caption { get; set; }
 
+        public virtual TypeOfRoom TypeOfRoom { get; set; }
     }
 }

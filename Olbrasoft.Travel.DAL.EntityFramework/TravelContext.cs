@@ -48,7 +48,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public virtual IDbSet<PhotoOfAccommodation> PhotosOfAccommodations { get; set; }
 
- //       public virtual IDbSet<TypeOfRoom> TypesOfRooms { get; set; }
+        public virtual IDbSet<TypeOfRoom> TypesOfRooms { get; set; }
 
 
         public TravelContext() : base("name=Travel")
@@ -86,7 +86,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
             OnPhotosOfAccommodationsCreating(modelBuilder);
 
-//            OnTypesOfRoomsCreating(modelBuilder);
+            OnTypesOfRoomsCreating(modelBuilder);
 
         }
 
@@ -100,11 +100,20 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         }
 
-        //private void OnTypesOfRoomsCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<TypeOfRoom>().ToTable(nameof(TypesOfRooms), "acco");
+        private void OnTypesOfRoomsCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TypeOfRoom>().ToTable(nameof(TypesOfRooms), "acco")
+                .HasRequired(tor=>tor.Creator)
+                .WithMany(u=>u.TypesOfRooms)
+                .WillCascadeOnDelete(false)
+                ;
 
-        //}
+            modelBuilder.Entity<TypeOfRoom>().HasRequired(tor => tor.Accommodation)
+                .WithMany(a => a.TypesOfRooms).WillCascadeOnDelete();
+
+            modelBuilder.Entity<TypeOfRoom>().HasMany(tor => tor.PhotosOfAccommodations)
+                .WithOptional(poa => poa.TypeOfRoom);
+        }
 
 
         private void OnCaptionsCreating(DbModelBuilder modelBuilder)

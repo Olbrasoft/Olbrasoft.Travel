@@ -248,6 +248,10 @@
     <Compile Include="Migrations\201803311733180_PhotosOfAccommodations.Designer.cs">
       <DependentUpon>201803311733180_PhotosOfAccommodations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804011457039_TypesOfRooms.cs" />
+    <Compile Include="Migrations\201804011457039_TypesOfRooms.Designer.cs">
+      <DependentUpon>201804011457039_TypesOfRooms.cs</DependentUpon>
+    </Compile>
     <Compile Include="PathsToPhotosRepository.cs" />
     <Compile Include="PhotosOfAccommodationsRepository.cs" />
     <Compile Include="RegionsToTypesRepository.cs" />
@@ -388,6 +392,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803311733180_PhotosOfAccommodations.resx">
       <DependentUpon>201803311733180_PhotosOfAccommodations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804011457039_TypesOfRooms.resx">
+      <DependentUpon>201804011457039_TypesOfRooms.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

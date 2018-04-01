@@ -21,7 +21,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             private set => _extensionsToIds = value;
         }
 
-        protected HashSet<string> Extensions
+        public HashSet<string> Extensions
         {
             get
             {

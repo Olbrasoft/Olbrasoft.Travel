@@ -85,12 +85,68 @@ namespace Olbrasoft.Travel.EAN.Import
             url = url.Replace("https://i.travelapi.com/hotels/", "").Replace(System.IO.Path.GetFileName(url), "");
             return url.Remove(url.Length - 1);
         }
+        
+
+        protected IReadOnlyDictionary<string, int> ImportPathsToPhotos(IEnumerable<string> urls,
+            IPathsToPhotosRepository repository, int creatorId)
+        {
+            LogBuild<PathToPhoto>();
+            var pathsToPhotos = BuildPathsToPhotos(urls, repository.Paths, creatorId);
+            var count = pathsToPhotos.Length;
+            LogBuilded(count);
+
+            if (count <= 0) return repository.PathsToIds;
+
+            LogSave<PathToPhoto>();
+            repository.BulkSave(pathsToPhotos);
+            LogSaved<PathToPhoto>();
+
+            return repository.PathsToIds;
+        }
+        
+
+        private static PathToPhoto[] BuildPathsToPhotos(IEnumerable<string> urls, ICollection<string> paths, int creatorId)
+        {
+            var group = urls.Select(ParsePath).Distinct();
+
+            return group.Where(ptp => !paths.Contains(ptp)).Select(ptp => new PathToPhoto()
+            {
+                Path = ptp,
+                CreatorId = creatorId
+
+            }).ToArray();
+        }
+        
+
+        protected IReadOnlyDictionary<string, int> ImportFilesExtensions(IEnumerable<string> urls, IFilesExtensionsRepository repository, int creatorId)
+        {
+            LogBuild<FileExtension>();
+            var filesExtensions = BuildFilesExtensions(urls, repository.Extensions, creatorId);
+            var count = filesExtensions.Length;
+            LogBuilded(count);
+
+            if (count <= 0) return repository.ExtensionsToIds;
+
+            LogSave<FileExtension>();
+            repository.Save(filesExtensions);
+            LogSaved<FileExtension>();
+
+            return repository.ExtensionsToIds;
+        }
+
+
+        private static FileExtension[] BuildFilesExtensions(IEnumerable<string> urls, ICollection<string> storedExtensions, int creatorId)
+        {
+            return urls.Select(url => System.IO.Path.GetExtension(url)?.ToLower()).Where(e => !storedExtensions.Contains(e)).Distinct()
+                .Select(p => new FileExtension { Extension = p, CreatorId = creatorId }).ToArray();
+        }
+
 
         protected LocalizedRegion[] BuildLocalizedRegions(IEnumerable<IHaveRegionIdRegionNameRegionNameLong> eanEntities,
             IReadOnlyDictionary<long, int> eanRegionIdsToIds,
             int langiageId,
             int creatorId
-        ) 
+        )
         {
             var localizedRegions = new Queue<LocalizedRegion>();
 
@@ -145,7 +201,7 @@ namespace Olbrasoft.Travel.EAN.Import
         )
         {
             var regions = new Queue<Region>();
-            
+
             //foreach (var entity in entities)
             //{
             //    var region = new Region
@@ -156,9 +212,9 @@ namespace Olbrasoft.Travel.EAN.Import
             //    };
 
             //     regions.Enqueue(region);
-                
+
             //}
-            
+
             Parallel.ForEach(entities, entity =>
             {
                 var region = new Region

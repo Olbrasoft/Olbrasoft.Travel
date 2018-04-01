@@ -112,26 +112,20 @@ namespace Olbrasoft.Travel.DTO
         /// </summary>
         public virtual ICollection<LocalizedCaption> LocalizedCaptions { get; set; }
 
-        
         /// <summary>
         /// Photos of Accommodations created by the User.
         /// </summary>
         public virtual ICollection<PhotoOfAccommodation> PhotosOfAccommodations { get; set; }
 
-
         /// <summary>
-        /// Photos of Accommodations To Localized Captions created by the User.
+        /// Rooms created by the User.
         /// </summary>
-        //public virtual ICollection<PhotoOfAccommodationToLocalizedCaption> PhotosOfAccommodationsToLocalizedCaptions
-        //{
-        //    get;
-        //    set;
-        //}
+        public virtual ICollection<TypeOfRoom> TypesOfRooms { get; set; }
 
-        /// <summary>
-        /// Localized Captions created by the User.
-        /// </summary>
-        //  public virtual ICollection<LocalizedCaption> LocalizedCaptions { get; set; }
+
+       
+
+        
 
 
         #endregion
