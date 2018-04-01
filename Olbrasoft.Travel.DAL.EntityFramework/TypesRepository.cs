@@ -23,8 +23,12 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
             get
             {
-                return _names ?? (_names = GetAll(p => p.Name));
+                if (_names != null) return _names;
+                _names = _namesToIds?.Keys ?? GetAll(p => p.Name);
+                return _names;
             }
+
+            private set => _names = value;
         }
 
         public IReadOnlyDictionary<string, int> NamesToIds
@@ -34,17 +38,19 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 return _namesToIds ??
                        (_namesToIds = GetAll(p => new { p.Name, p.Id }).ToDictionary(k => k.Name, v => v.Id));
             }
+
+            private set => _namesToIds = value;
         }
-        
+
 
         public TypesRepository(DbContext context) : base(context)
         {
         }
 
-        
+
         public void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
-           Context.BulkInsert(ForInsert(entities), OnSaved);
+            Context.BulkInsert(ForInsert(entities), OnSaved);
         }
 
         private IEnumerable<T> ForInsert(IEnumerable<T> entities)
@@ -65,8 +71,8 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public override void ClearCache()
         {
-            _names = null;
-            _namesToIds = null;
+            Names = null;
+            NamesToIds = null;
         }
 
 

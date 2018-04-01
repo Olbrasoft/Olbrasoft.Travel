@@ -10,7 +10,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<LogOfImport> LogsOfImports { get; set; }
         public virtual IDbSet<TypeOfRegion> TypesOfRegions { get; set; }
         public virtual IDbSet<Region> Regions { get; set; }
-
         public virtual IDbSet<SubClass> SubClasses { get; set; }
 
         public virtual IDbSet<Language> Languages { get; set; }
@@ -38,6 +37,18 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<TypeOfDescription> TypesOfDescriptions { get; set; }
 
         public virtual IDbSet<Description> Descriptions { get; set; }
+
+        public virtual IDbSet<PathToPhoto> PathsToPhotos { get; set; }
+
+        public virtual IDbSet<FileExtension> FilesExtensions { get; set; }
+
+        public virtual IDbSet<Caption> Captions { get; set; }
+
+        public virtual IDbSet<LocalizedCaption> LocalizedCaptions { get; set; }
+
+        public virtual IDbSet<PhotoOfAccommodation> PhotosOfAccommodations { get; set; }
+
+ //       public virtual IDbSet<TypeOfRoom> TypesOfRooms { get; set; }
 
 
         public TravelContext() : base("name=Travel")
@@ -67,7 +78,70 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnTypesOfDescriptionsCreating(modelBuilder);
             OnDescriptionsCreating(modelBuilder);
 
+            OnPathsToPhotosCreating(modelBuilder);
+            OnFilesExtensionsCreating(modelBuilder);
 
+            OnCaptionsCreating(modelBuilder);
+            OnLocalizedCaptions(modelBuilder);
+
+            OnPhotosOfAccommodationsCreating(modelBuilder);
+
+//            OnTypesOfRoomsCreating(modelBuilder);
+
+        }
+
+        private void OnLocalizedCaptions(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<LocalizedCaption>()
+                .HasRequired(lc => lc.Language).WithMany(l => l.LocalizedCaptions).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<LocalizedCaption>().HasRequired(lc => lc.Creator).WithMany(u => u.LocalizedCaptions)
+                .WillCascadeOnDelete(false);
+
+        }
+
+        //private void OnTypesOfRoomsCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<TypeOfRoom>().ToTable(nameof(TypesOfRooms), "acco");
+
+        //}
+
+
+        private void OnCaptionsCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Caption>().Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+        }
+        
+        private void OnFilesExtensionsCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<FileExtension>().ToTable(nameof(FilesExtensions)).HasIndex(fe => fe.Extension)
+                .IsUnique();
+
+        }
+        
+        private void OnPathsToPhotosCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PathToPhoto>().ToTable(nameof(PathsToPhotos))
+                .HasIndex(pathToPhoto => pathToPhoto.Path).IsUnique();
+            
+        }
+
+        private void OnPhotosOfAccommodationsCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PhotoOfAccommodation>().ToTable(nameof(PhotosOfAccommodations), "acco")
+               .HasIndex(p => new { p.PathToPhotoId, p.FileName }).IsUnique();
+
+            modelBuilder.Entity<PhotoOfAccommodation>().HasRequired(p => p.Accommodation).WithMany(p => p.PhotosOfAccommodations)
+                .HasForeignKey(p => p.AccommodationId).WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<PhotoOfAccommodation>().HasRequired(poa => poa.PathToPhoto)
+                .WithMany(ptp => ptp.PhotosOfAccommodations).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PhotoOfAccommodation>().HasRequired(poa => poa.FileExtension)
+                .WithMany(fe => fe.PhotosOfAccommodations).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PhotoOfAccommodation>().HasRequired(poa => poa.Creator)
+                .WithMany(u => u.PhotosOfAccommodations).WillCascadeOnDelete(false);
         }
 
         private void OnDescriptionsCreating(DbModelBuilder modelBuilder)
@@ -298,7 +372,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             modelBuilder.Entity<Language>().HasRequired(l => l.Creator).WithMany(u => u.Languages);
         }
 
-        
+
         private void OnLogsOfImportsCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<LogOfImport>()
@@ -324,9 +398,9 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .ToTable(nameof(TypesOfDescriptions), "acco")
                 .HasIndex(p => p.Name).IsUnique();
 
-          modelBuilder.Entity<TypeOfDescription>().Property(e => e.DateAndTimeOfCreation)
-              .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-            
+            modelBuilder.Entity<TypeOfDescription>().Property(e => e.DateAndTimeOfCreation)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+
             modelBuilder.Entity<TypeOfDescription>().HasRequired(tod => tod.Creator)
                 .WithMany(user => user.TypesOfDescriptions).WillCascadeOnDelete(true);
         }
@@ -344,13 +418,17 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             modelBuilder.Entity<Accommodation>().HasRequired(a => a.TypeOfAccommodation)
                 .WithMany(toa => toa.Accommodations).WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<Accommodation>().HasRequired(a => a.Chain).WithMany(ch => ch.Accommodations)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Accommodation>().HasRequired(a => a.Chain).WithMany(ch => ch.Accommodations)
+            //    .WillCascadeOnDelete(false);
+
+            // modelBuilder.Entity<Accommodation>().HasOptional(a => a.Airport).WithMany(a => a.Accommodations).
+
 
             modelBuilder.Entity<Accommodation>().HasRequired(a => a.Creator).WithMany(user => user.Accommodations)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Accommodation>().HasRequired(a => a.Country).WithMany(c => c.Accommodations).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Accommodation>().HasRequired(a => a.Country).WithMany(c => c.Accommodations)
+                .WillCascadeOnDelete(false);
 
         }
 

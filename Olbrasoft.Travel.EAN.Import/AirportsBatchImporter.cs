@@ -61,7 +61,7 @@ namespace Olbrasoft.Travel.EAN.Import
             if (count > 0)
             {
                 LogSave<Airport>();
-                FactoryOfRepositories.Travel<Airport>().BulkSave(airports);
+                FactoryOfRepositories.AdditionalRegionsInfo<Airport>().BulkSave(airports);
                 LogSaved<Airport>();
             }
 
@@ -80,7 +80,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             LogBuild<RegionToRegion>();
             var regionsToRegions = BuildRegionsToregions(eanAirportsCoordinates, eanIdsToIds,
-                regionsRepository.EanIdsToIds, FactoryOfRepositories.Countries().CodesToIds, CreatorId);
+                regionsRepository.EanIdsToIds, FactoryOfRepositories.AdditionalRegionsInfo<Travel.DTO.Country>().CodesToIds, CreatorId);
             count = regionsToRegions.Length;
             LogBuilded(count);
 

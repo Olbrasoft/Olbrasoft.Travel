@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Data.Entity.Spatial;
 using System.Net;
-using System.Text;
 using Castle.DynamicProxy;
 using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
@@ -135,6 +133,22 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Interceptors<IInterceptor>()
             );
 
+            container.Register(Component.For(typeof(IImport<Travel.EAN.DTO.Property.PathToHotelImage>))
+                .ImplementedBy<PathsToImagesOfHotelsImporter>()
+                .Interceptors<IInterceptor>()
+            );
+
+
+            container.Register(Component.For(typeof(IImport<Travel.EAN.DTO.Property.HotelImage>))
+                .ImplementedBy<ImagesOfHotelsImporter>()
+                .Interceptors<IInterceptor>()
+            );
+
+            container.Register(Component.For(typeof(IImport<Travel.EAN.DTO.Property.RoomType>))
+                .ImplementedBy<RoomsTypesImporter>()
+                .Interceptors<IInterceptor>()
+            );
+
 
             //var parentRegionImporter = container.Resolve<IImport<ParentRegion>>();
             //parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
@@ -169,101 +183,18 @@ namespace Olbrasoft.Travel.EAN.Import
             //var accommodationsImporter = container.Resolve<IImport<ActiveProperty>>();
             //accommodationsImporter.Import(@"D:\Ean\ActivePropertyList.txt");
 
-            var descriptionsImporter = container.Resolve<IImport<Travel.EAN.DTO.Property.Description>>();
-            descriptionsImporter.Import(@"D:\Ean\PropertyDescriptionList.txt");
-          
+            //var descriptionsImporter = container.Resolve<IImport<Travel.EAN.DTO.Property.Description>>();
+            //descriptionsImporter.Import(@"D:\Ean\PropertyDescriptionList.txt");
 
-            //loogerImports.Log("EanCountries Load.");
-            //const string countryListFullPath = @"D:\Ean\ParentRegionList.Txt";
-            //var eanCountries = new HashSet<DTO.Geography.Country>();
-            //using (var reader = new StreamReader(countryListFullPath))
-            //{
-            //    var parserCountries = parserFactory.Travel<DTO.Geography.Country>(reader.ReadLine());
-
-            //    while (!reader.EndOfStream)
-            //    {
-            //        if (parserCountries.TryParse(reader.ReadLine(), out var eanCountry))
-            //        {
-            //            eanCountries.Add(eanCountry);
-            //        }
-            //    }
-            //}
-            //loogerImports.Log("EanCountries Loaded.");
+            //var pathsToImagesOfHotelsImporter = container.Resolve<IImport<PathToHotelImage>>();
+            //pathsToImagesOfHotelsImporter.Import($@"D:\Ean\HotelImageList.txt");
 
 
-            //loogerImports.Log("EanCities Load.");
-            //const string cityCityCoordinatesListFullPath = @"D:\Ean\CityCoordinatesList.Txt";
-            //var eanCities = new HashSet<DTO.Geography.CityCoordinates>();
-            //using (var reader = new StreamReader(cityCityCoordinatesListFullPath))
-            //{
-            //    var parserCities = parserFactory.Travel<DTO.Geography.CityCoordinates>(reader.ReadLine());
+            //var imagesOfHotelsImporter = container.Resolve<IImport<HotelImage>>();
+            //imagesOfHotelsImporter.Import($@"D:\Ean\HotelImageList.txt");
 
-            //    while (!reader.EndOfStream)
-            //    {
-            //        if (parserCities.TryParse(reader.ReadLine(), out var eanCountry))
-            //        {
-            //            eanCities.Add(eanCountry);
-            //        }
-            //    }
-            //}
-            //loogerImports.Log("EanCities Loaded.");
-
-            //var typesOfRegionsFacade = container.Resolve<ITypesOfRegionsFacade>();
-            //var subClassesFacade = container.Resolve<ISubClassesFacade>();
-
-            //loogerImports.Log("Regions from CityCoordinatesList Build");
-            //var storedEanRegionsIds = regionsFacade.GetEanRegionsIds(true);
-            //var typeOfRegionCity = typesOfRegionsFacade.Travel("CityCoordinates");
-            //var subClassCity = subClassesFacade.Travel("city");
-
-            //var regions = new HashSet<Region>();
-
-            //foreach (var city in eanCities)
-            //{
-            //    if (storedEanRegionsIds.Contains(city.RegionID)) continue;
-            //    var region = new Region
-            //    {
-            //        EanId = city.RegionID,
-            //        TypeOfRegionId = typeOfRegionCity.Id,
-            //        SubClassId = subClassCity.Id,
-            //        CreatorId = user.Id,
-            //        DateAndTimeOfCreation = DateTime.Now
-
-            //    };
-            //    regions.Add(region);
-            //}
-            //loogerImports.Log("Regions from CityCoordinatesList Builded");
-
-            ////loogerImports.Log("Regions from CityCoordinatesList Save");
-            ////regionsFacade.BulkSave(regions);
-            ////loogerImports.Log("Regions from CityCoordinatesList Saved");
-
-            //var storedRegions = regionsFacade.GetMappingEanRegionIdsToRegions();
-
-            //loogerImports.Log("Regions type of CityCoordinates for update coordinates Build.");
-            //var cities = new List<Region>();
-
-            //foreach (var eanCity in eanCities)
-            //{
-            //    if (storedRegions.TryGetValue(eanCity.RegionID, out var city))
-            //    {
-            //         city.Coordinates = CreatePoligon(eanCity.Coordinates);
-            //    }
-            //    else
-            //    {
-            //        loogerImports.Log($"Region EanId: {eanCity.RegionID} not found in the Cities.");
-            //    }
-            //}
-            //loogerImports.Log("Regions type of CityCoordinates for update coordinates Builded.");
-
-            //var citiesImportOption = new ParentRegionImportOption(
-            //    container.Resolve<IRegionsFacade>(),
-            //    container.Resolve<ILoggingImports>(),
-            //    container.Resolve<IParserFactory>()
-            //    );
-
-
-
+            var roomsTypesImporter = container.Resolve<IImport<RoomType>>();
+            roomsTypesImporter.Import(@"D:\Ean\RoomTypeList.txt");
 
 
             Write("Imported");
@@ -271,27 +202,7 @@ namespace Olbrasoft.Travel.EAN.Import
             Console.ReadLine();
 #endif
         }
-        
-        public static DbGeography ParsePolygon(string s)
-        {
-            var spl = s.Split(':');
-            var pointsString = new StringBuilder();
-          
-                string lastPoint = null;
-
-                foreach (var s1 in spl)
-                {
-                    var latLon = s1.Split(';');
-                    var lotLanString = $"{latLon[1]} {latLon[0]}";
-                    pointsString.Append(lotLanString + ",");
-                    if (string.IsNullOrEmpty(lastPoint)) lastPoint = lotLanString;
-                }
-
-                pointsString.Append(lastPoint);
-
-                return DbGeography.PolygonFromText($"POLYGON(({pointsString}))", 4326);
-           
-        }
+      
 
         private static async void DownloadFile(string url)
         {
@@ -315,8 +226,7 @@ namespace Olbrasoft.Travel.EAN.Import
             }
 #endif
         }
-
-
+        
         private static WindsorContainer BuildContainer()
         {
             var container = new WindsorContainer();
@@ -329,7 +239,13 @@ namespace Olbrasoft.Travel.EAN.Import
             //    .WithService.AllInterfaces()
             //);
 
-            container.Register(FromAssemblyNamed("Olbrasoft.Travel.DAL.EntityFramework")
+            container.Register(FromAssemblyNamed("Olbrasoft.Travel.EAN")
+                .Where(type => type.Name.EndsWith("Parser"))
+                .WithService.AllInterfaces()
+            );
+
+
+         container.Register(FromAssemblyNamed("Olbrasoft.Travel.DAL.EntityFramework")
                 .Where(type => type.Name.EndsWith("Repository"))
                 .WithService.AllInterfaces()
             );
@@ -341,17 +257,13 @@ namespace Olbrasoft.Travel.EAN.Import
 #endif
             container.Register(Component.For<IParserFactory>().ImplementedBy<ParserFactory>());
 
-            //  container.Register(Component.For(typeof(IBaseRegionsRepository<>)).ImplementedBy(typeof(BaseRegionsRepository<>)));
-
-            container.Register(Component.For(typeof(ITravelRepository<>)).ImplementedBy(typeof(TravelRepository<>)));
-
+            container.Register(Component.For(typeof(IAdditionalRegionsInfoRepository<>)).ImplementedBy(typeof(AdditionalRegionsInfoRepository<>)));
+            
             container.Register(Component.For(typeof(ITypesRepository<>)).ImplementedBy(typeof(TypesRepository<>)));
 
             container.Register(Component.For(typeof(IManyToManyRepository<>)).ImplementedBy(typeof(ManyToManyRepository<>)));
 
             container.Register(Component.For(typeof(ILocalizedRepository<>)).ImplementedBy(typeof(LocalizedRepository<>)));
-
-           // container.Register(Component.For(typeof(IOneToManyRepository<>)).ImplementedBy(typeof(OneToManyRepository<>)));
 
             container.Register(Component.For(typeof(IMappedEntitiesRepository<>)).ImplementedBy(typeof(MappedEntitiesRepository<>)));
 

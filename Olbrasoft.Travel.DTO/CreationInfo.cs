@@ -8,6 +8,8 @@ namespace Olbrasoft.Travel.DTO
     {
         [Key, Column(Order = 1)]
         public int Id { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DateAndTimeOfCreation { get; set; }
     }
 }

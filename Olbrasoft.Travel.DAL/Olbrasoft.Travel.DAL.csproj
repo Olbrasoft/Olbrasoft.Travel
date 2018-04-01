@@ -141,16 +141,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAdditionalRegionsInfoRepository.cs" />
     <Compile Include="IBulkRepository.cs" />
-    <Compile Include="ICountriesRepository.cs" />
     <Compile Include="IDescriptionsRepository.cs" />
+    <Compile Include="IFilesExtensionsRepository.cs" />
+    <Compile Include="ILocalizedCaptionsRepository.cs" />
     <Compile Include="IMappedEntitiesRepository.cs" />
+    <Compile Include="IPathsToPhotosRepository.cs" />
+    <Compile Include="IPhotosOfAccommodationsRepository.cs" />
     <Compile Include="IRegionsRepository.cs" />
-    <Compile Include="IMapTo.cs" />
     <Compile Include="IRegionsToTypesRepository.cs" />
-    <Compile Include="ITravelRepository.cs" />
     <Compile Include="ITypesRepository.cs" />
-    <Compile Include="IBulkInsert.cs" />
     <Compile Include="ICanClearCache.cs" />
     <Compile Include="ILanguagesRepository.cs" />
     <Compile Include="ILocalizedRepository.cs" />
@@ -160,7 +161,6 @@
     <Compile Include="ISaved.cs" />
     <Compile Include="IRegionsToRegionsRepository.cs" />
     <Compile Include="IFactoryOfRepositories.cs" />
-    <Compile Include="ISubClassesRepository.cs" />
     <Compile Include="IBaseRepository.cs" />
     <Compile Include="ITypesOfRegionsRepository.cs" />
     <Compile Include="IUsersRepository.cs" />

@@ -79,7 +79,12 @@ namespace Olbrasoft.Travel.EAN.Import
 
             return DbGeography.PolygonFromText($"POLYGON(({pointsString}))", 4326);
         }
-        
+
+        protected static string ParsePath(string url)
+        {
+            url = url.Replace("https://i.travelapi.com/hotels/", "").Replace(System.IO.Path.GetFileName(url), "");
+            return url.Remove(url.Length - 1);
+        }
 
         protected LocalizedRegion[] BuildLocalizedRegions(IEnumerable<IHaveRegionIdRegionNameRegionNameLong> eanEntities,
             IReadOnlyDictionary<long, int> eanRegionIdsToIds,

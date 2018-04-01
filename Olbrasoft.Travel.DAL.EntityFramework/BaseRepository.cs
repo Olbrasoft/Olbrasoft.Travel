@@ -63,10 +63,12 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             return Context.Set<T>().Min(selector);
         }
 
+
         public new IEnumerable<TResult> GetAll<TResult>(Expression<Func<T, TResult>> selector)
         {
             return AsQueryable().Select(selector).ToArray();
         }
+
 
         public T Find(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includePaths)
         {

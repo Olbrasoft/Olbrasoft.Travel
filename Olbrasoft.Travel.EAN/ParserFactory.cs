@@ -6,5 +6,10 @@
         {
             return new Parser<TEan>(firstLine);
         }
+
+        public IPathsHotelsImagesParser Create()
+        {
+           return new PathsHotelsImages();
+        }
     }
 }

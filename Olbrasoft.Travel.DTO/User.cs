@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Net.NetworkInformation;
 
 namespace Olbrasoft.Travel.DTO
 {
     public class User : CreationInfo
     {
-
         [Required]
         [StringLength(255)]
         public string UserName { get; set; }
-
-
+        
         #region Child Properties
 
         public virtual ICollection<TypeOfRegion> CreatedTypesOfRegions { get; set; }
@@ -92,6 +91,48 @@ namespace Olbrasoft.Travel.DTO
         /// Descriptions Of Accommodations is Loacalized and Categorized 
         /// </summary>
         public virtual ICollection<Description> Descriptions { get; set; }
+
+        /// <summary>
+        /// Paths of Photos created by the User
+        /// </summary>
+        public virtual ICollection<PathToPhoto> PathsOfPhotos { get; set; }
+        
+        /// <summary>
+        /// Files Extensions created by the User.
+        /// </summary>
+        public virtual ICollection<FileExtension> FilesExtensions { get; set; }
+
+        /// <summary>
+        /// Captions created by the User.
+        /// </summary>
+        public virtual ICollection<Caption> Captions { get; set; }
+
+        /// <summary>
+        /// Localized Captions created by the User.
+        /// </summary>
+        public virtual ICollection<LocalizedCaption> LocalizedCaptions { get; set; }
+
+        
+        /// <summary>
+        /// Photos of Accommodations created by the User.
+        /// </summary>
+        public virtual ICollection<PhotoOfAccommodation> PhotosOfAccommodations { get; set; }
+
+
+        /// <summary>
+        /// Photos of Accommodations To Localized Captions created by the User.
+        /// </summary>
+        //public virtual ICollection<PhotoOfAccommodationToLocalizedCaption> PhotosOfAccommodationsToLocalizedCaptions
+        //{
+        //    get;
+        //    set;
+        //}
+
+        /// <summary>
+        /// Localized Captions created by the User.
+        /// </summary>
+        //  public virtual ICollection<LocalizedCaption> LocalizedCaptions { get; set; }
+
 
         #endregion
     }

@@ -4,8 +4,6 @@ namespace Olbrasoft.Travel.DAL
 {
     public interface IFactoryOfRepositories
     {
-        ITravelRepository<T> Travel<T>() where T : CreationInfo;
-
         ITypesRepository<T> BaseNames<T>() where T : CreationInfo, IHaveName;
         
         IManyToManyRepository<T> ManyToMany<T>() where T : ManyToMany;
@@ -14,14 +12,23 @@ namespace Olbrasoft.Travel.DAL
         
         IRegionsRepository Regions();
 
+        IAdditionalRegionsInfoRepository<T> AdditionalRegionsInfo<T>() where T : CreatorInfo, IAdditionalRegionInfo;
+
         IRegionsToTypesRepository RegionsToTypes();
-
-        ICountriesRepository Countries();
-
+        
         IMappedEntitiesRepository<T> MappedEntities<T>() where T : CreationInfo, IHaveEanId<int>;
 
         IDescriptionsRepository Descriptions();
+        
+        IFilesExtensionsRepository FilesExtensions();
 
+        IPathsToPhotosRepository PathsToPhotos();
+
+        ILocalizedCaptionsRepository LocalizedCaptions();
+
+        IPhotosOfAccommodationsRepository PhotosOfAccommodations();
+
+        
         IUsersRepository Users();
 
         ILanguagesRepository Languages();

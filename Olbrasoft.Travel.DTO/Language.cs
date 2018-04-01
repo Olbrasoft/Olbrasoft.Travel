@@ -14,8 +14,10 @@ namespace Olbrasoft.Travel.DTO
         public virtual ICollection<LocalizedTypeOfAccommodation> LocalizedTypesOfAccommodations { get; set; }
 
         public virtual ICollection<LocalizedAccommodation> LocalizedAccommodations { get; set; }
-
+        
         public virtual ICollection<Description> Descriptions { get; set; }
+
+        public virtual ICollection<LocalizedCaption> LocalizedCaptions { get; set; }
 
     }
 }

@@ -62,7 +62,7 @@ namespace Olbrasoft.Travel.EAN.DTO.Property
         [StringLength(3)]
         public string PropertyCurrency { get; set; }
 
-        public double StarRating { get; set; }
+        public decimal StarRating { get; set; }
 
         public int Confidence { get; set; }
 

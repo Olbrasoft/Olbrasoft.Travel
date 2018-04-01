@@ -20,9 +20,9 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public override void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
             var entitiesArray = entities as T[] ?? entities.ToArray();
-            foreach (var languageId in entitiesArray.GroupBy(entity => entity.LanguageId).Select(grp => grp.First()).Select(p=>p.LanguageId))
+            foreach (var languageId in entitiesArray.GroupBy(entity => entity.LanguageId).Select(grp => grp.First()).Select(p => p.LanguageId))
             {
-                if (!AsQueryable().Any(l=>l.LanguageId==languageId))
+                if (!AsQueryable().Any(l => l.LanguageId == languageId))
                 {
                     BulkInsert(entitiesArray);
                 }
@@ -48,20 +48,20 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
                     if (forInsert.Count > 0)
                     {
-                       BulkInsert(forInsert);
+                        BulkInsert(forInsert);
                     }
 
                     if (forUpdate.Count <= 0) return;
-                    BulkUpdate(forUpdate,ignorePropertiesWhenUpdating);
+                    BulkUpdate(forUpdate, ignorePropertiesWhenUpdating);
                 }
             }
         }
 
         protected void BulkUpdate(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
-           Context.BulkUpdate(entities,OnSaved,ignorePropertiesWhenUpdating);
+            Context.BulkUpdate(entities, OnSaved, ignorePropertiesWhenUpdating);
         }
-        
+
         public bool Exists(int languageId)
         {
             return Exists(l => l.LanguageId == languageId);

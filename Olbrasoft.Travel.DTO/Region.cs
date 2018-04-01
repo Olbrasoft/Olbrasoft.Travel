@@ -25,9 +25,7 @@ namespace Olbrasoft.Travel.DTO
         public ICollection<LocalizedRegion> LocalizedRegions { get; set; }
 
         //public TypeOfRegion TypeOfRegion { get; set; }
-
-        //public virtual RegionToSubClass ToSubClass { get; set; }
-
+        
         public ICollection<RegionToRegion> ToParentRegions { get; set; }
 
         public ICollection<RegionToRegion> ToChildRegions { get; set; }

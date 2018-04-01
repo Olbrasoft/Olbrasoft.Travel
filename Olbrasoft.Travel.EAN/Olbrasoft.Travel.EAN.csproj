@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseParser.cs" />
     <Compile Include="DTO\Geography\AirportCoordinates.cs" />
     <Compile Include="DTO\Geography\CityCoordinates.cs" />
     <Compile Include="DTO\Geography\CityNeighborhood.cs" />
@@ -69,10 +70,12 @@
     <Compile Include="DTO\Property\Amenities.cs" />
     <Compile Include="DTO\Property\DiningDescription.cs" />
     <Compile Include="DTO\Property\DiningDescriptionMultiLanguage.cs" />
+    <Compile Include="DTO\Property\HotelImage.cs" />
     <Compile Include="DTO\Property\Location.cs" />
     <Compile Include="DTO\Property\LocationMultiLanguage.cs" />
     <Compile Include="DTO\Property\NationalRatings.cs" />
     <Compile Include="DTO\Property\NationalRatingsMultiLanguage.cs" />
+    <Compile Include="DTO\Property\PathToHotelImage.cs" />
     <Compile Include="DTO\Property\PolicyDescription.cs" />
     <Compile Include="DTO\Property\PolicyDescriptionMultiLanguage.cs" />
     <Compile Include="DTO\Property\PropertyFees.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="DTO\Property\RenovationsMultiLanguage.cs" />
     <Compile Include="DTO\Property\Rooms.cs" />
     <Compile Include="DTO\Property\RoomsMultiLanguage.cs" />
+    <Compile Include="DTO\Property\RoomType.cs" />
     <Compile Include="DTO\Property\SpaDescription.cs" />
     <Compile Include="DTO\Property\SpaDescriptionMultiLanguage.cs" />
     <Compile Include="DTO\Property\WhatToExpectDescription.cs" />
@@ -98,8 +102,10 @@
     <Compile Include="EanLanguage.cs" />
     <Compile Include="IParser.cs" />
     <Compile Include="IParserFactory.cs" />
+    <Compile Include="IPathsHotelsImagesParser.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="ParserFactory.cs" />
+    <Compile Include="PathsHotelsImages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeOfEanFile.cs" />
   </ItemGroup>

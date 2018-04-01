@@ -174,6 +174,7 @@
     <Compile Include="CountriesBatchImporter.cs" />
     <Compile Include="DescriptionsBatchImporter.cs" />
     <Compile Include="FileImportProvider.cs" />
+    <Compile Include="ImagesOfHotelsImporter.cs" />
     <Compile Include="IImportProvider.cs" />
     <Compile Include="ImportInterceptor.cs" />
     <Compile Include="ConsoleLogger.cs" />
@@ -184,9 +185,11 @@
     <Compile Include="EanImport.cs" />
     <Compile Include="NeighborhoodsBatchImporter.cs" />
     <Compile Include="ParentRegionBatchImporter.cs" />
+    <Compile Include="PathsToImagesOfHotelsImporter.cs" />
     <Compile Include="PointsOfInterestCoordinatesBatchImporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionCenterBatchImporter.cs" />
+    <Compile Include="RoomsTypesImporter.cs" />
     <Compile Include="TrainMetroStationsBatchImporter.cs" />
     <Compile Include="TypesOfAccommodationsBatchImporter.cs" />
   </ItemGroup>

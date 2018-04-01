@@ -82,14 +82,12 @@ namespace Olbrasoft.Travel.EAN.Import
                 FactoryOfRepositories.RegionsToTypes().BulkSave(regionsToTypes);
                 LogSaved<RegionToType>();
             }
-
-
-
+            
             LogBuild<Travel.DTO.Country>();
             var countries = BuildCountries(eanCountries, eanIdsToIds, CreatorId);
             LogBuilded(countries.Length);
 
-            var countriesRepository = FactoryOfRepositories.Countries();
+            var countriesRepository = FactoryOfRepositories.AdditionalRegionsInfo<Travel.DTO.Country>();
 
             LogSave<Travel.DTO.Country>();
             countriesRepository.BulkSave(countries);

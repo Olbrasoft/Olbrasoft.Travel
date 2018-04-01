@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace Olbrasoft.Travel.EAN.Import
         public override void ImportBatch(Description[] eanEntities)
         {
 
-            var general = "General";
+            const string general = "General";
             var typesOfDescriptionsRepository = FactoryOfRepositories.BaseNames<TypeOfDescription>();
 
             if (!typesOfDescriptionsRepository.NamesToIds.ContainsKey(general))
@@ -58,7 +57,7 @@ namespace Olbrasoft.Travel.EAN.Import
             {
                 if(!eanIdsToIds.TryGetValue(eanEnity.EANHotelID,out var accommodationId) || !eanLanuageCodesToIds.TryGetValue(eanEnity.LanguageCode,out var languageId) ) continue;    
                 
-                var description = new Travel.DTO.Description()
+                var description = new Travel.DTO.Description
                 {
                     AccommodationId = accommodationId,
                     TypeOfDescriptionId = typeOfdescriptionId,

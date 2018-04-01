@@ -7,7 +7,7 @@ namespace Olbrasoft.Travel.EAN.Import
     /// <summary>
     /// todo https://www.currency-iso.org/dam/downloads/lists/list_one.xml
     /// </summary>
-    class AccommodationsBatchImporter :BatchImporter<Travel.EAN.DTO.Property.ActiveProperty>
+    class AccommodationsBatchImporter : BatchImporter<ActiveProperty>
     {
         public AccommodationsBatchImporter(ImportOption option) : base(option)
         {
@@ -15,25 +15,31 @@ namespace Olbrasoft.Travel.EAN.Import
 
         public override void ImportBatch(ActiveProperty[] eanEntities)
         {
-
             var typeOfAccommodationEanIdsToIds =
                 FactoryOfRepositories.MappedEntities<TypeOfAccommodation>().EanIdsToIds;
 
             var chainsEanIdsToIds = FactoryOfRepositories.MappedEntities<Travel.DTO.Chain>().EanIdsToIds;
 
-            var countriesCodesToIds = FactoryOfRepositories.Countries().CodesToIds;
+            var countriesCodesToIds = FactoryOfRepositories.AdditionalRegionsInfo<Country>().CodesToIds;
+
+            var airportsCodesToIds = FactoryOfRepositories.AdditionalRegionsInfo<Airport>().CodesToIds;
             
 
             //todo Jedno ubytovani pravdepodobne neni validni vraci to builded 79 999 misto 80 000 
             LogBuild<Accommodation>();
-            var accommodations = BuildAccommodations(eanEntities,typeOfAccommodationEanIdsToIds,chainsEanIdsToIds, countriesCodesToIds,
-                FactoryOfRepositories.BaseNames<Travel.DTO.Chain>().GetId("Independent"),
-                CreatorId);
+            var accommodations = BuildAccommodations(
+                eanEntities, 
+                typeOfAccommodationEanIdsToIds, 
+                countriesCodesToIds,
+                airportsCodesToIds,
+                chainsEanIdsToIds,
+                CreatorId
+                );
             var count = accommodations.Length;
             LogBuilded(count);
 
             var accommodationsRepository = FactoryOfRepositories.MappedEntities<Accommodation>();
-            
+
             if (count > 0)
             {
                 LogSave<Accommodation>();
@@ -51,12 +57,11 @@ namespace Olbrasoft.Travel.EAN.Import
             LogSave<LocalizedAccommodation>();
             FactoryOfRepositories.Localized<LocalizedAccommodation>().BulkSave(localizedAccommodations);
             LogSaved<LocalizedAccommodation>();
-            
         }
 
 
         LocalizedAccommodation[] BuildLocalizedAccommodations(IEnumerable<ActiveProperty> activeProperties,
-            IReadOnlyDictionary<int,int> eanIdsToIds,
+            IReadOnlyDictionary<int, int> eanIdsToIds,
             int languageId,
             int creatorId
             )
@@ -65,8 +70,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             foreach (var activeProperty in activeProperties)
             {
-                
-                if(!eanIdsToIds.TryGetValue(activeProperty.EANHotelID,out var id)) continue;
+                if (!eanIdsToIds.TryGetValue(activeProperty.EANHotelID, out var id)) continue;
 
                 var localizedAccommodation = new LocalizedAccommodation()
                 {
@@ -80,19 +84,17 @@ namespace Olbrasoft.Travel.EAN.Import
                 };
 
                 localizedAccommodations.Enqueue(localizedAccommodation);
-                
             }
 
             return localizedAccommodations.ToArray();
 
         }
 
-
         Accommodation[] BuildAccommodations(IEnumerable<ActiveProperty> activeProperties,
-        IReadOnlyDictionary<int,int> typesOfAccommodationsEanIdsToIds,
-        IReadOnlyDictionary<int,int> chainsEanIdsToIds,
-        IReadOnlyDictionary<string,int> countriesCodesToIds,
-        int chainIndependentId,
+        IReadOnlyDictionary<int, int> typesOfAccommodationsEanIdsToIds,
+        IReadOnlyDictionary<string, int> countriesCodesToIds,
+        IReadOnlyDictionary<string, int> airportsCodesToIds,
+        IReadOnlyDictionary<int, int> chainsEanIdsToIds,
         int creatorId
         )
         {
@@ -107,32 +109,36 @@ namespace Olbrasoft.Travel.EAN.Import
 
                     var accommodation = new Accommodation
                     {
+                        StarRating = activeProperty.StarRating,
                         SequenceNumber = activeProperty.SequenceNumber,
                         EanId = activeProperty.EANHotelID,
                         Address = activeProperty.Address1,
+                        AdditionalAddress = activeProperty.Address2,
                         CountryId = countryId,
                         TypeOfAccommodationId = typeOfAccommodationId,
                         CenterCoordinates = CreatePoint(activeProperty.Latitude, activeProperty.Longitude),
                         CreatorId = creatorId
                     };
-                    
+
                     if (!string.IsNullOrEmpty(activeProperty.ChainCodeID) &&
                         chainsEanIdsToIds.TryGetValue(int.Parse(activeProperty.ChainCodeID), out var chainId))
                     {
                         accommodation.ChainId = chainId;
                     }
-                    else
+                    
+                    if (!string.IsNullOrEmpty(activeProperty.AirportCode) &&
+                        airportsCodesToIds.TryGetValue(activeProperty.AirportCode, out var airportId))
                     {
-                        accommodation.ChainId = chainIndependentId;
+                        accommodation.AirportId = airportId;
                     }
 
                     accommodations.Enqueue(accommodation);
                 }
                 else
                 {
-                   Logger.Log(activeProperty.EANHotelID.ToString() + "Neproslo type" + activeProperty.PropertyCategory + " countr " + activeProperty.Country );
+                    Logger.Log(activeProperty.EANHotelID.ToString() + "Neproslo type" + activeProperty.PropertyCategory + " countr " + activeProperty.Country);
                 }
-                
+
             }
 
             return accommodations.ToArray();

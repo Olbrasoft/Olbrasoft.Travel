@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 
 namespace Olbrasoft.Travel.EAN
 {
-    public class Parser<TEan> : IParser<TEan> where TEan : class, new()
+    public class Parser<TEan> : BaseParser<TEan>, IParser<TEan> where TEan : class, new()
     {
         protected readonly string[] PropertiesNames;
 
@@ -24,7 +23,7 @@ namespace Olbrasoft.Travel.EAN
         }
 
 
-        public bool TryParse(string line, out TEan entita)
+        public override bool TryParse(string line, out TEan entita)
         {
             var items = Split(line);
             if (items.Count() != PropertiesNames.Length)
@@ -44,8 +43,15 @@ namespace Olbrasoft.Travel.EAN
 
                 if (!string.IsNullOrEmpty(items[counter]))
                 {
-                    property.SetValue(entita, Convert.ChangeType(items[counter], t,
-                        CultureInfo.InvariantCulture.NumberFormat), null);
+                    if (t != typeof(bool))
+                    {
+                        property.SetValue(entita, Convert.ChangeType(items[counter], t,
+                            CultureInfo.InvariantCulture.NumberFormat), null);
+                    }
+                    else
+                    {
+                        if (items[counter] == "1") property.SetValue(entita, true);
+                    }
                 }
 
                 counter++;
@@ -55,18 +61,13 @@ namespace Olbrasoft.Travel.EAN
 
         }
 
-        public IEnumerable<TEan> Parse(IEnumerable<string> lines)
-        {
-            var entities = new Queue<TEan>();
-            foreach (var line in lines)
-            {
-                if (TryParse(line, out var entity))
-                {
-                    entities.Enqueue(entity);
-                }
-            }
-
-            return entities;
-        }
+       
     }
+
+
+
+
+
 }
+
+
