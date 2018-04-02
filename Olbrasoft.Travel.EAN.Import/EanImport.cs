@@ -150,6 +150,8 @@ namespace Olbrasoft.Travel.EAN.Import
             );
 
 
+
+
             //var parentRegionImporter = container.Resolve<IImport<ParentRegion>>();
             //parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
 
@@ -193,8 +195,15 @@ namespace Olbrasoft.Travel.EAN.Import
             //var imagesOfHotelsImporter = container.Resolve<IImport<HotelImage>>();
             //imagesOfHotelsImporter.Import($@"D:\Ean\HotelImageList.txt");
 
-            var roomsTypesImporter = container.Resolve<IImport<RoomType>>();
-            roomsTypesImporter.Import(@"D:\Ean\RoomTypeList.txt");
+
+            //var develepmentRoomsTypesImporter = new Development.DevelopmentRoomsTypesImporter(container.Resolve<ImportOption>());
+            //develepmentRoomsTypesImporter.Import(@"D:\Ean\RoomTypeList.txt");
+
+
+            //var roomsTypesImporter = container.Resolve<IImport<RoomType>>();
+            //roomsTypesImporter.Import(@"D:\Ean\RoomTypeList.txt");
+
+
 
 
             Write("Imported");

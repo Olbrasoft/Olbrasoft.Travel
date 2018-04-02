@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Olbrasoft.Travel.DTO
 {
@@ -15,11 +14,7 @@ namespace Olbrasoft.Travel.DTO
         public string FileName { get; set; }
 
         public int FileExtensionId { get; set; }
-        
-        //public int Width { get; set; }
-
-        //public int Height { get; set; }
-
+      
         public bool IsDefault { get; set; }
         
         public int? CaptionId { get; set; }

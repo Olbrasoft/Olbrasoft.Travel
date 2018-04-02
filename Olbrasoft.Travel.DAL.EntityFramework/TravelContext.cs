@@ -57,7 +57,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         }
         
-
+         
         private void OnGeoCreating(DbModelBuilder modelBuilder, string dbSchema)
         {
             OnTypesOfRegionsCreating(modelBuilder,dbSchema, nameof(TypesOfRegions));

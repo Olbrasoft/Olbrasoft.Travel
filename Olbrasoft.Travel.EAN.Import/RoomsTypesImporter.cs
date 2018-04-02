@@ -24,11 +24,15 @@ namespace Olbrasoft.Travel.EAN.Import
             var eanHotelIds = new HashSet<int>(eanHotelIdsToIds.Keys);
 
             roomsTypes = roomsTypes.Where(rt => eanHotelIds.Contains(rt.EANHotelID)).ToArray();
-
+            
             var eanRoomTypeIdsToIds = ImportTypesOfRooms(roomsTypes, FactoryOfRepositories.MappedEntities<TypeOfRoom>(),
                 eanHotelIdsToIds, CreatorId);
-            
 
+            roomsTypes = roomsTypes.Where(rt => !string.IsNullOrEmpty(rt.RoomTypeName)).ToArray();
+
+            ImportLocalizedTypesOfRooms(roomsTypes, FactoryOfRepositories.Localized<LocalizedTypeOfRoom>(),
+                eanRoomTypeIdsToIds, DefaultLanguageId, CreatorId);
+            
 
             //var urls = roomsTypes.Where(p => !string.IsNullOrEmpty(p.RoomTypeImage)).Select(p => p.RoomTypeImage).ToArray();
 
@@ -41,7 +45,53 @@ namespace Olbrasoft.Travel.EAN.Import
             //    extensionsToIds, CreatorId);
         }
 
-        
+        private void ImportLocalizedTypesOfRooms(IEnumerable<RoomType> roomsTypes,
+            IBulkRepository<LocalizedTypeOfRoom> repository,
+            IReadOnlyDictionary<int, int> eanRoomTypeIdsToIds,
+            int languageId,
+            int creatorId
+            )
+        {
+            LogBuild<LocalizedTypeOfRoom>();
+            var localizedTypesOfRooms =
+                BuildLocalizedTypesOfRooms(roomsTypes, eanRoomTypeIdsToIds, languageId, creatorId);
+            var count = localizedTypesOfRooms.Length;
+            LogBuilded(count);
+
+            if (count <= 0) return;
+
+            LogSave<LocalizedTypeOfRoom>();
+            repository.BulkSave(localizedTypesOfRooms);
+            LogSaved<LocalizedTypeOfRoom>();
+        }
+
+
+        static LocalizedTypeOfRoom[] BuildLocalizedTypesOfRooms(IEnumerable<RoomType> roomsTypes,
+            IReadOnlyDictionary<int, int> eanRoomTypeIdsToIds,
+            int languageId,
+            int creatorId
+        )
+        {
+            var localizedTypesOfRooms = new Queue<LocalizedTypeOfRoom>();
+
+            foreach (var roomType in roomsTypes)
+            {
+                if (!eanRoomTypeIdsToIds.TryGetValue(roomType.RoomTypeID, out var id)) continue;
+
+                var localizedTypeOfRoom = new LocalizedTypeOfRoom
+                {
+                    Id = id,
+                    LanguageId = languageId,
+                    Name = roomType.RoomTypeName,
+                    Description = roomType.RoomTypeDescription,
+                    CreatorId = creatorId
+                };
+                localizedTypesOfRooms.Enqueue(localizedTypeOfRoom);
+            }
+
+            return localizedTypesOfRooms.ToArray();
+        }
+
 
         private void ImportPhotosOfAccommodations(IEnumerable<RoomType> roomsTypes,
             IPhotosOfAccommodationsRepository repository,
@@ -62,7 +112,7 @@ namespace Olbrasoft.Travel.EAN.Import
             if (count <= 0) return;
 
             LogSave<PhotoOfAccommodation>();
-            repository.BulkSave(photosOfAccommodations,poa=>poa.CaptionId,poa=>poa.IsDefault);
+            repository.BulkSave(photosOfAccommodations, poa => poa.CaptionId, poa => poa.IsDefault);
             LogSaved<PhotoOfAccommodation>();
 
         }
@@ -101,11 +151,11 @@ namespace Olbrasoft.Travel.EAN.Import
 
             foreach (var roomType in roomsTypes)
             {
-                if( string.IsNullOrEmpty(roomType.RoomTypeImage) ||    
-                   !eanRoomTypeIdsToIds.TryGetValue(roomType.RoomTypeID,out var typeOfRoomId) ||
-                   !eanHotelIdsToIds.TryGetValue(roomType.EANHotelID,out var accommodationId) ||
-                   !pathsToIds.TryGetValue(ParsePath(roomType.RoomTypeImage),out var pathId) ||
-                   !extensionsToIds.TryGetValue(System.IO.Path.GetExtension(roomType.RoomTypeImage).ToLower(),out var extensionId) 
+                if (string.IsNullOrEmpty(roomType.RoomTypeImage) ||
+                   !eanRoomTypeIdsToIds.TryGetValue(roomType.RoomTypeID, out var typeOfRoomId) ||
+                   !eanHotelIdsToIds.TryGetValue(roomType.EANHotelID, out var accommodationId) ||
+                   !pathsToIds.TryGetValue(ParsePath(roomType.RoomTypeImage), out var pathId) ||
+                   !extensionsToIds.TryGetValue(System.IO.Path.GetExtension(roomType.RoomTypeImage).ToLower(), out var extensionId)
                    ) continue;
 
                 var photoOfAccommodation = new PhotoOfAccommodation

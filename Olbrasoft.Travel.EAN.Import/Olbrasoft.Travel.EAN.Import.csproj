@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.2.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
@@ -173,6 +176,9 @@
     <Compile Include="CitiesBatchImporter.cs" />
     <Compile Include="CountriesBatchImporter.cs" />
     <Compile Include="DescriptionsBatchImporter.cs" />
+    <Compile Include="Development\DevelopmentContext.cs" />
+    <Compile Include="Development\DevelopmentRoomsTypesImporter.cs" />
+    <Compile Include="Development\DevelopmentRoomType.cs" />
     <Compile Include="FileImportProvider.cs" />
     <Compile Include="ImagesOfHotelsImporter.cs" />
     <Compile Include="IImportProvider.cs" />
@@ -183,6 +189,11 @@
     <Compile Include="BatchImporter.cs" />
     <Compile Include="ImportOption.cs" />
     <Compile Include="EanImport.cs" />
+    <Compile Include="Migrations\201804012305440_Init.cs" />
+    <Compile Include="Migrations\201804012305440_Init.Designer.cs">
+      <DependentUpon>201804012305440_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NeighborhoodsBatchImporter.cs" />
     <Compile Include="ParentRegionBatchImporter.cs" />
     <Compile Include="PathsToImagesOfHotelsImporter.cs" />
@@ -226,5 +237,11 @@
       <Name>Olbrasoft.Travel.EAN</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201804012305440_Init.resx">
+      <DependentUpon>201804012305440_Init.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
