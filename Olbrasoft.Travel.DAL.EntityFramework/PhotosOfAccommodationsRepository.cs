@@ -9,55 +9,109 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 {
     public class PhotosOfAccommodationsRepository : BaseRepository<PhotoOfAccommodation>, IPhotosOfAccommodationsRepository
     {
+        // private IReadOnlyDictionary<Tuple<int, string>, int> _pathsAndFilesNamesToIds;
 
-        private IReadOnlyDictionary<string, int> _pathsToIds;
+        //protected IReadOnlyDictionary<Tuple<int, string>, int> PathsAndFileNamesToIds
+        //{
+        //    get
+        //    {
+        //        return _pathsAndFilesNamesToIds ?? (_pathsAndFilesNamesToIds = AsQueryable()
+        //                   .Select(p => new { p.PathToPhotoId, p.FileName, p.Id }).ToArray()
+        //                   .ToDictionary(item => new Tuple<int, string>(item.PathToPhotoId, item.FileName),
+        //                       item => item.Id));
+        //    }
+        //    private set => _pathsAndFilesNamesToIds = value;
+        //}
 
-        protected IReadOnlyDictionary<string, int> PathsToIds
-        {
-            get
-            {
-                return _pathsToIds ?? (_pathsToIds = AsQueryable().Select(poa => new { poa.FileName, poa.Id })
-                           .ToDictionary(k => k.FileName, v => v.Id));
-            }
+        //private IReadOnlyDictionary<string, int> _pathsToIds;
 
-            private set => _pathsToIds = value;
-        }
+        //protected IReadOnlyDictionary<string, int> PathsToIds
+        //{
+        //    get
+        //    {
+        //        return _pathsToIds ?? (_pathsToIds = AsQueryable().Select(poa => new { poa.FileName, poa.Id })
+        //                   .ToDictionary(k => k.FileName, v => v.Id));
+        //    }
+        //    private set => _pathsToIds = value;
+        //}
 
 
         public PhotosOfAccommodationsRepository(DbContext context) : base(context)
         {
         }
 
-       
-
-        public void BulkSave(IEnumerable<PhotoOfAccommodation> entities, params Expression<Func<PhotoOfAccommodation, object>>[] ignorePropertiesWhenUpdating)
+        public void BulkSave(IEnumerable<PhotoOfAccommodation> photosOfAccommodations, params Expression<Func<PhotoOfAccommodation, object>>[] ignorePropertiesWhenUpdating)
         {
+            if (!Exists())
+            {
+                var photosOfAccommodationsForStored = RebuildIds(photosOfAccommodations.ToArray());
 
+                BulkInsert(photosOfAccommodationsForStored.Where(poa => poa.Id == 0));
 
-            BulkInsert(entities);
+                BulkUpdate(photosOfAccommodationsForStored.Where(poa => poa.Id != 0), ignorePropertiesWhenUpdating);
+            }
+            else
+            {
+                BulkInsert(photosOfAccommodations);
+            }
+        }
 
-            //entities = AddingIdsOnDependingPaths(entities.ToArray());
+        
+        private PhotoOfAccommodation[] RebuildIds(PhotoOfAccommodation[] photosOfAccommodations)
+        {
+            var pathsAndFilesNamesToIds =
+                GetPathIdsAndFileIdsAndExtensionIdsToIds(photosOfAccommodations.Select(p => p.PathToPhotoId)
+                    .Distinct());
 
-            //var forInsert = entities.Where(poa => poa.Id == 0).ToArray();
-            //var forUpdate = entities.Where(poa => poa.Id != 0).ToArray();
-
-            //if (forInsert.Any())
-            //{
-            //    BulkInsert(forInsert);
-            //}
-
-            //if (forUpdate.Any())
-            //{
-            //    BulkUpdate(forUpdate, ignorePropertiesWhenUpdating);
-            //}
+            foreach (var photoOfAccommodation in photosOfAccommodations.Where(poa => poa.Id == 0))
+            {
+                if (pathsAndFilesNamesToIds.TryGetValue(
+                    new Tuple<int, string, int>(photoOfAccommodation.PathToPhotoId, photoOfAccommodation.FileName,
+                        photoOfAccommodation.FileExtensionId), out var id))
+                {
+                    photoOfAccommodation.Id = id;
+                }
+            }
+            return photosOfAccommodations;
         }
 
 
-        public override void ClearCache()
+        public IReadOnlyDictionary<Tuple<int, string, int>, int> GetPathIdsAndFileIdsAndExtensionIdsToIds(IEnumerable<int> pathIds)
         {
-            PathsToIds = null;
-            base.ClearCache();
+            var storedPhotosOfAccommodations = new List<PhotoOfAccommodation>();
+
+            foreach (var items in pathIds.SplitToEanumerableOfList(8000))
+            {
+                storedPhotosOfAccommodations.AddRange(
+                    AsQueryable()
+                    .Where(poa => items.Contains(poa.PathToPhotoId))
+                    .Select(poa => new
+                    {
+                        poa.Id,
+                        poa.PathToPhotoId,
+                        poa.FileName,
+                        poa.FileExtensionId
+                    }).ToArray()
+                        .Select(a => new PhotoOfAccommodation
+                        {
+                            Id = a.Id,
+                            PathToPhotoId = a.PathToPhotoId,
+                            FileName = a.FileName,
+                            FileExtensionId = a.FileExtensionId
+                        }));
+            }
+
+            return storedPhotosOfAccommodations.ToDictionary(
+                item => new Tuple<int, string, int>(item.PathToPhotoId, item.FileName, item.FileExtensionId),
+                item => item.Id);
         }
+
+
+
+        //public override void ClearCache()
+        //{
+        //    base.ClearCache();
+        //}
 
     }
 }

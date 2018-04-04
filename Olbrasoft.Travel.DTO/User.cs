@@ -120,12 +120,12 @@ namespace Olbrasoft.Travel.DTO
         /// <summary>
         /// Rooms created by the User.
         /// </summary>
-        public virtual ICollection<TypeOfRoom> TypesOfRooms { get; set; }
+       // public virtual ICollection<TypeOfRoom> TypesOfRooms { get; set; }
 
         /// <summary>
         /// Localized Types of Rooms created by the User.
         /// </summary>
-        public virtual ICollection<LocalizedTypeOfRoom> LocalizedTypesOfRooms { get; set; }
+      //  public virtual ICollection<LocalizedTypeOfRoom> LocalizedTypesOfRooms { get; set; }
 
 
 

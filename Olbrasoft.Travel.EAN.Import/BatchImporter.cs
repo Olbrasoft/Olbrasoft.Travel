@@ -15,7 +15,7 @@ namespace Olbrasoft.Travel.EAN.Import
             BatchSize = Option.ImportBatchSize;
         }
 
-        //public static IEnumerable<List<T>> SplitList<T>(IEnumerable<T> locations, int nSize = 90000)
+        //public static IEnumerable<List<T>> SplitToEanumerableOfList<T>(IEnumerable<T> locations, int nSize = 90000)
         //{
         //    var result = locations.ToList();
         //    for (var i = 0; i < result.Count; i += nSize)

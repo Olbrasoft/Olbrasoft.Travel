@@ -179,6 +179,7 @@
     <Compile Include="Development\DevelopmentContext.cs" />
     <Compile Include="Development\DevelopmentRoomsTypesImporter.cs" />
     <Compile Include="Development\DevelopmentRoomType.cs" />
+    <Compile Include="Development\DevelopmentTask.cs" />
     <Compile Include="FileImportProvider.cs" />
     <Compile Include="ImagesOfHotelsImporter.cs" />
     <Compile Include="IImportProvider.cs" />
@@ -189,14 +190,21 @@
     <Compile Include="BatchImporter.cs" />
     <Compile Include="ImportOption.cs" />
     <Compile Include="EanImport.cs" />
-    <Compile Include="Migrations\201804012305440_Init.cs" />
-    <Compile Include="Migrations\201804012305440_Init.Designer.cs">
-      <DependentUpon>201804012305440_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201804020202217_Init.cs" />
+    <Compile Include="Migrations\201804020202217_Init.Designer.cs">
+      <DependentUpon>201804020202217_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804020204225_DevelopmentRoomsTypes.cs" />
+    <Compile Include="Migrations\201804020204225_DevelopmentRoomsTypes.Designer.cs">
+      <DependentUpon>201804020204225_DevelopmentRoomsTypes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804022348277_DevelopmentTasks.cs" />
+    <Compile Include="Migrations\201804022348277_DevelopmentTasks.Designer.cs">
+      <DependentUpon>201804022348277_DevelopmentTasks.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NeighborhoodsBatchImporter.cs" />
     <Compile Include="ParentRegionBatchImporter.cs" />
-    <Compile Include="PathsToImagesOfHotelsImporter.cs" />
     <Compile Include="PointsOfInterestCoordinatesBatchImporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionCenterBatchImporter.cs" />
@@ -238,10 +246,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201804012305440_Init.resx">
-      <DependentUpon>201804012305440_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804020202217_Init.resx">
+      <DependentUpon>201804020202217_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804020204225_DevelopmentRoomsTypes.resx">
+      <DependentUpon>201804020204225_DevelopmentRoomsTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804022348277_DevelopmentTasks.resx">
+      <DependentUpon>201804022348277_DevelopmentTasks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

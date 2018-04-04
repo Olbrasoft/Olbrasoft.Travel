@@ -104,17 +104,22 @@ namespace Olbrasoft.Travel.EAN.Import
             return repository.PathsToIds;
         }
         
-
+        
         private static PathToPhoto[] BuildPathsToPhotos(IEnumerable<string> urls, ICollection<string> paths, int creatorId)
         {
             var group = urls.Select(ParsePath).Distinct();
 
-            return group.Where(ptp => !paths.Contains(ptp)).Select(ptp => new PathToPhoto()
-            {
-                Path = ptp,
-                CreatorId = creatorId
+            return group.Where(ptp => !paths.Contains(ptp)).Select(ptp => BuildPathToPhoto(ptp,creatorId)
+            ).ToArray();
+        }
 
-            }).ToArray();
+        protected static PathToPhoto BuildPathToPhoto(string url, int creatorId)
+        {
+            return new PathToPhoto
+            {
+                Path = ParsePath(url),
+                CreatorId = creatorId
+            };
         }
         
 

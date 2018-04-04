@@ -29,9 +29,9 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<Caption> Captions { get; set; }
         public virtual IDbSet<LocalizedCaption> LocalizedCaptions { get; set; }
         public virtual IDbSet<PhotoOfAccommodation> PhotosOfAccommodations { get; set; }
-        public virtual IDbSet<TypeOfRoom> TypesOfRooms { get; set; }
 
-        public virtual IDbSet<LocalizedTypeOfRoom> LocalizedTypesOfRooms { get; set; }
+        //public virtual IDbSet<TypeOfRoom> TypesOfRooms { get; set; }
+        //public virtual IDbSet<LocalizedTypeOfRoom> LocalizedTypesOfRooms { get; set; }
 
 
         public TravelContext() : base("name=Travel")
@@ -43,11 +43,11 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
             OnUsersCreating(modelBuilder);
             OnLogsOfImportsCreating(modelBuilder);
-            
-            OnGeoCreating(modelBuilder,"geo");
-            
+
+            OnGeoCreating(modelBuilder, "geo");
+
             OnLanguagesCreating(modelBuilder);
-         
+
             OnPathsToPhotosCreating(modelBuilder);
             OnFilesExtensionsCreating(modelBuilder);
             OnCaptionsCreating(modelBuilder);
@@ -56,47 +56,47 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnAccoCreating(modelBuilder, "acco");
 
         }
-        
-         
+
+
         private void OnGeoCreating(DbModelBuilder modelBuilder, string dbSchema)
         {
-            OnTypesOfRegionsCreating(modelBuilder,dbSchema, nameof(TypesOfRegions));
-            OnRegionsCreating(modelBuilder,dbSchema, nameof(Regions));
-            OnSubClassesCreating(modelBuilder,dbSchema, nameof(SubClasses));
-            OnRegionsToTypes(modelBuilder,dbSchema, nameof(RegionsToTypes));
-            OnLocalizedRegions(modelBuilder,dbSchema, nameof(LocalizedRegions));
-            OnRegionsToRegionsCreating(modelBuilder,dbSchema, nameof(RegionsToRegions));
-            OnCountriesCreating(modelBuilder,dbSchema, nameof(Countries));
-            OnAirportsCreating(modelBuilder,dbSchema, nameof(Airports));
+            OnTypesOfRegionsCreating(modelBuilder, dbSchema, nameof(TypesOfRegions));
+            OnRegionsCreating(modelBuilder, dbSchema, nameof(Regions));
+            OnSubClassesCreating(modelBuilder, dbSchema, nameof(SubClasses));
+            OnRegionsToTypes(modelBuilder, dbSchema, nameof(RegionsToTypes));
+            OnLocalizedRegions(modelBuilder, dbSchema, nameof(LocalizedRegions));
+            OnRegionsToRegionsCreating(modelBuilder, dbSchema, nameof(RegionsToRegions));
+            OnCountriesCreating(modelBuilder, dbSchema, nameof(Countries));
+            OnAirportsCreating(modelBuilder, dbSchema, nameof(Airports));
         }
 
 
         private void OnAccoCreating(DbModelBuilder modelBuilder, string dbSchema)
         {
-            OnTypesOfAccommodationsCreating(modelBuilder,dbSchema, nameof(TypesOfAccommodations));
-            OnLocalizedTypesOfAccommodationsCreating(modelBuilder,dbSchema, nameof(LocalizedTypesOfAccommodations));
-            OnChainsCreating(modelBuilder,dbSchema, nameof(Chains));
-            OnAccommodationsCreating(modelBuilder,dbSchema, nameof(Accommodations));
-            OnLocalizedAccommodationsCreating(modelBuilder,dbSchema, nameof(LocalizedAccommodations));
-            OnTypesOfDescriptionsCreating(modelBuilder,dbSchema, nameof(TypesOfDescriptions));
-            OnDescriptionsCreating(modelBuilder,dbSchema,nameof(Descriptions));
+            OnTypesOfAccommodationsCreating(modelBuilder, dbSchema, nameof(TypesOfAccommodations));
+            OnLocalizedTypesOfAccommodationsCreating(modelBuilder, dbSchema, nameof(LocalizedTypesOfAccommodations));
+            OnChainsCreating(modelBuilder, dbSchema, nameof(Chains));
+            OnAccommodationsCreating(modelBuilder, dbSchema, nameof(Accommodations));
+            OnLocalizedAccommodationsCreating(modelBuilder, dbSchema, nameof(LocalizedAccommodations));
+            OnTypesOfDescriptionsCreating(modelBuilder, dbSchema, nameof(TypesOfDescriptions));
+            OnDescriptionsCreating(modelBuilder, dbSchema, nameof(Descriptions));
+            OnPhotosOfAccommodationsCreating(modelBuilder, dbSchema, nameof(PhotosOfAccommodations));
 
-            OnPhotosOfAccommodationsCreating(modelBuilder,dbSchema, nameof(PhotosOfAccommodations));
-            OnTypesOfRoomsCreating(modelBuilder, dbSchema, nameof(TypesOfRooms));
-            OnLocalizedTypesOfRoomsCreating(modelBuilder, dbSchema, nameof(LocalizedTypesOfRooms));
+            // OnTypesOfRoomsCreating(modelBuilder, dbSchema, nameof(TypesOfRooms));
+            // OnLocalizedTypesOfRoomsCreating(modelBuilder, dbSchema, nameof(LocalizedTypesOfRooms));
         }
-        
 
 
-        private static void OnLocalizedTypesOfRoomsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName )
-        {
-            modelBuilder.Entity<LocalizedTypeOfRoom>()
-                .ToTable(tableName, dbSchema).HasRequired(ltor => ltor.Creator)
-                .WithMany(u => u.LocalizedTypesOfRooms).WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<LocalizedTypeOfRoom>()
-                .HasRequired(ltor => ltor.Language).WithMany(l => l.LocalizedTypesOfRooms).WillCascadeOnDelete(false);
-        }
+        //private static void OnLocalizedTypesOfRoomsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName )
+        //{
+        //    modelBuilder.Entity<LocalizedTypeOfRoom>()
+        //        .ToTable(tableName, dbSchema).HasRequired(ltor => ltor.Creator)
+        //        .WithMany(u => u.LocalizedTypesOfRooms).WillCascadeOnDelete(false);
+
+        //    modelBuilder.Entity<LocalizedTypeOfRoom>()
+        //        .HasRequired(ltor => ltor.Language).WithMany(l => l.LocalizedTypesOfRooms).WillCascadeOnDelete(false);
+        //}
 
 
         private void OnLocalizedCaptions(DbModelBuilder modelBuilder)
@@ -109,20 +109,19 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         }
 
-        private static void OnTypesOfRoomsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName )
-        {
-            modelBuilder.Entity<TypeOfRoom>().ToTable(tableName, dbSchema)
-                .HasRequired(tor => tor.Creator)
-                .WithMany(u => u.TypesOfRooms)
-                .WillCascadeOnDelete(false)
-                ;
+        //private static void OnTypesOfRoomsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName )
+        //{
+        //    modelBuilder.Entity<TypeOfRoom>().ToTable(tableName, dbSchema)
+        //        .HasRequired(tor => tor.Creator)
+        //        .WithMany(u => u.TypesOfRooms)
+        //        .WillCascadeOnDelete(false)
+        //        ;
 
-            modelBuilder.Entity<TypeOfRoom>().HasRequired(tor => tor.Accommodation)
-                .WithMany(a => a.TypesOfRooms).WillCascadeOnDelete();
-
-            modelBuilder.Entity<TypeOfRoom>().HasMany(tor => tor.PhotosOfAccommodations)
-                .WithOptional(poa => poa.TypeOfRoom);
-        }
+        //    modelBuilder.Entity<TypeOfRoom>().HasRequired(tor => tor.Accommodation)
+        //        .WithMany(a => a.TypesOfRooms).WillCascadeOnDelete();
+        //    modelBuilder.Entity<TypeOfRoom>().HasMany(tor => tor.PhotosOfAccommodations)
+        //        .WithOptional(poa => poa.TypeOfRoom);
+        //}
 
 
         private void OnCaptionsCreating(DbModelBuilder modelBuilder)
@@ -141,13 +140,12 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
             modelBuilder.Entity<PathToPhoto>().ToTable(nameof(PathsToPhotos))
                 .HasIndex(pathToPhoto => pathToPhoto.Path).IsUnique();
-
         }
 
         private static void OnPhotosOfAccommodationsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
             modelBuilder.Entity<PhotoOfAccommodation>().ToTable(tableName, dbSchema)
-               .HasIndex(p => new { p.PathToPhotoId, p.FileName }).IsUnique();
+               .HasIndex(p => new { p.PathToPhotoId, p.FileName, p.FileExtensionId }).IsUnique();
 
             modelBuilder.Entity<PhotoOfAccommodation>().HasRequired(p => p.Accommodation).WithMany(p => p.PhotosOfAccommodations)
                 .HasForeignKey(p => p.AccommodationId).WillCascadeOnDelete(true);
@@ -166,7 +164,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
             modelBuilder.Entity<Description>().ToTable(tableName, dbSchema).Property(p => p.DateAndTimeOfCreation)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-            
+
 
             modelBuilder.Entity<Description>().HasRequired(d => d.Accommodation)
                 .WithMany(a => a.Descriptions).WillCascadeOnDelete(true);
@@ -193,18 +191,18 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         }
 
 
-        private static void OnChainsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName )
+        private static void OnChainsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
             modelBuilder.Entity<Chain>().ToTable(tableName, dbSchema).HasIndex(p => p.EanId).IsUnique();
-            
+
             modelBuilder.Entity<Chain>().HasRequired(ch => ch.Creator).WithMany(user => user.Chains)
                 .WillCascadeOnDelete(true);
 
         }
 
-        private static void OnLocalizedTypesOfAccommodationsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName )
+        private static void OnLocalizedTypesOfAccommodationsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
-            modelBuilder.Entity<LocalizedTypeOfAccommodation>().ToTable(tableName,dbSchema)
+            modelBuilder.Entity<LocalizedTypeOfAccommodation>().ToTable(tableName, dbSchema)
                 .HasRequired(ltoa => ltoa.Creator).WithMany(user => user.LocalizedTypesOfAccommodations).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<LocalizedTypeOfAccommodation>().HasRequired(ltoa => ltoa.TypeOfAccommodation)
@@ -214,13 +212,13 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .WithMany(l => l.LocalizedTypesOfAccommodations).WillCascadeOnDelete(false);
         }
 
-        private static void OnTypesOfAccommodationsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName  )
+        private static void OnTypesOfAccommodationsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
             modelBuilder.Entity<TypeOfAccommodation>()
                 .ToTable(tableName, dbSchema).HasIndex(toa => toa.EanId).IsUnique();
         }
 
-        private static void OnRegionsToTypes(DbModelBuilder modelBuilder,string dbSchema,string tableName)
+        private static void OnRegionsToTypes(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
             modelBuilder.Entity<RegionToType>().ToTable(tableName, dbSchema).HasRequired(rtp => rtp.Creator)
                 .WithMany(user => user.RegionsToTypes).WillCascadeOnDelete(false);
@@ -233,7 +231,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         }
 
-        private static void OnAirportsCreating(DbModelBuilder modelBuilder,string dbSchema,string tableName)
+        private static void OnAirportsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
             modelBuilder.Entity<Airport>()
                 .ToTable(tableName, dbSchema).HasRequired(c => c.Creator).WithMany(user => user.Airports).WillCascadeOnDelete(false);
@@ -251,11 +249,11 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
             modelBuilder.Entity<Country>().HasIndex(c => c.Id).IsUnique();
             modelBuilder.Entity<Country>().HasIndex(c => c.Code).IsUnique();
-            
+
             modelBuilder.Entity<Country>().HasRequired(c => c.Region).WithOptional(r => r.AdditionalCountryProperties).WillCascadeOnDelete(true);
         }
 
-        private static void OnRegionsToRegionsCreating(DbModelBuilder modelBuilder, string dbSchema,string tableName)
+        private static void OnRegionsToRegionsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
             modelBuilder.Entity<RegionToRegion>()
                 .ToTable(tableName, dbSchema).HasRequired(rtr => rtr.Creator)
@@ -276,7 +274,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         }
 
 
-        private static void OnLocalizedRegions(DbModelBuilder modelBuilder, string dbSchema,string tableName)
+        private static void OnLocalizedRegions(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
             modelBuilder.Entity<LocalizedRegion>().ToTable(tableName, dbSchema).HasRequired(lr => lr.Creator)
                 .WithMany(user => user.LocalizedRegions).WillCascadeOnDelete(false);
@@ -289,7 +287,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         }
 
 
-        private static void OnRegionsCreating(DbModelBuilder modelBuilder, string dbSchema,string tableName)
+        private static void OnRegionsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
             modelBuilder.Entity<Region>().ToTable(tableName, dbSchema).HasIndex(p => p.EanId).IsUnique();
 
@@ -302,13 +300,13 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             modelBuilder.Entity<TypeOfRegion>()
                 .ToTable(tableName, dbSchema)
                 .HasIndex(typeOfRegion => typeOfRegion.Name).IsUnique();
-            
+
         }
 
-        private static void OnSubClassesCreating(DbModelBuilder modelBuilder, string dbSchema,string tableName)
+        private static void OnSubClassesCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
             modelBuilder.Entity<SubClass>().ToTable(tableName, dbSchema).HasIndex(p => p.Name).IsUnique();
-            
+
         }
 
 
@@ -349,24 +347,24 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         }
 
 
-        private static void OnTypesOfDescriptionsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName )
+        private static void OnTypesOfDescriptionsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
             modelBuilder.Entity<TypeOfDescription>()
                 .ToTable(tableName, dbSchema)
                 .HasIndex(p => p.Name).IsUnique();
-            
+
             modelBuilder.Entity<TypeOfDescription>().HasRequired(tod => tod.Creator)
                 .WithMany(user => user.TypesOfDescriptions).WillCascadeOnDelete(true);
         }
 
 
-        private void OnAccommodationsCreating(DbModelBuilder modelBuilder, string dbSchema,string tableName )
+        private void OnAccommodationsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
             modelBuilder.Entity<Accommodation>().ToTable(tableName, dbSchema).HasIndex(e => e.EanId).IsUnique();
-            
+
             modelBuilder.Entity<Accommodation>().HasRequired(a => a.TypeOfAccommodation)
                 .WithMany(toa => toa.Accommodations).WillCascadeOnDelete(true);
-            
+
             modelBuilder.Entity<Accommodation>().HasRequired(a => a.Creator).WithMany(user => user.Accommodations)
                 .WillCascadeOnDelete(false);
 

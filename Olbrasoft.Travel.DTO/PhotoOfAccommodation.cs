@@ -5,8 +5,6 @@ namespace Olbrasoft.Travel.DTO
     public class PhotoOfAccommodation : CreatorInfo
     {
         public int AccommodationId { get; set; }
-
-        public int? TypeOfRoomId { get; set; }
         
         public int PathToPhotoId { get; set; }
 
@@ -26,7 +24,6 @@ namespace Olbrasoft.Travel.DTO
         public FileExtension FileExtension { get; set; }
 
         public Caption Caption { get; set; }
-
-        public virtual TypeOfRoom TypeOfRoom { get; set; }
+        
     }
 }

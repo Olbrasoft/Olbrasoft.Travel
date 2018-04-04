@@ -7,13 +7,13 @@ namespace Olbrasoft.Travel.EAN.Import.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Init : IMigrationMetadata
+    public sealed partial class DevelopmentRoomsTypes : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DevelopmentRoomsTypes));
         
         string IMigrationMetadata.Id
         {
-            get { return "201804012305440_Init"; }
+            get { return "201804020204225_DevelopmentRoomsTypes"; }
         }
         
         string IMigrationMetadata.Source

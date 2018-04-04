@@ -30,7 +30,5 @@ namespace Olbrasoft.Travel.DTO
         public int EanId { get; set; } = int.MinValue;
         public virtual Accommodation Accommodation { get; set; }
         public virtual ICollection<PhotoOfAccommodation> PhotosOfAccommodations { get; set; }
-
-
     }
 }

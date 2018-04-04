@@ -7,13 +7,13 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class TypesOfRooms : IMigrationMetadata
+    public sealed partial class PhotosOfAccommodations : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(TypesOfRooms));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(PhotosOfAccommodations));
         
         string IMigrationMetadata.Id
         {
-            get { return "201804011457039_TypesOfRooms"; }
+            get { return "201804022319054_PhotosOfAccommodations"; }
         }
         
         string IMigrationMetadata.Source

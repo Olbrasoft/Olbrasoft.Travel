@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.MemoryMappedFiles;
 using System.Linq;
 using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DTO;
@@ -7,14 +9,82 @@ using Olbrasoft.Travel.EAN.DTO.Property;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    internal class ImagesOfHotelsImporter : BatchImporter<HotelImage>
+    internal class ImagesOfHotelsImporter : BaseImporter<HotelImage>
     {
+        protected int BatchSize;
+
         public ImagesOfHotelsImporter(ImportOption option) : base(option)
         {
             BatchSize = 1500000;
         }
 
-        public override void ImportBatch(HotelImage[] eanEntities)
+        public override void Import(string path)
+        {
+
+            var pathsToPhotos = new HashSet<PathToPhoto>();
+            
+            var result= new HashSet<string>();
+            
+            Logger.Log("Load data from file: " + path);
+
+
+            using (var r = new StreamReader(path))
+            {
+                //var parser = Option.ParserFactory.Create<HotelImage>(r.ReadLine());
+
+                r.ReadLine();
+                while (!r.EndOfStream)
+                {
+                    var s = r.ReadLine()?.Split('|');
+
+                    if (s == null) continue;
+
+
+
+                    var url = s[2];
+                    var p = ParsePath(url);
+
+                    if (!result.Contains(p))
+                    {
+                        result.Add(p);
+                    }
+
+
+
+                    //if (parser.TryParse(line, out var hotelImage))
+                    //{
+
+
+                    ////    var pathToPhoto = BuildPathToPhoto(hotelImage.URL, CreatorId);
+
+                    ////    if (!result.Contains(pathToPhoto))
+                    ////    {
+                    ////        pathsToPhotos.Add(pathToPhoto);
+                    ////    }
+
+                    //    var p = ParsePath(hotelImage.URL);
+
+                    //    if (!result.Contains(p))
+                    //    {
+                    //        result.Add(p);
+                    //    }
+                    //}
+
+
+                    //Processing
+                }
+            }
+
+            Logger.Log("Data Loaded");
+            Logger.Log($"Builded {result.Count} ");
+
+
+        }
+        
+        
+
+
+        public void ImportBatch(HotelImage[] eanEntities)
         {
             var eanHotelsIdsToAccommodationsIds = FactoryOfRepositories.MappedEntities<Accommodation>().EanIdsToIds;
 
@@ -34,6 +104,7 @@ namespace Olbrasoft.Travel.EAN.Import
             ImportPhotosOfAccommodations(eanEntities, eanHotelsIdsToAccommodationsIds, pathsToIds, extensionsToIds, captionTextsToIds);
         }
         
+
 
         private void ImportPhotosOfAccommodations(IEnumerable<HotelImage> eanEntities, IReadOnlyDictionary<int, int> eanHotelsIdsToAccommodationsIds,
             IReadOnlyDictionary<string, int> pathsToIds, IReadOnlyDictionary<string, int> extensionsToIds, IReadOnlyDictionary<string, int> captionTextsToIds)
@@ -70,14 +141,12 @@ namespace Olbrasoft.Travel.EAN.Import
             return repository.GetLocalizedCaptionsTextsToIds(languageId);
         }
         
-
         private static LocalizedCaption[] BuildLocalizedCaptions(IEnumerable<HotelImage> eanEntities, int languageId, int creatorId)
         {
             return eanEntities.Where(p=>!string.IsNullOrEmpty(p.Caption)).Select(p => p.Caption).Distinct().Select(p =>
                 new LocalizedCaption {Text = p, LanguageId = languageId, CreatorId = creatorId}).ToArray();
         }
-
-
+        
         private static PhotoOfAccommodation[] BuildPhotosOfAccommodations(IEnumerable<HotelImage> eanEntities,
             IReadOnlyDictionary<int, int> eanHotelsIdsToAccommodationsIds,
             IReadOnlyDictionary<string, int> pathsToIds,
@@ -115,5 +184,6 @@ namespace Olbrasoft.Travel.EAN.Import
         }
 
 
+      
     }
 }

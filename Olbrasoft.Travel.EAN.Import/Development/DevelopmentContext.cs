@@ -11,6 +11,7 @@ namespace Olbrasoft.Travel.EAN.Import.Development
     public class DevelopmentContext : DbContext
     {
         public IDbSet<DevelopmentRoomType> DevelopmentRoomsTypes { get; set; }
+        public IDbSet<DevelopmentTask> Tasks { get; set; }
 
         public DevelopmentContext() : base("name=Travel")
         {

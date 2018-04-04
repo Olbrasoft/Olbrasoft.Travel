@@ -20,11 +20,15 @@ namespace Olbrasoft.Travel.EAN.Import
 
         public override void ImportBatch(RoomType[] roomsTypes)
         {
+            //Logger.Log("start");
+            //FactoryOfRepositories.PhotosOfAccommodations().BulkSave(new List<PhotoOfAccommodation>());
+            //Logger.Log("end");
+            
             var eanHotelIdsToIds = FactoryOfRepositories.MappedEntities<Accommodation>().EanIdsToIds;
             var eanHotelIds = new HashSet<int>(eanHotelIdsToIds.Keys);
 
             roomsTypes = roomsTypes.Where(rt => eanHotelIds.Contains(rt.EANHotelID)).ToArray();
-            
+
             var eanRoomTypeIdsToIds = ImportTypesOfRooms(roomsTypes, FactoryOfRepositories.MappedEntities<TypeOfRoom>(),
                 eanHotelIdsToIds, CreatorId);
 
@@ -32,17 +36,18 @@ namespace Olbrasoft.Travel.EAN.Import
 
             ImportLocalizedTypesOfRooms(roomsTypes, FactoryOfRepositories.Localized<LocalizedTypeOfRoom>(),
                 eanRoomTypeIdsToIds, DefaultLanguageId, CreatorId);
-            
 
-            //var urls = roomsTypes.Where(p => !string.IsNullOrEmpty(p.RoomTypeImage)).Select(p => p.RoomTypeImage).ToArray();
+            roomsTypes = roomsTypes.Where(rt => !string.IsNullOrEmpty(rt.RoomTypeImage)).ToArray();
 
-            //var pathsToIds = ImportPathsToPhotos(urls, FactoryOfRepositories.PathsToPhotos(), CreatorId);
+            var urls = roomsTypes.Select(p => p.RoomTypeImage).ToArray();
 
-            //var extensionsToIds = ImportFilesExtensions(urls, FactoryOfRepositories.FilesExtensions(), CreatorId);
+            var pathsToIds = ImportPathsToPhotos(urls, FactoryOfRepositories.PathsToPhotos(), CreatorId);
 
-            //ImportPhotosOfAccommodations(roomsTypes.Where(rt => !string.IsNullOrEmpty(rt.RoomTypeImage)),
-            //    FactoryOfRepositories.PhotosOfAccommodations(), eanRoomTypeIdsToIds, eanHotelIdsToIds, pathsToIds,
-            //    extensionsToIds, CreatorId);
+            var extensionsToIds = ImportFilesExtensions(urls, FactoryOfRepositories.FilesExtensions(), CreatorId);
+
+            ImportPhotosOfAccommodations(roomsTypes.Where(rt => !string.IsNullOrEmpty(rt.RoomTypeImage)),
+                FactoryOfRepositories.PhotosOfAccommodations(), eanRoomTypeIdsToIds, eanHotelIdsToIds, pathsToIds,
+                extensionsToIds, CreatorId);
         }
 
         private void ImportLocalizedTypesOfRooms(IEnumerable<RoomType> roomsTypes,
@@ -66,7 +71,7 @@ namespace Olbrasoft.Travel.EAN.Import
         }
 
 
-        static LocalizedTypeOfRoom[] BuildLocalizedTypesOfRooms(IEnumerable<RoomType> roomsTypes,
+        private static LocalizedTypeOfRoom[] BuildLocalizedTypesOfRooms(IEnumerable<RoomType> roomsTypes,
             IReadOnlyDictionary<int, int> eanRoomTypeIdsToIds,
             int languageId,
             int creatorId
@@ -91,8 +96,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             return localizedTypesOfRooms.ToArray();
         }
-
-
+        
         private void ImportPhotosOfAccommodations(IEnumerable<RoomType> roomsTypes,
             IPhotosOfAccommodationsRepository repository,
             IReadOnlyDictionary<int, int> eanRoomTypeIdsToIds,
@@ -114,7 +118,6 @@ namespace Olbrasoft.Travel.EAN.Import
             LogSave<PhotoOfAccommodation>();
             repository.BulkSave(photosOfAccommodations, poa => poa.CaptionId, poa => poa.IsDefault);
             LogSaved<PhotoOfAccommodation>();
-
         }
 
 
@@ -152,7 +155,6 @@ namespace Olbrasoft.Travel.EAN.Import
             foreach (var roomType in roomsTypes)
             {
                 if (string.IsNullOrEmpty(roomType.RoomTypeImage) ||
-                   !eanRoomTypeIdsToIds.TryGetValue(roomType.RoomTypeID, out var typeOfRoomId) ||
                    !eanHotelIdsToIds.TryGetValue(roomType.EANHotelID, out var accommodationId) ||
                    !pathsToIds.TryGetValue(ParsePath(roomType.RoomTypeImage), out var pathId) ||
                    !extensionsToIds.TryGetValue(System.IO.Path.GetExtension(roomType.RoomTypeImage).ToLower(), out var extensionId)
@@ -161,9 +163,8 @@ namespace Olbrasoft.Travel.EAN.Import
                 var photoOfAccommodation = new PhotoOfAccommodation
                 {
                     AccommodationId = accommodationId,
-                    TypeOfRoomId = typeOfRoomId,
                     PathToPhotoId = pathId,
-                    FileName = System.IO.Path.GetFileNameWithoutExtension(roomType.RoomTypeImage),
+                    FileName = RebuildFileName(roomType.RoomTypeImage),
                     FileExtensionId = extensionId,
                     CreatorId = creatorId
                 };
@@ -174,6 +175,15 @@ namespace Olbrasoft.Travel.EAN.Import
             return photosOfAccommodations.ToArray();
         }
 
+
+        private static string RebuildFileName(string fileName)
+        {
+            fileName = System.IO.Path.GetFileNameWithoutExtension(fileName);
+
+            if (fileName != null) return fileName.Remove(fileName.Length - 2) + "_b";
+            
+            throw new NullReferenceException();
+        }
 
 
         private static TypeOfRoom[] BuildTypesOfRooms(IEnumerable<RoomType> roomTypes,

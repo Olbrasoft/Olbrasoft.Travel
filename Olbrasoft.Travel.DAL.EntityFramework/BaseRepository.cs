@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using SharpRepository.Repository;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
@@ -30,7 +29,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public abstract void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating);
 
-      
+
         protected void BulkInsert(IEnumerable<T> entities)
         {
             Context.BulkInsert(entities, OnSaved);
@@ -48,11 +47,14 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
     }
     #endregion
-    
 
-    public class BaseRepository<T> : SharpRepository.EfRepository.EfRepository<T>, IBaseRepository<T> where T : class 
+
+    public class BaseRepository<T> : SharpRepository.EfRepository.EfRepository<T>, IBaseRepository<T> where T : class
     {
         public event EventHandler Saved;
+
+        private bool _existMustBeRefreshed = true;
+        private bool _exist;
 
         protected BaseRepository(DbContext context) : base(context)
         {
@@ -63,12 +65,19 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             return Context.Set<T>().Min(selector);
         }
 
-
         public new IEnumerable<TResult> GetAll<TResult>(Expression<Func<T, TResult>> selector)
         {
             return AsQueryable().Select(selector).ToArray();
         }
 
+        public bool Exists(bool clearRepositoryCache = false)
+        {
+            if (_existMustBeRefreshed || clearRepositoryCache)
+            {
+                _exist = AsQueryable().Any();
+            }
+            return _exist;
+        }
 
         public T Find(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includePaths)
         {
@@ -108,7 +117,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             Context.BulkUpdate(entities, OnSaved, ignorePropertiesWhenUpdating);
         }
 
-        
 
         protected void OnSaved(EventArgs eventArgs)
         {
@@ -119,10 +127,11 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public new virtual void ClearCache()
         {
+            _existMustBeRefreshed = true;
             base.ClearCache();
         }
 
-        //public static IEnumerable<List<T>> SplitList(IEnumerable<T> locations, int nSize = 30)
+        //public static IEnumerable<List<T>> SplitToEanumerableOfList(IEnumerable<T> locations, int nSize = 30)
         //{
         //    var result = locations.ToList();
         //    for (var i = 0; i < result.Count; i += nSize)

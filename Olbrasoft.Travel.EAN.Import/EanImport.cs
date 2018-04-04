@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Net;
 using Castle.DynamicProxy;
 using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
+using Olbrasoft.EntityFramework.Bulk;
 #pragma warning disable 618
 using static Castle.MicroKernel.Registration.AllTypes;
 #pragma warning restore 618
@@ -13,6 +15,7 @@ using Olbrasoft.Travel.DAL.EntityFramework;
 using Olbrasoft.Travel.DTO;
 using Olbrasoft.Travel.EAN.DTO.Geography;
 using Olbrasoft.Travel.EAN.DTO.Property;
+using Olbrasoft.Travel.EAN.Import.Development;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
@@ -133,12 +136,7 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Interceptors<IInterceptor>()
             );
 
-            container.Register(Component.For(typeof(IImport<Travel.EAN.DTO.Property.PathToHotelImage>))
-                .ImplementedBy<PathsToImagesOfHotelsImporter>()
-                .Interceptors<IInterceptor>()
-            );
-
-
+          
             container.Register(Component.For(typeof(IImport<Travel.EAN.DTO.Property.HotelImage>))
                 .ImplementedBy<ImagesOfHotelsImporter>()
                 .Interceptors<IInterceptor>()
@@ -148,8 +146,6 @@ namespace Olbrasoft.Travel.EAN.Import
                 .ImplementedBy<RoomsTypesImporter>()
                 .Interceptors<IInterceptor>()
             );
-
-
 
 
             //var parentRegionImporter = container.Resolve<IImport<ParentRegion>>();
@@ -176,6 +172,7 @@ namespace Olbrasoft.Travel.EAN.Import
             //var regionCenterImporter = container.Resolve<IImport<RegionCenter>>();
             //regionCenterImporter.Import(@"D:\Ean\RegionCenterCoordinatesList.txt");
 
+
             //var typesOfAccommodationsImporter = container.Resolve<IImport<PropertyType>>();
             //typesOfAccommodationsImporter.Import(@"D:\Ean\PropertyTypeList.txt");
 
@@ -188,22 +185,32 @@ namespace Olbrasoft.Travel.EAN.Import
             //var descriptionsImporter = container.Resolve<IImport<Travel.EAN.DTO.Property.Description>>();
             //descriptionsImporter.Import(@"D:\Ean\PropertyDescriptionList.txt");
 
-            //var pathsToImagesOfHotelsImporter = container.Resolve<IImport<PathToHotelImage>>();
-            //pathsToImagesOfHotelsImporter.Import($@"D:\Ean\HotelImageList.txt");
 
-
-            //var imagesOfHotelsImporter = container.Resolve<IImport<HotelImage>>();
-            //imagesOfHotelsImporter.Import($@"D:\Ean\HotelImageList.txt");
+            var imagesOfHotelsImporter = container.Resolve<IImport<HotelImage>>();
+            imagesOfHotelsImporter.Import($@"D:\Ean\HotelImageList.txt");
 
 
             //var develepmentRoomsTypesImporter = new Development.DevelopmentRoomsTypesImporter(container.Resolve<ImportOption>());
             //develepmentRoomsTypesImporter.Import(@"D:\Ean\RoomTypeList.txt");
 
-
             //var roomsTypesImporter = container.Resolve<IImport<RoomType>>();
             //roomsTypesImporter.Import(@"D:\Ean\RoomTypeList.txt");
 
 
+            //var tasks = new List<Development.DevelopmentTask>()
+            //{
+            //    new DevelopmentTask {Name = "Úkol1"},
+            //    new DevelopmentTask() {Name = "ukol2"}
+            //};
+
+
+            //using (var ctx= new Development.DevelopmentContext()   )
+            //{
+            //    ctx.BulkDev(tasks,new BulkConfig(){KeepIdentity = true} );
+            //}
+
+
+            //Logger.Log(tasks[2].Id.ToString());
 
 
             Write("Imported");

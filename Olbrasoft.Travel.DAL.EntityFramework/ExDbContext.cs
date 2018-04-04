@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Threading.Tasks;
 using Olbrasoft.EntityFramework.Bulk;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
@@ -24,19 +23,20 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         /// <returns>
         ///     The property name.
         /// </returns>
-        public static string GetPropertyName<T>(System.Linq.Expressions.Expression<Func<T, object>> property)
+        public static string GetPropertyName<T>(Expression<Func<T, object>> property)
         {
-            System.Linq.Expressions.LambdaExpression lambda = (System.Linq.Expressions.LambdaExpression)property;
-            System.Linq.Expressions.MemberExpression memberExpression;
+            var lambda = (LambdaExpression)property;
+            MemberExpression memberExpression;
 
-            if (lambda.Body is System.Linq.Expressions.UnaryExpression)
+            if (lambda.Body is UnaryExpression)
             {
-                System.Linq.Expressions.UnaryExpression unaryExpression = (System.Linq.Expressions.UnaryExpression)(lambda.Body);
-                memberExpression = (System.Linq.Expressions.MemberExpression)(unaryExpression.Operand);
+                var unaryExpression = (UnaryExpression)(lambda.Body);
+
+                memberExpression = (MemberExpression)(unaryExpression.Operand);
             }
             else
             {
-                memberExpression = (System.Linq.Expressions.MemberExpression)(lambda.Body);
+                memberExpression = (MemberExpression)(lambda.Body);
             }
 
             return ((PropertyInfo)memberExpression.Member).Name;
@@ -45,7 +45,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public static void BulkUpdate<T>(this DbContext context, IEnumerable<T> entities, Action<EventArgs> onSaved, params Expression<Func<T,object>>[] ignoreProperties) where T : class
         {
-            var batchesToUpdate = SplitList(entities);
+            var batchesToUpdate =entities.SplitToEanumerableOfList(90000);
             
             var ignoreColumnsUpdate = new HashSet<string>(ignoreProperties.Select(GetPropertyName));
 
@@ -69,10 +69,9 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public static void  BulkInsert<T>(this DbContext context, IEnumerable<T> entities, Action<EventArgs> onSaved, params Expression<Func<T, object>>[] ignoreProperties) where T : class
         {
-            var batchesToInsert = SplitList(entities);
+            var batchesToInsert = entities.SplitToEanumerableOfList(90000);
             var ignoreColmnsInsert = new HashSet<string>(ignoreProperties.Select(GetPropertyName));
-
-
+            
             const string createDateColumn = "DateAndTimeOfCreation";
             if (!ignoreColmnsInsert.Contains(createDateColumn)) ignoreColmnsInsert.Add(createDateColumn);
             
@@ -91,15 +90,10 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             }
         }
 
-        
-
-        public static IEnumerable<List<T>> SplitList<T>(IEnumerable<T> locations, int nSize = 90000)
+        public static void BulkDev<T>(this DbContext context, IEnumerable<T> entities, BulkConfig config) where T : class
         {
-            var result = locations.ToList();
-            for (var i = 0; i < result.Count; i += nSize)
-            {
-                yield return result.GetRange(i, Math.Min(nSize, result.Count - i));
-            }
+            context.BulkInsert(entities.ToArray(),config);
+
         }
 
     }

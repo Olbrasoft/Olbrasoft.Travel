@@ -153,6 +153,7 @@
   <ItemGroup>
     <Compile Include="AdditionalRegionsInfoRepository.cs" />
     <Compile Include="DescriptionsRepository.cs" />
+    <Compile Include="ExIEnumerable.cs" />
     <Compile Include="FilesExtensionsRepository.cs" />
     <Compile Include="LocalizedCaptionsRepository.cs" />
     <Compile Include="MappedEntitiesRepository.cs" />
@@ -244,17 +245,9 @@
     <Compile Include="Migrations\201803311414294_LocalizedCaptions.Designer.cs">
       <DependentUpon>201803311414294_LocalizedCaptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803311733180_PhotosOfAccommodations.cs" />
-    <Compile Include="Migrations\201803311733180_PhotosOfAccommodations.Designer.cs">
-      <DependentUpon>201803311733180_PhotosOfAccommodations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804011457039_TypesOfRooms.cs" />
-    <Compile Include="Migrations\201804011457039_TypesOfRooms.Designer.cs">
-      <DependentUpon>201804011457039_TypesOfRooms.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804012026279_LocalizedTypesOfRooms.cs" />
-    <Compile Include="Migrations\201804012026279_LocalizedTypesOfRooms.Designer.cs">
-      <DependentUpon>201804012026279_LocalizedTypesOfRooms.cs</DependentUpon>
+    <Compile Include="Migrations\201804022319054_PhotosOfAccommodations.cs" />
+    <Compile Include="Migrations\201804022319054_PhotosOfAccommodations.Designer.cs">
+      <DependentUpon>201804022319054_PhotosOfAccommodations.cs</DependentUpon>
     </Compile>
     <Compile Include="PathsToPhotosRepository.cs" />
     <Compile Include="PhotosOfAccommodationsRepository.cs" />
@@ -394,14 +387,8 @@
     <EmbeddedResource Include="Migrations\201803311414294_LocalizedCaptions.resx">
       <DependentUpon>201803311414294_LocalizedCaptions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803311733180_PhotosOfAccommodations.resx">
-      <DependentUpon>201803311733180_PhotosOfAccommodations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804011457039_TypesOfRooms.resx">
-      <DependentUpon>201804011457039_TypesOfRooms.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804012026279_LocalizedTypesOfRooms.resx">
-      <DependentUpon>201804012026279_LocalizedTypesOfRooms.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804022319054_PhotosOfAccommodations.resx">
+      <DependentUpon>201804022319054_PhotosOfAccommodations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

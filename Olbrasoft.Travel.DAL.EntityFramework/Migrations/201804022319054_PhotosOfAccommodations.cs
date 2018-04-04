@@ -1,6 +1,5 @@
 namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
     public partial class PhotosOfAccommodations : DbMigration
@@ -13,7 +12,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         AccommodationId = c.Int(nullable: false),
-                        TypeOfRoomId = c.Int(),
                         PathToPhotoId = c.Int(nullable: false),
                         FileName = c.String(maxLength: 50),
                         FileExtensionId = c.Int(nullable: false),
@@ -29,11 +27,9 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
                 .ForeignKey("dbo.FilesExtensions", t => t.FileExtensionId)
                 .ForeignKey("dbo.PathsToPhotos", t => t.PathToPhotoId)
                 .Index(t => t.AccommodationId)
-                .Index(t => new { t.PathToPhotoId, t.FileName }, unique: true)
-                .Index(t => t.FileExtensionId)
+                .Index(t => new { t.PathToPhotoId, t.FileName, t.FileExtensionId }, unique: true)
                 .Index(t => t.CaptionId)
                 .Index(t => t.CreatorId);
-            
         }
         
         public override void Down()
@@ -45,8 +41,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
             DropForeignKey("acco.PhotosOfAccommodations", "AccommodationId", "acco.Accommodations");
             DropIndex("acco.PhotosOfAccommodations", new[] { "CreatorId" });
             DropIndex("acco.PhotosOfAccommodations", new[] { "CaptionId" });
-            DropIndex("acco.PhotosOfAccommodations", new[] { "FileExtensionId" });
-            DropIndex("acco.PhotosOfAccommodations", new[] { "PathToPhotoId", "FileName" });
+            DropIndex("acco.PhotosOfAccommodations", new[] { "PathToPhotoId", "FileName", "FileExtensionId" });
             DropIndex("acco.PhotosOfAccommodations", new[] { "AccommodationId" });
             DropTable("acco.PhotosOfAccommodations");
         }
