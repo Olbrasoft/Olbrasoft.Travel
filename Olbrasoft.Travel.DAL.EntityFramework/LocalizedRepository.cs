@@ -17,14 +17,14 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
         }
 
-        public override void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
+        public void BulkSave(IEnumerable<T> entities, int batchSize, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
             var entitiesArray = entities as T[] ?? entities.ToArray();
             foreach (var languageId in entitiesArray.GroupBy(entity => entity.LanguageId).Select(grp => grp.First()).Select(p => p.LanguageId))
             {
                 if (!AsQueryable().Any(l => l.LanguageId == languageId))
                 {
-                    BulkInsert(entitiesArray);
+                    BulkInsert(entitiesArray, batchSize);
                 }
                 else
                 {
@@ -48,19 +48,30 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
                     if (forInsert.Count > 0)
                     {
-                        BulkInsert(forInsert);
+                        BulkInsert(forInsert, batchSize);
                     }
 
                     if (forUpdate.Count <= 0) return;
-                    BulkUpdate(forUpdate, ignorePropertiesWhenUpdating);
+                    BulkUpdate(forUpdate, batchSize, ignorePropertiesWhenUpdating);
                 }
             }
         }
 
+        public override void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
+        {
+            BulkSave(entities, 90000, ignorePropertiesWhenUpdating);
+        }
+
+        protected void BulkUpdate(IEnumerable<T> entities, int batchSize, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
+        {
+            Context.BulkUpdate(entities, OnSaved, batchSize, ignorePropertiesWhenUpdating);
+        }
+
         protected void BulkUpdate(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
-            Context.BulkUpdate(entities, OnSaved, ignorePropertiesWhenUpdating);
+            BulkUpdate(entities, 90000, ignorePropertiesWhenUpdating);
         }
+
 
         public bool Exists(int languageId)
         {

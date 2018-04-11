@@ -29,12 +29,19 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public abstract void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating);
 
+        protected void BulkInsert(IEnumerable<T> entities, int batchSize)
+        {
+            Context.BulkInsert(entities, OnSaved,batchSize);
+        }
+
 
         protected void BulkInsert(IEnumerable<T> entities)
         {
-            Context.BulkInsert(entities, OnSaved);
-
+          BulkInsert(entities, 90000);
         }
+
+
+
 
         protected void OnSaved(EventArgs eventArgs)
         {
@@ -111,12 +118,22 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         }
 
-        protected void BulkUpdate(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
+        protected virtual void BulkInsert(IEnumerable<T> entities, int batchSize)
         {
 
+            Context.BulkInsert(entities, OnSaved, batchSize);
+        }
+
+        protected void BulkUpdate(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
+        {
             Context.BulkUpdate(entities, OnSaved, ignorePropertiesWhenUpdating);
         }
 
+
+        protected void BulkUpdate(IEnumerable<T> entities, int bathcSize, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
+        {
+            Context.BulkUpdate(entities, OnSaved, bathcSize, ignorePropertiesWhenUpdating);
+        }
 
         protected void OnSaved(EventArgs eventArgs)
         {

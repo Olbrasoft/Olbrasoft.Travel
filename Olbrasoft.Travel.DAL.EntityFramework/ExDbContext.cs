@@ -43,21 +43,26 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         }
 
 
-        public static void BulkUpdate<T>(this DbContext context, IEnumerable<T> entities, Action<EventArgs> onSaved, params Expression<Func<T,object>>[] ignoreProperties) where T : class
+        public static void BulkUpdate<T>(this DbContext context, IEnumerable<T> entities, Action<EventArgs> onSaved, int batchSize = 90000 ,params Expression<Func<T,object>>[] ignoreProperties) where T : class
         {
-            var batchesToUpdate =entities.SplitToEanumerableOfList(90000);
+            var batchesToUpdate =entities.SplitToEanumerableOfList(batchSize);
             
             var ignoreColumnsUpdate = new HashSet<string>(ignoreProperties.Select(GetPropertyName));
 
             const string creatorColumn = "CreatorId";
             if (!ignoreColumnsUpdate.Contains(creatorColumn)) ignoreColumnsUpdate.Add(creatorColumn);
-      
+
+            if (batchSize == 90000)
+            {
+                batchSize = 45000;
+            }
+
 
             foreach (var batch in batchesToUpdate)
             {
               context.BulkUpdate(batch, new BulkConfig()
                 {
-                    BatchSize = 45000,
+                    BatchSize = batchSize,
                     BulkCopyTimeout = 480,
                     IgnoreColumns = new HashSet<string>(new[] { "DateAndTimeOfCreation" }),
                     IgnoreColumnsUpdate = ignoreColumnsUpdate
@@ -66,22 +71,32 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             }
         }
 
-
-        public static void  BulkInsert<T>(this DbContext context, IEnumerable<T> entities, Action<EventArgs> onSaved, params Expression<Func<T, object>>[] ignoreProperties) where T : class
+        public static void BulkUpdate<T>(this DbContext context, IEnumerable<T> entities, Action<EventArgs> onSaved, params Expression<Func<T, object>>[] ignoreProperties) where T : class
         {
-            var batchesToInsert = entities.SplitToEanumerableOfList(90000);
+            BulkUpdate(context,entities,onSaved,90000,ignoreProperties);
+
+        }
+        
+        public static void  BulkInsert<T>(this DbContext context, IEnumerable<T> entities, Action<EventArgs> onSaved, int batchSize = 90000, params Expression<Func<T, object>>[] ignoreProperties) where T : class
+        {
+            var batchesToInsert = entities.SplitToEanumerableOfList(batchSize);
             var ignoreColmnsInsert = new HashSet<string>(ignoreProperties.Select(GetPropertyName));
             
             const string createDateColumn = "DateAndTimeOfCreation";
             if (!ignoreColmnsInsert.Contains(createDateColumn)) ignoreColmnsInsert.Add(createDateColumn);
-            
+
+            if (batchSize == 90000)
+            {
+                batchSize = 45000;
+            }
+
             foreach (var batch in batchesToInsert)
             {
 
                context.BulkInsert(batch,
                     new BulkConfig
                     {
-                        BatchSize = 45000,
+                        BatchSize = batchSize,
                         BulkCopyTimeout = 480,
                         IgnoreColumns = ignoreColmnsInsert
                     });
@@ -89,6 +104,12 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 onSaved(EventArgs.Empty);
             }
         }
+
+        public static void BulkInsert<T>(this DbContext context, IEnumerable<T> entities, Action<EventArgs> onSaved, params Expression<Func<T, object>>[] ignoreProperties) where T : class
+        {
+            BulkInsert(context, entities, onSaved, 90000, ignoreProperties);
+        }
+
 
         public static void BulkDev<T>(this DbContext context, IEnumerable<T> entities, BulkConfig config) where T : class
         {

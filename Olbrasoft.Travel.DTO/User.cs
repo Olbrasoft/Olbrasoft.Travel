@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Net.NetworkInformation;
 
 namespace Olbrasoft.Travel.DTO
 {
@@ -120,15 +119,17 @@ namespace Olbrasoft.Travel.DTO
         /// <summary>
         /// Rooms created by the User.
         /// </summary>
-       // public virtual ICollection<TypeOfRoom> TypesOfRooms { get; set; }
+        public virtual ICollection<TypeOfRoom> TypesOfRooms { get; set; }
 
         /// <summary>
         /// Localized Types of Rooms created by the User.
         /// </summary>
-      //  public virtual ICollection<LocalizedTypeOfRoom> LocalizedTypesOfRooms { get; set; }
+        public virtual ICollection<LocalizedTypeOfRoom> LocalizedTypesOfRooms { get; set; }
 
-
-
+        /// <summary>
+        /// Photos of Accommodations to Types of Rooms created by the User.
+        /// </summary>
+        public virtual ICollection<PhotoOfAccommodationToTypeOfRoom> PhotosOfAccommodationsToTypesOfRooms { get; set; }
 
         #endregion
     }

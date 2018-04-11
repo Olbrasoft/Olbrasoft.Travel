@@ -29,9 +29,9 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<Caption> Captions { get; set; }
         public virtual IDbSet<LocalizedCaption> LocalizedCaptions { get; set; }
         public virtual IDbSet<PhotoOfAccommodation> PhotosOfAccommodations { get; set; }
-
-        //public virtual IDbSet<TypeOfRoom> TypesOfRooms { get; set; }
-        //public virtual IDbSet<LocalizedTypeOfRoom> LocalizedTypesOfRooms { get; set; }
+        public virtual IDbSet<TypeOfRoom> TypesOfRooms { get; set; }
+        public virtual IDbSet<LocalizedTypeOfRoom> LocalizedTypesOfRooms { get; set; }
+        public virtual IDbSet<PhotoOfAccommodationToTypeOfRoom> PhotosOfAccommodationsToTypesOfRooms { get; set; }
 
 
         public TravelContext() : base("name=Travel")
@@ -81,25 +81,37 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnTypesOfDescriptionsCreating(modelBuilder, dbSchema, nameof(TypesOfDescriptions));
             OnDescriptionsCreating(modelBuilder, dbSchema, nameof(Descriptions));
             OnPhotosOfAccommodationsCreating(modelBuilder, dbSchema, nameof(PhotosOfAccommodations));
+            OnTypesOfRoomsCreating(modelBuilder, dbSchema, nameof(TypesOfRooms));
+            OnLocalizedTypesOfRoomsCreating(modelBuilder, dbSchema, nameof(LocalizedTypesOfRooms));
+            OnPhotosOfAccommodationsToTypesOfRoomsCreating(modelBuilder, dbSchema,
+                nameof(PhotosOfAccommodationsToTypesOfRooms));
 
-            // OnTypesOfRoomsCreating(modelBuilder, dbSchema, nameof(TypesOfRooms));
-            // OnLocalizedTypesOfRoomsCreating(modelBuilder, dbSchema, nameof(LocalizedTypesOfRooms));
+        }
+
+        private static void OnPhotosOfAccommodationsToTypesOfRoomsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
+        {
+            modelBuilder.Entity<PhotoOfAccommodationToTypeOfRoom>().ToTable(tableName, dbSchema)
+                .HasRequired(p => p.Creator).WithMany(u => u.PhotosOfAccommodationsToTypesOfRooms)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PhotoOfAccommodationToTypeOfRoom>().HasRequired(p => p.TypeOfRoom)
+                .WithMany(tor => tor.PhotosOfAccommodationsToTypesOfRooms).HasForeignKey(p=>p.ToId).WillCascadeOnDelete(false);
+
         }
 
 
+        private static void OnLocalizedTypesOfRoomsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
+        {
+            modelBuilder.Entity<LocalizedTypeOfRoom>()
+                .ToTable(tableName, dbSchema).HasRequired(ltor => ltor.Creator)
+                .WithMany(u => u.LocalizedTypesOfRooms).WillCascadeOnDelete(false);
 
-        //private static void OnLocalizedTypesOfRoomsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName )
-        //{
-        //    modelBuilder.Entity<LocalizedTypeOfRoom>()
-        //        .ToTable(tableName, dbSchema).HasRequired(ltor => ltor.Creator)
-        //        .WithMany(u => u.LocalizedTypesOfRooms).WillCascadeOnDelete(false);
-
-        //    modelBuilder.Entity<LocalizedTypeOfRoom>()
-        //        .HasRequired(ltor => ltor.Language).WithMany(l => l.LocalizedTypesOfRooms).WillCascadeOnDelete(false);
-        //}
+            modelBuilder.Entity<LocalizedTypeOfRoom>()
+                .HasRequired(ltor => ltor.Language).WithMany(l => l.LocalizedTypesOfRooms).WillCascadeOnDelete(false);
+        }
 
 
-        private void OnLocalizedCaptions(DbModelBuilder modelBuilder)
+        private static void OnLocalizedCaptions(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<LocalizedCaption>()
                 .HasRequired(lc => lc.Language).WithMany(l => l.LocalizedCaptions).WillCascadeOnDelete(false);
@@ -109,19 +121,18 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         }
 
-        //private static void OnTypesOfRoomsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName )
-        //{
-        //    modelBuilder.Entity<TypeOfRoom>().ToTable(tableName, dbSchema)
-        //        .HasRequired(tor => tor.Creator)
-        //        .WithMany(u => u.TypesOfRooms)
-        //        .WillCascadeOnDelete(false)
-        //        ;
+        private static void OnTypesOfRoomsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
+        {
+            modelBuilder.Entity<TypeOfRoom>().ToTable(tableName, dbSchema)
+                .HasRequired(tor => tor.Creator)
+                .WithMany(u => u.TypesOfRooms)
+                .WillCascadeOnDelete(false)
+                ;
 
-        //    modelBuilder.Entity<TypeOfRoom>().HasRequired(tor => tor.Accommodation)
-        //        .WithMany(a => a.TypesOfRooms).WillCascadeOnDelete();
-        //    modelBuilder.Entity<TypeOfRoom>().HasMany(tor => tor.PhotosOfAccommodations)
-        //        .WithOptional(poa => poa.TypeOfRoom);
-        //}
+            modelBuilder.Entity<TypeOfRoom>().HasRequired(tor => tor.Accommodation)
+                .WithMany(a => a.TypesOfRooms).WillCascadeOnDelete()
+                ;
+        }
 
 
         private void OnCaptionsCreating(DbModelBuilder modelBuilder)

@@ -73,6 +73,7 @@
     <Compile Include="ManyToMany.cs" />
     <Compile Include="PathToPhoto.cs" />
     <Compile Include="PhotoOfAccommodation.cs" />
+    <Compile Include="PhotoOfAccommodationToTypeOfRoom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Region.cs" />
     <Compile Include="RegionToRegion.cs" />

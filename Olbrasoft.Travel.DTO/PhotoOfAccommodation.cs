@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Olbrasoft.Travel.DTO
 {
@@ -24,6 +25,7 @@ namespace Olbrasoft.Travel.DTO
         public FileExtension FileExtension { get; set; }
 
         public Caption Caption { get; set; }
-        
+
+        public virtual ICollection<PhotoOfAccommodationToTypeOfRoom> ToTypesOfRooms { get; set; }
     }
 }

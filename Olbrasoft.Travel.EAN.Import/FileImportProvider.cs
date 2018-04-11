@@ -1,11 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    class FileImportProvider : IImportProvider
+    internal class FileImportProvider : IImportProvider, IProvider
     {
+        public event EventHandler<string[]> SplittingLine;
+
+        protected virtual void OnSplittingLine(string[] e)
+        {
+            SplittingLine?.Invoke(this, e);
+        }
+
+        public void ReadToEnd(string path)
+        {
+            using (var reader = new StreamReader(path))
+            {
+                //skip first line
+                 reader.ReadLine();
+
+                while (!reader.EndOfStream)
+                {
+                    OnSplittingLine(reader.ReadLine()?.Split('|'));
+                }
+            }
+        }
+
         public string GetFirstLine(string path)
         {
             return File.ReadLines(path).First();

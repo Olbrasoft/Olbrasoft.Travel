@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.DAL
@@ -7,5 +9,7 @@ namespace Olbrasoft.Travel.DAL
     {
         HashSet<int>EanIds { get; }
         IReadOnlyDictionary<int, int> EanIdsToIds { get; }
+
+        void BulkSave(IEnumerable<T> entities, int batchSize,  params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating);
     }
 }

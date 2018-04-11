@@ -34,6 +34,8 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             private set => _eanIdsToIds = value;
         }
 
+
+
         private int MinEanId
         {
             get
@@ -57,21 +59,26 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
         }
 
-        public void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
+        public void BulkSave(IEnumerable<T> entities, int batchSize, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
             entities = Rebuild(entities.ToArray());
 
             if (entities.Any(region => region.Id == 0))
             {
-                BulkInsert(entities.Where(region => region.Id == 0));
+                BulkInsert(entities.Where(region => region.Id == 0),batchSize);
             }
 
             if (entities.Any(region => region.Id != 0))
             {
-                BulkUpdate(entities.Where(region => region.Id != 0), ignorePropertiesWhenUpdating);
+                BulkUpdate(entities.Where(region => region.Id != 0),batchSize, ignorePropertiesWhenUpdating);
             }
         }
-        
+
+        public void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
+        {
+            BulkSave(entities, 90000, ignorePropertiesWhenUpdating);
+        }
+
         protected T[] Rebuild(T[] entities)
         {
             entities = AddingIdsOnDependingEanIds(entities);

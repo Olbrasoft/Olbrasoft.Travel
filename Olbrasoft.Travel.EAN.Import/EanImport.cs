@@ -42,7 +42,7 @@ namespace Olbrasoft.Travel.EAN.Import
             user = usersRepository.AddIfNotExist(user);
 
             Write($"Id to a user with a UserName {user.UserName} is {user.Id}.");
-            
+
 
             // var url = "https://www.ian.com/affiliatecenter/include/V2/ParentRegionList.zip";
 
@@ -52,7 +52,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             container.Register(Component.For<IImportProvider>().ImplementedBy<FileImportProvider>());
             container.Register(Component.For<User>().Instance(user));
-            
+
             var languagesRepository = container.Resolve<ILanguagesRepository>();
 
             var defaultLanguage = languagesRepository.Get(1033);
@@ -66,25 +66,29 @@ namespace Olbrasoft.Travel.EAN.Import
                 };
                 languagesRepository.Add(defaultLanguage);
             }
-            
-           
+
+
             container.Register(
                 Component.For<ImportOption>()
                 .ImplementedBy<ImportOption>()
-                .DependsOn(Dependency.OnValue("creatorId", user.Id),Dependency.OnValue("defaultLanguageId", defaultLanguage.Id))
+                .DependsOn(Dependency.OnValue("creatorId", user.Id), Dependency.OnValue("defaultLanguageId", defaultLanguage.Id))
             );
+
+
+
+
 
             container.Register(Component.For(typeof(IImport<ParentRegion>))
                 .ImplementedBy(typeof(ParentRegionBatchImporter))
                 .Interceptors<IInterceptor>()
             );
-            
+
 
             container.Register(Component.For(typeof(IImport<DTO.Geography.Country>))
                 .ImplementedBy<CountriesBatchImporter>()
                 .Interceptors<IInterceptor>()
             );
-            
+
 
             container.Register(Component.For(typeof(IImport<CityCoordinates>))
                 .ImplementedBy<CitiesBatchImporter>()
@@ -136,7 +140,7 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Interceptors<IInterceptor>()
             );
 
-          
+
             container.Register(Component.For(typeof(IImport<Travel.EAN.DTO.Property.HotelImage>))
                 .ImplementedBy<ImagesOfHotelsImporter>()
                 .Interceptors<IInterceptor>()
@@ -146,7 +150,7 @@ namespace Olbrasoft.Travel.EAN.Import
                 .ImplementedBy<RoomsTypesImporter>()
                 .Interceptors<IInterceptor>()
             );
-
+            
 
             //var parentRegionImporter = container.Resolve<IImport<ParentRegion>>();
             //parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
@@ -186,9 +190,78 @@ namespace Olbrasoft.Travel.EAN.Import
             //descriptionsImporter.Import(@"D:\Ean\PropertyDescriptionList.txt");
 
 
-            var imagesOfHotelsImporter = container.Resolve<IImport<HotelImage>>();
-            imagesOfHotelsImporter.Import($@"D:\Ean\HotelImageList.txt");
+            container.Register(
+                   Component.For<SharedProperties>()
+                       .ImplementedBy<SharedProperties>()
+                       .DependsOn(Dependency.OnValue("creatorId", user.Id), Dependency.OnValue("defaultLanguageId", defaultLanguage.Id))
+               );
 
+
+            container.Register(Component.For(typeof(IProvider)).ImplementedBy<FileImportProvider>().Named(nameof(FileImportProvider)));
+
+            container.Register(Component.For(typeof(IImporter))
+                   .ImplementedBy<PathsExtensionsCaptionsImporter>().Named(nameof(PathsExtensionsCaptionsImporter))
+                   .Interceptors<IInterceptor>()
+               );
+
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<PhotosOfAccommodationsImporter>().Named(nameof(PhotosOfAccommodationsImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<TypesOfRoomsImporter>().Named(nameof(TypesOfRoomsImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<LocalizedTypesOfRoomsImporter>().Named(nameof(LocalizedTypesOfRoomsImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<RoomsTypesImagesImporter>().Named(nameof(RoomsTypesImagesImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<PhotosOfAccommodationsToTypesOfRoomsImporter>().Named(nameof(PhotosOfAccommodationsToTypesOfRoomsImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+            //var pathsExtensionsCaptionsImporter = container.Resolve<IImporter>(nameof(PathsExtensionsCaptionsImporter));
+            //pathsExtensionsCaptionsImporter.Import(@"D:\Ean\HotelImageList.txt");
+
+
+            //var photosOfAccommodationsImporter = container.Resolve<IImporter>(nameof(PhotosOfAccommodationsImporter));
+            //photosOfAccommodationsImporter.Import(@"D:\Ean\HotelImageList.txt");
+
+            //using (var typesOfRoomsImporter = container.Resolve<IImporter>(nameof(TypesOfRoomsImporter)))
+            //{
+            //    typesOfRoomsImporter.Import(@"D:\Ean\RoomTypeList.txt");
+            //}
+
+            //using (var localizedTypesOfRoomsImporter =
+            //    container.Resolve<IImporter>(nameof(LocalizedTypesOfRoomsImporter)))
+            //{
+            //    localizedTypesOfRoomsImporter.Import(@"D:\Ean\RoomTypeList.txt");
+            //}
+
+            //using (var roomsTypesImagesImporter = container.Resolve<IImporter>(nameof(RoomsTypesImagesImporter)))
+            //{
+            //    roomsTypesImagesImporter.Import(@"D:\Ean\RoomTypeList.txt");
+            //}
+
+            using (var photosOfAccommodationsToTypesOfRoomsImporter= container.Resolve<IImporter>(nameof(PhotosOfAccommodationsToTypesOfRoomsImporter)))
+            {
+                photosOfAccommodationsToTypesOfRoomsImporter.Import(@"D:\Ean\RoomTypeList.txt");
+            }
+
+            
 
             //var develepmentRoomsTypesImporter = new Development.DevelopmentRoomsTypesImporter(container.Resolve<ImportOption>());
             //develepmentRoomsTypesImporter.Import(@"D:\Ean\RoomTypeList.txt");
@@ -218,7 +291,7 @@ namespace Olbrasoft.Travel.EAN.Import
             Console.ReadLine();
 #endif
         }
-      
+
 
         private static async void DownloadFile(string url)
         {
@@ -242,7 +315,7 @@ namespace Olbrasoft.Travel.EAN.Import
             }
 #endif
         }
-        
+
         private static WindsorContainer BuildContainer()
         {
             var container = new WindsorContainer();
@@ -261,20 +334,24 @@ namespace Olbrasoft.Travel.EAN.Import
             );
 
 
-         container.Register(FromAssemblyNamed("Olbrasoft.Travel.DAL.EntityFramework")
-                .Where(type => type.Name.EndsWith("Repository"))
-                .WithService.AllInterfaces()
-            );
+            container.Register(FromAssemblyNamed("Olbrasoft.Travel.DAL.EntityFramework")
+                   .Where(type => type.Name.EndsWith("Repository"))
+                   .WithService.AllInterfaces()
+               );
 
 #if DEBUG
-         container.Register(Component.For<ILoggingImports>().ImplementedBy<ConsoleLogger>());
+            container.Register(Component.For<ILoggingImports>().ImplementedBy<ConsoleLogger>());
+
+
 #else
-         container.Register(Component.For<ILoggingImports>().ImplementedBy<ImportsLogger>());
+            container.Register(Component.For<ILoggingImports>().ImplementedBy<ConsoleLogger>());
+
+              
 #endif
             container.Register(Component.For<IParserFactory>().ImplementedBy<ParserFactory>());
 
             container.Register(Component.For(typeof(IAdditionalRegionsInfoRepository<>)).ImplementedBy(typeof(AdditionalRegionsInfoRepository<>)));
-            
+
             container.Register(Component.For(typeof(ITypesRepository<>)).ImplementedBy(typeof(TypesRepository<>)));
 
             container.Register(Component.For(typeof(IManyToManyRepository<>)).ImplementedBy(typeof(ManyToManyRepository<>)));
@@ -287,7 +364,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             return container;
         }
-        
+
 
         public static void Write(object s)
         {

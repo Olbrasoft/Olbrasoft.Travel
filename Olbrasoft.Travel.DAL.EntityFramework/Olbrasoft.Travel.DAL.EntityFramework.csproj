@@ -249,6 +249,18 @@
     <Compile Include="Migrations\201804022319054_PhotosOfAccommodations.Designer.cs">
       <DependentUpon>201804022319054_PhotosOfAccommodations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804081905587_TypesOfRooms.cs" />
+    <Compile Include="Migrations\201804081905587_TypesOfRooms.Designer.cs">
+      <DependentUpon>201804081905587_TypesOfRooms.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804082145494_LocalizedTypesOfRooms.cs" />
+    <Compile Include="Migrations\201804082145494_LocalizedTypesOfRooms.Designer.cs">
+      <DependentUpon>201804082145494_LocalizedTypesOfRooms.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804112250332_PhotosOfAccommodationsToTypesOfRooms.cs" />
+    <Compile Include="Migrations\201804112250332_PhotosOfAccommodationsToTypesOfRooms.Designer.cs">
+      <DependentUpon>201804112250332_PhotosOfAccommodationsToTypesOfRooms.cs</DependentUpon>
+    </Compile>
     <Compile Include="PathsToPhotosRepository.cs" />
     <Compile Include="PhotosOfAccommodationsRepository.cs" />
     <Compile Include="RegionsToTypesRepository.cs" />
@@ -389,6 +401,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804022319054_PhotosOfAccommodations.resx">
       <DependentUpon>201804022319054_PhotosOfAccommodations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804081905587_TypesOfRooms.resx">
+      <DependentUpon>201804081905587_TypesOfRooms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804082145494_LocalizedTypesOfRooms.resx">
+      <DependentUpon>201804082145494_LocalizedTypesOfRooms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804112250332_PhotosOfAccommodationsToTypesOfRooms.resx">
+      <DependentUpon>201804112250332_PhotosOfAccommodationsToTypesOfRooms.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

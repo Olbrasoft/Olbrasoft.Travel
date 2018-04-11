@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Olbrasoft.Travel.DTO
 {
@@ -29,6 +24,9 @@ namespace Olbrasoft.Travel.DTO
         public int AccommodationId { get; set; }
         public int EanId { get; set; } = int.MinValue;
         public virtual Accommodation Accommodation { get; set; }
-        public virtual ICollection<PhotoOfAccommodation> PhotosOfAccommodations { get; set; }
+       
+        public virtual ICollection<LocalizedTypeOfRoom> LocalizedTypesOfRooms { get; set; }
+
+        public virtual ICollection<PhotoOfAccommodationToTypeOfRoom> PhotosOfAccommodationsToTypesOfRooms { get; set; }
     }
 }
