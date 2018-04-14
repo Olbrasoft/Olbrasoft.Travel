@@ -150,6 +150,15 @@ namespace Olbrasoft.Travel.DTO
         /// </summary>
         public virtual ICollection<LocalizedAttribute> LocalizedAttributes { get; set; }
 
+
+        /// <summary>
+        /// Accommodations to Attributes created by the User.
+        /// </summary>
+        public virtual ICollection<AccommodationToAttribute> AccommodationsToAttributes { get; set; }
+
+
+
+
         #endregion
     }
 }

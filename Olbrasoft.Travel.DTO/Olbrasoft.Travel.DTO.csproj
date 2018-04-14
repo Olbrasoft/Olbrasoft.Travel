@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accommodation.cs" />
+    <Compile Include="AccommodationToAttribute.cs" />
     <Compile Include="Airport.cs" />
     <Compile Include="Attribute.cs" />
     <Compile Include="Caption.cs" />

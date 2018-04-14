@@ -36,7 +36,8 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<SubTypeOfAttribute> SubTypesOfAttributes { get; set; }
         public virtual IDbSet<Attribute> Attributes { get; set; }
         public virtual IDbSet<LocalizedAttribute> LocalizedAttributes { get; set; }
-        
+        public virtual IDbSet<AccommodationToAttribute> AccommodationsToAttributes { get; set; }
+
 
         public TravelContext() : base("name=Travel")
         {
@@ -94,6 +95,23 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnSubTypesOfAttributesCreating(modelBuilder, dbSchema, nameof(SubTypesOfAttributes));
             OnAttributesCreating(modelBuilder, dbSchema, nameof(Attributes));
             OnLocalizedAttributesCreating(modelBuilder, dbSchema, nameof(LocalizedAttributes));
+
+            OnAccommodationsToAttributesCreating(modelBuilder, dbSchema, nameof(AccommodationsToAttributes));
+        }
+
+        private static void OnAccommodationsToAttributesCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
+        {
+            modelBuilder.Entity<AccommodationToAttribute>().ToTable(tableName, dbSchema)
+                .Property(p => p.DateAndTimeOfCreation).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+
+            modelBuilder.Entity<AccommodationToAttribute>().HasRequired(ata => ata.Attribute)
+                .WithMany(a => a.AccommodationsToAttributes).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<AccommodationToAttribute>().HasRequired(ata => ata.Language)
+                .WithMany(l => l.AccommodationsToAttributes).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<AccommodationToAttribute>().HasRequired(ata => ata.Creator)
+                .WithMany(u => u.AccommodationsToAttributes).WillCascadeOnDelete(false);
 
         }
 

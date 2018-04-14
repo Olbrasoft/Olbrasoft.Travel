@@ -245,9 +245,7 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Interceptors<IInterceptor>()
             );
 
-
-
-
+            
 
             //using (var pathsExtensionsCaptionsImporter =
             //    container.Resolve<IImporter>(nameof(PathsExtensionsCaptionsImporter)))

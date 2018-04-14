@@ -45,5 +45,7 @@ namespace Olbrasoft.Travel.DTO
         public virtual ICollection<PhotoOfAccommodation> PhotosOfAccommodations { get; set; }
 
         public virtual ICollection<TypeOfRoom> TypesOfRooms { get; set; }
+
+        public virtual ICollection<AccommodationToAttribute> AccommodationsToAttributes { get; set; }
     }
 }
