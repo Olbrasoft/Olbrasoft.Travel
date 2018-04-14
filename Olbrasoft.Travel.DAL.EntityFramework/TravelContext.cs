@@ -34,8 +34,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<PhotoOfAccommodationToTypeOfRoom> PhotosOfAccommodationsToTypesOfRooms { get; set; }
         public virtual IDbSet<TypeOfAttribute> TypesOfAttributes { get; set; }
         public virtual IDbSet<SubTypeOfAttribute> SubTypesOfAttributes { get; set; }
-
-
+        public virtual IDbSet<Attribute> Attributes { get; set; }
 
 
         //public virtual IDbSet<Travel.EAN.DTO.Property.Attribute> Attributes { get; set; }
@@ -95,8 +94,21 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
             OnTypesOfAttributesCreating(modelBuilder, dbSchema, nameof(TypesOfAttributes));
             OnSubTypesOfAttributesCreating(modelBuilder, dbSchema, nameof(SubTypesOfAttributes));
+            OnAttributesCreating(modelBuilder, dbSchema, nameof(Attributes));
 
         }
+
+        private static void OnAttributesCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
+        {
+            modelBuilder.Entity<Attribute>().ToTable(tableName, dbSchema);
+
+            modelBuilder.Entity<Attribute>().HasRequired(a => a.TypeOfAttribute).WithMany(toa => toa.Attributes)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Attribute>().HasRequired(a => a.SubTypeOfAttribute).WithMany(toa => toa.Attributes)
+                .WillCascadeOnDelete(false);
+        }
+
 
         private static void OnSubTypesOfAttributesCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
@@ -116,7 +128,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<PhotoOfAccommodationToTypeOfRoom>().HasRequired(p => p.TypeOfRoom)
-                .WithMany(tor => tor.PhotosOfAccommodationsToTypesOfRooms).HasForeignKey(p=>p.ToId).WillCascadeOnDelete(false);
+                .WithMany(tor => tor.PhotosOfAccommodationsToTypesOfRooms).HasForeignKey(p => p.ToId).WillCascadeOnDelete(false);
 
         }
 

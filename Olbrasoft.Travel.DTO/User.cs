@@ -140,6 +140,11 @@ namespace Olbrasoft.Travel.DTO
         /// </summary>
         public virtual ICollection<SubTypeOfAttribute> SubTypesOfAttributes { get; set; }
 
+        /// <summary>
+        /// Attributes created by the User.
+        /// </summary>
+        public virtual ICollection<Attribute> Attributes { get; set; }
+
         #endregion
     }
 }
