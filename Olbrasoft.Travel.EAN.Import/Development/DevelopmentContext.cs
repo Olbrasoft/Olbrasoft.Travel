@@ -13,6 +13,8 @@ namespace Olbrasoft.Travel.EAN.Import.Development
         public IDbSet<DevelopmentRoomType> DevelopmentRoomsTypes { get; set; }
         public IDbSet<DevelopmentTask> Tasks { get; set; }
 
+        public IDbSet<Travel.EAN.DTO.Property.Attribute> Attributes { get; set; }
+
         public DevelopmentContext() : base("name=Travel")
         {
             

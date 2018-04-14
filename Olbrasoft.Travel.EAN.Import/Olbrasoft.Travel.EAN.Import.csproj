@@ -208,6 +208,10 @@
     <Compile Include="Migrations\201804022348277_DevelopmentTasks.Designer.cs">
       <DependentUpon>201804022348277_DevelopmentTasks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804141212215_Attributes.cs" />
+    <Compile Include="Migrations\201804141212215_Attributes.Designer.cs">
+      <DependentUpon>201804141212215_Attributes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NeighborhoodsBatchImporter.cs" />
     <Compile Include="ParentRegionBatchImporter.cs" />
@@ -267,6 +271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804022348277_DevelopmentTasks.resx">
       <DependentUpon>201804022348277_DevelopmentTasks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804141212215_Attributes.resx">
+      <DependentUpon>201804141212215_Attributes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

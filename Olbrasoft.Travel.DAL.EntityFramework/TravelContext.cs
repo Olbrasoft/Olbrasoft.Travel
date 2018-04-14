@@ -36,9 +36,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<SubTypeOfAttribute> SubTypesOfAttributes { get; set; }
         public virtual IDbSet<Attribute> Attributes { get; set; }
 
-
-        //public virtual IDbSet<Travel.EAN.DTO.Property.Attribute> Attributes { get; set; }
-
+        
 
         public TravelContext() : base("name=Travel")
         {
