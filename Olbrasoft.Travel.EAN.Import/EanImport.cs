@@ -150,7 +150,8 @@ namespace Olbrasoft.Travel.EAN.Import
                 .ImplementedBy<RoomsTypesImporter>()
                 .Interceptors<IInterceptor>()
             );
-            
+
+           
 
             //var parentRegionImporter = container.Resolve<IImport<ParentRegion>>();
             //parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
@@ -239,6 +240,15 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Interceptors<IInterceptor>()
             );
 
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<LocalizedAttributesDefaultLanguageImporter>().Named(nameof(LocalizedAttributesDefaultLanguageImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+
+
+
+
             //using (var pathsExtensionsCaptionsImporter =
             //    container.Resolve<IImporter>(nameof(PathsExtensionsCaptionsImporter)))
             //{
@@ -277,6 +287,12 @@ namespace Olbrasoft.Travel.EAN.Import
             {
                 attributesImporter.Import(@"D:\Ean\AttributeList.txt");
             }
+            
+            using (var attributesImporter = container.Resolve<IImporter>(nameof(LocalizedAttributesDefaultLanguageImporter)))
+            {
+                attributesImporter.Import(@"D:\Ean\AttributeList.txt");
+            }
+
 
 
             //var develepmentRoomsTypesImporter = new Development.DevelopmentRoomsTypesImporter(container.Resolve<ImportOption>());

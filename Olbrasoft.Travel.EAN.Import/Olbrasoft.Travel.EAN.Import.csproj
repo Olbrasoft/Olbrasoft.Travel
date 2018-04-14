@@ -195,6 +195,7 @@
     <Compile Include="ImportOption.cs" />
     <Compile Include="EanImport.cs" />
     <Compile Include="IProvider.cs" />
+    <Compile Include="LocalizedAttributesDefaultLanguageImporter.cs" />
     <Compile Include="LocalizedTypesOfRoomsImporter.cs" />
     <Compile Include="Migrations\201804020202217_Init.cs" />
     <Compile Include="Migrations\201804020202217_Init.Designer.cs">
