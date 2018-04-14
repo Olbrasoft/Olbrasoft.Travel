@@ -265,6 +265,10 @@
     <Compile Include="Migrations\201804131845503_TypesOfAttributes.Designer.cs">
       <DependentUpon>201804131845503_TypesOfAttributes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804140930174_SubTypesOfAttributes.cs" />
+    <Compile Include="Migrations\201804140930174_SubTypesOfAttributes.Designer.cs">
+      <DependentUpon>201804140930174_SubTypesOfAttributes.cs</DependentUpon>
+    </Compile>
     <Compile Include="PathsToPhotosRepository.cs" />
     <Compile Include="PhotosOfAccommodationsRepository.cs" />
     <Compile Include="RegionsToTypesRepository.cs" />
@@ -417,6 +421,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804131845503_TypesOfAttributes.resx">
       <DependentUpon>201804131845503_TypesOfAttributes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804140930174_SubTypesOfAttributes.resx">
+      <DependentUpon>201804140930174_SubTypesOfAttributes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

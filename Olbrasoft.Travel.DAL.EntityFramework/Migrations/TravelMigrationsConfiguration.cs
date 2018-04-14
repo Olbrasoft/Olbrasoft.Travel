@@ -32,7 +32,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
                 travelUser = storedTravelUser;
             }
 
-            var storedNamesTypesOfRegions = new HashSet<string>(context.Set<TypeOfRegion>().Select(t => t.Name));
+            var storedTypesOfRegionsNames = new HashSet<string>(context.Set<TypeOfRegion>().Select(t => t.Name));
 
             var regionNames = new HashSet<string>
             {
@@ -52,7 +52,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
 
             foreach (var regionName in regionNames)
             {
-                if (!storedNamesTypesOfRegions.Contains(regionName))
+                if (!storedTypesOfRegionsNames.Contains(regionName))
                 {
                     context.Set<TypeOfRegion>().Add(new TypeOfRegion { Name = regionName, Creator = travelUser });
                 }
@@ -60,7 +60,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
             }
             context.SaveChanges();
 
-            var storedNamesTypesOfAttributes = new HashSet<string>(context.Set<TypeOfAttribute>().Select(t => t.Name));
+            var storedTypesOfAttributesNames = new HashSet<string>(context.Set<TypeOfAttribute>().Select(t => t.Name));
 
             var typesOfAttributesNames = new HashSet<string>
             {
@@ -70,7 +70,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
 
             foreach (var typeOfAttributeName in typesOfAttributesNames)
             {
-                if (!storedNamesTypesOfAttributes.Contains(typeOfAttributeName))
+                if (!storedTypesOfAttributesNames.Contains(typeOfAttributeName))
                 {
                     context.Set<TypeOfAttribute>().Add(new TypeOfAttribute { Name = typeOfAttributeName, Creator = travelUser });
                 }
@@ -78,6 +78,26 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
             context.SaveChanges();
 
 
+            var storedSubTypesOfAttributesNames = new HashSet<string>(context.Set<SubTypeOfAttribute>().Select(s=>s.Name));
+
+            var subTypesOfAttributesNames = new HashSet<string>
+            {
+                "AmenityOfAccommodation",
+                "AmenityOfRoom",
+                "CheckInOut",
+                "Other",
+                "Payment",
+                "Pets"
+            };
+
+            foreach (var subTypesOfAttributesName in subTypesOfAttributesNames)
+            {
+                if (!storedSubTypesOfAttributesNames.Contains(subTypesOfAttributesName))
+                {
+                    context.Set<SubTypeOfAttribute>().Add(new SubTypeOfAttribute(){Name = subTypesOfAttributesName, Creator = travelUser});
+                }
+            }
+            context.SaveChanges();
 
         }
 
