@@ -62,6 +62,7 @@
     <Compile Include="DTO\Property\AmenitiesMultiLanguage.cs" />
     <Compile Include="DTO\Property\AreaAttractions.cs" />
     <Compile Include="DTO\Property\AreaAttractionsMultiLanguage.cs" />
+    <Compile Include="DTO\Property\Attribute.cs" />
     <Compile Include="DTO\Property\BusinessAmenities.cs" />
     <Compile Include="DTO\Property\BusinessAmenitiesMultiLanguage.cs" />
     <Compile Include="DTO\Property\Chain.cs" />

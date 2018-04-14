@@ -22,6 +22,5 @@ namespace Olbrasoft.Travel.EAN.DTO.Property
 
         public string RoomTypeDescription { get; set; }
 
-
     }
 }

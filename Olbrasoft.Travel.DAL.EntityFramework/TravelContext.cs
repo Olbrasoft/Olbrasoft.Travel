@@ -32,6 +32,13 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<TypeOfRoom> TypesOfRooms { get; set; }
         public virtual IDbSet<LocalizedTypeOfRoom> LocalizedTypesOfRooms { get; set; }
         public virtual IDbSet<PhotoOfAccommodationToTypeOfRoom> PhotosOfAccommodationsToTypesOfRooms { get; set; }
+        public virtual IDbSet<TypeOfAttribute> TypesOfAttributes { get; set; }
+        public virtual IDbSet<SubTypeOfAttribute> SubTypesOfAttributes { get; set; }
+
+
+
+
+        //public virtual IDbSet<Travel.EAN.DTO.Property.Attribute> Attributes { get; set; }
 
 
         public TravelContext() : base("name=Travel")
@@ -86,6 +93,20 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnPhotosOfAccommodationsToTypesOfRoomsCreating(modelBuilder, dbSchema,
                 nameof(PhotosOfAccommodationsToTypesOfRooms));
 
+            OnTypesOfAttributesCreating(modelBuilder, dbSchema, nameof(TypesOfAttributes));
+            OnSubTypesOfAttributesCreating(modelBuilder, dbSchema, nameof(SubTypesOfAttributes));
+
+        }
+
+        private static void OnSubTypesOfAttributesCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
+        {
+            modelBuilder.Entity<SubTypeOfAttribute>().ToTable(tableName, dbSchema).HasIndex(p => p.Name).IsUnique();
+        }
+
+
+        private static void OnTypesOfAttributesCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
+        {
+            modelBuilder.Entity<TypeOfAttribute>().ToTable(tableName, dbSchema).HasIndex(p => p.Name).IsUnique();
         }
 
         private static void OnPhotosOfAccommodationsToTypesOfRoomsCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)

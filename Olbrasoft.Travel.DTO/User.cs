@@ -28,7 +28,6 @@ namespace Olbrasoft.Travel.DTO
         /// </summary>
         public virtual ICollection<Language> Languages { get; set; }
 
-
         /// <summary>
         /// Linking Regions to (TypesOfRegions and SubClasses)
         /// Example Praha is Kreis and City
@@ -130,6 +129,16 @@ namespace Olbrasoft.Travel.DTO
         /// Photos of Accommodations to Types of Rooms created by the User.
         /// </summary>
         public virtual ICollection<PhotoOfAccommodationToTypeOfRoom> PhotosOfAccommodationsToTypesOfRooms { get; set; }
+
+        /// <summary>
+        /// Types of Attributes created by the User.
+        /// </summary>
+        public virtual ICollection<TypeOfAttribute> TypesOfAttributes { get; set; }
+
+        /// <summary>
+        /// Sub Types Of Attributes created by the User.
+        /// </summary>
+        public virtual ICollection<SubTypeOfAttribute> SubTypesOfAttributes { get; set; }
 
         #endregion
     }

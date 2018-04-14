@@ -79,7 +79,9 @@
     <Compile Include="RegionToRegion.cs" />
     <Compile Include="RegionToType.cs" />
     <Compile Include="SubClass.cs" />
+    <Compile Include="SubTypeOfAttribute.cs" />
     <Compile Include="TypeOfAccommodation.cs" />
+    <Compile Include="TypeOfAttribute.cs" />
     <Compile Include="TypeOfDescription.cs" />
     <Compile Include="TypeOfRegion.cs" />
     <Compile Include="TypeOfRoom.cs" />

@@ -170,6 +170,7 @@
   <ItemGroup>
     <Compile Include="AccommodationsBatchImporter.cs" />
     <Compile Include="AirportsBatchImporter.cs" />
+    <Compile Include="AttributesImporter.cs" />
     <Compile Include="BaseCitiesAndNeighborhoodImporter.cs" />
     <Compile Include="BaseImporter.cs" />
     <Compile Include="BasePhotosRelationalToAccommodationImporter.cs" />

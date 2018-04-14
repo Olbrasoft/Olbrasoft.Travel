@@ -233,12 +233,23 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Interceptors<IInterceptor>()
             );
 
-            //var pathsExtensionsCaptionsImporter = container.Resolve<IImporter>(nameof(PathsExtensionsCaptionsImporter));
-            //pathsExtensionsCaptionsImporter.Import(@"D:\Ean\HotelImageList.txt");
 
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<AttributesImporter>().Named(nameof(AttributesImporter))
+                .Interceptors<IInterceptor>()
+            );
 
-            //var photosOfAccommodationsImporter = container.Resolve<IImporter>(nameof(PhotosOfAccommodationsImporter));
-            //photosOfAccommodationsImporter.Import(@"D:\Ean\HotelImageList.txt");
+            //using (var pathsExtensionsCaptionsImporter =
+            //    container.Resolve<IImporter>(nameof(PathsExtensionsCaptionsImporter)))
+            //{
+            //    pathsExtensionsCaptionsImporter.Import(@"D:\Ean\HotelImageList.txt");
+            //}
+
+            //using (var photosOfAccommodationsImporter =
+            //    container.Resolve<IImporter>(nameof(PhotosOfAccommodationsImporter)))
+            //{
+            //    photosOfAccommodationsImporter.Import(@"D:\Ean\HotelImageList.txt");
+            //}
 
             //using (var typesOfRoomsImporter = container.Resolve<IImporter>(nameof(TypesOfRoomsImporter)))
             //{
@@ -256,12 +267,17 @@ namespace Olbrasoft.Travel.EAN.Import
             //    roomsTypesImagesImporter.Import(@"D:\Ean\RoomTypeList.txt");
             //}
 
-            using (var photosOfAccommodationsToTypesOfRoomsImporter= container.Resolve<IImporter>(nameof(PhotosOfAccommodationsToTypesOfRoomsImporter)))
+            //using (var photosOfAccommodationsToTypesOfRoomsImporter = container.Resolve<IImporter>(nameof(PhotosOfAccommodationsToTypesOfRoomsImporter)))
+            //{
+            //    photosOfAccommodationsToTypesOfRoomsImporter.Import(@"D:\Ean\RoomTypeList.txt");
+            //}
+
+
+            using (var attributesImporter = container.Resolve<IImporter>(nameof(AttributesImporter)))
             {
-                photosOfAccommodationsToTypesOfRoomsImporter.Import(@"D:\Ean\RoomTypeList.txt");
+                attributesImporter.Import(@"D:\Ean\AttributeList.txt");
             }
 
-            
 
             //var develepmentRoomsTypesImporter = new Development.DevelopmentRoomsTypesImporter(container.Resolve<ImportOption>());
             //develepmentRoomsTypesImporter.Import(@"D:\Ean\RoomTypeList.txt");

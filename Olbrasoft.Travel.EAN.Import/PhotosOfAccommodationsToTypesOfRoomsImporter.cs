@@ -6,7 +6,7 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    internal class PhotosOfAccommodationsToTypesOfRoomsImporter:Importer
+    internal class PhotosOfAccommodationsToTypesOfRoomsImporter : Importer
     {
         private IReadOnlyDictionary<int, int> _typesOfRoomsEanIdsToIds;
 
@@ -19,14 +19,13 @@ namespace Olbrasoft.Travel.EAN.Import
             set => _typesOfRoomsEanIdsToIds = value;
         }
 
-        
         private IReadOnlyDictionary<Tuple<int, string, int>, int> _pathIdsAndFileIdsAndExtensionIdsToIds;
 
         protected IReadOnlyDictionary<Tuple<int, string, int>, int> PathIdsAndFileIdsAndExtensionIdsToIds
         {
             get => _pathIdsAndFileIdsAndExtensionIdsToIds ?? (_pathIdsAndFileIdsAndExtensionIdsToIds =
                        FactoryOfRepositories.PhotosOfAccommodations().GetPathIdsAndFileIdsAndExtensionIdsToIds());
-            
+
             set => _pathIdsAndFileIdsAndExtensionIdsToIds = value;
         }
 
@@ -34,14 +33,13 @@ namespace Olbrasoft.Travel.EAN.Import
 
         public IReadOnlyDictionary<string, int> PathsToIds
         {
-            get => _pathsToIds ?? (_pathsToIds = FactoryOfRepositories.PathsToPhotos().PathsToIds );
+            get => _pathsToIds ?? (_pathsToIds = FactoryOfRepositories.PathsToPhotos().PathsToIds);
 
             private set => _pathsToIds = value;
         }
 
 
         private IReadOnlyDictionary<string, int> _extensionsToIds;
-       
 
         public IReadOnlyDictionary<string, int> ExtensionsToIds
         {
@@ -53,7 +51,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
         protected Queue<PhotoOfAccommodationToTypeOfRoom> PhotosOfAccommodationsToTypesOfRooms = new Queue<PhotoOfAccommodationToTypeOfRoom>();
 
-        public PhotosOfAccommodationsToTypesOfRoomsImporter(IProvider provider, IFactoryOfRepositories factoryOfRepositories, SharedProperties sharedProperties, ILoggingImports logger) 
+        public PhotosOfAccommodationsToTypesOfRoomsImporter(IProvider provider, IFactoryOfRepositories factoryOfRepositories, SharedProperties sharedProperties, ILoggingImports logger)
             : base(provider, factoryOfRepositories, sharedProperties, logger)
         {
         }
@@ -73,15 +71,15 @@ namespace Olbrasoft.Travel.EAN.Import
             if (!int.TryParse(items[1], out var eanRoomTypeId) ||
                 !TypesOfRoomsEanIdsToIds.TryGetValue(eanRoomTypeId, out var typeOfRoomId)) return;
 
-            var photoOfAccommodationToTypeOfRoom= new PhotoOfAccommodationToTypeOfRoom
+            var photoOfAccommodationToTypeOfRoom = new PhotoOfAccommodationToTypeOfRoom
             {
                 Id = photoOfAccommodationId,
                 ToId = typeOfRoomId,
                 CreatorId = CreatorId
             };
-            
+
             PhotosOfAccommodationsToTypesOfRooms.Enqueue(photoOfAccommodationToTypeOfRoom);
-            
+
         }
 
         public override void Import(string path)

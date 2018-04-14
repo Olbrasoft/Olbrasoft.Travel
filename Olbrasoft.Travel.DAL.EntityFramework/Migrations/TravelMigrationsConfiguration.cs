@@ -54,11 +54,31 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
             {
                 if (!storedNamesTypesOfRegions.Contains(regionName))
                 {
-                    context.Set<TypeOfRegion>().AddOrUpdate(new TypeOfRegion() { Name = regionName, Creator = travelUser });
+                    context.Set<TypeOfRegion>().Add(new TypeOfRegion { Name = regionName, Creator = travelUser });
                 }
 
             }
             context.SaveChanges();
+
+            var storedNamesTypesOfAttributes = new HashSet<string>(context.Set<TypeOfAttribute>().Select(t => t.Name));
+
+            var typesOfAttributesNames = new HashSet<string>
+            {
+                "Amenity",
+                "Policy"
+            };
+
+            foreach (var typeOfAttributeName in typesOfAttributesNames)
+            {
+                if (!storedNamesTypesOfAttributes.Contains(typeOfAttributeName))
+                {
+                    context.Set<TypeOfAttribute>().Add(new TypeOfAttribute { Name = typeOfAttributeName, Creator = travelUser });
+                }
+            }
+            context.SaveChanges();
+
+
+
         }
 
     }

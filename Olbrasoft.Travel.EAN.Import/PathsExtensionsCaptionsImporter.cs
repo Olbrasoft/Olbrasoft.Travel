@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Olbrasoft.Travel.DAL;
@@ -10,16 +11,20 @@ namespace Olbrasoft.Travel.EAN.Import
     {
         private IReadOnlyDictionary<int, int> _accommodationsEanIdsToIds;
 
-        private IReadOnlyDictionary<int, int> AccommodationsEanIdsToIds =>
-            _accommodationsEanIdsToIds ?? (_accommodationsEanIdsToIds =
-                FactoryOfRepositories.MappedEntities<Accommodation>().EanIdsToIds);
+        private IReadOnlyDictionary<int, int> AccommodationsEanIdsToIds {
+        get =>
+        _accommodationsEanIdsToIds ?? (_accommodationsEanIdsToIds =
+        FactoryOfRepositories.MappedEntities<Accommodation>().EanIdsToIds);
+            set => _accommodationsEanIdsToIds = value;
+        }
 
-        protected readonly HashSet<string> Paths = new HashSet<string>();
-        protected readonly HashSet<string> Extensions = new HashSet<string>();
-        protected readonly HashSet<string> Captions = new HashSet<string>();
+    protected HashSet<string> Paths = new HashSet<string>();
+        protected HashSet<string> Extensions = new HashSet<string>();
+        protected HashSet<string> Captions = new HashSet<string>();
 
 
-        public PathsExtensionsCaptionsImporter(IProvider provider, IFactoryOfRepositories factoryOfRepositories, SharedProperties sharedProperties, ILoggingImports logger)
+        public PathsExtensionsCaptionsImporter(IProvider provider, IFactoryOfRepositories factoryOfRepositories,
+            SharedProperties sharedProperties, ILoggingImports logger)
             : base(provider, factoryOfRepositories, sharedProperties, logger)
         {
         }
@@ -32,14 +37,14 @@ namespace Olbrasoft.Travel.EAN.Import
 
             ImportFilesExtensions(Extensions, FactoryOfRepositories.FilesExtensions(), CreatorId);
 
-            ImportLocalizedCaptions(Captions,FactoryOfRepositories.LocalizedCaptions(),DefaultLanguageId,CreatorId);
+            ImportLocalizedCaptions(Captions, FactoryOfRepositories.LocalizedCaptions(), DefaultLanguageId, CreatorId);
         }
 
 
         private void ImportPathsToPhotos(IEnumerable<string> paths, IPathsToPhotosRepository repository, int creatorId)
         {
             LogBuild<PathToPhoto>();
-            var pathsToPhotos = paths.Select(p => new PathToPhoto { Path = p, CreatorId = creatorId }).ToArray();
+            var pathsToPhotos = paths.Select(p => new PathToPhoto {Path = p, CreatorId = creatorId}).ToArray();
             var count = pathsToPhotos.Length;
             LogBuilded(count);
 
@@ -54,7 +59,8 @@ namespace Olbrasoft.Travel.EAN.Import
             int creatorId)
         {
             LogBuild<FileExtension>();
-            var filesExtensions = extensions.Select(p => new FileExtension { Extension = p, CreatorId = creatorId }).ToArray();
+            var filesExtensions = extensions.Select(p => new FileExtension {Extension = p, CreatorId = creatorId})
+                .ToArray();
             var count = filesExtensions.Length;
             LogBuilded(count);
 
@@ -70,7 +76,7 @@ namespace Olbrasoft.Travel.EAN.Import
         {
             LogBuild<LocalizedCaption>();
             var localizedCaptions = captions
-                .Select(p => new LocalizedCaption() { Text = p, LanguageId = languageId, CreatorId = creatorId })
+                .Select(p => new LocalizedCaption() {Text = p, LanguageId = languageId, CreatorId = creatorId})
                 .ToArray();
             var count = localizedCaptions.Length;
             LogBuilded(count);
@@ -102,8 +108,19 @@ namespace Olbrasoft.Travel.EAN.Import
 
             if (!Extensions.Contains(extension)) Extensions.Add(extension);
         }
+
+        public override void Dispose()
+        {
+            AccommodationsEanIdsToIds = null;
+            Paths = null;
+            Extensions = null;
+            Captions = null;
+            
+            GC.SuppressFinalize(this);
+            base.Dispose();
+
+        }
+
     }
-
-
 
 }

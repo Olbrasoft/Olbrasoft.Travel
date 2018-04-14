@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DTO;
 
@@ -8,12 +9,17 @@ namespace Olbrasoft.Travel.EAN.Import
     {
         private IReadOnlyDictionary<string, int> _captionsToIds;
 
-        protected IReadOnlyDictionary<string, int> CaptionsToIds =>
-            _captionsToIds ?? (_captionsToIds = FactoryOfRepositories.LocalizedCaptions()
-                .GetLocalizedCaptionsTextsToIds(DefaultLanguageId));
-        
+        protected IReadOnlyDictionary<string, int> CaptionsToIds
+        {
+            get =>
+                _captionsToIds ?? (_captionsToIds = FactoryOfRepositories.LocalizedCaptions()
+                    .GetLocalizedCaptionsTextsToIds(DefaultLanguageId));
 
-        public PhotosOfAccommodationsImporter(IProvider provider, IFactoryOfRepositories factoryOfRepositories, SharedProperties sharedProperties, ILoggingImports logger)
+            set => _captionsToIds = value;
+        }
+        
+        public PhotosOfAccommodationsImporter(IProvider provider, IFactoryOfRepositories factoryOfRepositories,
+            SharedProperties sharedProperties, ILoggingImports logger)
             : base(provider, factoryOfRepositories, sharedProperties, logger)
         {
 
@@ -28,7 +34,8 @@ namespace Olbrasoft.Travel.EAN.Import
             PhotosOfAccommodations.Add(photoOfAccommodation);
         }
 
-        private static PhotoOfAccommodation IfExistsCaptionAddLink(PhotoOfAccommodation photoOfAccommodation, IReadOnlyDictionary<string, int> captionsToIds, string caption)
+        private static PhotoOfAccommodation IfExistsCaptionAddLink(PhotoOfAccommodation photoOfAccommodation,
+            IReadOnlyDictionary<string, int> captionsToIds, string caption)
         {
             if (!string.IsNullOrEmpty(caption) && captionsToIds.TryGetValue(caption, out var captionId))
             {
@@ -52,5 +59,13 @@ namespace Olbrasoft.Travel.EAN.Import
             LogSaved<PhotoOfAccommodation>();
         }
 
+
+        public override void Dispose()
+        {
+            CaptionsToIds = null;
+
+            GC.SuppressFinalize(this);
+            base.Dispose();
+        }
     }
 }
