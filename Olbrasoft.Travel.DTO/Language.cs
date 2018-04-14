@@ -19,5 +19,7 @@ namespace Olbrasoft.Travel.DTO
         public virtual ICollection<LocalizedCaption> LocalizedCaptions { get; set; }
 
         public virtual ICollection<LocalizedTypeOfRoom> LocalizedTypesOfRooms { get; set; }
+
+        public virtual ICollection<LocalizedAttribute> LocalizedAttributes { get; set; }
     }
 }

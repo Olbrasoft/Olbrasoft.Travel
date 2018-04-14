@@ -1,4 +1,6 @@
-﻿namespace Olbrasoft.Travel.DTO
+﻿using System.Collections.Generic;
+
+namespace Olbrasoft.Travel.DTO
 {
     public class Attribute : CreatorInfo, IHaveEanId<int>
     {
@@ -8,5 +10,7 @@
 
         public TypeOfAttribute TypeOfAttribute { get; set; }
         public SubTypeOfAttribute SubTypeOfAttribute { get; set; }
+
+        public ICollection<LocalizedAttribute> LocalizedAttributes { get; set; }
     }
 }

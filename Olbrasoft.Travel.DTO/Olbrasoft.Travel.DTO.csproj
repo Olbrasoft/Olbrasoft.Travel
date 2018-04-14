@@ -66,6 +66,7 @@
     <Compile Include="Language.cs" />
     <Compile Include="Localized.cs" />
     <Compile Include="LocalizedAccommodation.cs" />
+    <Compile Include="LocalizedAttribute.cs" />
     <Compile Include="LocalizedCaption.cs" />
     <Compile Include="LocalizedRegion.cs" />
     <Compile Include="LocalizedTypeOfAccommodation.cs" />

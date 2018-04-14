@@ -35,7 +35,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public virtual IDbSet<TypeOfAttribute> TypesOfAttributes { get; set; }
         public virtual IDbSet<SubTypeOfAttribute> SubTypesOfAttributes { get; set; }
         public virtual IDbSet<Attribute> Attributes { get; set; }
-
+        public virtual IDbSet<LocalizedAttribute> LocalizedAttributes { get; set; }
         
 
         public TravelContext() : base("name=Travel")
@@ -93,8 +93,19 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             OnTypesOfAttributesCreating(modelBuilder, dbSchema, nameof(TypesOfAttributes));
             OnSubTypesOfAttributesCreating(modelBuilder, dbSchema, nameof(SubTypesOfAttributes));
             OnAttributesCreating(modelBuilder, dbSchema, nameof(Attributes));
+            OnLocalizedAttributesCreating(modelBuilder, dbSchema, nameof(LocalizedAttributes));
 
         }
+
+        private static void OnLocalizedAttributesCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
+        {
+            modelBuilder.Entity<LocalizedAttribute>().ToTable(tableName, dbSchema).HasRequired(la => la.Creator)
+                .WithMany(user => user.LocalizedAttributes).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<LocalizedAttribute>().HasRequired(la => la.Language)
+                .WithMany(l => l.LocalizedAttributes).WillCascadeOnDelete(false);
+        }
+
 
         private static void OnAttributesCreating(DbModelBuilder modelBuilder, string dbSchema, string tableName)
         {
