@@ -224,9 +224,11 @@
     <Compile Include="PointsOfInterestCoordinatesBatchImporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionCenterBatchImporter.cs" />
+    <Compile Include="RegionsImporter.cs" />
     <Compile Include="RoomsTypesImagesImporter.cs" />
     <Compile Include="RoomsTypesImporter.cs" />
     <Compile Include="SharedProperties.cs" />
+    <Compile Include="SubClassesImporter.cs" />
     <Compile Include="TrainMetroStationsBatchImporter.cs" />
     <Compile Include="TypesOfAccommodationsBatchImporter.cs" />
     <Compile Include="TypesOfRoomsImporter.cs" />

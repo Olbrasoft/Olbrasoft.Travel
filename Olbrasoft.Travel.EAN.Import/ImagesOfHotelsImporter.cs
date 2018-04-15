@@ -132,7 +132,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             //        if (s == null) continue;
 
-            //        var eanHotelId = int.Parse(s[0]);
+            //        var eanHotelId = int.ParseAll(s[0]);
 
             //        if(!accommodationsEanIdsToIds.ContainsKey(eanHotelId)) continue;
 
@@ -148,7 +148,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             //        //var photo = new PhotoOfRoom
             //        //{
-            //        //    Id = int.Parse(s[0]),
+            //        //    Id = int.ParseAll(s[0]),
             //        //    Path = ParsePath(url),
             //        //    File = Path.GetFileNameWithoutExtension(url),
             //        //    Extension = Path.GetExtension(url)
@@ -238,7 +238,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             //        if (s == null) continue;
 
-            //        var eanHotelId = int.Parse(s[0]);
+            //        var eanHotelId = int.ParseAll(s[0]);
 
             //        if (!accommodationsEanIdsToIds.TryGetValue(eanHotelId,out var accommodationId)) continue;
 

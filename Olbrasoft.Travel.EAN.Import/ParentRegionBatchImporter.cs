@@ -9,29 +9,25 @@ namespace Olbrasoft.Travel.EAN.Import
     internal class ParentRegionBatchImporter : BatchImporter<ParentRegion>
     {
 
+
         public ParentRegionBatchImporter(ImportOption option) : base(option)
         {
         }
 
+
         public override void ImportBatch(ParentRegion[] parentRegions)
-        {
-            var typesOfRegions = FactoryOfRepositories.BaseNames<TypeOfRegion>().NamesToIds;
-
-            var regionsRepository = FactoryOfRepositories.Regions();
-
-            var eanRegionIdsToIds = ImportRegions(parentRegions, regionsRepository, CreatorId, out var subClassNames);
+        {        
+            
+            var eanRegionIdsToIds = ImportRegions(parentRegions, FactoryOfRepositories.Regions(), CreatorId, out var subClassNames);
 
             var subClasses = ImportSubClasses(FactoryOfRepositories.BaseNames<SubClass>(), subClassNames, CreatorId);
-
-            ImportRegionsToTypes(parentRegions,FactoryOfRepositories.RegionsToTypes(),eanRegionIdsToIds,typesOfRegions,subClasses,CreatorId);
             
-            //ImportRegionsToSubClasses(parentRegions, FactoryOfRepositories.OneToMany<RegionToSubClass>(), eanRegionIdsToIds, subClasses, CreatorId);
+            ImportRegionsToTypes(parentRegions, FactoryOfRepositories.RegionsToTypes(), eanRegionIdsToIds, FactoryOfRepositories.BaseNames<TypeOfRegion>().NamesToIds, subClasses, CreatorId);
 
             ImportLocalized(parentRegions, FactoryOfRepositories.Localized<LocalizedRegion>(), eanRegionIdsToIds, DefaultLanguageId, CreatorId);
 
             ImportRegionsToRegions(parentRegions, FactoryOfRepositories.ManyToMany<RegionToRegion>(), eanRegionIdsToIds, CreatorId);
         }
-
 
         private void ImportRegionsToTypes(IEnumerable<ParentRegion> parentRegions,
             IRegionsToTypesRepository repository,
@@ -40,7 +36,6 @@ namespace Olbrasoft.Travel.EAN.Import
             IReadOnlyDictionary<string, int> namesToSubClassIds,
             int creatorId)
         {
-
             LogBuild<RegionToType>();
             var regionsTotypes =
                 BuildRegionsToTypes(parentRegions, eanIdsToIds, namesToTypeIds, namesToSubClassIds, creatorId);
@@ -52,9 +47,8 @@ namespace Olbrasoft.Travel.EAN.Import
             LogSaved<RegionToType>();
         }
 
-
         private static RegionToType[] BuildRegionsToTypes(IEnumerable<ParentRegion> parentRegions,
-            IReadOnlyDictionary<long,int> eanIdsToIds,
+            IReadOnlyDictionary<long, int> eanIdsToIds,
             IReadOnlyDictionary<string, int> namesToTypeIds,
             IReadOnlyDictionary<string, int> namesToSubClassIds,
             int creatorId
@@ -65,10 +59,9 @@ namespace Olbrasoft.Travel.EAN.Import
 
             foreach (var parentRegion in parentRegions)
             {
-                
-                if ( !regionIds.Contains(parentRegion.RegionID) && 
-                     eanIdsToIds.TryGetValue(parentRegion.RegionID, out var id) && 
-                     namesToTypeIds.TryGetValue(parentRegion.RegionType,out var toId))
+                if (!regionIds.Contains(parentRegion.RegionID) &&
+                     eanIdsToIds.TryGetValue(parentRegion.RegionID, out var id) &&
+                     namesToTypeIds.TryGetValue(parentRegion.RegionType, out var toId))
                 {
                     var regionToType = new RegionToType
                     {
@@ -76,15 +69,13 @@ namespace Olbrasoft.Travel.EAN.Import
                         ToId = toId,
                         CreatorId = creatorId
                     };
-                    
+
                     var subClassName = GetSubClassName(parentRegion.SubClass);
 
-                    if (!string.IsNullOrEmpty(subClassName)  && namesToSubClassIds.TryGetValue(parentRegion.SubClass, out var subClassId))
+                    if (!string.IsNullOrEmpty(subClassName) && namesToSubClassIds.TryGetValue(parentRegion.SubClass, out var subClassId))
                     {
                         regionToType.SubClassId = subClassId;
                     }
-
-                   
 
                     regionsToTypes.Enqueue(regionToType);
                     regionIds.Add(parentRegion.RegionID);
@@ -96,11 +87,11 @@ namespace Olbrasoft.Travel.EAN.Import
                 {
                     var regionToType = new RegionToType
                     {
-                        Id=pId,
+                        Id = pId,
                         ToId = pToId,
                         CreatorId = creatorId
                     };
-                  
+
                     regionsToTypes.Enqueue(regionToType);
                     regionIds.Add(parentRegion.ParentRegionID);
                 }
@@ -110,7 +101,6 @@ namespace Olbrasoft.Travel.EAN.Import
         }
 
 
-   
         private void ImportLocalized<T>(
             IEnumerable<ParentRegion> parentRegions,
             IBulkRepository<T> repository,
@@ -131,7 +121,6 @@ namespace Olbrasoft.Travel.EAN.Import
             repository.BulkSave(localizedEntities);
             LogSaved<T>();
         }
-
 
         private void ImportRegionsToRegions(IEnumerable<ParentRegion> parentRegions,
             IBulkRepository<RegionToRegion> repository,
@@ -156,12 +145,10 @@ namespace Olbrasoft.Travel.EAN.Import
             LogSaved<RegionToRegion>();
         }
 
-
         private IReadOnlyDictionary<long, int> ImportRegions(ParentRegion[] parentRegions,
             IRegionsRepository repository,
             int creatorId,
             out HashSet<string> subClassNames
-
             )
         {
             ImportParentRegions(parentRegions, repository, creatorId);
@@ -179,7 +166,6 @@ namespace Olbrasoft.Travel.EAN.Import
             LogSaved<Region>();
 
             return repository.EanIdsToIds;
-
         }
 
 
@@ -190,7 +176,7 @@ namespace Olbrasoft.Travel.EAN.Import
         {
             WriteLog("ParentRegions Build.");
             var regions = BuildParentRegions(
-                parentRegions,  creatorId);
+                parentRegions, creatorId);
 
             var count = regions.Length;
             WriteLog($"ParentRegions Builded:{count} Regions.");
@@ -201,10 +187,8 @@ namespace Olbrasoft.Travel.EAN.Import
             WriteLog("ParenRegions Saved.");
         }
 
-
         private IReadOnlyDictionary<string, int> ImportSubClasses(ITypesRepository<SubClass> repository, IEnumerable<string> subClassesNames, int creatorId)
         {
-
             LogBuild<SubClass>();
             var subClasses = subClassesNames.Select(s => new SubClass { Name = s, CreatorId = creatorId }).ToArray();
             var count = subClasses.Length;
@@ -226,7 +210,6 @@ namespace Olbrasoft.Travel.EAN.Import
             var regionsToRegions = new HashSet<RegionToRegion>();
             foreach (var parentRegion in parentRegions)
             {
-
                 if (!eanRegionIdsToIds.TryGetValue(parentRegion.ParentRegionID, out var parentRegionId)
                     ||
                     !eanRegionIdsToIds.TryGetValue(parentRegion.RegionID, out var regionId)
@@ -251,7 +234,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             return regionsToRegions.ToArray();
         }
-        
+
 
         private static T[] BuildLocalizedRegions<T>(IEnumerable<ParentRegion> parentRegions,
             IReadOnlyDictionary<long, int> eanRegionIdsToIds, int languageId, int creatorId) where T : LocalizedRegion, new()
@@ -302,21 +285,18 @@ namespace Olbrasoft.Travel.EAN.Import
             return localizedRegions.Values.ToArray();
         }
 
-
-        private static Region[] BuildRegions(IEnumerable<ParentRegion> parentRegions, 
+        private static Region[] BuildRegions(IEnumerable<ParentRegion> parentRegions,
             int creatorId,
             out HashSet<string> subClassesNames
-
             )
         {
-
             subClassesNames = new HashSet<string>();
             var regions = new Dictionary<long, Region>();
 
             foreach (var parentRegion in parentRegions)
             {
                 if (regions.ContainsKey(parentRegion.RegionID)) continue;
-                
+
                 var region = new Region
                 {
                     EanId = parentRegion.RegionID,
@@ -355,8 +335,5 @@ namespace Olbrasoft.Travel.EAN.Import
             return regions.Values.ToArray();
         }
 
-
     }
-
-
 }

@@ -16,12 +16,12 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             get
             {
                 if (_idsToToIds != null) return _idsToToIds;
-          
-                _idsToToIds = new HashSet<Tuple<int, int>>(AsQueryable().Select(p => new {p.Id, p.ToId}).ToArray()
+
+                _idsToToIds = new HashSet<Tuple<int, int>>(AsQueryable().Select(p => new { p.Id, p.ToId }).ToArray()
                     .Select(p => new Tuple<int, int>(p.Id, p.ToId)));
 
                 return _idsToToIds;
-                
+
             }
 
             private set => _idsToToIds = value;
@@ -32,12 +32,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
         }
 
-        public override void ClearCache()
-        {
-            IdsToToIds = null;
-        }
-
-        public override void BulkSave(IEnumerable<T> manyToManyEntities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
+        public void BulkSave(IEnumerable<T> manyToManyEntities, int batchSize, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
             var forInsert = new Dictionary<Tuple<int, int>, T>();
 
@@ -55,6 +50,18 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
             BulkInsert(forInsert.Values);
         }
+
+
+        public override void BulkSave(IEnumerable<T> manyToManyEntities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
+        {
+            BulkSave(manyToManyEntities, 90000, ignorePropertiesWhenUpdating);
+        }
+
+        public override void ClearCache()
+        {
+            IdsToToIds = null;
+        }
+
 
     }
 }

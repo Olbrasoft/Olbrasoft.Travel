@@ -36,7 +36,7 @@ namespace Olbrasoft.Travel.EAN.Import
             for (var batch = 1; batch <= BatchCount; batch++)
             {
                 var lines = Provider.GetBatchLines(path, batch, BatchSize).ToArray();
-                var entities = parser.Parse(lines);
+                var entities = parser.ParseAll(lines);
                 ImportBatch(entities.ToArray());
             }
         }

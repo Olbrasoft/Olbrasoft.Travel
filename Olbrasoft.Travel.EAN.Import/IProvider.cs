@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
@@ -10,5 +6,6 @@ namespace Olbrasoft.Travel.EAN.Import
     {
         event EventHandler<string[]> SplittingLine;
         void ReadToEnd(string path);
+        string GetFirstLine(string path);
     }
 }

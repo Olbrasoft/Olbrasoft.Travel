@@ -10,7 +10,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
     public class RegionsRepository : BaseRepository<Region>, IRegionsRepository
     {
         private long _minEanId = long.MinValue;
-       
+
         private IReadOnlyDictionary<long, int> _eanIdsToIds;
 
 
@@ -19,7 +19,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             get
             {
                 return _eanIdsToIds ?? (_eanIdsToIds = AsQueryable().Where(p => p.EanId >= 0)
-                           .Select(r => new {r.EanId, r.Id})
+                           .Select(r => new { r.EanId, r.Id })
                            .ToDictionary(k => k.EanId, v => v.Id));
 
                 //return _eanIdsToIds ?? (_eanIdsToIds =
@@ -49,43 +49,45 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             set => _minEanId = value;
         }
 
-       
 
         public RegionsRepository(DbContext dbContext) : base(dbContext)
         {
         }
-
-
+        
         public new void Add(Region region)
         {
-            region = Rebuild(new[] {region}).FirstOrDefault();
+            region = Rebuild(new[] { region }).FirstOrDefault();
             base.Add(region);
         }
-        
 
-        public void BulkSave(IEnumerable<Region> regions, params Expression<Func<Region, object>>[] ignorePropertiesWhenUpdating)
+        public void BulkSave(IEnumerable<Region> regions, int batchSize, params Expression<Func<Region, object>>[] ignorePropertiesWhenUpdating)
         {
             regions = Rebuild(regions.ToArray());
 
             if (regions.Any(region => region.Id == 0))
             {
-                BulkInsert(regions.Where(region => region.Id == 0));
+                BulkInsert(regions.Where(region => region.Id == 0), batchSize);
             }
 
             if (regions.Any(region => region.Id != 0))
             {
-                BulkUpdate(regions.Where(region => region.Id != 0), ignorePropertiesWhenUpdating);
+                BulkUpdate(regions.Where(region => region.Id != 0), batchSize, ignorePropertiesWhenUpdating);
             }
         }
-        
+
+        public void BulkSave(IEnumerable<Region> regions, params Expression<Func<Region, object>>[] ignorePropertiesWhenUpdating)
+        {
+            BulkSave(regions,90000,ignorePropertiesWhenUpdating);
+        }
+
         protected Region[] Rebuild(Region[] regions)
         {
             regions = AddingIdsOnDependingRegionIds(regions);
             regions = OverrideRegionIds(regions);
-           
+
             return regions;
         }
-        
+
         protected Region[] AddingIdsOnDependingRegionIds(Region[] regions)
         {
             foreach (var region in regions.Where(p => p.EanId >= 0 && p.Id == 0))
@@ -95,7 +97,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             }
             return regions;
         }
-        
+
         protected Region[] OverrideRegionIds(Region[] regions)
         {
             if (regions.All(r => r.EanId != long.MinValue)) return regions;
@@ -108,12 +110,12 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
             return regions;
         }
-        
+
         public override void ClearCache()
         {
             MinEanId = long.MinValue;
             EanIdsToIds = null;
-           base.ClearCache();
+            base.ClearCache();
         }
     }
 }

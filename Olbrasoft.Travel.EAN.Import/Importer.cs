@@ -59,6 +59,10 @@ namespace Olbrasoft.Travel.EAN.Import
             throw new NullReferenceException();
         }
 
+        protected static string GetSubClassName(string name)
+        {
+            return string.IsNullOrEmpty(name) ? null : name.ToLower().Replace("musuems", "museums");
+        }
 
         protected void WriteLog(object obj)
         {

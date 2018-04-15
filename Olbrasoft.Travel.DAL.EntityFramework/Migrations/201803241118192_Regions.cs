@@ -21,7 +21,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
                 .ForeignKey("dbo.Users", t => t.CreatorId)
                 .Index(t => t.EanId, unique: true)
                 .Index(t => t.CreatorId);
-         
         }
         
         public override void Down()

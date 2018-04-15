@@ -4,9 +4,11 @@ namespace Olbrasoft.Travel.EAN
 {
     public abstract class BaseParser<TEan> : IParser<TEan> where TEan : class, new()
     {
+        public abstract TEan Parse(string[] items);
+
         public abstract bool TryParse(string line, out TEan entita);
         
-        public IEnumerable<TEan> Parse(IEnumerable<string> lines)
+        public IEnumerable<TEan> ParseAll(IEnumerable<string> lines)
         {
             var entities = new Queue<TEan>();
             foreach (var line in lines)
@@ -19,5 +21,6 @@ namespace Olbrasoft.Travel.EAN
 
             return entities;
         }
+       
     }
 }

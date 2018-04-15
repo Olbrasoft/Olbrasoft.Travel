@@ -5,6 +5,11 @@ namespace Olbrasoft.Travel.EAN
 {
     public class PathsHotelsImages : BaseParser<PathToHotelImage>, IPathsHotelsImagesParser
     {
+        public override PathToHotelImage Parse(string[] items)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override bool TryParse(string line, out PathToHotelImage entita)
         {
             var properties= line.Split('|');

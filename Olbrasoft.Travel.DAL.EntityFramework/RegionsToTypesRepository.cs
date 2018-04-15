@@ -12,28 +12,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public RegionsToTypesRepository(DbContext context) : base(context)
         {
         }
-
-        //public override void BulkSave(IEnumerable<RegionToType> regionsToTypes, params Expression<Func<RegionToType, object>>[] ignorePropertiesWhenUpdating)
-        //{
         
-        //    var forUpdate = new Queue<RegionToType>();
-
-        //    var regionsToTypesArray = regionsToTypes as RegionToType[] ?? regionsToTypes.ToArray();
-        //    foreach (var regionToType in regionsToTypesArray)
-        //    {
-        //        var tup = new Tuple<int, int>(regionToType.Id, regionToType.ToId);
-
-        //        if (IdsToToIds.Contains(tup))
-        //        {
-        //            forUpdate.Enqueue(regionToType);
-        //        }
-                
-        //    }
-
-        //    Context.BulkUpdate(forUpdate,OnSaved,ignorePropertiesWhenUpdating);
-            
-        //    base.BulkSave(regionsToTypesArray, ignorePropertiesWhenUpdating);
-            
-        //}
     }
 }
