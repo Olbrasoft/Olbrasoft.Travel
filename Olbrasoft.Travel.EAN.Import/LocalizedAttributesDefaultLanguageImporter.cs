@@ -5,8 +5,6 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    
-
     public class LocalizedAttributesDefaultLanguageImporter : Importer
     {
         private IReadOnlyDictionary<int, int> _attributesEanIdsToIds;

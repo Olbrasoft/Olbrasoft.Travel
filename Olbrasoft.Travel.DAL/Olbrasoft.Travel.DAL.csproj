@@ -141,6 +141,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAccommodationsToAttributesRepository.cs" />
     <Compile Include="IAdditionalRegionsInfoRepository.cs" />
     <Compile Include="IBulkRepository.cs" />
     <Compile Include="IDescriptionsRepository.cs" />

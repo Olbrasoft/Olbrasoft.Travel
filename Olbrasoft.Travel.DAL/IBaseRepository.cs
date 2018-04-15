@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using SharpRepository.Repository.Caching;
 
 namespace Olbrasoft.Travel.DAL
 {
@@ -13,7 +14,6 @@ namespace Olbrasoft.Travel.DAL
     public interface IBaseRepository<T, TKey, TKey2> : SharpRepository.Repository.ICompoundKeyRepository<T, TKey, TKey2>, ICanClearCache
         where T : class
     {
-
 
     }
 }

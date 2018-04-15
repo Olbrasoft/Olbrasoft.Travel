@@ -28,7 +28,8 @@ namespace Olbrasoft.Travel.DAL
 
         IPhotosOfAccommodationsRepository PhotosOfAccommodations();
 
-        
+        IAccommodationsToAttributesRepository AccommodationsToAttributes();
+
         IUsersRepository Users();
 
         ILanguagesRepository Languages();

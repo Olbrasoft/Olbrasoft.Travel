@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using Olbrasoft.Travel.DTO;
+using SharpRepository.Repository.Caching;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
@@ -22,6 +23,8 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             var entitiesArray = entities as T[] ?? entities.ToArray();
             foreach (var languageId in entitiesArray.GroupBy(entity => entity.LanguageId).Select(grp => grp.First()).Select(p => p.LanguageId))
             {
+                entitiesArray = entitiesArray.Where(p => p.LanguageId == languageId).ToArray();
+
                 if (!AsQueryable().Any(l => l.LanguageId == languageId))
                 {
                     BulkInsert(entitiesArray, batchSize);

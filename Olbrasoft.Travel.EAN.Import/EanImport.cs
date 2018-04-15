@@ -244,8 +244,13 @@ namespace Olbrasoft.Travel.EAN.Import
                 .ImplementedBy<LocalizedAttributesDefaultLanguageImporter>().Named(nameof(LocalizedAttributesDefaultLanguageImporter))
                 .Interceptors<IInterceptor>()
             );
-
             
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<AccommodationsToAttributesDefaultLanguageImporter>().Named(nameof(AccommodationsToAttributesDefaultLanguageImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+
 
             //using (var pathsExtensionsCaptionsImporter =
             //    container.Resolve<IImporter>(nameof(PathsExtensionsCaptionsImporter)))
@@ -281,14 +286,19 @@ namespace Olbrasoft.Travel.EAN.Import
             //}
 
 
-            using (var attributesImporter = container.Resolve<IImporter>(nameof(AttributesImporter)))
-            {
-                attributesImporter.Import(@"D:\Ean\AttributeList.txt");
-            }
+            //using (var attributesImporter = container.Resolve<IImporter>(nameof(AttributesImporter)))
+            //{
+            //    attributesImporter.Import(@"D:\Ean\AttributeList.txt");
+            //}
             
-            using (var attributesImporter = container.Resolve<IImporter>(nameof(LocalizedAttributesDefaultLanguageImporter)))
+            //using (var attributesImporter = container.Resolve<IImporter>(nameof(LocalizedAttributesDefaultLanguageImporter)))
+            //{
+            //    attributesImporter.Import(@"D:\Ean\AttributeList.txt");
+            //}
+
+            using (var accommodationsToAttributesDefaultLanguageImporter = container.Resolve<IImporter>(nameof(AccommodationsToAttributesDefaultLanguageImporter)))
             {
-                attributesImporter.Import(@"D:\Ean\AttributeList.txt");
+                accommodationsToAttributesDefaultLanguageImporter.Import(@"D:\Ean\PropertyAttributeLink.txt");
             }
 
 

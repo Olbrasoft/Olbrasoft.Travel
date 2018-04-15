@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
+    
     #region BaseRepository<T, TKey, TKey2>
     public abstract class BaseRepository<T, TKey, TKey2> : SharpRepository.EfRepository.EfRepository<T, TKey, TKey2>, IBaseRepository<T, TKey, TKey2> where T : class
     {
@@ -39,9 +40,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
           BulkInsert(entities, 90000);
         }
-
-
-
+        
 
         protected void OnSaved(EventArgs eventArgs)
         {
