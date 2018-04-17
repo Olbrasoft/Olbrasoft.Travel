@@ -14,6 +14,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
         public override void ImportBatch(T[] eanEntities)
         {
+
             var regionsRepository = FactoryOfRepositories.Regions();
 
             LogBuild<Region>();

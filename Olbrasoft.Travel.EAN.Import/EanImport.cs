@@ -149,28 +149,27 @@ namespace Olbrasoft.Travel.EAN.Import
             );
 
             
-
-
             //var parentRegionImporter = container.Resolve<IImport<ParentRegion>>();
             //parentRegionImporter.Import(@"D:\Ean\ParentRegionList.txt");
             
-
-
-
             //var countriesImporter = container.Resolve<IImport<DTO.Geography.Country>>();
             //countriesImporter.Import(@"D:\Ean\CountryList.txt");
-
+            
             //var neighborhoodsImporter = container.Resolve<IImport<NeighborhoodCoordinates>>();
             //neighborhoodsImporter.Import(@"D:\Ean\NeighborhoodCoordinatesList.Txt");
 
             //var citiesImporter = container.Resolve<IImport<CityCoordinates>>();
             //citiesImporter.Import(@"D:\Ean\CityCoordinatesList.Txt");
-
+            
             //var pointsOfInterestImporter = container.Resolve<IImport<PointOfInterestCoordinates>>();
             //pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
 
+            
+
             //var airportsImporter = container.Resolve<IImport<AirportCoordinates>>();
             //airportsImporter.Import(@"D:\Ean\AirportCoordinatesList.txt");
+
+
 
             //var trainMetroStationsImporter = container.Resolve<IImport<TrainMetroStationCoordinates>>();
             //trainMetroStationsImporter.Import(@"D:\Ean\TrainMetroStationCoordinatesList.txt");
@@ -261,10 +260,60 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Named(nameof(RegionsImporter))
                 .Interceptors<IInterceptor>()
             );
+
+            //using (var subClassesImporter = container.Resolve<IImporter>(nameof(RegionsImporter)))
+            //{
+            //    subClassesImporter.Import(@"D:\Ean\ParentRegionList.txt");
+            //}
+
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<CountriesImporter>()
+                .Named(nameof(CountriesImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+            //using (var countriesImporter = container.Resolve<IImporter>(nameof(CountriesImporter)))
+            //{
+            //    countriesImporter.Import(@"D:\Ean\CountryList.txt");
+            //}
+
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<NeighborhoodsImporter>()
+                .Named(nameof(NeighborhoodsImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+
+            //using (var neighborhoodsImporter = container.Resolve<IImporter>(nameof(NeighborhoodsImporter)))
+            //{
+            //    neighborhoodsImporter.Import(@"D:\Ean\NeighborhoodCoordinatesList.txt");
+            //}
+
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<RegionsTypesOfCitiesImporter>()
+                .Named(nameof(RegionsTypesOfCitiesImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+            //using (var citiesImporter = container.Resolve<IImporter>(nameof(RegionsTypesOfCitiesImporter)))
+            //{
+            //    citiesImporter.Import(@"D:\Ean\CityCoordinatesList.txt");
+            //}
             
-            using (var subClassesImporter = container.Resolve<IImporter>(nameof(RegionsImporter)))
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<PointsOfInterestImporter>()
+                .Named(nameof(PointsOfInterestImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+
+            using (var pointsOfInterestImporter = container.Resolve<IImporter>(nameof(PointsOfInterestImporter)))
             {
-                   subClassesImporter.Import(@"D:\Ean\ParentRegionList.txt");
+                pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
             }
 
 
@@ -304,12 +353,12 @@ namespace Olbrasoft.Travel.EAN.Import
             //{
             //    photosOfAccommodationsToTypesOfRoomsImporter.Import(@"D:\Ean\RoomTypeList.txt");
             //}
-            
+
             //using (var attributesImporter = container.Resolve<IImporter>(nameof(AttributesImporter)))
             //{
             //    attributesImporter.Import(@"D:\Ean\AttributeList.txt");
             //}
-            
+
             //using (var attributesImporter = container.Resolve<IImporter>(nameof(LocalizedAttributesDefaultLanguageImporter)))
             //{
             //    attributesImporter.Import(@"D:\Ean\AttributeList.txt");

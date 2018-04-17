@@ -176,8 +176,12 @@
     <Compile Include="BaseImporter.cs" />
     <Compile Include="BasePhotosRelationalToAccommodationImporter.cs" />
     <Compile Include="ChainsBatchImporter.cs" />
+    <Compile Include="PointsOfInterestImporter.cs" />
+    <Compile Include="RegionsTypesOfCitiesAndNeighborhoodsImporter.cs" />
     <Compile Include="CitiesBatchImporter.cs" />
+    <Compile Include="RegionsTypesOfCitiesImporter.cs" />
     <Compile Include="CountriesBatchImporter.cs" />
+    <Compile Include="CountriesImporter.cs" />
     <Compile Include="DescriptionsBatchImporter.cs" />
     <Compile Include="Development\DevelopmentContext.cs" />
     <Compile Include="Development\DevelopmentRoomsTypesImporter.cs" />
@@ -216,6 +220,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NeighborhoodsBatchImporter.cs" />
+    <Compile Include="NeighborhoodsImporter.cs" />
     <Compile Include="ParentRegionBatchImporter.cs" />
     <Compile Include="PathsExtensionsCaptionsImporter.cs" />
     <Compile Include="PhotoOfRoom.cs" />

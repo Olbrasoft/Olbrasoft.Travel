@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Olbrasoft.Travel.DTO;
+using Olbrasoft.Travel.EAN.DTO.Geography;
 using Country = Olbrasoft.Travel.EAN.DTO.Geography.Country;
 
 namespace Olbrasoft.Travel.EAN.Import
@@ -246,8 +247,7 @@ namespace Olbrasoft.Travel.EAN.Import
             return regions.ToArray();
 
         }
-
-       
+        
 
         public Travel.DTO.Country[] BuildCountries(Country[] eanCountries,
             IReadOnlyDictionary<long, int> eanIdsToIds,

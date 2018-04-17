@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Olbrasoft.Travel.DTO;
 using Olbrasoft.Travel.EAN.DTO.Geography;
 
@@ -60,7 +61,7 @@ namespace Olbrasoft.Travel.EAN.Import
             int creatorId
             )
         {
-            var regionsToTypes= new Queue<RegionToType>();
+            var regionsToTypes = new Queue<RegionToType>();
 
             foreach (var eanPoint in pointsOfInterestCoordinates)
             {
@@ -68,14 +69,14 @@ namespace Olbrasoft.Travel.EAN.Import
 
                 var regionToType = new RegionToType
                 {
-                    Id=id,
+                    Id = id,
                     ToId = typeOfRegionId,
                     CreatorId = creatorId
                 };
 
                 var subClassName = GetSubClassName(eanPoint.SubClassification);
-                
-                if (!string.IsNullOrEmpty(subClassName) && subClasses.TryGetValue(subClassName , out var subClassId))
+
+                if (!string.IsNullOrEmpty(subClassName) && subClasses.TryGetValue(subClassName, out var subClassId))
                 {
                     regionToType.SubClassId = subClassId;
                 }
@@ -85,7 +86,7 @@ namespace Olbrasoft.Travel.EAN.Import
             return regionsToTypes.ToArray();
         }
 
-        
+
         private static LocalizedRegion[] BuildLocalizedRegions(IEnumerable<PointOfInterestCoordinates> pointsOfInterestCoordinates,
             IReadOnlyDictionary<long, int> eanIdsToIds,
             int languageId,
@@ -114,6 +115,6 @@ namespace Olbrasoft.Travel.EAN.Import
         }
 
 
-       
+
     }
 }
