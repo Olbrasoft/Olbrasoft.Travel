@@ -165,14 +165,14 @@ namespace Olbrasoft.Travel.EAN.Import
             //pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
 
             
-
             //var airportsImporter = container.Resolve<IImport<AirportCoordinates>>();
             //airportsImporter.Import(@"D:\Ean\AirportCoordinatesList.txt");
 
-
-
+            
             //var trainMetroStationsImporter = container.Resolve<IImport<TrainMetroStationCoordinates>>();
             //trainMetroStationsImporter.Import(@"D:\Ean\TrainMetroStationCoordinatesList.txt");
+
+
 
             //var regionCenterImporter = container.Resolve<IImport<RegionCenter>>();
             //regionCenterImporter.Import(@"D:\Ean\RegionCenterCoordinatesList.txt");
@@ -302,7 +302,7 @@ namespace Olbrasoft.Travel.EAN.Import
             //{
             //    citiesImporter.Import(@"D:\Ean\CityCoordinatesList.txt");
             //}
-            
+
 
             container.Register(Component.For(typeof(IImporter))
                 .ImplementedBy<PointsOfInterestImporter>()
@@ -311,12 +311,36 @@ namespace Olbrasoft.Travel.EAN.Import
             );
 
 
-            using (var pointsOfInterestImporter = container.Resolve<IImporter>(nameof(PointsOfInterestImporter)))
+            //using (var pointsOfInterestImporter = container.Resolve<IImporter>(nameof(PointsOfInterestImporter)))
+            //{
+            //    pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
+            //}
+
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<AirportsImporter>()
+                .Named(nameof(AirportsImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+
+            //using (var airportsImporter = container.Resolve<IImporter>(nameof(AirportsImporter)))
+            //{
+            //    airportsImporter.Import(@"D:\Ean\AirportCoordinatesList.txt");
+            //}
+
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<TrainMetroStationsImporter>()
+                .Named(nameof(TrainMetroStationsImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+
+            using (var trainMetroStationsImporter = container.Resolve<IImporter>(nameof(TrainMetroStationsImporter)))
             {
-                pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
+                trainMetroStationsImporter.Import(@"D:\Ean\TrainMetroStationCoordinatesList.txt");
             }
-
-
 
 
 

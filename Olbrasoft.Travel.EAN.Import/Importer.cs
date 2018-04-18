@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Spatial;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -117,6 +119,13 @@ namespace Olbrasoft.Travel.EAN.Import
             return localizedRegions.ToArray();
         }
 
+        public static DbGeography CreatePoint(double latitude, double longitude)
+        {
+            var point = string.Format(CultureInfo.InvariantCulture.NumberFormat,
+                "POINT({0} {1})", longitude, latitude);
+            // 4326 is most common coordinate system used by GPS/Maps
+            return DbGeography.PointFromText(point, 4326);
+        }
 
         protected static string ParsePath(string url)
         {

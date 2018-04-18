@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Olbrasoft.Travel.DTO;
 using Olbrasoft.Travel.EAN.DTO.Geography;
 
@@ -67,7 +68,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             LogBuild<RegionToType>();
             var regionsToTypes =
-                BuildRegionsToTypes(eanAirportsCoordinates, eanIdsToIds, typeOfRegionAirportId,subClassAirportId, CreatorId);
+                BuildRegionsToTypes(eanAirportsCoordinates, eanIdsToIds, typeOfRegionAirportId, subClassAirportId, CreatorId);
             count = regionsToTypes.Length;
             LogBuilded(count);
 
@@ -160,7 +161,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
                     regionsToregions.Enqueue(regionToRegion);
                 }
-                
+
             }
 
             return regionsToregions.ToArray();

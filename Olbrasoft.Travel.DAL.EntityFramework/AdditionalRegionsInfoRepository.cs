@@ -8,9 +8,6 @@ using Olbrasoft.Travel.DTO;
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
 
-
-
-    
     public class AdditionalRegionsInfoRepository<T> : BaseRepository<T>, IAdditionalRegionsInfoRepository<T>
         where T : CreatorInfo, IAdditionalRegionInfo
     {
@@ -39,28 +36,34 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public AdditionalRegionsInfoRepository(DbContext context) : base(context)
         {
         }
-        
-        public void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
+
+        public void BulkSave(IEnumerable<T> additionalRegionsInfo, int batchSize, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
             var forInsert = new Queue<T>();
             var forUpdate = new Queue<T>();
             var ids = new HashSet<int>(Ids);
 
-            foreach (var country in entities)
+            foreach (var item in additionalRegionsInfo)
             {
-                if (ids.Contains(country.Id))
+                if (ids.Contains(item.Id))
                 {
-                    forUpdate.Enqueue(country);
+                    forUpdate.Enqueue(item);
                 }
                 else
                 {
-                    forInsert.Enqueue(country);
+                    forInsert.Enqueue(item);
                 }
             }
 
-            if (forInsert.Count > 0) BulkInsert(forInsert);
+            if (forInsert.Count > 0) BulkInsert(forInsert, batchSize);
 
-            if (forUpdate.Count > 0) BulkUpdate(forUpdate, ignorePropertiesWhenUpdating);
+            if (forUpdate.Count > 0) BulkUpdate(forUpdate, batchSize, ignorePropertiesWhenUpdating);
+        }
+
+
+        public void BulkSave(IEnumerable<T> additionalRegionsInfo, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
+        {
+            BulkSave(additionalRegionsInfo, 90000, ignorePropertiesWhenUpdating);
         }
 
         public override void ClearCache()
