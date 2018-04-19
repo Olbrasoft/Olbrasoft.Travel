@@ -353,6 +353,17 @@ namespace Olbrasoft.Travel.EAN.Import
             //    regionsCenterImporter.Import(@"D:\Ean\RegionCenterCoordinatesList.txt");
             //}
 
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<TypesOfAccommodationsImporter>()
+                .Named(nameof(TypesOfAccommodationsImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+            using (var typesOfAccommodationsImporter = container.Resolve<IImporter>(nameof(TypesOfAccommodationsImporter)))
+            {
+                typesOfAccommodationsImporter.Import(@"D:\Ean\PropertyTypeList.txt");
+
+            }
 
 
 

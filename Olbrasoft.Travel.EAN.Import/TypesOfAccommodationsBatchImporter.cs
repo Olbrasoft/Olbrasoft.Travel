@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DTO;
 using Olbrasoft.Travel.EAN.DTO.Property;
 
@@ -8,6 +7,10 @@ namespace Olbrasoft.Travel.EAN.Import
 {
     class TypesOfAccommodationsBatchImporter : BatchImporter<PropertyType>
     {
+
+
+
+
         public TypesOfAccommodationsBatchImporter(ImportOption option) : base(option)
         {
         }
@@ -25,7 +28,7 @@ namespace Olbrasoft.Travel.EAN.Import
             if (count > 0)
             {
                 LogSave<TypeOfAccommodation>();
-                    typesOfAccommodationsRepository.BulkSave(typesOfAccommodations);
+                typesOfAccommodationsRepository.BulkSave(typesOfAccommodations);
                 LogSaved<TypeOfAccommodation>();
             }
 
@@ -52,9 +55,9 @@ namespace Olbrasoft.Travel.EAN.Import
 
             foreach (var propertyType in propertyTypes)
             {
-                if(!eanIdsToIds.TryGetValue(propertyType.PropertyCategory,out var id)) continue;
+                if (!eanIdsToIds.TryGetValue(propertyType.PropertyCategory, out var id)) continue;
 
-                var localizedTypeOfAccommodation= new LocalizedTypeOfAccommodation
+                var localizedTypeOfAccommodation = new LocalizedTypeOfAccommodation
                 {
                     Id = id,
                     LanguageId = languageId,
@@ -63,7 +66,7 @@ namespace Olbrasoft.Travel.EAN.Import
                 };
 
                 localizedTypesOfAccommodations.Enqueue(localizedTypeOfAccommodation);
-                
+
             }
             return localizedTypesOfAccommodations.ToArray();
         }
