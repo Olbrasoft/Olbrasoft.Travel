@@ -5,31 +5,21 @@ using Olbrasoft.Travel.EAN.DTO.Geography;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    internal class AirportsImporter : Importer
+    internal class AirportsImporter : Importer<AirportCoordinates>
     {
-        private readonly IParserFactory _parserFactory;
-        protected IParser<AirportCoordinates> Parser;
-        protected Queue<AirportCoordinates> AirportsCoordinates = new Queue<AirportCoordinates>();
-
+       
         public AirportsImporter(IProvider provider, IParserFactory parserFactory, IFactoryOfRepositories factoryOfRepositories, SharedProperties sharedProperties, ILoggingImports logger)
-            : base(provider, factoryOfRepositories, sharedProperties, logger)
+            : base(provider, parserFactory, factoryOfRepositories, sharedProperties, logger)
         {
-            _parserFactory = parserFactory;
+           
         }
-
-        protected override void RowLoaded(string[] items)
-        {
-            AirportsCoordinates.Enqueue(Parser.Parse(items));
-        }
-
+        
         public override void Import(string path)
         {
-            Parser = _parserFactory.Create<AirportCoordinates>(Provider.GetFirstLine(path));
-
             LoadData(path);
 
-            var airportsCoordinates = AirportsCoordinates.ToArray();
-            AirportsCoordinates = null;
+            var airportsCoordinates = EanEntities.ToArray();
+            EanEntities = null;
 
             var regionsEanIdsToIds =
                 ImportRegions(airportsCoordinates, FactoryOfRepositories.Regions(), CreatorId);

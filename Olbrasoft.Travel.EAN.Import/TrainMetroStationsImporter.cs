@@ -24,9 +24,10 @@ namespace Olbrasoft.Travel.EAN.Import
             ImportRegionsToTypes(EanEntities, FactoryOfRepositories.RegionsToTypes(), eanIdsToIds,
                 FactoryOfRepositories.BaseNames<TypeOfRegion>().GetId("Train Station"),
                 FactoryOfRepositories.BaseNames<SubClass>().GetId("train"), CreatorId);
+
+            EanEntities = null;
         }
-
-
+        
 
         private void ImportRegionsToTypes(
             IEnumerable<TrainMetroStationCoordinates> trainsMetroStationCoordinateses,
@@ -54,25 +55,25 @@ namespace Olbrasoft.Travel.EAN.Import
         }
 
 
-        private void ImportLocalizedRegions(
-            IEnumerable<TrainMetroStationCoordinates> trainsMetroStationCoordinateses,
-            ILocalizedRepository<LocalizedRegion> repository,
-            IReadOnlyDictionary<long, int> eanIdsToIds,
-            int languageId,
-            int creatorId
+        //private void ImportLocalizedRegions(
+        //    IEnumerable<TrainMetroStationCoordinates> trainsMetroStationCoordinateses,
+        //    ILocalizedRepository<LocalizedRegion> repository,
+        //    IReadOnlyDictionary<long, int> eanIdsToIds,
+        //    int languageId,
+        //    int creatorId
 
-            )
-        {
-            LogBuild<LocalizedRegion>();
-            var localizedRegions = BuildLocalizedRegions(trainsMetroStationCoordinateses, eanIdsToIds, languageId, creatorId);
-            var count = localizedRegions.Length;
-            LogBuilded(count);
+        //    )
+        //{
+        //    LogBuild<LocalizedRegion>();
+        //    var localizedRegions = BuildLocalizedRegions(trainsMetroStationCoordinateses, eanIdsToIds, languageId, creatorId);
+        //    var count = localizedRegions.Length;
+        //    LogBuilded(count);
 
-            if (count <= 0) return;
-            LogSave<LocalizedRegion>();
-            repository.BulkSave(localizedRegions, count);
-            LogSaved<LocalizedRegion>();
-        }
+        //    if (count <= 0) return;
+        //    LogSave<LocalizedRegion>();
+        //    repository.BulkSave(localizedRegions, count);
+        //    LogSaved<LocalizedRegion>();
+        //}
 
 
         private IReadOnlyDictionary<long, int> ImportRegions(
@@ -96,8 +97,6 @@ namespace Olbrasoft.Travel.EAN.Import
 
         }
     }
-
-
 
 
 }

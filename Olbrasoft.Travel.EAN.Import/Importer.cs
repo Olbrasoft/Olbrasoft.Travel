@@ -39,7 +39,26 @@ namespace Olbrasoft.Travel.EAN.Import
             Parser = _parserFactory.Create<T>(Provider.GetFirstLine(path));
             base.LoadData(path);
         }
+        
+        protected void ImportLocalizedRegions(
+            IEnumerable<IHaveRegionIdRegionName> eanEntities,
+            ILocalizedRepository<LocalizedRegion> repository,
+            IReadOnlyDictionary<long, int> eanIdsToIds,
+            int languageId,
+            int creatorId
 
+        )
+        {
+            LogBuild<LocalizedRegion>();
+            var localizedRegions = BuildLocalizedRegions(eanEntities, eanIdsToIds, languageId, creatorId);
+            var count = localizedRegions.Length;
+            LogBuilded(count);
+
+            if (count <= 0) return;
+            LogSave<LocalizedRegion>();
+            repository.BulkSave(localizedRegions, count);
+            LogSaved<LocalizedRegion>();
+        }
 
         protected LocalizedRegion[] BuildLocalizedRegions(IEnumerable<IHaveRegionIdRegionName> eanEntities,
             IReadOnlyDictionary<long, int> eanIdsToIds,
@@ -193,7 +212,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             return repository.EanIdsToIds;
         }
-
+        
 
         protected void ImportLocalizedRegions(IDictionary<long, Tuple<string, string>> adeptsToLocalizedRegions,
             ILocalizedRepository<LocalizedRegion> repository,

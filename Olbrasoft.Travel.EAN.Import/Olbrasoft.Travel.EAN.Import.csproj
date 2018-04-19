@@ -178,6 +178,7 @@
     <Compile Include="BasePhotosRelationalToAccommodationImporter.cs" />
     <Compile Include="ChainsBatchImporter.cs" />
     <Compile Include="PointsOfInterestImporter.cs" />
+    <Compile Include="RegionsCenterImporter.cs" />
     <Compile Include="RegionsTypesOfCitiesAndNeighborhoodsImporter.cs" />
     <Compile Include="CitiesBatchImporter.cs" />
     <Compile Include="RegionsTypesOfCitiesImporter.cs" />

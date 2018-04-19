@@ -163,19 +163,17 @@ namespace Olbrasoft.Travel.EAN.Import
             
             //var pointsOfInterestImporter = container.Resolve<IImport<PointOfInterestCoordinates>>();
             //pointsOfInterestImporter.Import(@"D:\Ean\PointsOfInterestCoordinatesList.txt");
-
             
             //var airportsImporter = container.Resolve<IImport<AirportCoordinates>>();
             //airportsImporter.Import(@"D:\Ean\AirportCoordinatesList.txt");
-
             
             //var trainMetroStationsImporter = container.Resolve<IImport<TrainMetroStationCoordinates>>();
             //trainMetroStationsImporter.Import(@"D:\Ean\TrainMetroStationCoordinatesList.txt");
-
-
-
+            
             //var regionCenterImporter = container.Resolve<IImport<RegionCenter>>();
             //regionCenterImporter.Import(@"D:\Ean\RegionCenterCoordinatesList.txt");
+
+
 
 
             //var typesOfAccommodationsImporter = container.Resolve<IImport<PropertyType>>();
@@ -337,10 +335,23 @@ namespace Olbrasoft.Travel.EAN.Import
             );
 
 
-            using (var trainMetroStationsImporter = container.Resolve<IImporter>(nameof(TrainMetroStationsImporter)))
-            {
-                trainMetroStationsImporter.Import(@"D:\Ean\TrainMetroStationCoordinatesList.txt");
-            }
+            //using (var trainMetroStationsImporter = container.Resolve<IImporter>(nameof(TrainMetroStationsImporter)))
+            //{
+            //    trainMetroStationsImporter.Import(@"D:\Ean\TrainMetroStationCoordinatesList.txt");
+            //}
+
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<RegionsCenterImporter>()
+                .Named(nameof(RegionsCenterImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+
+            //using (var regionsCenterImporter = container.Resolve<IImporter>(nameof(RegionsCenterImporter)))
+            //{
+            //    regionsCenterImporter.Import(@"D:\Ean\RegionCenterCoordinatesList.txt");
+            //}
 
 
 
