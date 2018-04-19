@@ -26,11 +26,11 @@ namespace Olbrasoft.Travel.EAN.Import
         {
             LoadData(path);
 
-            var eanIdsToIds = ImportTypesOfAccommodations(EanIdsToNames.Keys,
+            var typesOfAccommodationsEanIdsToIds = ImportTypesOfAccommodations(EanIdsToNames.Keys,
                 FactoryOfRepositories.MappedEntities<TypeOfAccommodation>(), CreatorId);
 
             ImportLocalizedTypesOfAccommodations(EanIdsToNames,
-                FactoryOfRepositories.Localized<LocalizedTypeOfAccommodation>(), eanIdsToIds, DefaultLanguageId,
+                FactoryOfRepositories.Localized<LocalizedTypeOfAccommodation>(), typesOfAccommodationsEanIdsToIds, DefaultLanguageId,
                 CreatorId);
 
             EanIdsToNames = null;
@@ -39,13 +39,13 @@ namespace Olbrasoft.Travel.EAN.Import
 
         private void ImportLocalizedTypesOfAccommodations(IDictionary<int, string> eanIdsToNames,
             ILocalizedRepository<LocalizedTypeOfAccommodation> repository,
-            IReadOnlyDictionary<int, int> eanIdsToIds,
+            IReadOnlyDictionary<int, int> typesOfAccommodationsEanIdsToIds,
             int languageId,
             int creatorId)
         {
             LogBuild<LocalizedTypeOfAccommodation>();
             var localizedTypesOfAccommodations = BuildLocalizedTypesOfAccommodations(eanIdsToNames,
-                eanIdsToIds, languageId, creatorId);
+                typesOfAccommodationsEanIdsToIds, languageId, creatorId);
             var count = localizedTypesOfAccommodations.Length;
 
             if (count <= 0) return;
@@ -58,7 +58,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
         private static LocalizedTypeOfAccommodation[] BuildLocalizedTypesOfAccommodations(
             IDictionary<int, string> eanIdsToNames,
-            IReadOnlyDictionary<int, int> eanIdsToIds,
+            IReadOnlyDictionary<int, int> typesOfAccommodationsEanIdsToIds,
             int languageId,
             int creatorId
         )
@@ -67,7 +67,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             foreach (var propertyType in eanIdsToNames)
             {
-                if (!eanIdsToIds.TryGetValue(propertyType.Key, out var id)) continue;
+                if (!typesOfAccommodationsEanIdsToIds.TryGetValue(propertyType.Key, out var id)) continue;
 
                 var localizedTypeOfAccommodation = new LocalizedTypeOfAccommodation
                 {
@@ -90,7 +90,7 @@ namespace Olbrasoft.Travel.EAN.Import
         )
         {
             LogBuild<TypeOfAccommodation>();
-            var typesOfAccommodations = BuildTypesOfAccommodations(eanIds, CreatorId);
+            var typesOfAccommodations = BuildTypesOfAccommodations(eanIds, creatorId);
             var count = typesOfAccommodations.Length;
             LogBuilded(count);
 
