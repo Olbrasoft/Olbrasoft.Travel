@@ -5,12 +5,140 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DAL.EntityFramework.Migrations;
 using Olbrasoft.Travel.DTO;
+using Olbrasoft.Travel.EAN.DTO.Geography;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
+
+
+    internal abstract class Importer<T> : Importer where T : class, new()
+    {
+        protected readonly object LockMe = new object();
+        private readonly IParserFactory _parserFactory;
+        protected IParser<T> Parser;
+        protected Queue<T> EanEntities = new Queue<T>();
+
+
+        protected Importer(IProvider provider, IParserFactory parserFactory, IFactoryOfRepositories factoryOfRepositories, SharedProperties sharedProperties, ILoggingImports logger)
+            : base(provider, factoryOfRepositories, sharedProperties, logger)
+        {
+            _parserFactory = parserFactory;
+        }
+
+        protected override void RowLoaded(string[] items)
+        {
+            EanEntities.Enqueue(Parser.Parse(items));
+        }
+
+        protected override void LoadData(string path)
+        {
+            Parser = _parserFactory.Create<T>(Provider.GetFirstLine(path));
+            base.LoadData(path);
+        }
+
+
+        protected LocalizedRegion[] BuildLocalizedRegions(IEnumerable<IHaveRegionIdRegionName> eanEntities,
+            IReadOnlyDictionary<long, int> eanIdsToIds,
+            int languageId,
+            int creatorId
+        )
+        {
+            var localizedRegions = new Queue<LocalizedRegion>();
+            Parallel.ForEach(eanEntities, eanEntity =>
+            {
+                if (!eanIdsToIds.TryGetValue(eanEntity.RegionID, out var id)) return;
+
+                var localizedRegion = new LocalizedRegion()
+                {
+                    Id = id,
+                    LanguageId = languageId,
+                    CreatorId = creatorId,
+                    Name = eanEntity.RegionName
+                };
+
+                lock (LockMe)
+                {
+                    localizedRegions.Enqueue(localizedRegion);
+                }
+            });
+
+            return localizedRegions.ToArray();
+        }
+
+
+        protected Region[] BuildRegions(IEnumerable<IHaveRegionIdLatitudeLongitude> entities,
+            int cretorId
+        )
+        {
+            var regions = new Queue<Region>();
+
+            //foreach (var entity in entities)
+            //{
+            //    var region = new Region
+            //    {
+            //        EanId = entity.RegionID,
+            //        CenterCoordinates = CreatePoint(entity.Latitude, entity.Longitude),
+            //        CreatorId = cretorId
+            //    };
+
+            //     regions.Enqueue(region);
+
+            //}
+
+            Parallel.ForEach(entities, entity =>
+            {
+                var region = new Region
+                {
+                    EanId = entity.RegionID,
+                    CenterCoordinates = CreatePoint(entity.Latitude, entity.Longitude),
+                    CreatorId = cretorId
+                };
+
+                lock (LockMe)
+                {
+                    regions.Enqueue(region);
+                }
+            });
+
+            return regions.ToArray();
+        }
+        
+        protected RegionToType[] BuildRegionsToTypes(IEnumerable<IHaveRegionId> eanEntities,
+            IReadOnlyDictionary<long, int> eanIdsToIds,
+            int typeOfRegionId,
+            int subClassId,
+            int creatorId
+        )
+        {
+            var regionsToTypes = new Queue<RegionToType>();
+            Parallel.ForEach(eanEntities, eanEntity =>
+            {
+                if (!eanIdsToIds.TryGetValue(eanEntity.RegionID, out var id)) return;
+
+                var regionToType = new RegionToType
+                {
+                    Id = id,
+                    ToId = typeOfRegionId,
+                    SubClassId = subClassId,
+                    CreatorId = creatorId
+                };
+
+                lock (LockMe)
+                {
+                    regionsToTypes.Enqueue(regionToType);
+                }
+
+            });
+
+            return regionsToTypes.ToArray();
+        }
+
+    }
+
     public abstract class Importer : IImporter
     {
         protected readonly IProvider Provider;
@@ -39,7 +167,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
         protected abstract void RowLoaded(string[] items);
 
-        protected void LoadData(string path)
+        protected virtual void LoadData(string path)
         {
             WriteLog("Load data from: " + path);
             Provider.SplittingLine += Provider_SplittingLine;
