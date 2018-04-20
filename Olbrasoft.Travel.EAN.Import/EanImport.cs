@@ -172,15 +172,15 @@ namespace Olbrasoft.Travel.EAN.Import
             
             //var regionCenterImporter = container.Resolve<IImport<RegionCenter>>();
             //regionCenterImporter.Import(@"D:\Ean\RegionCenterCoordinatesList.txt");
-
-
-
-
+            
             //var typesOfAccommodationsImporter = container.Resolve<IImport<PropertyType>>();
             //typesOfAccommodationsImporter.Import(@"D:\Ean\PropertyTypeList.txt");
-
+            
             //var chainsImporter = container.Resolve<IImport<DTO.Property.Chain>>();
             //chainsImporter.Import(@"D:\Ean\ChainList.txt");
+
+
+
 
             //var accommodationsImporter = container.Resolve<IImport<ActiveProperty>>();
             //accommodationsImporter.Import(@"D:\Ean\ActivePropertyList.txt");
@@ -359,11 +359,27 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Interceptors<IInterceptor>()
             );
 
-            using (var typesOfAccommodationsImporter = container.Resolve<IImporter>(nameof(TypesOfAccommodationsImporter)))
-            {
-                typesOfAccommodationsImporter.Import(@"D:\Ean\PropertyTypeList.txt");
+            //using (var typesOfAccommodationsImporter = container.Resolve<IImporter>(nameof(TypesOfAccommodationsImporter)))
+            //{
+            //    typesOfAccommodationsImporter.Import(@"D:\Ean\PropertyTypeList.txt");
 
-            }
+            //}
+
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<ChainsImporter>()
+                .Named(nameof(ChainsImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+            //using (var chainsImporter= container.Resolve<IImporter>(nameof(ChainsImporter)))
+            //{
+            //    chainsImporter.Import(@"D:\Ean\ChainList.txt");
+            //}
+
+
+
+
 
 
 

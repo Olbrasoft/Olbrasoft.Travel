@@ -5,23 +5,17 @@ using Olbrasoft.Travel.DTO;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    internal class TypesOfAccommodationsImporter : Importer
+    internal class TypesOfAccommodationsImporter : BaseNamesImporter
     {
 
-        protected IDictionary<int, string> EanIdsToNames = new Dictionary<int, string>();
+        protected override int NameIndex { get;} = 2;
 
         public TypesOfAccommodationsImporter(IProvider provider, IFactoryOfRepositories factoryOfRepositories, SharedProperties sharedProperties, ILoggingImports logger)
             : base(provider, factoryOfRepositories, sharedProperties, logger)
         {
+
         }
-
-        protected override void RowLoaded(string[] items)
-        {
-            if (!int.TryParse(items[0], out var eanId)) return;
-
-            EanIdsToNames.Add(eanId, items[2]);
-        }
-
+        
         public override void Import(string path)
         {
             LoadData(path);
@@ -116,5 +110,6 @@ namespace Olbrasoft.Travel.EAN.Import
             }).ToArray();
         }
 
+  
     }
 }
