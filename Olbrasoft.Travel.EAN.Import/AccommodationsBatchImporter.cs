@@ -1,73 +1,9 @@
 ﻿using System.Collections.Generic;
-using Olbrasoft.Travel.DAL;
 using Olbrasoft.Travel.DTO;
 using Olbrasoft.Travel.EAN.DTO.Property;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    class AccommodationsImporter : Importer<ActiveProperty>
-    {
-
-        private IReadOnlyDictionary<int, int> _typeOfAccommodationEanIdsToIds;
-        private IReadOnlyDictionary<int, int> _chainsEanIdsToIds;
-        private IReadOnlyDictionary<string, int> _countriesCodesToIds;
-        private IReadOnlyDictionary<string, int> _airportsCodesToIds;
-
-        protected IReadOnlyDictionary<int, int> TypeOfAccommodationEanIdsToIds
-        {
-            get => _typeOfAccommodationEanIdsToIds ?? (_typeOfAccommodationEanIdsToIds =
-                       FactoryOfRepositories.MappedEntities<TypeOfAccommodation>().EanIdsToIds);
-
-            set => _typeOfAccommodationEanIdsToIds = value;
-        }
-
-        protected IReadOnlyDictionary<int, int> ChainsEanIdsToIds
-        {
-            get => _chainsEanIdsToIds ??
-                   (_chainsEanIdsToIds = FactoryOfRepositories.MappedEntities<Travel.DTO.Chain>().EanIdsToIds);
-
-            set => _chainsEanIdsToIds = value;
-        }
-
-
-        protected IReadOnlyDictionary<string, int> CountriesCodesToIds
-        {
-            get => _countriesCodesToIds ??
-                   (_countriesCodesToIds = FactoryOfRepositories.AdditionalRegionsInfo<Country>().CodesToIds);
-
-            set => _countriesCodesToIds = value;
-        }
-
-
-        protected IReadOnlyDictionary<string, int> AirportsCodesToIds
-        {
-            get => _airportsCodesToIds ??
-                   (_airportsCodesToIds = FactoryOfRepositories.AdditionalRegionsInfo<Airport>().CodesToIds);
-
-            set => _airportsCodesToIds = value;
-
-        }
-
-
-
-        public AccommodationsImporter(IProvider provider, IParserFactory parserFactory, IFactoryOfRepositories factoryOfRepositories, SharedProperties sharedProperties, ILoggingImports logger)
-            : base(provider, parserFactory, factoryOfRepositories, sharedProperties, logger)
-        {
-        }
-
-        public override void Import(string path)
-        {
-            LoadData(path);
-
-
-        }
-
-
-    }
-
-
-
-
     /// <summary>
     /// todo https://www.currency-iso.org/dam/downloads/lists/list_one.xml
     /// </summary>
@@ -87,13 +23,13 @@ namespace Olbrasoft.Travel.EAN.Import
             var countriesCodesToIds = FactoryOfRepositories.AdditionalRegionsInfo<Country>().CodesToIds;
 
             var airportsCodesToIds = FactoryOfRepositories.AdditionalRegionsInfo<Airport>().CodesToIds;
-            
+
 
             //todo Jedno ubytovani pravdepodobne neni validni vraci to builded 79 999 misto 80 000 
             LogBuild<Accommodation>();
             var accommodations = BuildAccommodations(
-                eanEntities, 
-                typeOfAccommodationEanIdsToIds, 
+                eanEntities,
+                typeOfAccommodationEanIdsToIds,
                 countriesCodesToIds,
                 airportsCodesToIds,
                 chainsEanIdsToIds,
@@ -189,7 +125,7 @@ namespace Olbrasoft.Travel.EAN.Import
                     {
                         accommodation.ChainId = chainId;
                     }
-                    
+
                     if (!string.IsNullOrEmpty(activeProperty.AirportCode) &&
                         airportsCodesToIds.TryGetValue(activeProperty.AirportCode, out var airportId))
                     {
