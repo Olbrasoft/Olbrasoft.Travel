@@ -181,9 +181,7 @@ namespace Olbrasoft.Travel.EAN.Import
             
             //var accommodationsImporter = container.Resolve<IImport<ActiveProperty>>();
             //accommodationsImporter.Import(@"D:\Ean\ActivePropertyList.txt");
-
-
-
+            
             //var descriptionsImporter = container.Resolve<IImport<Travel.EAN.DTO.Property.Description>>();
             //descriptionsImporter.Import(@"D:\Ean\PropertyDescriptionList.txt");
 
@@ -383,12 +381,22 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Interceptors<IInterceptor>()
             );
 
-            using (var accommodationsImporter = container.Resolve<IImporter>(nameof(AccommodationsImporter)))
+            //using (var accommodationsImporter = container.Resolve<IImporter>(nameof(AccommodationsImporter)))
+            //{
+            //    accommodationsImporter.Import(@"D:\Ean\ActivePropertyList.txt");
+            //}
+
+
+            container.Register(Component.For(typeof(IImporter))
+                .ImplementedBy<DescriptionsImporter>()
+                .Named(nameof(DescriptionsImporter))
+                .Interceptors<IInterceptor>()
+            );
+
+            using (var descriptionsImporter= container.Resolve<IImporter>(nameof(DescriptionsImporter)))
             {
-                accommodationsImporter.Import(@"D:\Ean\ActivePropertyList.txt");
+                descriptionsImporter.Import(@"D:\Ean\PropertyDescriptionList.txt");
             }
-
-
 
 
 
