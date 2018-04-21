@@ -393,60 +393,60 @@ namespace Olbrasoft.Travel.EAN.Import
                 .Interceptors<IInterceptor>()
             );
 
-            using (var descriptionsImporter= container.Resolve<IImporter>(nameof(DescriptionsImporter)))
+            //using (var descriptionsImporter= container.Resolve<IImporter>(nameof(DescriptionsImporter)))
+            //{
+            //    descriptionsImporter.Import(@"D:\Ean\PropertyDescriptionList.txt");
+            //}
+
+
+
+            using (var pathsExtensionsCaptionsImporter =
+                container.Resolve<IImporter>(nameof(PathsExtensionsCaptionsImporter)))
             {
-                descriptionsImporter.Import(@"D:\Ean\PropertyDescriptionList.txt");
+                pathsExtensionsCaptionsImporter.Import(@"D:\Ean\HotelImageList.txt");
             }
 
+            using (var photosOfAccommodationsImporter =
+                container.Resolve<IImporter>(nameof(PhotosOfAccommodationsImporter)))
+            {
+                photosOfAccommodationsImporter.Import(@"D:\Ean\HotelImageList.txt");
+            }
 
+            using (var typesOfRoomsImporter = container.Resolve<IImporter>(nameof(TypesOfRoomsImporter)))
+            {
+                typesOfRoomsImporter.Import(@"D:\Ean\RoomTypeList.txt");
+            }
 
-            //using (var pathsExtensionsCaptionsImporter =
-            //    container.Resolve<IImporter>(nameof(PathsExtensionsCaptionsImporter)))
-            //{
-            //    pathsExtensionsCaptionsImporter.Import(@"D:\Ean\HotelImageList.txt");
-            //}
+            using (var localizedTypesOfRoomsImporter =
+                container.Resolve<IImporter>(nameof(LocalizedTypesOfRoomsImporter)))
+            {
+                localizedTypesOfRoomsImporter.Import(@"D:\Ean\RoomTypeList.txt");
+            }
 
-            //using (var photosOfAccommodationsImporter =
-            //    container.Resolve<IImporter>(nameof(PhotosOfAccommodationsImporter)))
-            //{
-            //    photosOfAccommodationsImporter.Import(@"D:\Ean\HotelImageList.txt");
-            //}
+            using (var roomsTypesImagesImporter = container.Resolve<IImporter>(nameof(RoomsTypesImagesImporter)))
+            {
+                roomsTypesImagesImporter.Import(@"D:\Ean\RoomTypeList.txt");
+            }
 
-            //using (var typesOfRoomsImporter = container.Resolve<IImporter>(nameof(TypesOfRoomsImporter)))
-            //{
-            //    typesOfRoomsImporter.Import(@"D:\Ean\RoomTypeList.txt");
-            //}
+            using (var photosOfAccommodationsToTypesOfRoomsImporter = container.Resolve<IImporter>(nameof(PhotosOfAccommodationsToTypesOfRoomsImporter)))
+            {
+                photosOfAccommodationsToTypesOfRoomsImporter.Import(@"D:\Ean\RoomTypeList.txt");
+            }
 
-            //using (var localizedTypesOfRoomsImporter =
-            //    container.Resolve<IImporter>(nameof(LocalizedTypesOfRoomsImporter)))
-            //{
-            //    localizedTypesOfRoomsImporter.Import(@"D:\Ean\RoomTypeList.txt");
-            //}
+            using (var attributesImporter = container.Resolve<IImporter>(nameof(AttributesImporter)))
+            {
+                attributesImporter.Import(@"D:\Ean\AttributeList.txt");
+            }
 
-            //using (var roomsTypesImagesImporter = container.Resolve<IImporter>(nameof(RoomsTypesImagesImporter)))
-            //{
-            //    roomsTypesImagesImporter.Import(@"D:\Ean\RoomTypeList.txt");
-            //}
+            using (var attributesImporter = container.Resolve<IImporter>(nameof(LocalizedAttributesDefaultLanguageImporter)))
+            {
+                attributesImporter.Import(@"D:\Ean\AttributeList.txt");
+            }
 
-            //using (var photosOfAccommodationsToTypesOfRoomsImporter = container.Resolve<IImporter>(nameof(PhotosOfAccommodationsToTypesOfRoomsImporter)))
-            //{
-            //    photosOfAccommodationsToTypesOfRoomsImporter.Import(@"D:\Ean\RoomTypeList.txt");
-            //}
-
-            //using (var attributesImporter = container.Resolve<IImporter>(nameof(AttributesImporter)))
-            //{
-            //    attributesImporter.Import(@"D:\Ean\AttributeList.txt");
-            //}
-
-            //using (var attributesImporter = container.Resolve<IImporter>(nameof(LocalizedAttributesDefaultLanguageImporter)))
-            //{
-            //    attributesImporter.Import(@"D:\Ean\AttributeList.txt");
-            //}
-
-            //using (var accommodationsToAttributesDefaultLanguageImporter = container.Resolve<IImporter>(nameof(AccommodationsToAttributesDefaultLanguageImporter)))
-            //{
-            //    accommodationsToAttributesDefaultLanguageImporter.Import(@"D:\Ean\PropertyAttributeLink.txt");
-            //}
+            using (var accommodationsToAttributesDefaultLanguageImporter = container.Resolve<IImporter>(nameof(AccommodationsToAttributesDefaultLanguageImporter)))
+            {
+                accommodationsToAttributesDefaultLanguageImporter.Import(@"D:\Ean\PropertyAttributeLink.txt");
+            }
 
 
 

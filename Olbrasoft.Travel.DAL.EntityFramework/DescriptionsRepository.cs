@@ -31,7 +31,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
         }
 
-        public void BulkSave(IEnumerable<Description> descriptions, params Expression<Func<Description, object>>[] ignorePropertiesWhenUpdating)
+        public void BulkSave(IEnumerable<Description> descriptions, int batchSize, params Expression<Func<Description, object>>[] ignorePropertiesWhenUpdating)
         {
             var forInsert = new Queue<Description>();
             var forUpdate = new Queue<Description>();
@@ -51,14 +51,21 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
             if (forInsert.Count > 0)
             {
-                Context.BulkInsert(forInsert, OnSaved);
+                Context.BulkInsert(forInsert, OnSaved, batchSize);
             }
 
             if (forUpdate.Count > 0)
             {
-                Context.BulkUpdate(forUpdate, OnSaved, ignorePropertiesWhenUpdating);
+                Context.BulkUpdate(forUpdate, OnSaved, batchSize, ignorePropertiesWhenUpdating);
             }
         }
+
+        public void BulkSave(IEnumerable<Description> descriptions, params Expression<Func<Description, object>>[] ignorePropertiesWhenUpdating)
+        {
+            BulkSave(descriptions, 90000, ignorePropertiesWhenUpdating);
+        }
+
+
 
         protected void OnSaved(EventArgs eventArgs)
         {
@@ -72,6 +79,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
             Keys = null;
         }
 
-        
+
     }
 }

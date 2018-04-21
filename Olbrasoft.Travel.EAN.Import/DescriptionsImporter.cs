@@ -51,7 +51,6 @@ namespace Olbrasoft.Travel.EAN.Import
                 LanguageId = languageId,
                 Text = items[2],
                 CreatorId = CreatorId
-
             };
 
             Descriptions.Enqueue(description);
@@ -71,14 +70,17 @@ namespace Olbrasoft.Travel.EAN.Import
 
             LoadData(path);
 
+            AccommodationsEanIdsToIds = null;
+            LanguagesEanLangueageCodesToIds = null;
+            
             if (Descriptions.Count <= 0) return;
 
             LogSave<Description>();
-            FactoryOfRepositories.Descriptions().BulkSave(Descriptions);
+            FactoryOfRepositories.Descriptions().BulkSave(Descriptions, 160000);
             LogSaved<Description>();
 
+            Descriptions = null;
         }
-
 
 
     }
