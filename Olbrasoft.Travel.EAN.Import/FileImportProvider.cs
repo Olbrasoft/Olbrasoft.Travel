@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-    internal class FileImportProvider : IImportProvider, IProvider
+    internal class FileImportProvider : IProvider
     {
         public event EventHandler<string[]> SplittingLine;
 

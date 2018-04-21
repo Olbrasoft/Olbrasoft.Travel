@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Olbrasoft.Travel.DAL;
-using Olbrasoft.Travel.DAL.EntityFramework.Migrations;
 using Olbrasoft.Travel.DTO;
 using Olbrasoft.Travel.EAN.DTO.Geography;
 
 namespace Olbrasoft.Travel.EAN.Import
 {
-
-
+    
     internal abstract class Importer<T> : Importer where T : class, new()
     {
         protected readonly object LockMe = new object();

@@ -76,9 +76,7 @@ namespace Olbrasoft.Travel.EAN.Import
 
             return true;
         }
-
-
-       
+        
 
 
         public override void Dispose()
