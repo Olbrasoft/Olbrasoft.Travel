@@ -10,8 +10,6 @@ namespace Olbrasoft.Travel.DAL
     {
         IReadOnlyDictionary<string, int> CodesToIds { get; }
 
-        void BulkSave(IEnumerable<T> additionalRegionsInfo, int batchSize,
-            params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating);
     }
 
 

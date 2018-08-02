@@ -12,24 +12,33 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         public PhotosOfAccommodationsRepository(DbContext context) : base(context)
         {
         }
-        
-        public void BulkSave(IEnumerable<PhotoOfAccommodation> photosOfAccommodations, params Expression<Func<PhotoOfAccommodation, object>>[] ignorePropertiesWhenUpdating)
+
+
+
+        public void BulkSave(IEnumerable<PhotoOfAccommodation> photosOfAccommodations, int batchSize,
+            params Expression<Func<PhotoOfAccommodation, object>>[] ignorePropertiesWhenUpdating)
         {
+
             if (Exists())
             {
                 var photosOfAccommodationsForStored = RebuildIds(photosOfAccommodations.ToArray());
 
                 //var forInsert = photosOfAccommodationsForStored.Where(poa => poa.Id == 0).ToArray();
                 //var forUpdate = photosOfAccommodationsForStored.Where(poa => poa.Id != 0).ToArray();
-                
+
                 BulkInsert(photosOfAccommodationsForStored.Where(poa => poa.Id == 0));
 
-                BulkUpdate(photosOfAccommodationsForStored.Where(poa => poa.Id != 0), 720000, ignorePropertiesWhenUpdating);
+                BulkUpdate(photosOfAccommodationsForStored.Where(poa => poa.Id != 0), batchSize, ignorePropertiesWhenUpdating);
             }
             else
             {
-                BulkInsert(photosOfAccommodations, 360000);
+                BulkInsert(photosOfAccommodations, batchSize);
             }
+
+        }
+        public void BulkSave(IEnumerable<PhotoOfAccommodation> photosOfAccommodations, params Expression<Func<PhotoOfAccommodation, object>>[] ignorePropertiesWhenUpdating)
+        {
+            BulkSave(photosOfAccommodations, 360000, ignorePropertiesWhenUpdating);
         }
 
 
@@ -95,6 +104,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         //        item => new Tuple<int, string, int>(item.PathToPhotoId, item.FileName, item.FileExtensionId),
         //        item => item.Id);
         //}
-        
+
     }
 }

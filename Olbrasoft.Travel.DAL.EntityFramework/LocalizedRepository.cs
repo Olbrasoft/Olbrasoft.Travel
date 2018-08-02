@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using Olbrasoft.Travel.DTO;
-using SharpRepository.Repository.Caching;
 
 namespace Olbrasoft.Travel.DAL.EntityFramework
 {
@@ -74,8 +73,7 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
             BulkUpdate(entities, 90000, ignorePropertiesWhenUpdating);
         }
-
-
+        
         public bool Exists(int languageId)
         {
             return Exists(l => l.LanguageId == languageId);
@@ -83,7 +81,6 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
 
         public IEnumerable<int> FindIds(int languageId)
         {
-
             return AsQueryable().Where(lr => lr.LanguageId == languageId).Select(lr => lr.Id);
 
             //  return   FindAll(l => l.LanguageId == languageId, l => l.Id);

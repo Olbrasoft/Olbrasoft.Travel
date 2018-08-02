@@ -314,7 +314,6 @@
     <Compile Include="TravelContext.cs" />
     <Compile Include="Migrations\TravelMigrationsConfiguration.cs" />
     <Compile Include="BaseRepository.cs" />
-    <Compile Include="TypesOfRegionsRepository.cs" />
     <Compile Include="UsersRepository.cs" />
   </ItemGroup>
   <ItemGroup>

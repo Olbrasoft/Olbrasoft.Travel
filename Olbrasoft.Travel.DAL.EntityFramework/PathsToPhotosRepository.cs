@@ -16,8 +16,8 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
             get
             {
-               return _pathsToIds ?? (_pathsToIds = AsQueryable().Select(ptp => new {ptp.Path, ptp.Id})
-                    .ToDictionary(k => k.Path, v => v.Id));
+                return _pathsToIds ?? (_pathsToIds = AsQueryable().Select(ptp => new { ptp.Path, ptp.Id })
+                     .ToDictionary(k => k.Path, v => v.Id));
             }
 
             private set => _pathsToIds = value;
@@ -37,10 +37,17 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
         }
 
+        public void BulkSave(IEnumerable<PathToPhoto> entities, int batchSize,
+            params Expression<Func<PathToPhoto, object>>[] ignorePropertiesWhenUpdating)
+        {
+            BulkInsert(entities.Where(ptp => ptp.Id == 0 && !Paths.Contains(ptp.Path)), batchSize);
+        }
+
         public void BulkSave(IEnumerable<PathToPhoto> entities, params Expression<Func<PathToPhoto, object>>[] ignorePropertiesWhenUpdating)
         {
-            BulkInsert(entities.Where(ptp=>ptp.Id==0 && !Paths.Contains(ptp.Path)));
+            BulkSave(entities, 90000, ignorePropertiesWhenUpdating);
         }
+
 
         public override void ClearCache()
         {

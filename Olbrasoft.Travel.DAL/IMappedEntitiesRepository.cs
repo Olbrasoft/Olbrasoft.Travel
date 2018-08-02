@@ -9,7 +9,5 @@ namespace Olbrasoft.Travel.DAL
     {
         HashSet<int>EanIds { get; }
         IReadOnlyDictionary<int, int> EanIdsToIds { get; }
-
-        void BulkSave(IEnumerable<T> entities, int batchSize,  params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating);
     }
 }

@@ -47,11 +47,16 @@ namespace Olbrasoft.Travel.DAL.EntityFramework
         {
         }
 
+        public void BulkSave(IEnumerable<T> entities, int batchSize, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
+        {
+            Context.BulkInsert(ForInsert(entities), OnSaved, batchSize);
+        }
 
         public void BulkSave(IEnumerable<T> entities, params Expression<Func<T, object>>[] ignorePropertiesWhenUpdating)
         {
-            Context.BulkInsert(ForInsert(entities), OnSaved);
+            BulkSave(entities, 90000, ignorePropertiesWhenUpdating);
         }
+        
 
         private IEnumerable<T> ForInsert(IEnumerable<T> entities)
         {
