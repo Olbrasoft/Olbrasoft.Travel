@@ -1,0 +1,14 @@
+﻿@model List<Olbrasoft.Travel.Data.Entity.Accommodation>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@foreach (var a in Model)
+{
+    @a.Address
+    <br />
+
+}
