@@ -183,21 +183,42 @@ namespace Olbrasoft.Travel.ExpediaAffiliateNetwork.Import
 
             var language = languagesRepository.Get(1031);
 
+            //if (language == null)
+            //{
+            //    language = new Language
+            //    {
+            //        Id = 1031,
+            //        EanLanguageCode = "de_DE",
+            //        CreatorId = user.Id
+            //    };
+            //    languagesRepository.Add(language);
+            //}
+
+            //using (var accommodationsMultiLanguageImporter = container.Resolve<IImporter>(nameof(AccommodationsMultiLanguageImporter)))
+            //{
+            //    accommodationsMultiLanguageImporter.Import(@"D:\Ean\ActivePropertyList_de_DE.txt");
+            //}
+
+
+
+            language = languagesRepository.Get(1034);
+
             if (language == null)
             {
                 language = new Language
                 {
-                    Id = 1031,
-                    EanLanguageCode = "de_DE",
+                    Id = 1034,
+                    EanLanguageCode = "es_ES",
                     CreatorId = user.Id
                 };
                 languagesRepository.Add(language);
             }
-            
+
             using (var accommodationsMultiLanguageImporter = container.Resolve<IImporter>(nameof(AccommodationsMultiLanguageImporter)))
             {
-                accommodationsMultiLanguageImporter.Import(@"D:\Ean\ActivePropertyList_de_DE.txt");
+                accommodationsMultiLanguageImporter.Import(@"D:\Ean\ActivePropertyList_es_ES.txt");
             }
+
 
 
             Write("Imported");

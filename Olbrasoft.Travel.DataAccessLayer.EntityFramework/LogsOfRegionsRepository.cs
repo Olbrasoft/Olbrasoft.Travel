@@ -1,5 +1,4 @@
 ﻿using Olbrasoft.Travel.Data.Entity;
-using Olbrasoft.Travel.DAL.EntityFramework;
 
 namespace Olbrasoft.Travel.DataAccessLayer.EntityFramework
 {
@@ -8,10 +7,5 @@ namespace Olbrasoft.Travel.DataAccessLayer.EntityFramework
         public LogsOfRegionsRepository(TravelContext context) : base(context)
         {
         }
-
-
-      
-
-       
     }
 }

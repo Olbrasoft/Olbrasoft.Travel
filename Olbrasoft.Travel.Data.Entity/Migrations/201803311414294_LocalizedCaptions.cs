@@ -1,7 +1,7 @@
-namespace Olbrasoft.Travel.DAL.EntityFramework.Migrations
+using System.Data.Entity.Migrations;
+
+namespace Olbrasoft.Travel.Data.Entity.Migrations
 {
-    using System.Data.Entity.Migrations;
-    
     public partial class LocalizedCaptions : DbMigration
     {
         public override void Up()

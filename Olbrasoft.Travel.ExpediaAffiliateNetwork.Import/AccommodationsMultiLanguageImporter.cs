@@ -15,6 +15,7 @@ namespace Olbrasoft.Travel.ExpediaAffiliateNetwork.Import
         {
 
             var languageId = CultureInfo(EanLanguageCode(System.IO.Path.GetFileName(path))).LCID;
+            
 
             LoadData(path);
 
